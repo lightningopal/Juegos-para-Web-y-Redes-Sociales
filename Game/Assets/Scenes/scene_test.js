@@ -1,11 +1,16 @@
-//this.sys.game.device.os --> Muestra un array de bools que indica el dispositivo en el que se abre la página
+// this.sys.game.device.os --> Muestra un array de bools que indica el dispositivo en el que se abre la página
 class Scene_Test extends Phaser.Scene {
     constructor(){
         super({key: "scene_test"});
-    }// Fin constructor
+    } // Fin constructor
 
     preload(){
-        options.device = this.sys.game.device.os;
+        var os = this.sys.game.device.os;
+        if (os.android || os.iOS || os.iPad || os.iPhone)
+            options.device = "mobile";
+        else
+            options.device = "desktop"
+
         this.cursors1 = this.input.keyboard.addKeys({
             'jump': cursors1Keys.jump,
             'left': cursors1Keys.left,
@@ -13,15 +18,54 @@ class Scene_Test extends Phaser.Scene {
             'basicAttack': cursors1Keys.basicAttack,
             'specialAttack': cursors1Keys.specialAttack,
         });
-    }// Fin preload
+
+        var url;
+  
+        url = './Assets/Plugins/rexvirtualjoystickplugin.min.js';
+        this.load.plugin('rexvirtualjoystickplugin', url, true);
+    } // Fin preload
 
     create(){
         var Personaje = new Character_Controller(this, 0, 100, 100, 50, 50, 0xaaffaa, this.cursors1);
         console.log(Personaje.body);
-    }// Fin create
+        console.log(options.device);
+
+        // Si el dispositivo es movil, añadir un joystick
+        if (options.device == "mobile")
+        {
+            this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
+                x: 60,
+                y: 325,
+                radius: 15,
+                base: this.add.circle(0, 0, 40, 0x888888),
+                thumb: this.add.circle(0, 0, 30, 0xcccccc),
+                // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
+                // forceMin: 16,
+                // enable: true
+            })
+            .on('update', this.dumpJoyStickState, this);
+
+            this.text = this.add.text(0, 0);
+            this.dumpJoyStickState();
+        }
+    } // Fin create
+
+    dumpJoyStickState() {
+        var cursorKeys = this.joyStick.createCursorKeys();
+        var s = 'Key down: ';
+        for (var name in cursorKeys) {
+            if (cursorKeys[name].isDown) {
+                s += name + ' ';
+            }
+        }
+        s += '\n';
+        s += ('Force: ' + Math.floor(this.joyStick.force * 100) / 100 + '\n');
+        s += ('Angle: ' + Math.floor(this.joyStick.angle * 100) / 100 + '\n');
+        this.text.setText(s);
+    }
 
     update(){
 
-    }// Fin update
+    } // Fin update
 
 }
