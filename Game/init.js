@@ -1,3 +1,4 @@
+"use strict";
 var config1080 = {
     type: Phaser.AUTO,
     backgroundColor: "#2a0678",
@@ -10,7 +11,7 @@ var config1080 = {
             debug: false
         }
     },
-    scene: [ Character_Control ]
+    scene: [ Scene_Test ]
 };
 
 var config720 = {
@@ -27,5 +28,28 @@ var config720 = {
     },
     scene: []
 };
+
+var options = {
+    device: null,
+    musicVol: 1.0,
+    SFXVol: 1.0,
+    fullScreen: false
+};
+
+var cursors1Keys = {
+    jump : Phaser.Input.Keyboard.KeyCodes.W,
+    left: Phaser.Input.Keyboard.KeyCodes.A,
+    right: Phaser.Input.Keyboard.KeyCodes.D,
+    basicAttack: Phaser.Input.Keyboard.KeyCodes.E,
+    specialAttack: Phaser.Input.Keyboard.KeyCodes.Q
+}
+
+var cursors2Keys = {
+    jump : Phaser.Input.Keyboard.KeyCodes.I,
+    left: Phaser.Input.Keyboard.KeyCodes.J,
+    right: Phaser.Input.Keyboard.KeyCodes.L,
+    basicAttack: Phaser.Input.Keyboard.KeyCodes.U,
+    specialAttack: Phaser.Input.Keyboard.KeyCodes.O
+}
 
 var game = new Phaser.Game(config1080);
