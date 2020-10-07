@@ -26,7 +26,7 @@ class Scene_Test extends Phaser.Scene {
     } // Fin preload
 
     create(){
-        var Personaje = new Character_Controller(this, 0, 100, 100, 50, 50, 0xaaffaa, this.cursors1);
+        var personaje = new Character_Controller(this, 0, 100, 100, 50, 50, 0xaaffaa, this.cursors1);
         console.log(Personaje.body);
         console.log(options.device);
 
@@ -48,8 +48,44 @@ class Scene_Test extends Phaser.Scene {
             this.text = this.add.text(0, 0);
             this.dumpJoyStickState();
         }
+
+
+        //Colisiones
+        var characters = [personaje];
+        var bullets = [];
+
+        this.physics.add.overlap(this.characters, this.bullets, this.bulletHit, player, bullet);
+
     } // Fin create
 
+    bulletHit(player, bullet)
+    {
+        this.damagePlayer(player, bullet);
+        this.removeBullet(bullet);
+    }
+
+    removeBullet(bullet)
+    {
+        var index = bullet.bulletIndex;
+        this.bullets[index].destroy();
+
+        for (var i = index; i < (this.bullets.length - 1); i++)
+        {
+            this.bullets[i] = this.bullets[i+1]
+        }
+
+        this.bullets[this.bullets.length].destroy();
+    }
+
+    damagePlayer(player, bullet)
+    {
+        player.actualHP -= bullet.damage;
+
+        if (player.actualHP <= 0)
+            player.die();
+    }
+
+    // Joystick movil
     dumpJoyStickState() {
         var cursorKeys = this.joyStick.createCursorKeys();
         var s = 'Key down: ';
