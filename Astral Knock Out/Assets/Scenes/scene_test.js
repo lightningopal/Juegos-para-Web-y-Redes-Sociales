@@ -19,6 +19,14 @@ class Scene_Test extends Phaser.Scene {
             'specialAttack': cursors1Keys.specialAttack,
         });
 
+        this.cursors2 = this.input.keyboard.addKeys({
+            'jump': cursors2Keys.jump,
+            'left': cursors2Keys.left,
+            'right': cursors2Keys.right,
+            'basicAttack': cursors2Keys.basicAttack,
+            'specialAttack': cursors2Keys.specialAttack,
+        });
+
         var url;
   
         url = './Assets/Plugins/rexvirtualjoystickplugin.min.js';
@@ -26,9 +34,8 @@ class Scene_Test extends Phaser.Scene {
     } // Fin preload
 
     create(){
-        var personaje = new Character_Controller(this, 0, 100, 100, 50, 50, 0xaaffaa, this.cursors1);
-        console.log(Personaje.body);
-        console.log(options.device);
+        var player1 = new Character_Controller(this, 0, 100, 100, 50, 50, 0xaaffaa, this.cursors1, 500);
+        //var player2 = new Character_Controller(this, 1, 300, 100, 50, 50, 0xaaffaa, this.cursors2);
 
         // Si el dispositivo es movil, añadir un joystick
         if (options.device == "mobile")
@@ -42,8 +49,7 @@ class Scene_Test extends Phaser.Scene {
                 // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
                 // forceMin: 16,
                 // enable: true
-            })
-            .on('update', this.dumpJoyStickState, this);
+            }).on('update', this.dumpJoyStickState, this);
 
             this.text = this.add.text(0, 0);
             this.dumpJoyStickState();
@@ -51,10 +57,10 @@ class Scene_Test extends Phaser.Scene {
 
 
         //Colisiones
-        var characters = [personaje];
+        var characters = [player1/*, player2*/];
         var bullets = [];
 
-        this.physics.add.overlap(this.characters, this.bullets, this.bulletHit, player, bullet);
+        //this.physics.add.overlap(this.characters, this.bullets, this.bulletHit, player, bullet);
 
     } // Fin create
 
