@@ -7,8 +7,8 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
         this.scene = scene;
         this.id = id;
         this.moveSpeed = moveSpeed;
-        
         this.jumpForce = jumpForce;
+        this.numJumps = 1;
         this.actualHP = actualHP;
         this.maxHP = maxHP;
         this.cursors = cursors;
@@ -52,28 +52,52 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
 
     update(time, delta){
         // Físicas de personaje
+        if(this.body.onFloor()){
+            this.numJumps = 1;
+            this.body.drag.x = 3500;
+        }
     }// Fin update
 
     jump(){
-        console.log(this.id+": Salto");
+        //console.log(this.id+": Salto");
+        if (this.body.onFloor() || this.numJumps == 1){
+            this.body.velocity.y = -this.jumpForce;
+            this.numJumps--;
+        }
     }
 
     moveLeft(){
-        this.body.velocity.x = -(this.moveSpeed);
-        this.body.acceleration.x = -(1);
+        if (this.body.onFloor()){
+            this.body.velocity.x = -(this.moveSpeed);
+            this.body.acceleration.x = -(1);
+        }else {
+            this.body.velocity.x = -(this.moveSpeed / 2);
+            this.body.acceleration.x = -(1);
+        }
     }
     stopLeft(){
         if (this.body.velocity.x <= 0){
             this.body.acceleration.x = 0;
+            if (!this.body.onFloor()){
+                this.body.drag.x = 500;
+            }
         }
     }
     moveRight(){
-        this.body.velocity.x = (this.moveSpeed);
-        this.body.acceleration.x = (1);
+        if (this.body.onFloor()){
+            this.body.velocity.x = (this.moveSpeed);
+            this.body.acceleration.x = (1);
+        }else {
+            this.body.velocity.x = (this.moveSpeed / 2);
+            this.body.acceleration.x = (1);
+        }
     }
     stopRight(){
         if (this.body.velocity.x >= 0){
             this.body.acceleration.x = 0;
+            if (!this.body.onFloor()){
+                this.body.drag.x = 500;
+            }
         }
     }
 }

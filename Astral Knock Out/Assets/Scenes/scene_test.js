@@ -34,7 +34,7 @@ class Scene_Test extends Phaser.Scene {
     } // Fin preload
 
     create(){
-        var player1 = new Character_Controller(this, 0, 100, 100, 50, 50, 0xaaffaa, this.cursors1, 500);
+        var player1 = new Character_Controller(this, 0, 100, 100, 50, 50, 0xaaffaa, this.cursors1, 500, 500);
         //var player2 = new Character_Controller(this, 1, 300, 100, 50, 50, 0xaaffaa, this.cursors2);
 
         // Si el dispositivo es movil, añadir un joystick
