@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 var config1080 = {
     type: Phaser.AUTO,
     backgroundColor: "#2a0678",
@@ -42,7 +42,7 @@ var cursors1Keys = {
     right: Phaser.Input.Keyboard.KeyCodes.D,
     basicAttack: Phaser.Input.Keyboard.KeyCodes.E,
     specialAttack: Phaser.Input.Keyboard.KeyCodes.Q
-}
+};
 
 var cursors2Keys = {
     jump : Phaser.Input.Keyboard.KeyCodes.I,
@@ -50,6 +50,6 @@ var cursors2Keys = {
     right: Phaser.Input.Keyboard.KeyCodes.L,
     basicAttack: Phaser.Input.Keyboard.KeyCodes.U,
     specialAttack: Phaser.Input.Keyboard.KeyCodes.O
-}
+};
 
 var game = new Phaser.Game(config1080);

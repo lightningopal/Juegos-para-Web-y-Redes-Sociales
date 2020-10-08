@@ -1,10 +1,10 @@
 // this.sys.game.device.os --> Muestra un array de bools que indica el dispositivo en el que se abre la página
 class Scene_Test extends Phaser.Scene {
-    constructor(){
-        super({key: "scene_test"});
+    constructor() {
+        super({ key: "scene_test" });
     } // Fin constructor
 
-    preload(){
+    preload() {
         var os = this.sys.game.device.os;
         if (os.android || os.iOS || os.iPad || os.iPhone)
             options.device = "mobile";
@@ -28,18 +28,14 @@ class Scene_Test extends Phaser.Scene {
         });
 
         var url;
-  
+
         url = './Assets/Plugins/rexvirtualjoystickplugin.min.js';
         this.load.plugin('rexvirtualjoystickplugin', url, true);
     } // Fin preload
 
-    create(){
-        var player1 = new Character_Controller(this, 0, 100, 100, 50, 50, 0xaaffaa, this.cursors1, 500, 500);
-        //var player2 = new Character_Controller(this, 1, 300, 100, 50, 50, 0xaaffaa, this.cursors2);
-
+    create() {
         // Si el dispositivo es movil, añadir un joystick
-        if (options.device == "mobile")
-        {
+        if (options.device == "mobile") {
             this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
                 x: 60,
                 y: 325,
@@ -55,6 +51,9 @@ class Scene_Test extends Phaser.Scene {
             this.dumpJoyStickState();
         }
 
+        // Crear el personaje
+        var player1 = new Character_Controller(this, 0, 100, 100, 50, 50, 0xaaffaa, this.cursors1, this.joyStick, 500, 500);
+        //var player2 = new Character_Controller(this, 1, 300, 100, 50, 50, 0xaaffaa, this.cursors2);
 
         //Colisiones
         var characters = [player1/*, player2*/];
@@ -64,27 +63,23 @@ class Scene_Test extends Phaser.Scene {
 
     } // Fin create
 
-    bulletHit(player, bullet)
-    {
+    bulletHit(player, bullet) {
         this.damagePlayer(player, bullet);
         this.removeBullet(bullet);
     }
 
-    removeBullet(bullet)
-    {
+    removeBullet(bullet) {
         var index = bullet.bulletIndex;
         this.bullets[index].destroy();
 
-        for (var i = index; i < (this.bullets.length - 1); i++)
-        {
-            this.bullets[i] = this.bullets[i+1]
+        for (var i = index; i < (this.bullets.length - 1); i++) {
+            this.bullets[i] = this.bullets[i + 1]
         }
 
         this.bullets[this.bullets.length].destroy();
     }
 
-    damagePlayer(player, bullet)
-    {
+    damagePlayer(player, bullet) {
         player.actualHP -= bullet.damage;
 
         if (player.actualHP <= 0)
@@ -106,7 +101,7 @@ class Scene_Test extends Phaser.Scene {
         this.text.setText(s);
     }
 
-    update(){
+    update() {
 
     } // Fin update
 

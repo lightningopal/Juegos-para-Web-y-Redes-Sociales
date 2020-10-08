@@ -1,5 +1,5 @@
 class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
-    constructor(scene, id, x, y, w, h, color, cursors, moveSpeed, jumpForce, actualHP, maxHP) {
+    constructor(scene, id, x, y, w, h, color, cursors, joyStick, moveSpeed, jumpForce, actualHP, maxHP) {
         super(scene, x, y, w, h, color);
 
         var that = this;
@@ -12,6 +12,7 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
         this.actualHP = actualHP;
         this.maxHP = maxHP;
         this.cursors = cursors;
+        this.joyStick = joyStick;
 
         // Se añade a la escena
         scene.add.existing(this);
@@ -72,8 +73,23 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
                     this.body.acceleration.x = 0;
                 }
             }
-
         }
+
+        // Movimiento movil
+        /*if (options.device == "mobile" && this.joyStick != null)
+        {
+            // Izquierda
+            if ((this.joyStick.angle < -(90) || this.joyStick.angle > 135) && this.joyStick.force > 20)
+            {
+                console.log("izquierda");
+            }
+            // Derecha
+            else if ((this.joyStick.angle > -(90) && mobilethisKeys.joyStick.angle < 45) && this.joyStick.force > 20)
+            {
+                console.log("derecha");
+            }
+        }*/
+
     }// Fin update
 
     jump() {
