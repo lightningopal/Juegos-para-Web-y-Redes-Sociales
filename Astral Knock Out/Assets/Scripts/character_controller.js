@@ -50,7 +50,10 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
 
         // Mobile
         if (options.device == "mobile")
+        {
             this.mobileKeys.jumpButton.on('pointerdown',that.jump,this);
+            this.mobileKeys.jumpButton.on('pointerup',that.setButtonNormalColor,this);
+        }
     }// Fin constructor
 
     die() {
@@ -117,6 +120,9 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
             this.body.velocity.y = -this.jumpForce;
             this.numJumps--;
         }
+
+        if (options.device == "mobile")
+            this.mobileKeys.jumpButton.setFillStyle(0x888888);
     }
 
     moveLeft() {
@@ -159,5 +165,11 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
                 this.body.drag.x = 500;
             }
         }
+    }
+
+    // Mobile
+    setButtonNormalColor()
+    {
+        this.mobileKeys.jumpButton.setFillStyle(0xdddddd);
     }
 }

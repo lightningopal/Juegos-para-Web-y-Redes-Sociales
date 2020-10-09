@@ -1,4 +1,13 @@
 'use strict';
+// Mobile JS detector
+var isMobile = false;
+
+var userAgent = navigator.userAgent.toLowerCase();
+if (/windows phone/i.test(userAgent) || /android/i.test(userAgent) || (/iPad|iPhone|iPod/i.test(userAgent) && !window.MSStream))
+{
+    isMobile = true;
+}
+
 var config1080 = {
     type: Phaser.AUTO,
     backgroundColor: "#2a0678",
@@ -26,15 +35,15 @@ var config720 = {
             debug: false
         }
     },
-    scene: []
+    scene: [ Scene_Test ]
 };
 
 // Config test mobile
 var configMobile = {
     type: Phaser.AUTO,
     backgroundColor: "#2a0678",
-    width: 800,
-    height: 380,
+    width: window.screen.width,
+    height: window.screen.height,
     physics: {
         default: 'arcade',
         arcade: {
@@ -68,4 +77,7 @@ var cursors2Keys = {
     specialAttack: Phaser.Input.Keyboard.KeyCodes.O
 };
 
-var game = new Phaser.Game(configMobile);
+if (isMobile)
+    var game = new Phaser.Game(configMobile);
+else
+    var game = new Phaser.Game(config720);
