@@ -1,5 +1,5 @@
 class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
-    constructor(scene, id, x, y, w, h, color, cursors, joyStick, moveSpeed, jumpForce, actualHP, maxHP) {
+    constructor(scene, id, x, y, w, h, color, cursors, mobileKeys, moveSpeed, jumpForce, actualHP, maxHP) {
         super(scene, x, y, w, h, color);
 
         var that = this;
@@ -12,7 +12,7 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
         this.actualHP = actualHP;
         this.maxHP = maxHP;
         this.cursors = cursors;
-        this.joyStick = joyStick;
+        this.mobileKeys = mobileKeys;
 
         // Se añade a la escena
         scene.add.existing(this);
@@ -45,6 +45,10 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
         this.cursors.right.on('up', function (event) {
             that.stopRight();
         });
+
+        // Mobile
+        if (options.device == "mobile")
+            this.mobileKeys.jumpButton.on('pointerdown',that.jump,this);
     }// Fin constructor
 
     die() {
@@ -76,19 +80,26 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
         }
 
         // Movimiento movil
-        /*if (options.device == "mobile" && this.joyStick != null)
+        if (options.device == "mobile" && this.mobileKeys.joyStick != null)
         {
             // Izquierda
-            if ((this.joyStick.angle < -(90) || this.joyStick.angle > 135) && this.joyStick.force > 20)
+            if ((this.mobileKeys.joyStick.angle < -(90) || this.mobileKeys.joyStick.angle > 135) && this.mobileKeys.joyStick.force > 16)
             {
-                console.log("izquierda");
+                this.body.velocity.x = -(this.moveSpeed);
+                this.body.acceleration.x = -(1);
             }
             // Derecha
-            else if ((this.joyStick.angle > -(90) && mobilethisKeys.joyStick.angle < 45) && this.joyStick.force > 20)
+            else if ((this.mobileKeys.joyStick.angle > -(90) && this.mobileKeys.joyStick.angle < 45) && this.mobileKeys.joyStick.force > 16)
             {
-                console.log("derecha");
+                this.body.velocity.x = (this.moveSpeed);
+                this.body.acceleration.x = (1);
             }
-        }*/
+            else
+            {
+                this.body.velocity.x = (0);
+                this.body.acceleration.x = (0);
+            }
+        }
 
     }// Fin update
 

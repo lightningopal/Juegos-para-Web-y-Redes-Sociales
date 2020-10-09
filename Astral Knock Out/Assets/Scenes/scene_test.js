@@ -34,10 +34,16 @@ class Scene_Test extends Phaser.Scene {
     } // Fin preload
 
     create() {
+        // Create mobileKeys
+        this.mobileKeys = {
+            joyStick : null,
+            jumpButton : null
+        };
+
         // Si el dispositivo es movil, añadir un joystick
         if (options.device == "mobile") {
-            this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
-                x: 60,
+            this.mobileKeys.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
+                x: 70,
                 y: 325,
                 radius: 15,
                 base: this.add.circle(0, 0, 40, 0x888888),
@@ -49,10 +55,14 @@ class Scene_Test extends Phaser.Scene {
 
             this.text = this.add.text(0, 0);
             this.dumpJoyStickState();
+
+            this.mobileKeys.jumpButton = this.add.circle(700, 330, 20, 0xdddddd).setInteractive();
+            
+            this.input.addPointer(2);
         }
 
         // Crear el personaje
-        var player1 = new Character_Controller(this, 0, 100, 100, 50, 50, 0xaaffaa, this.cursors1, this.joyStick, 500, 500);
+        var player1 = new Character_Controller(this, 0, 100, 100, 50, 50, 0xaaffaa, this.cursors1, this.mobileKeys, 500, 500);
         //var player2 = new Character_Controller(this, 1, 300, 100, 50, 50, 0xaaffaa, this.cursors2);
 
         //Colisiones
@@ -88,7 +98,7 @@ class Scene_Test extends Phaser.Scene {
 
     // Joystick movil
     dumpJoyStickState() {
-        var cursorKeys = this.joyStick.createCursorKeys();
+        var cursorKeys = this.mobileKeys.joyStick.createCursorKeys();
         var s = 'Key down: ';
         for (var name in cursorKeys) {
             if (cursorKeys[name].isDown) {
@@ -96,8 +106,8 @@ class Scene_Test extends Phaser.Scene {
             }
         }
         s += '\n';
-        s += ('Force: ' + Math.floor(this.joyStick.force * 100) / 100 + '\n');
-        s += ('Angle: ' + Math.floor(this.joyStick.angle * 100) / 100 + '\n');
+        s += ('Force: ' + Math.floor(this.mobileKeys.joyStick.force * 100) / 100 + '\n');
+        s += ('Angle: ' + Math.floor(this.mobileKeys.joyStick.angle * 100) / 100 + '\n');
         this.text.setText(s);
     }
 

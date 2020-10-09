@@ -29,6 +29,22 @@ var config720 = {
     scene: []
 };
 
+// Config test mobile
+var configMobile = {
+    type: Phaser.AUTO,
+    backgroundColor: "#2a0678",
+    width: 800,
+    height: 380,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 900 },
+            debug: false
+        }
+    },
+    scene: [ Scene_Test ]
+};
+
 var options = {
     device: null,
     musicVol: 1.0,
@@ -52,4 +68,4 @@ var cursors2Keys = {
     specialAttack: Phaser.Input.Keyboard.KeyCodes.O
 };
 
-var game = new Phaser.Game(config1080);
+var game = new Phaser.Game(configMobile);
