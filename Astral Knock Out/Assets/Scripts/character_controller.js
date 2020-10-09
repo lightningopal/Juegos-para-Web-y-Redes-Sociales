@@ -21,7 +21,9 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
         scene.physics.world.enable(this);
         this.body.maxVelocity.x = moveSpeed;
         this.body.setCollideWorldBounds(true);
-        this.isOnAir = false;
+
+        this.movingLeft = false;
+        this.movingRight = false;
 
         // Establecemos el evento update
         this.scene.events.on("update", this.update, this);
@@ -29,7 +31,7 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
         // Añadimos el sprite del personaje
         //this.sprite = this.scene.add.sprite(x, y, 'character_' + id); COMENTAR;
         this.body.drag.x = 3500;
-        console.log(this.body);
+
         this.cursors.jump.on('down', function (event) {
             that.jump();
         });
@@ -60,22 +62,11 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
         if (this.body.onFloor()) {
             this.numJumps = 1;
             this.body.drag.x = 3500;
-
-            // Anadido para corregir velocidad suelo tras aire
-            if (this.isOnAir) {
-                this.isOnAir = false;
-                if (this.body.velocity.x < -(0.1)) {
-                    this.body.velocity.x = -(this.moveSpeed);
-                    this.body.acceleration.x = -(1);
-                }
-                else if (this.body.velocity.x > 0.1) {
-                    this.body.velocity.x = (this.moveSpeed);
-                    this.body.acceleration.x = (1);
-                }
-                else {
-                    this.body.velocity.x = 0;
-                    this.body.acceleration.x = 0;
-                }
+            if (this.movingLeft){
+                this.body.velocity.x = -(this.moveSpeed);
+            }
+            else if (this.movingRight){
+                this.body.velocity.x = (this.moveSpeed);
             }
         }
 
@@ -85,50 +76,63 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
             // Izquierda
             if ((this.mobileKeys.joyStick.angle < -(90) || this.mobileKeys.joyStick.angle > 135) && this.mobileKeys.joyStick.force > 16)
             {
-                this.body.velocity.x = -(this.moveSpeed);
-                this.body.acceleration.x = -(1);
+                this.movingLeft = true;
+                this.movingRight = false;
+                if (this.body.onFloor()) {
+                    this.body.velocity.x = -(this.moveSpeed);
+                    this.body.acceleration.x = -(1);
+                } else {
+                    this.body.acceleration.x = -(this.moveSpeed*4);
+                }
             }
             // Derecha
             else if ((this.mobileKeys.joyStick.angle > -(90) && this.mobileKeys.joyStick.angle < 45) && this.mobileKeys.joyStick.force > 16)
             {
-                this.body.velocity.x = (this.moveSpeed);
-                this.body.acceleration.x = (1);
+                this.movingRight = true;
+                this.movingLeft = false;
+                if (this.body.onFloor()) {
+                    this.body.velocity.x = (this.moveSpeed);
+                    this.body.acceleration.x = (1);
+        
+                } else {
+                    this.body.acceleration.x = (this.moveSpeed*4);
+                }
             }
             else
             {
-                this.body.velocity.x = (0);
-                this.body.acceleration.x = (0);
+                this.movingRight = false;
+                this.movingLeft = false;
+                //this.body.velocity.x = (0); La velocidad se resta sola con el rozamiento
+                this.body.acceleration.x = 0;
+                if (!this.body.onFloor()) {
+                    this.body.drag.x = 500;
+                }
             }
         }
 
     }// Fin update
 
     jump() {
-        //console.log(this.id+": Salto");
         if (this.body.onFloor() || this.numJumps == 1) {
-            this.isOnAir = true;
             this.body.velocity.y = -this.jumpForce;
             this.numJumps--;
-
-            if (this.body.velocity.x < -(0.1))
-                this.body.velocity.x = -(this.moveSpeed / 2);
-            else if (this.body.velocity.x > 0.1)
-                this.body.velocity.x = (this.moveSpeed / 2);
-            else
-                this.body.velocity.x = 0;
         }
     }
 
     moveLeft() {
+        this.movingLeft = true;
+        this.movingRight = false;
         if (this.body.onFloor()) {
             this.body.velocity.x = -(this.moveSpeed);
+            this.body.acceleration.x = -(1);
         } else {
-            this.body.velocity.x = -(this.moveSpeed / 2);
+            this.body.acceleration.x = -(this.moveSpeed*4);
         }
-        this.body.acceleration.x = -(1);
+        
     }
     stopLeft() {
-        if (this.body.velocity.x <= 0) {
+        this.movingLeft = false;
+        if (!this.movingRight) {
             this.body.acceleration.x = 0;
             if (!this.body.onFloor()) {
                 this.body.drag.x = 500;
@@ -136,16 +140,20 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
         }
     }
     moveRight() {
+        this.movingRight = true;
+        this.movingLeft = false;
         if (this.body.onFloor()) {
             this.body.velocity.x = (this.moveSpeed);
+            this.body.acceleration.x = (1);
 
         } else {
-            this.body.velocity.x = (this.moveSpeed / 2);
+            this.body.acceleration.x = (this.moveSpeed*4);
         }
-        this.body.acceleration.x = (1);
+        
     }
     stopRight() {
-        if (this.body.velocity.x >= 0) {
+        this.movingRight = false;
+        if (!this.movingLeft) {
             this.body.acceleration.x = 0;
             if (!this.body.onFloor()) {
                 this.body.drag.x = 500;
