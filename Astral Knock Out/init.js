@@ -63,6 +63,7 @@ var options = {
 
 var cursors1Keys = {
     jump : Phaser.Input.Keyboard.KeyCodes.W,
+    fall : Phaser.Input.Keyboard.KeyCodes.S,
     left: Phaser.Input.Keyboard.KeyCodes.A,
     right: Phaser.Input.Keyboard.KeyCodes.D,
     basicAttack: Phaser.Input.Keyboard.KeyCodes.E,
@@ -71,6 +72,7 @@ var cursors1Keys = {
 
 var cursors2Keys = {
     jump : Phaser.Input.Keyboard.KeyCodes.I,
+    fall : Phaser.Input.Keyboard.KeyCodes.K,
     left: Phaser.Input.Keyboard.KeyCodes.J,
     right: Phaser.Input.Keyboard.KeyCodes.L,
     basicAttack: Phaser.Input.Keyboard.KeyCodes.U,

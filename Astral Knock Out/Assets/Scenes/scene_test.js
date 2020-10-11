@@ -27,6 +27,9 @@ class Scene_Test extends Phaser.Scene {
     }*/
 
     preload() {
+
+        this.load.image("slope", "./Assets/Images/Slope.png");
+
         var os = this.sys.game.device.os;
         if (os.android || os.iOS || os.iPad || os.iPhone)
             options.device = "mobile";
@@ -39,6 +42,7 @@ class Scene_Test extends Phaser.Scene {
 
         this.cursors1 = this.input.keyboard.addKeys({
             'jump': cursors1Keys.jump,
+            'fall': cursors1Keys.fall,
             'left': cursors1Keys.left,
             'right': cursors1Keys.right,
             'basicAttack': cursors1Keys.basicAttack,
@@ -47,6 +51,7 @@ class Scene_Test extends Phaser.Scene {
 
         this.cursors2 = this.input.keyboard.addKeys({
             'jump': cursors2Keys.jump,
+            'fall': cursors1Keys.fall,
             'left': cursors2Keys.left,
             'right': cursors2Keys.right,
             'basicAttack': cursors2Keys.basicAttack,
@@ -60,6 +65,10 @@ class Scene_Test extends Phaser.Scene {
     } // Fin preload
 
     create() {
+
+        var slopes = this.physics.add.staticGroup();
+        slopes.create(500, 670, 'slope');
+
         // Create mobileKeys
         this.mobileKeys = {
             joyStick : null,

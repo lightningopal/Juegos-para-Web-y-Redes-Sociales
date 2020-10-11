@@ -30,10 +30,13 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
 
         // Añadimos el sprite del personaje
         //this.sprite = this.scene.add.sprite(x, y, 'character_' + id); COMENTAR;
-        this.body.drag.x = 3500;
+        this.body.drag.x = 3000;
 
         this.cursors.jump.on('down', function (event) {
             that.jump();
+        });
+        this.cursors.fall.on('down', function (event) {
+            that.fall();
         });
         this.cursors.left.on('down', function (event) {
             that.moveLeft();
@@ -61,16 +64,19 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
     }
 
     update(time, delta) {
+        console.log(this.body.velocity.y);
         // Físicas de personaje
         if (this.body.onFloor()) {
             this.numJumps = 1;
-            this.body.drag.x = 3500;
+            this.body.drag.x = 3000;
+            /*
             if (this.movingLeft){
                 this.body.velocity.x = -(this.moveSpeed);
             }
             else if (this.movingRight){
                 this.body.velocity.x = (this.moveSpeed);
             }
+            */
         }
 
         // Movimiento movil
@@ -82,10 +88,10 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
                 this.movingLeft = true;
                 this.movingRight = false;
                 if (this.body.onFloor()) {
-                    this.body.velocity.x = -(this.moveSpeed);
-                    this.body.acceleration.x = -(1);
+                    //this.body.velocity.x = -(this.moveSpeed);
+                    this.body.acceleration.x = -(this.moveSpeed*8);
                 } else {
-                    this.body.acceleration.x = -(this.moveSpeed*4);
+                    this.body.acceleration.x = -(this.moveSpeed*6);
                 }
             }
             // Derecha
@@ -94,14 +100,15 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
                 this.movingRight = true;
                 this.movingLeft = false;
                 if (this.body.onFloor()) {
-                    this.body.velocity.x = (this.moveSpeed);
-                    this.body.acceleration.x = (1);
+                    //this.body.velocity.x = (this.moveSpeed);
+                    this.body.acceleration.x = (this.moveSpeed*8);
         
                 } else {
-                    this.body.acceleration.x = (this.moveSpeed*4);
+                    this.body.acceleration.x = (this.moveSpeed*6);
                 }
-            }
-            else
+            }else if ((this.mobileKeys.joyStick.angle > 45 && this.mobileKeys.joyStick.angle < 135) && this.mobileKeys.joyStick.force > 16){
+                this.fall();
+            }else
             {
                 this.movingRight = false;
                 this.movingLeft = false;
@@ -125,14 +132,18 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
             this.mobileKeys.jumpButton.setFillStyle(0x888888);
     }
 
+    fall(){
+        this.body.velocity.y = 900;
+    }
+
     moveLeft() {
         this.movingLeft = true;
         this.movingRight = false;
         if (this.body.onFloor()) {
-            this.body.velocity.x = -(this.moveSpeed);
-            this.body.acceleration.x = -(1);
+            //this.body.velocity.x = -(this.moveSpeed);
+            this.body.acceleration.x = -(this.moveSpeed*8);
         } else {
-            this.body.acceleration.x = -(this.moveSpeed*4);
+            this.body.acceleration.x = -(this.moveSpeed*6);
         }
         
     }
@@ -149,11 +160,11 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
         this.movingRight = true;
         this.movingLeft = false;
         if (this.body.onFloor()) {
-            this.body.velocity.x = (this.moveSpeed);
-            this.body.acceleration.x = (1);
+            //this.body.velocity.x = (this.moveSpeed);
+            this.body.acceleration.x = (this.moveSpeed*8);
 
         } else {
-            this.body.acceleration.x = (this.moveSpeed*4);
+            this.body.acceleration.x = (this.moveSpeed*6);
         }
         
     }
