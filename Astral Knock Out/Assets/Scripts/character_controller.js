@@ -1,5 +1,5 @@
 class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
-    constructor(scene, id, x, y, w, h, color, cursors, mobileKeys, moveSpeed, jumpForce, actualHP, maxHP) {
+    constructor(scene, id, x, y, w, h, scale, color, cursors, mobileKeys, moveSpeed, jumpForce, actualHP, maxHP) {
         super(scene, x, y, w, h, color);
 
         var that = this;
@@ -15,7 +15,7 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
         this.mobileKeys = mobileKeys;
 
         // Se añade a la escena
-        scene.add.existing(this);
+        scene.add.existing(this).setScale(1);
 
         // Se activan las físicas
         scene.physics.world.enable(this);

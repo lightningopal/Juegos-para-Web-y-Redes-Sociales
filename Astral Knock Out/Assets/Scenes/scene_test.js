@@ -15,16 +15,10 @@ class Scene_Test extends Phaser.Scene {
         return pos;
     }
 
-    /*RelativeScale(value, axis)
+    RelativeScale(value)
     {
-        var scale = 0;
-        if (axis == "x")
-            scale = this.width * value / 100;
-        else
-            scale = this.height * value / 100;
-
-        return scale;
-    }*/
+        return this.scale * value;
+    }
 
     preload() {
 
@@ -39,6 +33,9 @@ class Scene_Test extends Phaser.Scene {
         // Referencias de pantalla
         this.referenceWidth = 1280;
         this.referenceHeight = 720;
+
+        // Escala
+        this.scale = (game.canvas.clientWidth / this.referenceWidth);
 
         this.cursors1 = this.input.keyboard.addKeys({
             'jump': cursors1Keys.jump,
@@ -81,8 +78,8 @@ class Scene_Test extends Phaser.Scene {
                 x: this.RelativePosition(100, "x"),
                 y: this.RelativePosition(630, "y"),
                 radius: 15,
-                base: this.add.circle(0, 0, this.RelativePosition(60, "x"), 0x888888).setAlpha(0.7).setDepth(1000),
-                thumb: this.add.circle(0, 0, this.RelativePosition(45, "x"), 0xcccccc).setAlpha(0.7).setDepth(1001),
+                base: this.add.circle(0, 0, this.RelativePosition(60, "x"), 0x888888).setAlpha(0.7).setScale(this.scale).setDepth(1000),
+                thumb: this.add.circle(0, 0, this.RelativePosition(45, "x"), 0xcccccc).setAlpha(0.7).setScale(this.scale).setDepth(1001),
                 // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
                 // forceMin: 16,
                 // enable: true
@@ -91,13 +88,13 @@ class Scene_Test extends Phaser.Scene {
             this.text = this.add.text(0, 0);
             this.dumpJoyStickState();
 
-            this.mobileKeys.jumpButton = this.add.circle(this.RelativePosition(1160, "x"), this.RelativePosition(630, "y"), 20, 0xdddddd).setAlpha(0.7).setDepth(1000).setInteractive();
+            this.mobileKeys.jumpButton = this.add.circle(this.RelativePosition(1160, "x"), this.RelativePosition(630, "y"), 20, 0xdddddd).setAlpha(0.7).setScale(this.scale).setDepth(1000).setInteractive();
             
             this.input.addPointer(2);
         }
 
         // Crear el personaje
-        var player1 = new Character_Controller(this, 0, this.RelativePosition(100, "x"), this.RelativePosition(100, "y"), 50, 50, 0xaaffaa, this.cursors1, this.mobileKeys, 500, 500);
+        var player1 = new Character_Controller(this, 0, this.RelativePosition(100, "x"), this.RelativePosition(100, "y"), 50, 50, this.scale, 0xaaffaa, this.cursors1, this.mobileKeys, 500, 500);
         //var player2 = new Character_Controller(this, 1, 300, 100, 50, 50, 0xaaffaa, this.cursors2);
 
         //Colisiones
