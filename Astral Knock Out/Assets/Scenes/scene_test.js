@@ -70,9 +70,6 @@ class Scene_Test extends Phaser.Scene {
 
     create() {
 
-        var slopes = this.physics.add.staticGroup();
-        slopes.create(500, 670, 'slope');
-
         // Create mobileKeys
         this.mobileKeys = {
             joyStick : null,
@@ -101,16 +98,35 @@ class Scene_Test extends Phaser.Scene {
         }
 
         // Crear el personaje
-        var player1 = new Character_Controller(this, 0, this.RelativePosition(100, "x"), this.RelativePosition(100, "y"), 50, 50, this.RelativeScale(), 0xaaffaa, this.cursors1, this.mobileKeys, 500, 500);
-        //var player2 = new Character_Controller(this, 1, 300, 100, 50, 50, 0xaaffaa, this.cursors2);
+        var myPlayer = new Character_Controller(this, 0, this.RelativePosition(100, "x"), this.RelativePosition(100, "y"), 50, 50, this.RelativeScale(), 0xaaffaa, this.cursors1, this.mobileKeys, 500, 500);
+        //var enemyPlayer = new Character_Controller(this, 1, 300, 100, 50, 50, 0xaaffaa, this.cursors2);
+
+        //Plataformas
+        this.hidePlatforms = [this.physics.add.image(600, 700, "slope"), this.physics.add.image(200, 700, "slope")];
+        this.hidePlatforms.forEach(platform => {
+            platform.body.setCollideWorldBounds(true);
+            platform.body.allowGravity = false;
+        });
 
         //Colisiones
-        var characters = [player1/*, player2*/];
+        var characters = [myPlayer/**, enemyPlayer/**/];
         var bullets = [];
 
         //this.physics.add.overlap(this.characters, this.bullets, this.bulletHit, player, bullet);
-
+        this.physics.add.overlap(characters, this.hidePlatforms);
     } // Fin create
+
+    update() {
+        // Mostrar u ocultar las plataformas al pasar por encima
+        this.hidePlatforms.forEach(platform => {
+            if (platform.body.embedded) platform.body.touching.none = false;
+            if (!platform.body.touching.none && platform.body.wasTouching.none){
+                this.hidePlatform(platform);
+            }else if (platform.body.touching.none && !platform.body.wasTouching.none){
+                this.showPlatform(platform);
+            }
+        });
+    } // Fin update
 
     bulletHit(player, bullet) {
         this.damagePlayer(player, bullet);
@@ -150,8 +166,22 @@ class Scene_Test extends Phaser.Scene {
         this.text.setText(s);
     }
 
-    update() {
+    hidePlatform(platform){
+        var tween = this.tweens.add({
+            targets: platform,
+            alpha: 0.6,
+            ease: 'Sine.easeInOut',
+            duration: 200,
+        });
+    }
 
-    } // Fin update
+    showPlatform(platform){
+        var tween = this.tweens.add({
+            targets: platform,
+            alpha: 1.0,
+            ease: 'Sine.easeInOut',
+            duration: 200,
+        });
+    }
 
 }

@@ -64,7 +64,6 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
     }
 
     update(time, delta) {
-        console.log(this.body.velocity.y);
         // Físicas de personaje
         if (this.body.onFloor()) {
             this.numJumps = 1;
