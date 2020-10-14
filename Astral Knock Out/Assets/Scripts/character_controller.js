@@ -1,37 +1,38 @@
 class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
-    constructor(scene, id, x, y, w, h, scale, color, cursors, mobileKeys, moveSpeed, jumpForce, actualHP, maxHP) {
+    constructor(scene, id, x, y, w, h, scale, color, cursors, mobileKeys, moveSpeed, jumpForce, maxHP,bW, sW) {
         super(scene, x, y, w, h, color);
 
         var that = this;
-
+        // Atributos
         this.scene = scene;
         this.id = id;
         this.moveSpeed = moveSpeed;
         this.jumpForce = jumpForce;
         this.numJumps = 1;
-        this.actualHP = actualHP;
         this.maxHP = maxHP;
+        this.actualHP = maxHP;
         this.cursors = cursors;
         this.mobileKeys = mobileKeys;
-
+        // Ataques
+        this.basicWeapon = bW;
+        this.basicWeapon.character = this;
+        this.specialWeapon = sW;
+        this.specialWeapon.character = this;
         // Se añade a la escena
         scene.add.existing(this).setScale(1);
-
         // Se activan las físicas
         scene.physics.world.enable(this);
         this.body.maxVelocity.x = moveSpeed;
+        this.body.drag.x = 3000;
         this.body.setCollideWorldBounds(true);
-
+        // Variables de control
         this.movingLeft = false;
         this.movingRight = false;
-
+        // Restringir la acción si attacking == true
+        this.attacking = false;
         // Establecemos el evento update
         this.scene.events.on("update", this.update, this);
-
-        // Añadimos el sprite del personaje
-        //this.sprite = this.scene.add.sprite(x, y, 'character_' + id); COMENTAR;
-        this.body.drag.x = 3000;
-
+        // Eventos de movimiento y ataque
         this.cursors.jump.on('down', function (event) {
             that.jump();
         });
@@ -51,6 +52,32 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
             that.stopRight();
         });
 
+        this.cursors.basicAttack.on('down', function(event){
+            if (!that.attacking && that.basicWeapon.canShoot){
+                that.attacking = true;
+                that.body.allowGravity = false;
+                // Animación
+                // Este código va en la función onAnimComplete (cuando termine de lanzar el ataque se spawnea)
+                console.log("Básico: ");
+                that.basicWeapon.shoot();
+                that.attacking = false;
+                that.body.allowGravity = true;
+            }
+        });
+
+        this.cursors.specialAttack.on('down', function(event){
+            if (!that.attacking && that.specialWeapon.canShoot){
+                that.attacking = true;
+                that.body.allowGravity = false;
+                // Animación
+                // Este código va en la función onAnimComplete (cuando termine de lanzar el ataque se spawnea)
+                console.log("Especial: ");
+                that.specialWeapon.shoot();
+                that.attacking = false;
+                that.body.allowGravity = true;
+            }
+        });
+
         // Mobile
         if (options.device == "mobile")
         {
@@ -68,14 +95,6 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
         if (this.body.onFloor()) {
             this.numJumps = 1;
             this.body.drag.x = 3000;
-            /*
-            if (this.movingLeft){
-                this.body.velocity.x = -(this.moveSpeed);
-            }
-            else if (this.movingRight){
-                this.body.velocity.x = (this.moveSpeed);
-            }
-            */
         }
 
         // Movimiento movil

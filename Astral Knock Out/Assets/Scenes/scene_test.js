@@ -98,11 +98,13 @@ class Scene_Test extends Phaser.Scene {
         }
 
         // Crear el personaje
-        var myPlayer = new Character_Controller(this, 0, this.RelativePosition(100, "x"), this.RelativePosition(100, "y"), 50, 50, this.RelativeScale(), 0xaaffaa, this.cursors1, this.mobileKeys, 500, 500);
-        //var enemyPlayer = new Character_Controller(this, 1, 300, 100, 50, 50, 0xaaffaa, this.cursors2);
+        var basicWeapon = new Weapon(this, 500);
+        var myPlayer = new Character_Controller(this, 0, this.RelativePosition(100, "x"), 
+        this.RelativePosition(100, "y"), 50, 50, this.RelativeScale(), 0xaaffaa, this.cursors1, 
+        this.mobileKeys, 500, 500, 100, basicWeapon, basicWeapon);
 
         //Plataformas
-        this.hidePlatforms = [this.physics.add.image(600, 700, "slope"), this.physics.add.image(200, 700, "slope")];
+        this.hidePlatforms = [this.physics.add.image(600, 700, "slope")];
         this.hidePlatforms.forEach(platform => {
             platform.body.setCollideWorldBounds(true);
             platform.body.allowGravity = false;

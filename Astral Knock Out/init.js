@@ -66,8 +66,8 @@ var cursors1Keys = {
     fall : Phaser.Input.Keyboard.KeyCodes.S,
     left: Phaser.Input.Keyboard.KeyCodes.A,
     right: Phaser.Input.Keyboard.KeyCodes.D,
-    basicAttack: Phaser.Input.Keyboard.KeyCodes.E,
-    specialAttack: Phaser.Input.Keyboard.KeyCodes.Q
+    basicAttack: Phaser.Input.Keyboard.KeyCodes.O,
+    specialAttack: Phaser.Input.Keyboard.KeyCodes.P
 };
 
 var cursors2Keys = {
@@ -75,8 +75,8 @@ var cursors2Keys = {
     fall : Phaser.Input.Keyboard.KeyCodes.K,
     left: Phaser.Input.Keyboard.KeyCodes.J,
     right: Phaser.Input.Keyboard.KeyCodes.L,
-    basicAttack: Phaser.Input.Keyboard.KeyCodes.U,
-    specialAttack: Phaser.Input.Keyboard.KeyCodes.O
+    basicAttack: Phaser.Input.Keyboard.KeyCodes.Y,
+    specialAttack: Phaser.Input.Keyboard.KeyCodes.T
 };
 
 if (isMobile)
