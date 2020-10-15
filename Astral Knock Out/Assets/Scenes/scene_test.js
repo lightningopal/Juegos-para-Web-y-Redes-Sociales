@@ -4,45 +4,14 @@ class Scene_Test extends Phaser.Scene {
         super({ key: "scene_test" });
     } // Fin constructor
 
-    // Responsive Functions
-    // Position
-    RelativePosition(value, axis)
-    {
-        var pos = 0;
-        if (axis == "x")
-            pos = (game.canvas.clientWidth / this.referenceWidth) * value;
-        else
-            pos = (game.canvas.clientHeight / this.referenceHeight)  * value;
-        return pos;
-    }
-
-    // Scale
-    RelativeScale()
-    {
-        return this.scale;
-    }
-
-    RelativeScale(value)
-    {
-        return this.scale * value;
-    }
-
     preload() {
-
         this.load.image("slope", "./Assets/Images/Slope.png");
 
         var os = this.sys.game.device.os;
         if (os.android || os.iOS || os.iPad || os.iPhone)
             options.device = "mobile";
         else
-            options.device = "desktop"
-
-        // Referencias de pantalla
-        this.referenceWidth = 1280;
-        this.referenceHeight = 720;
-
-        // Escala
-        this.scale = (game.canvas.clientWidth / this.referenceWidth);
+            options.device = "desktop";
 
         this.cursors1 = this.input.keyboard.addKeys({
             'jump': cursors1Keys.jump,
@@ -79,11 +48,11 @@ class Scene_Test extends Phaser.Scene {
         // Si el dispositivo es movil, añadir un joystick y un boton
         if (options.device == "mobile") {
             this.mobileKeys.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
-                x: this.RelativePosition(100, "x"),
-                y: this.RelativePosition(630, "y"),
+                x: RelativePosition(100, "x"),
+                y: RelativePosition(630, "y"),
                 radius: 15,
-                base: this.add.circle(0, 0, this.RelativePosition(60, "x"), 0x888888).setAlpha(0.7).setScale(this.RelativeScale()).setDepth(1000),
-                thumb: this.add.circle(0, 0, this.RelativePosition(45, "x"), 0xcccccc).setAlpha(0.7).setScale(this.RelativeScale()).setDepth(1001),
+                base: this.add.circle(0, 0, RelativePosition(60, "x"), 0x888888).setAlpha(0.7).setScale(RelativeScale()).setDepth(1000),
+                thumb: this.add.circle(0, 0, RelativePosition(45, "x"), 0xcccccc).setAlpha(0.7).setScale(RelativeScale()).setDepth(1001),
                 // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
                 // forceMin: 16,
                 // enable: true
@@ -92,19 +61,21 @@ class Scene_Test extends Phaser.Scene {
             this.text = this.add.text(0, 0);
             this.dumpJoyStickState();
 
-            this.mobileKeys.jumpButton = this.add.circle(this.RelativePosition(1160, "x"), this.RelativePosition(630, "y"), 20, 0xdddddd).setAlpha(0.7).setScale(this.RelativeScale()).setDepth(1000).setInteractive();
+            this.mobileKeys.jumpButton = this.add.circle(RelativePosition(1160, "x"), RelativePosition(630, "y"), 20, 0xdddddd).setAlpha(0.7).setScale(RelativeScale()).setDepth(1000).setInteractive();
             
             this.input.addPointer(2);
         }
 
         // Crear el personaje
         var basicWeapon = new Weapon(this, 500);
-        var myPlayer = new Character_Controller(this, 0, this.RelativePosition(100, "x"), 
-        this.RelativePosition(100, "y"), 50, 50, this.RelativeScale(), 0xaaffaa, this.cursors1, 
-        this.mobileKeys, 500, 500, 100, basicWeapon, basicWeapon);
+        var myPlayer = new Character_Controller(this, 0, RelativePosition(100, "x"), 
+        RelativePosition(100, "y"), 50, 50, RelativeScale(), 0xaaffaa, this.cursors1, 
+        this.mobileKeys, RelativeScale(500, "x"), RelativeScale(500, "y"), 100, basicWeapon, basicWeapon).setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));;
 
         //Plataformas
-        this.hidePlatforms = [this.physics.add.image(600, 700, "slope")];
+        this.platform = this.physics.add.image(RelativePosition(600,"x"), RelativePosition(1030,"y"), "slope")
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.hidePlatforms = [this.platform];
         this.hidePlatforms.forEach(platform => {
             platform.body.setCollideWorldBounds(true);
             platform.body.allowGravity = false;
@@ -114,7 +85,7 @@ class Scene_Test extends Phaser.Scene {
         var characters = [myPlayer/**, enemyPlayer/**/];
         var bullets = [];
 
-        //this.physics.add.overlap(this.characters, this.bullets, this.bulletHit, player, bullet);
+        //this.physics.add.overlap(this.characters, this.bullets, this.BulletHit, player, bullet);
         this.physics.add.overlap(characters, this.hidePlatforms);
     } // Fin create
 
@@ -123,19 +94,19 @@ class Scene_Test extends Phaser.Scene {
         this.hidePlatforms.forEach(platform => {
             if (platform.body.embedded) platform.body.touching.none = false;
             if (!platform.body.touching.none && platform.body.wasTouching.none){
-                this.hidePlatform(platform);
+                this.HidePlatform(platform);
             }else if (platform.body.touching.none && !platform.body.wasTouching.none){
-                this.showPlatform(platform);
+                this.ShowPlatform(platform);
             }
         });
     } // Fin update
 
-    bulletHit(player, bullet) {
-        this.damagePlayer(player, bullet);
-        this.removeBullet(bullet);
+    BulletHit(player, bullet) {
+        this.DamagePlayer(player, bullet);
+        this.RemoveBullet(bullet);
     }
 
-    removeBullet(bullet) {
+    RemoveBullet(bullet) {
         var index = bullet.bulletIndex;
         this.bullets[index].destroy();
 
@@ -146,7 +117,7 @@ class Scene_Test extends Phaser.Scene {
         this.bullets[this.bullets.length].destroy();
     }
 
-    damagePlayer(player, bullet) {
+    DamagePlayer(player, bullet) {
         player.actualHP -= bullet.damage;
 
         if (player.actualHP <= 0)
@@ -154,7 +125,7 @@ class Scene_Test extends Phaser.Scene {
     }
 
     // Joystick movil
-    dumpJoyStickState() {
+    DumpJoyStickState() {
         var cursorKeys = this.mobileKeys.joyStick.createCursorKeys();
         var s = 'Key down: ';
         for (var name in cursorKeys) {
@@ -168,7 +139,7 @@ class Scene_Test extends Phaser.Scene {
         this.text.setText(s);
     }
 
-    hidePlatform(platform){
+    HidePlatform(platform){
         var tween = this.tweens.add({
             targets: platform,
             alpha: 0.6,
@@ -177,7 +148,7 @@ class Scene_Test extends Phaser.Scene {
         });
     }
 
-    showPlatform(platform){
+    ShowPlatform(platform){
         var tween = this.tweens.add({
             targets: platform,
             alpha: 1.0,

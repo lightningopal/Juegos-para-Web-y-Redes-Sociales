@@ -8,19 +8,23 @@ if (/windows phone/i.test(userAgent) || /android/i.test(userAgent) || (/iPad|iPh
     isMobile = true;
 }
 
+// Referencias de pantalla
+var referenceWidth = 1920;
+var referenceHeight = 1080;
+
 var config1080 = {
     type: Phaser.AUTO,
     backgroundColor: "#2a0678",
-    width: 800, //1920
-    height: 450, //1080
+    width: window.screen.width/1.3,//800, //1920
+    height: window.screen.height/1.3,//450, //1080
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 900 },
+            gravity: { y: ((window.screen.height/1.3) / referenceHeight) * 900 },
             debug: false
         }
     },
-    scene: [ Scene_Test ]
+    scene: [ Scene_Account, Scene_Test ]
 };
 
 var config720 = {
@@ -35,7 +39,7 @@ var config720 = {
             debug: false
         }
     },
-    scene: [ Scene_Test ]
+    scene: [ Scene_Account, Scene_Test ]
 };
 
 // Config test mobile
@@ -51,7 +55,7 @@ var configMobile = {
             debug: false
         }
     },
-    scene: [ Scene_Test ]
+    scene: [ Scene_Account, Scene_Test ]
 };
 
 var options = {
@@ -79,7 +83,49 @@ var cursors2Keys = {
     specialAttack: Phaser.Input.Keyboard.KeyCodes.T
 };
 
+//config1080.height = (1080 * config1080.width) / 1920;
+
 if (isMobile)
     var game = new Phaser.Game(configMobile);
 else
-    var game = new Phaser.Game(config720);
+    var game = new Phaser.Game(config1080);
+
+
+// Responsive Functions
+// Escala
+var scaleX = (game.config.width / referenceWidth);
+var scaleY = (game.config.height / referenceHeight);
+console.log(scaleX);
+console.log(scaleY);
+// Position
+function RelativePosition(value, axis)
+{
+    var pos = 0;
+    if (axis == "x")
+        pos = (game.config.width / referenceWidth) * value;
+    else
+        pos = (game.config.height / referenceHeight)  * value;
+    return pos;
+}
+
+// Scale
+function RelativeScale()
+{
+    return scaleX;
+}
+
+function RelativeScale(value)
+{
+    return scaleX * value;
+}
+
+function RelativeScale(v, axis)
+{
+    var value = 1;
+    
+    if (axis == "x")
+    value = scaleX * v;
+    else
+    value = scaleY * v;
+    return value;
+}
