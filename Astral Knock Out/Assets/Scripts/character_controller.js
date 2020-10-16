@@ -1,6 +1,6 @@
-class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
-    constructor(scene, id, x, y, w, h, scale, color, cursors, mobileKeys, moveSpeed, jumpForce, maxHP,bW, sW) {
-        super(scene, x, y, w, h, color);
+class Character_Controller extends Phaser.GameObjects.Sprite {
+    constructor(scene, id, x, y, type, scale, cursors, mobileKeys, moveSpeed, jumpForce, maxHP,bW, sW) {
+        super(scene, x, y, type);
 
         var that = this;
         // Atributos
@@ -24,7 +24,7 @@ class Character_Controller extends Phaser.GameObjects.Rectangle /*Sprite*/ {
         scene.physics.world.enable(this);
         this.body.maxVelocity.x = moveSpeed;
         this.body.drag.x = 3000;
-        this.body.setCollideWorldBounds(true);
+        //this.body.setCollideWorldBounds(true);
         // Variables de control
         this.movingLeft = false;
         this.movingRight = false;
