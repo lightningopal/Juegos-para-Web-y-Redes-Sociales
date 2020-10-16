@@ -24,7 +24,7 @@ var config1080 = {
             debug: false
         }
     },
-    scene: [ Scene_Account, Scene_Test ]
+    scene: [ Scene_Account, Scene_Main_Menu, Scene_Test ]
 };
 
 var config720 = {
@@ -39,7 +39,7 @@ var config720 = {
             debug: false
         }
     },
-    scene: [ Scene_Account, Scene_Test ]
+    scene: [ Scene_Account, Scene_Main_Menu, Scene_Test ]
 };
 
 // Config test mobile
@@ -55,7 +55,7 @@ var configMobile = {
             debug: false
         }
     },
-    scene: [ Scene_Account, Scene_Test ]
+    scene: [ Scene_Test ]
 };
 
 var options = {

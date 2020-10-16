@@ -1,12 +1,12 @@
-class Scene_Account extends Phaser.Scene {
+class Scene_Main_Menu extends Phaser.Scene {
 
     constructor() {
-        super({ key: "scene_account" });
+        super({ key: "scene_main_menu" });
     } // Fin constructor
 
     preload() {
         // Carga de Imágenes
-        this.load.image("account-bg", "./Assets/Images/Account-BG.jpg");
+        this.load.image("main_menu-bg", "./Assets/Images/MainMenu-BG.jpg");
         // Dispositivo móvil
         var os = this.sys.game.device.os;
         if (os.android || os.iOS || os.iPad || os.iPhone)
@@ -22,13 +22,14 @@ class Scene_Account extends Phaser.Scene {
         this.cursors;
 
         // Opciones de selección
-        this.optionSelected;
+        this.optionSelectedRow;
+        this.optionSelectedCol;
     } // Fin preload
 
     create() {
         var that = this;
         //Fondo
-        this.background = this.add.image(0, 0, "account-bg").setOrigin(0,0)
+        this.background = this.add.image(0, 0, "main_menu-bg").setOrigin(0,0)
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
         // Create mobileKeys
@@ -57,28 +58,46 @@ class Scene_Account extends Phaser.Scene {
             this.input.addPointer(2);
         }// Fin if mobile
 
-        // Opciones de selección
         this.cursors = this.input.keyboard.addKeys({
+            'up': cursors1Keys.jump,
+            'down': cursors1Keys.fall,
             'left': cursors1Keys.left,
             'right': cursors1Keys.right,
             'enter': Phaser.Input.Keyboard.KeyCodes.ENTER,
             'escape': Phaser.Input.Keyboard.KeyCodes.ESC,
         });
-
-        this.optionSelected = -1;
+        // Opciones de selección
+        this.optionSelectedRow = 1;
+        this.optionSelectedCol = 0;
         this.cursors.right.on('down', function(event){
-            that.optionSelected = (that.optionSelected + 1) % 2;
-            console.log(that.optionSelected);
-            
+            that.optionSelectedCol = (that.optionSelectedCol + 1) % 2;
+            console.log("COL: "+that.optionSelectedCol);
         });
         this.cursors.left.on('down', function(event){
-            that.optionSelected = (that.optionSelected + 1) % 2;
-            console.log(that.optionSelected);
+            that.optionSelectedCol = (that.optionSelectedCol + 1) % 2;
+            console.log("COL: "+that.optionSelectedCol);
         });
 
+        this.cursors.up.on('down', function(event){
+            if (that.optionSelectedRow >= 1){
+                that.optionSelectedRow = (that.optionSelectedRow - 1);
+            }else{
+                that.optionSelectedRow = 2;
+            }
+            console.log("ROW: "+that.optionSelectedRow);
+        });
+        this.cursors.down.on('down', function(event){
+            that.optionSelectedRow = (that.optionSelectedRow + 1) % 3;
+            console.log("ROW: "+that.optionSelectedRow);
+        });
+        
         this.cursors.enter.on('down', function(event){
             that.input.keyboard.removeAllKeys(true);
-            that.scene.start("scene_main_menu");
+            that.scene.start("scene_test");
+        });
+        this.cursors.escape.on('down', function(event){
+            that.input.keyboard.removeAllKeys(true);
+            that.scene.start("scene_account");
         });
     } // Fin create
 
