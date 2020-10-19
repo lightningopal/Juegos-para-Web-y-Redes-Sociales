@@ -28,6 +28,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
         // Variables de control
         this.movingLeft = false;
         this.movingRight = false;
+        this.falling = false;
         // Restringir la acción si attacking == true
         this.attacking = false;
         // Establecemos el evento update
@@ -95,6 +96,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
         if (this.body.onFloor()) {
             this.numJumps = 1;
             this.body.drag.x = 3000;
+            this.falling = false;
         }
 
         // Movimiento movil
@@ -138,8 +140,10 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
             }
         }
         // Gravedad mayor al caer
-        if (this.body.velocity.y > -50){
-            this.body.gravity.y = RelativeScale(1800, "y");
+        if (this.body.velocity.y > -50 && !this.falling){
+            this.body.gravity.y = RelativeScale(800, "y");
+        } else if (this.falling){
+            this.body.gravity.y = RelativeScale(1500, "y");
         }else {
             this.body.gravity.y = 0;
         }
@@ -147,6 +151,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
     }// Fin update
 
     jump() {
+        this.falling = false;
         if (this.body.onFloor()) {
             this.body.velocity.y = -this.jumpForce;
         }else if (this.numJumps >= 1){
@@ -162,6 +167,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
         if (this.body.velocity.y < 0){
             this.body.velocity.y = 0;
         }
+        this.falling = true;
     }
 
     moveLeft() {
