@@ -137,9 +137,9 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
                 }
             }
         }
-
+        // Gravedad mayor al caer
         if (this.body.velocity.y > -50){
-            this.body.gravity.y = RelativeScale(900, "y");
+            this.body.gravity.y = RelativeScale(1800, "y");
         }else {
             this.body.gravity.y = 0;
         }
@@ -157,7 +157,9 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
     }
 
     fall(){
-        this.body.velocity.y = 900;
+        if (this.body.velocity.y < 0){
+            this.body.velocity.y = 0;
+        }
     }
 
     moveLeft() {

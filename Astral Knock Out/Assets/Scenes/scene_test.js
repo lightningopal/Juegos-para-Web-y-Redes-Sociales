@@ -19,6 +19,7 @@ class Scene_Test extends Phaser.Scene {
         this.load.image("t_plat", "./Assets/Images/Platforms_Lvl1/test_plats/t_plat.png");
         this.load.image("character_test", "./Assets/Images/Platforms_Lvl1/test_plats/character_test.png");
 
+        // Mover a escena inicial
         var os = this.sys.game.device.os;
         if (os.android || os.iOS || os.iPad || os.iPhone)
             options.device = "mobile";
@@ -43,10 +44,12 @@ class Scene_Test extends Phaser.Scene {
             'specialAttack': cursors2Keys.specialAttack,
         });
 
-        var url;
-
-        url = './Assets/Plugins/rexvirtualjoystickplugin.min.js';
-        this.load.plugin('rexvirtualjoystickplugin', url, true);
+        if (options.device == "mobile") {
+            var url;
+            url = './Assets/Plugins/rexvirtualjoystickplugin.min.js';
+            this.load.plugin('rexvirtualjoystickplugin', url, true);
+        }
+        
     } // Fin preload
 
     create() {
@@ -122,7 +125,7 @@ class Scene_Test extends Phaser.Scene {
         var myPlayer = new Character_Controller(this, 0, RelativePosition(100, "x"), 
         RelativePosition(100, "y"), "character_test", RelativeScale(), this.cursors1, 
         this.mobileKeys, RelativeScale(500, "x"), RelativeScale(1200, "y"), 100, basicWeapon, basicWeapon)
-        .setScale(RelativeScale(0.85, "x"), RelativeScale(0.85, "y"));;
+        .setScale(RelativeScale(0.75, "x"), RelativeScale(0.75, "y"));;
         
         /*
         this.platform = this.physics.add.image(RelativePosition(600,"x"), RelativePosition(1030,"y"), "slope")
