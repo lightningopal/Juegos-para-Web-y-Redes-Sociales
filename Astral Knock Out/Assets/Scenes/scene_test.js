@@ -1,4 +1,10 @@
 // this.sys.game.device.os --> Muestra un array de bools que indica el dispositivo en el que se abre la página
+// Debug
+var x = 0;
+var y = 0;
+//var rScaleX = scaleX;
+//var rScaleY = 1;
+
 class Scene_Test extends Phaser.Scene {
     constructor() {
         super({ key: "scene_test" });
@@ -156,6 +162,9 @@ class Scene_Test extends Phaser.Scene {
                 this.ShowPlatform(platform);
             }
         });
+
+        var debugText = document.getElementById("debugText");
+        debugText.innerHTML = "Posición del ratón: {x: " + x + ", y: " + y + "} | FPS: " + Math.round(game.loop.actualFps);
     } // Fin update
 
     BulletHit(player, bullet) {
@@ -215,3 +224,8 @@ class Scene_Test extends Phaser.Scene {
     }
 
 }
+
+function showCoords(event) {
+    x = Math.round(event.clientX / (game.config.width / 1920));
+    y= Math.round(event.clientY / (game.config.height / 1080));
+  }
