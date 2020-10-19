@@ -125,7 +125,7 @@ class Scene_Test extends Phaser.Scene {
         var myPlayer = new Character_Controller(this, 0, RelativePosition(100, "x"), 
         RelativePosition(100, "y"), "character_test", RelativeScale(), this.cursors1, 
         this.mobileKeys, RelativeScale(500, "x"), RelativeScale(1000, "y"), 100, basicWeapon, basicWeapon)
-        .setScale(RelativeScale(0.75, "x"), RelativeScale(0.75, "y"));;
+        .setScale(RelativeScale(0.75, "x"), RelativeScale(0.75, "y"));
         
         /*
         this.platform = this.physics.add.image(RelativePosition(600,"x"), RelativePosition(1030,"y"), "slope")

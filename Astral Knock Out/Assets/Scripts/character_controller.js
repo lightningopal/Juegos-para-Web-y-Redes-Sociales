@@ -22,7 +22,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
         scene.add.existing(this).setScale(1);
         // Se activan las físicas
         scene.physics.world.enable(this);
-        this.body.maxVelocity.x = moveSpeed;
+        this.body.maxVelocity.x = moveSpeed*1.5;
         this.body.drag.x = 3000;
         //this.body.setCollideWorldBounds(true);
         // Variables de control
