@@ -24,7 +24,12 @@ var config1080 = {
             debug: false
         }
     },
-    scene: [ Scene_Account, Scene_Main_Menu, Scene_Test ]
+    scene: [ Scene_Account,
+        Scene_Main_Menu,
+        Scene_Ranking,
+        Scene_Credits,
+        Scene_Select_Character,
+        Scene_Test ]
 };
 
 var config720 = {

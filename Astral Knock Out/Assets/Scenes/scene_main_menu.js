@@ -69,31 +69,62 @@ class Scene_Main_Menu extends Phaser.Scene {
         // Opciones de selección
         this.optionSelectedRow = 1;
         this.optionSelectedCol = 0;
+
         this.cursors.right.on('down', function(event){
-            that.optionSelectedCol = (that.optionSelectedCol + 1) % 2;
-            console.log("COL: "+that.optionSelectedCol);
+            if (that.optionSelectedRow == 3){
+                that.optionSelectedCol = (that.optionSelectedCol + 1) % 2;
+                console.log("COL: "+that.optionSelectedCol);
+            }
+            
         });
         this.cursors.left.on('down', function(event){
-            that.optionSelectedCol = (that.optionSelectedCol + 1) % 2;
-            console.log("COL: "+that.optionSelectedCol);
+            if (that.optionSelectedRow == 3){
+                that.optionSelectedCol = (that.optionSelectedCol + 1) % 2;
+                console.log("COL: "+that.optionSelectedCol);
+            }
         });
 
         this.cursors.up.on('down', function(event){
             if (that.optionSelectedRow >= 1){
                 that.optionSelectedRow = (that.optionSelectedRow - 1);
             }else{
-                that.optionSelectedRow = 2;
+                that.optionSelectedRow = 3;
             }
             console.log("ROW: "+that.optionSelectedRow);
         });
         this.cursors.down.on('down', function(event){
-            that.optionSelectedRow = (that.optionSelectedRow + 1) % 3;
+            that.optionSelectedRow = (that.optionSelectedRow + 1) % 4;
             console.log("ROW: "+that.optionSelectedRow);
         });
         
         this.cursors.enter.on('down', function(event){
-            that.input.keyboard.removeAllKeys(true);
-            that.scene.start("scene_test");
+            switch(that.optionSelectedRow){
+                case 0:
+                    // Options
+                    break;
+                case 1:
+                    // Tournament
+                    break;
+                case 2:
+                    // Space Gym
+                    that.input.keyboard.removeAllKeys(true);
+                    that.scene.start("scene_select_character");
+                    break;
+                case 3:
+                    if (that.optionSelectedCol == 0){
+                        // Ranking
+                        that.input.keyboard.removeAllKeys(true);
+                        that.scene.start("scene_ranking");
+                    }else{
+                        // Credits
+                        that.input.keyboard.removeAllKeys(true);
+                        that.scene.start("scene_credits");
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
         });
         this.cursors.escape.on('down', function(event){
             that.input.keyboard.removeAllKeys(true);

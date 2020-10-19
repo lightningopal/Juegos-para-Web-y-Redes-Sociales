@@ -5,6 +5,8 @@ class Scene_Test extends Phaser.Scene {
     } // Fin constructor
 
     preload() {
+        // Fondo
+        this.load.image("level_1_bg", "./Assets/Images/BackGrounds/level_1_bg.png");
         // Plataformas
         this.load.image("floor", "./Assets/Images/Platforms_Lvl1/test_plats/floor.png");
         this.load.image("base_big_plat_2", "./Assets/Images/Platforms_Lvl1/test_plats/base_big_plat_2.png");
@@ -48,6 +50,8 @@ class Scene_Test extends Phaser.Scene {
     } // Fin preload
 
     create() {
+        this.add.image(0, 0, "level_1_bg").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
+
         // Create mobileKeys
         this.mobileKeys = {
             joyStick : null,
@@ -118,7 +122,7 @@ class Scene_Test extends Phaser.Scene {
         var myPlayer = new Character_Controller(this, 0, RelativePosition(100, "x"), 
         RelativePosition(100, "y"), "character_test", RelativeScale(), this.cursors1, 
         this.mobileKeys, RelativeScale(500, "x"), RelativeScale(1200, "y"), 100, basicWeapon, basicWeapon)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));;
+        .setScale(RelativeScale(0.85, "x"), RelativeScale(0.85, "y"));;
         
         /*
         this.platform = this.physics.add.image(RelativePosition(600,"x"), RelativePosition(1030,"y"), "slope")

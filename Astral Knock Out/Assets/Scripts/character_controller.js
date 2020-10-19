@@ -138,6 +138,12 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
             }
         }
 
+        if (this.body.velocity.y > -50){
+            this.body.gravity.y = RelativeScale(900, "y");
+        }else {
+            this.body.gravity.y = 0;
+        }
+
     }// Fin update
 
     jump() {
