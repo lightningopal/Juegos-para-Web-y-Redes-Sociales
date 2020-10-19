@@ -20,7 +20,7 @@ var config1080 = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: ((window.screen.height/1.3) / referenceHeight) * 2000 },
+            gravity: { y: ((window.screen.height/1.3) / referenceHeight) * 1900 },
             debug: false
         }
     },
