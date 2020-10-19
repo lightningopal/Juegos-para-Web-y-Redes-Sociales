@@ -8,7 +8,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
         this.id = id;
         this.moveSpeed = moveSpeed;
         this.jumpForce = jumpForce;
-        this.numJumps = 1;
+        this.numJumps = 2;
         this.maxHP = maxHP;
         this.actualHP = maxHP;
         this.cursors = cursors;
@@ -147,7 +147,9 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
     }// Fin update
 
     jump() {
-        if (this.body.onFloor() || this.numJumps == 1) {
+        if (this.body.onFloor()) {
+            this.body.velocity.y = -this.jumpForce;
+        }else if (this.numJumps >= 1){
             this.body.velocity.y = -this.jumpForce;
             this.numJumps--;
         }
