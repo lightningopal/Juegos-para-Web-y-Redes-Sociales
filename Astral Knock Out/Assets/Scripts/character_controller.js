@@ -143,7 +143,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
         if (this.body.velocity.y > -50 && !this.falling){
             this.body.gravity.y = RelativeScale(800, "y");
         } else if (this.falling){
-            this.body.gravity.y = RelativeScale(1500, "y");
+            this.body.gravity.y = RelativeScale(3000, "y");
         }else {
             this.body.gravity.y = 0;
         }

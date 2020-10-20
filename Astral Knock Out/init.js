@@ -59,6 +59,7 @@ var configMobile = {
         arcade: {
             gravity: { y: 900 },
             debug: false
+            //debug: true
         }
     },
     scene: [ Scene_Test ]
@@ -88,7 +89,6 @@ var cursors2Keys = {
     basicAttack: Phaser.Input.Keyboard.KeyCodes.Y,
     specialAttack: Phaser.Input.Keyboard.KeyCodes.T
 };
-
 //config1080.height = (1080 * config1080.width) / 1920;
 
 if (isMobile)
@@ -96,6 +96,7 @@ if (isMobile)
 else
     var game = new Phaser.Game(config1080);
 
+//window.focus();
 
 // Responsive Functions
 // Escala
