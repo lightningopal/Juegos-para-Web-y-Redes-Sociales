@@ -14,6 +14,7 @@ class Shot extends Phaser.GameObjects.Rectangle /*Sprite*/ {
         // Se activan las físicas
         scene.physics.world.enable(this);
         this.body.setCollideWorldBounds(false);
+        this.body.allowGravity = false;
 
         // Establecemos el evento update
         this.scene.events.on("update", this.update, this);

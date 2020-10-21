@@ -6,7 +6,7 @@ class Scene_Credits extends Phaser.Scene {
 
     preload() {
         // Carga de Imágenes
-        this.load.image("credits-bg", "./Assets/Images/Credits-BG.jpg");
+        this.load.image("credits-bg", "./Assets/Images/Tests/test_bg/Credits-BG.jpg");
 
         // Teclas
         this.cursors;

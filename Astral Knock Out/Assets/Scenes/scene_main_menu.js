@@ -6,7 +6,7 @@ class Scene_Main_Menu extends Phaser.Scene {
 
     preload() {
         // Carga de Imágenes
-        this.load.image("main_menu-bg", "./Assets/Images/MainMenu-BG.jpg");
+        this.load.image("main_menu-bg", "./Assets/Images/Tests/test_bg/MainMenu-BG.jpg");
         
         // Teclas
         this.cursors;
