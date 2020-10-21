@@ -14,16 +14,17 @@ class Scene_Test extends Phaser.Scene {
         // Fondo
         this.load.image("level_1_bg", "./Assets/Images/BackGrounds/level_1_bg.png");
         // Plataformas
-        this.load.image("floor", "./Assets/Images/Platforms_Lvl1/test_plats/floor.png");
-        this.load.image("base_big_plat_2", "./Assets/Images/Platforms_Lvl1/test_plats/base_big_plat_2.png");
-        this.load.image("base_t_plat", "./Assets/Images/Platforms_Lvl1/test_plats/base_t_plat.png");
-        this.load.image("big_plat_1", "./Assets/Images/Platforms_Lvl1/test_plats/big_plat_1.png");
-        this.load.image("big_plat_2", "./Assets/Images/Platforms_Lvl1/test_plats/big_plat_2.png");
-        this.load.image("plat_1", "./Assets/Images/Platforms_Lvl1/test_plats/plat_1.png");
-        this.load.image("plat_2", "./Assets/Images/Platforms_Lvl1/test_plats/plat_2.png");
-        this.load.image("plat_3", "./Assets/Images/Platforms_Lvl1/test_plats/plat_3.png");
-        this.load.image("t_plat", "./Assets/Images/Platforms_Lvl1/test_plats/t_plat.png");
-        this.load.image("character_test", "./Assets/Images/Platforms_Lvl1/test_plats/character_test.png");
+        this.load.image("floor", "./Assets/Images/Tests/test_plats/floor.png");
+        this.load.image("base_big_plat_2", "./Assets/Images/Tests/test_plats/base_big_plat_2.png");
+        this.load.image("base_t_plat", "./Assets/Images/Tests/test_plats/base_t_plat.png");
+        this.load.image("big_plat_1", "./Assets/Images/Tests/test_plats/big_plat_1.png");
+        this.load.image("big_plat_2", "./Assets/Images/Tests/test_plats/big_plat_2.png");
+        this.load.image("plat_1", "./Assets/Images/Tests/test_plats/plat_1.png");
+        this.load.image("plat_2", "./Assets/Images/Tests/test_plats/plat_2.png");
+        this.load.image("plat_3", "./Assets/Images/Tests/test_plats/plat_3.png");
+        this.load.image("t_plat", "./Assets/Images/Tests/test_plats/t_plat.png");
+        this.load.image("character_test", "./Assets/Images/Tests/test_char/p.png");
+        this.load.image("character_test2", "./Assets/Images/Tests/test_char/bardo2.png");
 
         // Mover a escena inicial
         var os = this.sys.game.device.os;
@@ -102,11 +103,11 @@ class Scene_Test extends Phaser.Scene {
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         .body.setSize(RelativeScale(279,"x"),RelativeScale(34,"y")).setOffset(0,RelativePosition(12,"y"));
 
-        this.platforms.create(RelativePosition(501.5,"x"), RelativePosition(755.0,"y"), "big_plat_1")
+        this.platforms.create(RelativePosition(502.5,"x"), RelativePosition(707.0,"y"), "big_plat_1") // 502.5 x 707
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         .body.setSize(RelativeScale(325,"x"),RelativeScale(158,"y")).setOffset(0,RelativePosition(12,"y"));
 
-        this.platforms.create(RelativePosition(1790.0,"x"), RelativePosition(422.50,"y"), "big_plat_2")
+        this.platforms.create(RelativePosition(1764.0,"x"), RelativePosition(362,"y"), "big_plat_2") // 1764 x 362
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         .body.setSize(RelativeScale(341,"x"),RelativeScale(165,"y")).setOffset(0,RelativePosition(12,"y"));
 
@@ -128,10 +129,15 @@ class Scene_Test extends Phaser.Scene {
         
         // Crear el personaje
         var basicWeapon = new Weapon(this, 500);
-        var myPlayer = new Character_Controller(this, 0, RelativePosition(100, "x"), 
-        RelativePosition(100, "y"), "character_test", RelativeScale(), this.cursors1, 
+        /**/var myPlayer = new Character_Controller(this, 0, RelativePosition(250, "x"), 
+        RelativePosition(900, "y"), "character_test2", RelativeScale(), this.cursors1, 
         this.mobileKeys, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, basicWeapon, basicWeapon)
-        .setScale(RelativeScale(0.75, "x"), RelativeScale(0.75, "y"));
+        .setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));/**/
+
+        var myPlayer2 = new Character_Controller(this, 0, RelativePosition(100, "x"), 
+        RelativePosition(900, "y"), "character_test", RelativeScale(), this.cursors1, 
+        this.mobileKeys, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, basicWeapon, basicWeapon)
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         
         /*
         this.platform = this.physics.add.image(RelativePosition(600,"x"), RelativePosition(1030,"y"), "slope")
@@ -144,7 +150,7 @@ class Scene_Test extends Phaser.Scene {
         });
 
         //Colisiones
-        var characters = [myPlayer/**, enemyPlayer/**/];
+        var characters = [myPlayer, myPlayer2/**, enemyPlayer/**/];
         var bullets = [];
 
         //this.physics.add.overlap(this.characters, this.bullets, this.BulletHit, player, bullet);

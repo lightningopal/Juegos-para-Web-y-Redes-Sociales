@@ -6,7 +6,7 @@ class Scene_Ranking extends Phaser.Scene {
 
     preload() {
         // Carga de Imágenes
-        this.load.image("ranking-bg", "./Assets/Images/Ranking-BG.jpg");
+        this.load.image("ranking-bg", "./Assets/Images/Tests/test_bg/Ranking-BG.jpg");
 
         // Teclas
         this.cursors;

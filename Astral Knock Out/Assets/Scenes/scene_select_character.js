@@ -6,7 +6,7 @@ class Scene_Select_Character extends Phaser.Scene{
 
     preload(){
         // Carga de Imágenes
-        this.load.image("select_character-bg", "./Assets/Images/SelectCharacter-BG.jpg");
+        this.load.image("select_character-bg", "./Assets/Images/Tests/test_bg/SelectCharacter-BG.jpg");
 
         // Teclas
         this.cursors;

@@ -41,12 +41,14 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
             that.fall();
         });
         this.cursors.left.on('down', function (event) {
+            that.flipX = true;
             that.moveLeft();
         });
         this.cursors.left.on('up', function (event) {
             that.stopLeft();
         });
         this.cursors.right.on('down', function (event) {
+            that.flipX = false;
             that.moveRight();
         });
         this.cursors.right.on('up', function (event) {
