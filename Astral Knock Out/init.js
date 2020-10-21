@@ -25,7 +25,7 @@ var config1080 = {
         }
     },
     parent: 'game', // Create the game inside the <div id="game">
-    scene: [ Scene_TestMireya, Scene_Account,
+    scene: [ Scene_Test, Scene_Account,
         Scene_Main_Menu,
         Scene_Ranking,
         Scene_Credits,
