@@ -1,5 +1,5 @@
 class Shot extends Phaser.GameObjects.Sprite {
-    constructor(scene, id, x, y, type, moveSpeed, direction, damage){
+    constructor(scene, id, x, y, type, damage, moveSpeed, direction){
         super(scene, x, y, type);
 
         this.scene = scene;
@@ -27,7 +27,7 @@ class Shot extends Phaser.GameObjects.Sprite {
 
     update(time, delta){
         if (this.active){
-            this.x += this.moveSpeed * this.direction * delta;
+            //this.x += this.moveSpeed * this.direction * delta;
         }
     }// Fin update
 

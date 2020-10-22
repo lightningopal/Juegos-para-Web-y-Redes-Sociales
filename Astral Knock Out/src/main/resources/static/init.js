@@ -136,3 +136,13 @@ function RelativeScale(v, axis)
     value = scaleY * v;
     return value;
 }
+
+function Unscale(v, axis){
+    var value = 1;
+    
+    if (axis == "x")
+    value = v / scaleX;
+    else
+    value = v * scaleY;
+    return value;
+}

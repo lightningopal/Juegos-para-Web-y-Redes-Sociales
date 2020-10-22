@@ -24,6 +24,7 @@ class Scene_Test extends Phaser.Scene {
         this.load.image("plat_3", "./Assets/Images/Tests/test_plats/plat_3.png");
         this.load.image("t_plat", "./Assets/Images/Tests/test_plats/t_plat.png");
         this.load.image("bard", "./Assets/Images/Characters/bard.png");
+        this.load.image("dummy", "./Assets/Images/Characters/Dummy.png");
         this.load.image("projectile", "./Assets/Images/Tests/projectile.png")
 
         // Mover a escena inicial
@@ -128,9 +129,17 @@ class Scene_Test extends Phaser.Scene {
         .body.setSize(RelativeScale(56,"x"),RelativeScale(140,"y")).setOffset(0,RelativePosition(10,"y"));
         
         // Crear el personaje
+        
+        this.dummy = new Character_Controller(this, 0, RelativePosition(1560, "x"), 
+        RelativePosition(500, "y"), "dummy", RelativeScale(), undefined, 
+        undefined, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, undefined, undefined)
+        .setScale(RelativeScale(1, "x"), RelativeScale(1.3, "y"));
+        this.dummy.body.debugBodyColor = 0xff0000;
+
         var basicAttacks = [];
-        var basicAttack = new Shot(this, 0, 0, 0,"projectile", undefined, undefined, 10);
-        var basicWeapon = new Weapon(this, 500, basicAttack);
+        this.bardAttack = new BardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 1000).setDepth(1);
+
+        var basicWeapon = new Weapon(this, 1500, this.bardAttack);
         var myPlayer = new Character_Controller(this, 0, RelativePosition(250, "x"), 
         RelativePosition(900, "y"), "bard", RelativeScale(), this.cursors1, 
         this.mobileKeys, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, basicWeapon, basicWeapon)
@@ -147,7 +156,7 @@ class Scene_Test extends Phaser.Scene {
         });
 
         //Colisiones
-        var characters = [myPlayer/**, enemyPlayer/**/];
+        var characters = [myPlayer, this.dummy/**, enemyPlayer/**/];
         var bullets = [];
 
         //this.physics.add.overlap(this.characters, this.bullets, this.BulletHit, player, bullet);
@@ -229,6 +238,6 @@ class Scene_Test extends Phaser.Scene {
 }
 
 function showCoords(event) {
-    x = Math.round(event.clientX / (game.config.width / 1920));
-    y= Math.round(event.clientY / (game.config.height / 1080));
+    x = Math.round(event.clientX * (game.config.width / 1920));
+    y= Math.round(event.clientY * (game.config.height / 1080));
   }

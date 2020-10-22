@@ -15,9 +15,13 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
         this.mobileKeys = mobileKeys;
         // Ataques
         this.basicWeapon = bW;
-        this.basicWeapon.character = this;
+        if (bW != undefined){
+            this.basicWeapon.character = this;
+        }
         this.specialWeapon = sW;
-        this.specialWeapon.character = this;
+        if (sW != undefined){
+            this.specialWeapon.character = this;
+        }
         // Se añade a la escena
         scene.add.existing(this).setScale(1);
         // Se activan las físicas
@@ -34,57 +38,57 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
         // Establecemos el evento update
         this.scene.events.on("update", this.update, this);
         // Eventos de movimiento y ataque
-        this.cursors.jump.on('down', function (event) {
-            that.jump();
-        });
-        this.cursors.fall.on('down', function (event) {
-            that.fall();
-        });
-        this.cursors.left.on('down', function (event) {
-            that.flipX = true;
-            that.moveLeft();
-        });
-        this.cursors.left.on('up', function (event) {
-            that.stopLeft();
-        });
-        this.cursors.right.on('down', function (event) {
-            that.flipX = false;
-            that.moveRight();
-        });
-        this.cursors.right.on('up', function (event) {
-            that.stopRight();
-        });
-
-        this.cursors.basicAttack.on('down', function(event){
-            if (!that.attacking && that.basicWeapon.canShoot){
-                that.attacking = true;
-                that.body.allowGravity = false;
-                //that.body.velocity.x = 0;
-                //that.body.velocity.y = 0;
-                // Animación
-                // Este código va en la función onAnimComplete (cuando termine de lanzar el ataque se spawnea)
-                console.log("Básico: ");
-                that.basicWeapon.shoot();
-                that.attacking = false;
-                that.body.allowGravity = true;
-            }
-        });
-
-        this.cursors.specialAttack.on('down', function(event){
-            if (!that.attacking && that.specialWeapon.canShoot){
-                that.attacking = true;
-                that.body.allowGravity = false;
-                // Animación
-                // Este código va en la función onAnimComplete (cuando termine de lanzar el ataque se spawnea)
-                console.log("Especial: ");
-                that.specialWeapon.shoot();
-                that.attacking = false;
-                that.body.allowGravity = true;
-            }
-        });
-
+        if (this.cursors != undefined){
+            this.cursors.jump.on('down', function (event) {
+                that.jump();
+            });
+            this.cursors.fall.on('down', function (event) {
+                that.fall();
+            });
+            this.cursors.left.on('down', function (event) {
+                that.flipX = true;
+                that.moveLeft();
+            });
+            this.cursors.left.on('up', function (event) {
+                that.stopLeft();
+            });
+            this.cursors.right.on('down', function (event) {
+                that.flipX = false;
+                that.moveRight();
+            });
+            this.cursors.right.on('up', function (event) {
+                that.stopRight();
+            });
+    
+            this.cursors.basicAttack.on('down', function(event){
+                if (!that.attacking && that.basicWeapon.canShoot){
+                    that.attacking = true;
+                    that.body.allowGravity = false;
+                    //that.body.velocity.x = 0;
+                    //that.body.velocity.y = 0;
+                    // Animación
+                    // Este código va en la función onAnimComplete (cuando termine de lanzar el ataque se spawnea)
+                    console.log("Básico: ");
+                    that.basicWeapon.shoot();
+                    that.attacking = false;
+                    that.body.allowGravity = true;
+                }
+            });
+            this.cursors.specialAttack.on('down', function(event){
+                if (!that.attacking && that.specialWeapon.canShoot){
+                    that.attacking = true;
+                    that.body.allowGravity = false;
+                    // Animación
+                    // Este código va en la función onAnimComplete (cuando termine de lanzar el ataque se spawnea)
+                    console.log("Especial: ");
+                    that.specialWeapon.shoot();
+                    that.attacking = false;
+                    that.body.allowGravity = true;
+                }
+            });
+        }
         // Mobile
-        if (options.device == "mobile")
+        if (options.device == "mobile" && this.mobileKeys != undefined)
         {
             this.mobileKeys.jumpButton.on('pointerdown',that.jump,this);
             this.mobileKeys.jumpButton.on('pointerup',that.setButtonNormalColor,this);
