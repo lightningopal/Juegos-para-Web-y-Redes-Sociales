@@ -21,7 +21,7 @@ var config1080 = {
         default: 'arcade',
         arcade: {
             gravity: { y: ((window.screen.height/1.3) / referenceHeight) * 2200 },
-            debug: false
+            debug: true
         }
     },
     parent: 'game', // Create the game inside the <div id="game">
