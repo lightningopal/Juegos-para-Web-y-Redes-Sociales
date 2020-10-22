@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Game</title>
+        <script src="./phaser.min.js"></script>
+        <script src="./Assets/Scripts/shot.js"></script>
+        <script src="./Assets/Scripts/weapon.js"></script>
+        <script src="./Assets/Scripts/character_controller.js"></script>
+        <script src="./Assets/Scenes/scene_account.js"></script>
+        <script src="./Assets/Scenes/scene_main_menu.js"></script>
+        <script src="./Assets/Scenes/scene_ranking.js"></script>
+        <script src="./Assets/Scenes/scene_credits.js"></script>
+        <script src="./Assets/Scenes/scene_test.js"></script>
+        <script src="./Assets/Scenes/scene_testMireya.js"></script>
+        <script src="./Assets/Scenes/scene_select_character.js"></script>
+        <script src="./init.js"></script>
+        <style type="text/css">
+            body {
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="game" onmousemove="showCoords(event)"></div>
+        <h2 id="debugText">Posición del ratón: {x: 0, y: 0} | FPS: 0</h2>    
+    </body>
+</html>
