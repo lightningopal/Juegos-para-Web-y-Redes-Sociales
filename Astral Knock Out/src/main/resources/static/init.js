@@ -25,11 +25,12 @@ var config1080 = {
         }
     },
     parent: 'game', // Create the game inside the <div id="game">
-    scene: [ Scene_Test, Scene_Account,
+    scene: [ Scene_Account,
         Scene_Main_Menu,
         Scene_Ranking,
         Scene_Credits,
-        Scene_Select_Character
+        Scene_Select_Character, 
+        Scene_Test
          ]
 };
 
@@ -89,6 +90,17 @@ var cursors2Keys = {
     basicAttack: Phaser.Input.Keyboard.KeyCodes.Y,
     specialAttack: Phaser.Input.Keyboard.KeyCodes.T
 };
+
+var server = {
+	serverIP : "192.168.1.35",
+	playerID : -1,
+	isOnline : false,
+	ready : false,
+	characterSel : -1,
+	playerName : "",
+	playerPassword : ""
+};
+
 //config1080.height = (1080 * config1080.width) / 1920;
 
 if (isMobile)
