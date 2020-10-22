@@ -229,6 +229,6 @@ class Scene_Test extends Phaser.Scene {
 }
 
 function showCoords(event) {
-    x = Math.round(event.clientX / (game.config.width / 1920));
-    y= Math.round(event.clientY / (game.config.height / 1080));
+    x = Math.round(event.clientX * (game.config.width / 1920));
+    y = Math.round(event.clientY * (game.config.height / 1080));
   }
