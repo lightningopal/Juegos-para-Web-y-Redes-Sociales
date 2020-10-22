@@ -30,7 +30,9 @@ class Weapon {
     shoot(){
         console.log("Pium pium");
         // Instanciar ataque
-        
+        this.shot.DoSomething(this.character);
+
+
         this.nextShot = this.time + this.attackRatio;
     }
 }

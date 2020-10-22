@@ -24,6 +24,7 @@ class Scene_Test extends Phaser.Scene {
         this.load.image("plat_3", "./Assets/Images/Tests/test_plats/plat_3.png");
         this.load.image("t_plat", "./Assets/Images/Tests/test_plats/t_plat.png");
         this.load.image("bard", "./Assets/Images/Characters/bard.png");
+        this.load.image("projectile", "./Assets/Images/Tests/projectile.png")
 
         // Mover a escena inicial
         var os = this.sys.game.device.os;
@@ -127,11 +128,13 @@ class Scene_Test extends Phaser.Scene {
         .body.setSize(RelativeScale(56,"x"),RelativeScale(140,"y")).setOffset(0,RelativePosition(10,"y"));
         
         // Crear el personaje
-        var basicWeapon = new Weapon(this, 500);
-        /**/var myPlayer = new Character_Controller(this, 0, RelativePosition(250, "x"), 
+        var basicAttacks = [];
+        var basicAttack = new Shot(this, 0, 0, 0,"projectile", undefined, undefined, 10);
+        var basicWeapon = new Weapon(this, 500, basicAttack);
+        var myPlayer = new Character_Controller(this, 0, RelativePosition(250, "x"), 
         RelativePosition(900, "y"), "bard", RelativeScale(), this.cursors1, 
         this.mobileKeys, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, basicWeapon, basicWeapon)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));/**/
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         
         /*
         this.platform = this.physics.add.image(RelativePosition(600,"x"), RelativePosition(1030,"y"), "slope")

@@ -1,5 +1,5 @@
 class Character_Controller extends Phaser.GameObjects.Sprite {
-    constructor(scene, id, x, y, type, scale, cursors, mobileKeys, moveSpeed, jumpForce, maxHP,bW, sW) {
+    constructor(scene, id, x, y, type, scale, cursors, mobileKeys, moveSpeed, jumpForce, maxHP, bW, sW) {
         super(scene, x, y, type);
 
         var that = this;
@@ -59,6 +59,8 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
             if (!that.attacking && that.basicWeapon.canShoot){
                 that.attacking = true;
                 that.body.allowGravity = false;
+                //that.body.velocity.x = 0;
+                //that.body.velocity.y = 0;
                 // Animación
                 // Este código va en la función onAnimComplete (cuando termine de lanzar el ataque se spawnea)
                 console.log("Básico: ");
