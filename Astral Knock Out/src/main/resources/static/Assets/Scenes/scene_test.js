@@ -23,7 +23,7 @@ class Scene_Test extends Phaser.Scene {
         this.load.image("plat_2", "./Assets/Images/Tests/test_plats/plat_2.png");
         this.load.image("plat_3", "./Assets/Images/Tests/test_plats/plat_3.png");
         this.load.image("t_plat", "./Assets/Images/Tests/test_plats/t_plat.png");
-        this.load.image("bard", "./Assets/Images/Characters/bard.png");
+        this.load.image("bard", "./Assets/Images/Characters/Bard.png");
         this.load.image("dummy", "./Assets/Images/Characters/Dummy.png");
         this.load.image("projectile", "./Assets/Images/Tests/projectile.png")
 
