@@ -21,16 +21,16 @@ var config1080 = {
         default: 'arcade',
         arcade: {
             gravity: { y: ((window.screen.height/1.3) / referenceHeight) * 2200 },
-            debug: true
+            debug: false
         }
     },
     parent: 'game', // Create the game inside the <div id="game">
-    scene: [ Scene_Account,
+    scene: [ Scene_Test,
         Scene_Main_Menu,
         Scene_Ranking,
         Scene_Credits,
         Scene_Select_Character, 
-        Scene_Test
+        Scene_Account
          ]
 };
 

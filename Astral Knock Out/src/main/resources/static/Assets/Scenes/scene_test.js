@@ -27,6 +27,10 @@ class Scene_Test extends Phaser.Scene {
         this.load.image("dummy", "./Assets/Images/Characters/Dummy.png");
         this.load.image("projectile", "./Assets/Images/Tests/projectile.png")
 
+        this.load.spritesheet("bard_idle", "./Assets/Images/Characters/Animations/IdleAnimation_Bardo.png", { frameWidth: 170, frameHeight: 170 });
+        this.load.spritesheet("bard_walk", "./Assets/Images/Characters/Animations/WalkAnimation_Bardo.png", { frameWidth: 170, frameHeight: 170 });
+        
+
         // Mover a escena inicial
         var os = this.sys.game.device.os;
         if (os.android || os.iOS || os.iPad || os.iPhone)
@@ -61,6 +65,20 @@ class Scene_Test extends Phaser.Scene {
     } // Fin preload
 
     create() {
+        // Creamos las animaciones
+        this.anims.create({
+            key: 'bard_idle',
+            frames: this.anims.generateFrameNumbers('bard_idle', { start: 1, end: 9 }),
+            frameRate: 14,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'bard_walk',
+            frames: this.anims.generateFrameNumbers('bard_walk', { start: 0, end: 10 }),
+            frameRate: 24,
+            repeat: -1
+        });
+
         this.add.image(0, 0, "level_1_bg").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
 
         // Create mobileKeys
@@ -142,7 +160,7 @@ class Scene_Test extends Phaser.Scene {
         var basicWeapon = new Weapon(this, 1500, this.bardAttack);
         var myPlayer = new Character_Controller(this, 0, RelativePosition(250, "x"), 
         RelativePosition(900, "y"), "bard", RelativeScale(), this.cursors1, 
-        this.mobileKeys, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, basicWeapon, basicWeapon)
+        this.mobileKeys, RelativeScale(310, "x"), RelativeScale(1020, "y"), 100, basicWeapon, basicWeapon)
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         
         /*

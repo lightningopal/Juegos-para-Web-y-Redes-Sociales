@@ -13,6 +13,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
         this.actualHP = maxHP;
         this.cursors = cursors;
         this.mobileKeys = mobileKeys;
+        this.type = type;
         // Ataques
         this.basicWeapon = bW;
         if (bW != undefined){
@@ -156,6 +157,8 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
             this.body.gravity.y = 0;
         }
 
+        this.PlayAnimation();
+
     }// Fin update
 
     jump() {
@@ -217,6 +220,24 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
             if (!this.body.onFloor()) {
                 this.body.drag.x = 500;
             }
+        }
+    }
+
+    PlayAnimation()
+    {
+        //console.log(Math.abs(this.body.velocity.x));
+        switch (this.type)
+        {
+            case "bard":
+                if (Math.abs(this.body.velocity.x) <= 10)
+                {
+                    this.anims.play('bard_idle', true);
+                }
+                else
+                {
+                    this.anims.play('bard_walk', true);
+                }
+            break;
         }
     }
 
