@@ -21,11 +21,12 @@ var config1080 = {
         default: 'arcade',
         arcade: {
             gravity: { y: ((window.screen.height/1.3) / referenceHeight) * 2200 },
-            debug: false
+            debug: true
         }
     },
     parent: 'game', // Create the game inside the <div id="game">
-    scene: [ Scene_Test,
+    scene: [ Scene_Boot,
+        Scene_Test,
         Scene_Main_Menu,
         Scene_Ranking,
         Scene_Credits,
@@ -155,6 +156,6 @@ function Unscale(v, axis){
     if (axis == "x")
     value = v / scaleX;
     else
-    value = v * scaleY;
+    value = v / scaleY;
     return value;
 }

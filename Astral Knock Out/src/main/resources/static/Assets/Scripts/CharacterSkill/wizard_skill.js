@@ -1,4 +1,4 @@
-class BardSkill extends Phaser.GameObjects.Sprite {
+class WizardSkill extends Phaser.GameObjects.Sprite {
     constructor(scene, id, x, y, type, target, damage, speed, duration){
         super(scene, x, y, type);
 
@@ -9,6 +9,8 @@ class BardSkill extends Phaser.GameObjects.Sprite {
         this.speed = speed;
         this.duration = duration;
         this.startTime;
+        this.dirX;
+        this.dirY;
 
         this.isActive = false;
         // Se añade a la escena
@@ -26,18 +28,11 @@ class BardSkill extends Phaser.GameObjects.Sprite {
 
     update(time, delta){
         if (this.isActive){
-            // Si el ataque está activo, se moverá al objetivo desde el inicio hasta la duración
-            // del hechizo, reduciendo su velocidad de forma gradual, e ignorando las paredes
             var timeRemaining = this.duration - (time - this.startTime);
             if (timeRemaining > 0){
-                var directionX =  Unscale(this.target.x - this.x, "x");
-                var directionY =  Unscale(this.target.y - this.y, "y");
-                var direction = new Phaser.Math.Vector2(directionX, directionY).normalize();
-                this.body.velocity.x = RelativeScale(direction.x * this.speed * (timeRemaining / this.duration), "x");
-                this.body.velocity.y = RelativeScale(direction.y * this.speed * (timeRemaining / this.duration),"y");
+                
             }else{
                 this.isActive = false;
-                // Animación de fin
                 this.x = RelativePosition(3000, "x");
             }
         }else{
@@ -45,15 +40,31 @@ class BardSkill extends Phaser.GameObjects.Sprite {
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
         }
-        this.flipX = (this.body.velocity.x < 0);
     }// Fin update
 
     DoSomething(character){
-        console.log("Ataque de Bardo");
+        console.log("Ataque de Mago");
         // Animación de inicio
         // Se centra el ataque en el personaje
+        this.flipX = character.flipX;
         this.x = character.x;
         this.y = character.y;
+        switch(this.id){
+            case 0:
+                this.dirX = 1;
+                this.dirY = 0;
+                break;
+            case 1:
+                this.dirX = 1;
+                this.dirY = 0.3;
+                break;
+            case 2:
+                this.dirX = 1;
+                this.dirY = -0.3;
+                break;
+        }
+        this.body.velocity.x = this.dirX * this.speed * scaleX;
+        this.body.velocity.y = this.dirY * this.speed * scaleY;
         this.isActive = true;
     }
 }

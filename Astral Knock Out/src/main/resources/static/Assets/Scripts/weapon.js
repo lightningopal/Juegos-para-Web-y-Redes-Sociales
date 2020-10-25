@@ -1,8 +1,11 @@
 class Weapon {
-    constructor(scene, attackRatio, shot){
+    constructor(scene, attackRatio, shots, groupSize){
         this.scene = scene;
         this.attackRatio = attackRatio;
-        this.shot = shot;
+        //this.shot = shot;
+        this.shots = shots;
+        this.groupSize = groupSize;
+        this.currentShot = 0;
         this.nextShot = 0.0;
         this.canShoot = true;
         this.time = 0.0;
@@ -30,9 +33,13 @@ class Weapon {
     shoot(){
         console.log("Pium pium");
         // Instanciar ataque
-        this.shot.DoSomething(this.character);
-
-
+        //this.shot.DoSomething(this.character);
+        for (var i = 0; i < this.groupSize; i++){
+            this.shots[this.currentShot + i].DoSomething(this.character);
+        }
+        //this.shots[this.currentShot].DoSomething(this.character);
+        this.currentShot = (this.currentShot+this.groupSize) % this.shots.length;
+        console.log(this.currentShot);
         this.nextShot = this.time + this.attackRatio;
     }
 }

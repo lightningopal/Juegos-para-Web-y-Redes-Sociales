@@ -1,4 +1,4 @@
-class BardSkill extends Phaser.GameObjects.Sprite {
+class BerserkerSkill extends Phaser.GameObjects.Sprite {
     constructor(scene, id, x, y, type, target, damage, speed, duration){
         super(scene, x, y, type);
 
@@ -26,18 +26,15 @@ class BardSkill extends Phaser.GameObjects.Sprite {
 
     update(time, delta){
         if (this.isActive){
-            // Si el ataque está activo, se moverá al objetivo desde el inicio hasta la duración
-            // del hechizo, reduciendo su velocidad de forma gradual, e ignorando las paredes
             var timeRemaining = this.duration - (time - this.startTime);
             if (timeRemaining > 0){
-                var directionX =  Unscale(this.target.x - this.x, "x");
-                var directionY =  Unscale(this.target.y - this.y, "y");
-                var direction = new Phaser.Math.Vector2(directionX, directionY).normalize();
-                this.body.velocity.x = RelativeScale(direction.x * this.speed * (timeRemaining / this.duration), "x");
-                this.body.velocity.y = RelativeScale(direction.y * this.speed * (timeRemaining / this.duration),"y");
+                if (this.flipX){
+                    this.body.velocity.x = RelativeScale(-this.speed * (timeRemaining / this.duration) * (timeRemaining / this.duration));
+                }else{
+                    this.body.velocity.x = RelativeScale(this.speed * (timeRemaining / this.duration) * (timeRemaining / this.duration));
+                }
             }else{
                 this.isActive = false;
-                // Animación de fin
                 this.x = RelativePosition(3000, "x");
             }
         }else{
@@ -45,15 +42,15 @@ class BardSkill extends Phaser.GameObjects.Sprite {
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
         }
-        this.flipX = (this.body.velocity.x < 0);
     }// Fin update
 
     DoSomething(character){
-        console.log("Ataque de Bardo");
+        console.log("Ataque de Berserker");
         // Animación de inicio
         // Se centra el ataque en el personaje
         this.x = character.x;
         this.y = character.y;
+        this.flipX = character.flipX;
         this.isActive = true;
     }
 }

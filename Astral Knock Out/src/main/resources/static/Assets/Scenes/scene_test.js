@@ -26,7 +26,7 @@ class Scene_Test extends Phaser.Scene {
         this.load.image("bard", "./Assets/Images/Characters/bard.png");
         this.load.image("dummy", "./Assets/Images/Characters/Dummy.png");
         this.load.image("projectile", "./Assets/Images/Tests/projectile.png")
-
+        // Animaciones Bardo
         this.load.spritesheet("bard_idle", "./Assets/Images/Characters/Animations/IdleAnimation_Bardo.png", { frameWidth: 170, frameHeight: 170 });
         this.load.spritesheet("bard_walk", "./Assets/Images/Characters/Animations/WalkAnimation_Bardo.png", { frameWidth: 170, frameHeight: 170 });
         
@@ -69,13 +69,13 @@ class Scene_Test extends Phaser.Scene {
         this.anims.create({
             key: 'bard_idle',
             frames: this.anims.generateFrameNumbers('bard_idle', { start: 1, end: 9 }),
-            frameRate: 14,
+            frameRate: 8,
             repeat: -1
         });
         this.anims.create({
             key: 'bard_walk',
             frames: this.anims.generateFrameNumbers('bard_walk', { start: 0, end: 10 }),
-            frameRate: 24,
+            frameRate: 48,
             repeat: -1
         });
 
@@ -145,22 +145,35 @@ class Scene_Test extends Phaser.Scene {
         this.platforms.create(RelativePosition(944.0,"x"), RelativePosition(395.0,"y"), "t_plat")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         .body.setSize(RelativeScale(56,"x"),RelativeScale(140,"y")).setOffset(0,RelativePosition(10,"y"));
-        
-        // Crear el personaje
-        
-        this.dummy = new Character_Controller(this, 0, RelativePosition(1560, "x"), 
+        // Dummy de prácticas
+        this.dummy = new Character_Controller(this, 0, RelativePosition(1500, "x"), 
         RelativePosition(500, "y"), "dummy", RelativeScale(), undefined, 
         undefined, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, undefined, undefined)
         .setScale(RelativeScale(1, "x"), RelativeScale(1.3, "y"));
         this.dummy.body.debugBodyColor = 0xff0000;
-
-        var basicAttacks = [];
-        this.bardAttack = new BardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 1000).setDepth(1);
-
-        var basicWeapon = new Weapon(this, 1500, this.bardAttack);
+        // Pool de habilidades
+        /** */
+        this.bardAttack = new BardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
+        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        this.bardAttack2 = new BardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
+        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        /**/
+       /*
+        this.wizardAttack1 = new WizardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
+        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        this.wizardAttack2 = new WizardSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 2000, 800)
+        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        this.wizardAttack3 = new WizardSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 2000, 800)
+        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        */
+        // Se añade el pool a un array y se pasa al arma del personaje (que maneja el id del ataque a lanzar)
+        var bardBasicAttacks = [this.bardAttack, this.bardAttack2];
+        // var wizardBasicAttacks = [this.wizardAttack1,this.wizardAttack2,this.wizardAttack3];
+        var basicWeapon = new Weapon(this, 1000, bardBasicAttacks, 1);
+        // Crear el personaje
         var myPlayer = new Character_Controller(this, 0, RelativePosition(250, "x"), 
         RelativePosition(900, "y"), "bard", RelativeScale(), this.cursors1, 
-        this.mobileKeys, RelativeScale(310, "x"), RelativeScale(1020, "y"), 100, basicWeapon, basicWeapon)
+        this.mobileKeys, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, basicWeapon, basicWeapon)
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         
         /*
@@ -193,6 +206,10 @@ class Scene_Test extends Phaser.Scene {
             }
         });
 
+        if (this.dummy.body.touching.down){
+            //this.dummy.body.velocity.y = RelativeScale(-800,"y");
+        }
+
         var debugText = document.getElementById("debugText");
         debugText.innerHTML = "Posición del ratón: {x: " + x + ", y: " + y + "} | FPS: " + Math.round(game.loop.actualFps);
     } // Fin update
@@ -213,8 +230,8 @@ class Scene_Test extends Phaser.Scene {
         this.bullets[this.bullets.length].destroy();
     }
 
-    DamagePlayer(player, bullet) {
-        player.actualHP -= bullet.damage;
+    DamagePlayer(player, attack) {
+        player.actualHP -= attack.damage;
 
         if (player.actualHP <= 0)
             player.die();
