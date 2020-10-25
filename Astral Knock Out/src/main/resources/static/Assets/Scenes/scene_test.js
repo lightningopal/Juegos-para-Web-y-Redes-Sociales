@@ -152,24 +152,47 @@ class Scene_Test extends Phaser.Scene {
         .setScale(RelativeScale(1, "x"), RelativeScale(1.3, "y"));
         this.dummy.body.debugBodyColor = 0xff0000;
         // Pool de habilidades
-        /** */
+        /*Bardo*
         this.bardAttack = new BardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
         .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
         this.bardAttack2 = new BardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
         .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
         /**/
-       /*
-        this.wizardAttack1 = new WizardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
+       /*Mago*
+        this.wizardAttack1 = new WizardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 1500, 350)
         .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
-        this.wizardAttack2 = new WizardSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 2000, 800)
+        this.wizardAttack2 = new WizardSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 1500, 350)
         .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
-        this.wizardAttack3 = new WizardSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 2000, 800)
+        this.wizardAttack3 = new WizardSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 1500, 350)
         .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
-        */
+        this.wizardAttack4 = new WizardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 1500, 350)
+        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        this.wizardAttack5 = new WizardSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 1500, 350)
+        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        this.wizardAttack6 = new WizardSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 1500, 350)
+        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        /**/
+        /*Pícaro*/
+        this.rogueAttack1 = new RogueSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 350, 0)
+        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        this.rogueAttack2 = new RogueSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 2000, 350, 150)
+        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        this.rogueAttack3 = new RogueSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 2000, 350, 300)
+        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        this.rogueAttack4 = new RogueSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 350, 0)
+        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        this.rogueAttack5 = new RogueSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 2000, 350, 150)
+        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        this.rogueAttack6 = new RogueSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 2000, 350, 300)
+        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        /**/
         // Se añade el pool a un array y se pasa al arma del personaje (que maneja el id del ataque a lanzar)
-        var bardBasicAttacks = [this.bardAttack, this.bardAttack2];
-        // var wizardBasicAttacks = [this.wizardAttack1,this.wizardAttack2,this.wizardAttack3];
-        var basicWeapon = new Weapon(this, 1000, bardBasicAttacks, 1);
+        // var bardBasicAttacks = [this.bardAttack, this.bardAttack2];
+        // var wizardBasicAttacks = [this.wizardAttack1,this.wizardAttack2,this.wizardAttack3, 
+            // this.wizardAttack4,this.wizardAttack5,this.wizardAttack6];
+        var rogueBasicAttacks = [this.rogueAttack1,this.rogueAttack2,this.rogueAttack3, 
+            this.rogueAttack4,this.rogueAttack5,this.rogueAttack6];
+        var basicWeapon = new Weapon(this, 700, rogueBasicAttacks, 3);
         // Crear el personaje
         var myPlayer = new Character_Controller(this, 0, RelativePosition(250, "x"), 
         RelativePosition(900, "y"), "bard", RelativeScale(), this.cursors1, 
@@ -207,7 +230,7 @@ class Scene_Test extends Phaser.Scene {
         });
 
         if (this.dummy.body.touching.down){
-            //this.dummy.body.velocity.y = RelativeScale(-800,"y");
+            this.dummy.body.velocity.y = RelativeScale(-800,"y");
         }
 
         var debugText = document.getElementById("debugText");

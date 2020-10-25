@@ -49,17 +49,21 @@ class WizardSkill extends Phaser.GameObjects.Sprite {
         this.flipX = character.flipX;
         this.x = character.x;
         this.y = character.y;
+
+        if (!this.flipX){
+            this.dirX = 1;
+        }else{
+            this.dirX = -1;
+        }
+
         switch(this.id){
             case 0:
-                this.dirX = 1;
                 this.dirY = 0;
                 break;
             case 1:
-                this.dirX = 1;
                 this.dirY = 0.3;
                 break;
             case 2:
-                this.dirX = 1;
                 this.dirY = -0.3;
                 break;
         }
