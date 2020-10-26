@@ -13,16 +13,21 @@ class Scene_Test extends Phaser.Scene {
     preload() {
         // Fondo
         this.load.image("level_1_bg", "./Assets/Images/BackGrounds/level_1_bg.png");
+        this.load.image("level_1_bg_details", "./Assets/Images/BackGrounds/level_1_bg_details.png");
+        this.load.image("level_1_bg_move", "./Assets/Images/BackGrounds/level_1_bg_move.png");
+        this.load.image("level_1_trans", "./Assets/Images/BackGrounds/level_1_trans.png");
+        this.load.image("level_1_fg_details", "./Assets/Images/BackGrounds/level_1_fg_details.png");
+        this.load.image("level_1_fg_move", "./Assets/Images/BackGrounds/level_1_fg_move.png");
         // Plataformas
-        this.load.image("floor", "./Assets/Images/Tests/test_plats/floor.png");
-        this.load.image("base_big_plat_2", "./Assets/Images/Tests/test_plats/base_big_plat_2.png");
-        this.load.image("base_t_plat", "./Assets/Images/Tests/test_plats/base_t_plat.png");
-        this.load.image("big_plat_1", "./Assets/Images/Tests/test_plats/big_plat_1.png");
-        this.load.image("big_plat_2", "./Assets/Images/Tests/test_plats/big_plat_2.png");
-        this.load.image("plat_1", "./Assets/Images/Tests/test_plats/plat_1.png");
-        this.load.image("plat_2", "./Assets/Images/Tests/test_plats/plat_2.png");
-        this.load.image("plat_3", "./Assets/Images/Tests/test_plats/plat_3.png");
-        this.load.image("t_plat", "./Assets/Images/Tests/test_plats/t_plat.png");
+        this.load.image("floor", "./Assets/Images/Platforms/floor.png");
+        this.load.image("base_big_plat_2", "./Assets/Images/Platforms/base_big_plat_2.png");
+        this.load.image("base_t_plat", "./Assets/Images/Platforms/base_t_plat.png");
+        this.load.image("big_plat_1", "./Assets/Images/Platforms/big_plat_1.png");
+        this.load.image("big_plat_2", "./Assets/Images/Platforms/big_plat_2.png");
+        this.load.image("plat_1", "./Assets/Images/Platforms/plat_1.png");
+        this.load.image("plat_2", "./Assets/Images/Platforms/plat_2.png");
+        this.load.image("plat_3", "./Assets/Images/Platforms/plat_3.png");
+        this.load.image("t_plat", "./Assets/Images/Platforms/t_plat.png");
         this.load.image("bard", "./Assets/Images/Characters/Bard.png");
         this.load.image("dummy", "./Assets/Images/Characters/Dummy.png");
         this.load.image("projectile", "./Assets/Images/Tests/projectile.png")
@@ -65,6 +70,7 @@ class Scene_Test extends Phaser.Scene {
     } // Fin preload
 
     create() {
+        var that = this;
         // Creamos las animaciones
         this.anims.create({
             key: 'bard_idle',
@@ -79,8 +85,27 @@ class Scene_Test extends Phaser.Scene {
             repeat: -1
         });
 
-        this.add.image(0, 0, "level_1_bg").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
-
+        this.add.image(0, 0, "level_1_bg").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(-5);
+        this.add.image(0, 0, "level_1_bg_details").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(-3);
+        this.bgMove = this.add.image(0, 0, "level_1_bg_move").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(-2);
+        this.tweens.add({
+            targets: that.bgMove,
+            y: (that.bgMove.y+3),
+            ease: 'Sine.easeInOut',
+            duration: 1000,
+            yoyo: true,
+            repeat: -1
+        });
+        this.add.image(0, 0, "level_1_fg_details").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(3);
+        this.fgMove = this.add.image(0, 0, "level_1_fg_move").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(4);
+        this.tweens.add({
+            targets: that.fgMove,
+            y: (that.fgMove.y-4),
+            ease: 'Sine.easeInOut',
+            duration: 1000,
+            yoyo: true,
+            repeat: -1
+        });
         // Create mobileKeys
         this.mobileKeys = {
             joyStick : null,
@@ -109,24 +134,26 @@ class Scene_Test extends Phaser.Scene {
         }
 
         //Plataformas
+        this.transimage = this.physics.add.image(RelativePosition(522.50, "x"), RelativePosition(889.0, "y"), "level_1_trans").setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(2);
+        
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(RelativePosition(960.0,"x"), RelativePosition(1038.0,"y"), "floor")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         .body.setSize(RelativeScale(1920,"x"),RelativeScale(67,"y")).setOffset(0,RelativePosition(17,"y"));
 
-        this.platforms.create(RelativePosition(1526.0,"x"), RelativePosition(715.0,"y"), "base_big_plat_2")
+        this.platforms.create(RelativePosition(1526.0,"x"), RelativePosition(708.0,"y"), "base_big_plat_2")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         .body.setSize(RelativeScale(378,"x"),RelativeScale(74,"y")).setOffset(0,RelativePosition(12,"y"));
 
-        this.platforms.create(RelativePosition(947.50,"x"), RelativePosition(491.50,"y"), "base_t_plat")
+        this.platforms.create(RelativePosition(949.50,"x"), RelativePosition(495.50,"y"), "base_t_plat")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         .body.setSize(RelativeScale(279,"x"),RelativeScale(34,"y")).setOffset(0,RelativePosition(12,"y"));
 
-        this.platforms.create(RelativePosition(502.5,"x"), RelativePosition(707.0,"y"), "big_plat_1") // 502.5 x 707
+        this.platforms.create(RelativePosition(502.5,"x"), RelativePosition(707.50,"y"), "big_plat_1") // 502.5 x 707
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         .body.setSize(RelativeScale(325,"x"),RelativeScale(158,"y")).setOffset(0,RelativePosition(12,"y"));
 
-        this.platforms.create(RelativePosition(1764.0,"x"), RelativePosition(362,"y"), "big_plat_2") // 1764 x 362
+        this.platforms.create(RelativePosition(1764.0,"x"), RelativePosition(362.5,"y"), "big_plat_2") // 1764 x 362
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         .body.setSize(RelativeScale(341,"x"),RelativeScale(165,"y")).setOffset(0,RelativePosition(12,"y"));
 
@@ -134,15 +161,15 @@ class Scene_Test extends Phaser.Scene {
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         .body.setSize(RelativeScale(181,"x"),RelativeScale(40,"y")).setOffset(0,RelativePosition(10,"y"));
 
-        this.platforms.create(RelativePosition(516.0,"x"), RelativePosition(194.50,"y"), "plat_2")
+        this.platforms.create(RelativePosition(517.0,"x"), RelativePosition(194.50,"y"), "plat_2")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         .body.setSize(RelativeScale(218,"x"),RelativeScale(40,"y")).setOffset(0,RelativePosition(10,"y"));
 
-        this.platforms.create(RelativePosition(1328.50,"x"), RelativePosition(157.50,"y"), "plat_3")
+        this.platforms.create(RelativePosition(1229.50,"x"), RelativePosition(107.50,"y"), "plat_3")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         .body.setSize(RelativeScale(207,"x"),RelativeScale(40,"y")).setOffset(0,RelativePosition(10,"y"));
 
-        this.platforms.create(RelativePosition(944.0,"x"), RelativePosition(395.0,"y"), "t_plat")
+        this.platforms.create(RelativePosition(946.0,"x"), RelativePosition(392.0,"y"), "t_plat")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         .body.setSize(RelativeScale(56,"x"),RelativeScale(140,"y")).setOffset(0,RelativePosition(10,"y"));
         // Dummy de prácticas
@@ -152,7 +179,7 @@ class Scene_Test extends Phaser.Scene {
         .setScale(RelativeScale(1, "x"), RelativeScale(1.3, "y"));
         this.dummy.body.debugBodyColor = 0xff0000;
         // Pool de habilidades
-        /*Bardo*
+        /*Bardo*/
         this.bardAttack = new BardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
         .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
         this.bardAttack2 = new BardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
@@ -172,7 +199,7 @@ class Scene_Test extends Phaser.Scene {
         this.wizardAttack6 = new WizardSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 1500, 350)
         .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
         /**/
-        /*Pícaro*/
+        /*Pícaro*
         this.rogueAttack1 = new RogueSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 350, 0)
         .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
         this.rogueAttack2 = new RogueSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 2000, 350, 150)
@@ -187,12 +214,12 @@ class Scene_Test extends Phaser.Scene {
         .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
         /**/
         // Se añade el pool a un array y se pasa al arma del personaje (que maneja el id del ataque a lanzar)
-        // var bardBasicAttacks = [this.bardAttack, this.bardAttack2];
+        var bardBasicAttacks = [this.bardAttack, this.bardAttack2];
         // var wizardBasicAttacks = [this.wizardAttack1,this.wizardAttack2,this.wizardAttack3, 
             // this.wizardAttack4,this.wizardAttack5,this.wizardAttack6];
-        var rogueBasicAttacks = [this.rogueAttack1,this.rogueAttack2,this.rogueAttack3, 
-            this.rogueAttack4,this.rogueAttack5,this.rogueAttack6];
-        var basicWeapon = new Weapon(this, 700, rogueBasicAttacks, 3);
+        // var rogueBasicAttacks = [this.rogueAttack1,this.rogueAttack2,this.rogueAttack3, 
+        //     this.rogueAttack4,this.rogueAttack5,this.rogueAttack6];
+        var basicWeapon = new Weapon(this, 700, bardBasicAttacks, 1);
         // Crear el personaje
         var myPlayer = new Character_Controller(this, 0, RelativePosition(250, "x"), 
         RelativePosition(900, "y"), "bard", RelativeScale(), this.cursors1, 
@@ -203,7 +230,7 @@ class Scene_Test extends Phaser.Scene {
         this.platform = this.physics.add.image(RelativePosition(600,"x"), RelativePosition(1030,"y"), "slope")
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         */
-        this.hidePlatforms = [];
+        this.hidePlatforms = [this.transimage];
         this.hidePlatforms.forEach(platform => {
             platform.body.setCollideWorldBounds(true);
             platform.body.allowGravity = false;

@@ -25,15 +25,6 @@ class Scene_Boot extends Phaser.Scene {
         // Fondo
         this.load.image("level_1_bg", "./Assets/Images/BackGrounds/level_1_bg.png");
         // Plataformas
-        this.load.image("floor", "./Assets/Images/Tests/test_plats/floor.png");
-        this.load.image("base_big_plat_2", "./Assets/Images/Tests/test_plats/base_big_plat_2.png");
-        this.load.image("base_t_plat", "./Assets/Images/Tests/test_plats/base_t_plat.png");
-        this.load.image("big_plat_1", "./Assets/Images/Tests/test_plats/big_plat_1.png");
-        this.load.image("big_plat_2", "./Assets/Images/Tests/test_plats/big_plat_2.png");
-        this.load.image("plat_1", "./Assets/Images/Tests/test_plats/plat_1.png");
-        this.load.image("plat_2", "./Assets/Images/Tests/test_plats/plat_2.png");
-        this.load.image("plat_3", "./Assets/Images/Tests/test_plats/plat_3.png");
-        this.load.image("t_plat", "./Assets/Images/Tests/test_plats/t_plat.png");
         this.load.image("bard", "./Assets/Images/Characters/bard.png");
         this.load.image("dummy", "./Assets/Images/Characters/Dummy.png");
         this.load.image("projectile", "./Assets/Images/Tests/projectile.png")
