@@ -21,35 +21,18 @@ class RogueSkill extends Phaser.GameObjects.Sprite {
         this.body.allowGravity = true;
         this.body.gravity.y = RelativeScale(-1500, "y");
 
+        this.scene.physics.add.overlap(this.target, this, this.Damage, null, this);
         // Establecemos el evento update
         this.scene.events.on("update", this.update, this);
 
     }// Fin constructor
 
     update(time, delta){
-        // if (this.isActive){
-        //     var timeRemaining = this.duration - (time - this.startTime);
-        //     if (timeRemaining > 0){
-                
-        //     }else{
-        //         this.isActive = false;
-        //         this.x = RelativePosition(3000, "x");
-        //     }
-        // }else{
-        //     this.startTime = time;
-        //     this.body.velocity.x = 0;
-        //     this.body.velocity.y = 0;
-        // }
+
     }// Fin update
 
     DoSomething(character){
         console.log("Ataque de Pícaro");
-        // Animación de inicio
-        // Se centra el ataque en el personaje
-        // this.flipX = character.flipX;
-        // this.x = character.x;
-        // this.y = character.y;
-        // this.isActive = true;
         console.log("Hola " + this.id);
         var that = this;
         setTimeout(function(){
@@ -69,8 +52,10 @@ class RogueSkill extends Phaser.GameObjects.Sprite {
         }, this.delay);
     }
 
-    Start(character){
-        console.log("Adiós " + this.id);
-        
+    Damage(target, skill){
+        this.isActive = false;
+        // Animación de golpe
+        this.x = RelativePosition(3000, "x");
+        target.userInterface.Damage(skill.damage);
     }
 }

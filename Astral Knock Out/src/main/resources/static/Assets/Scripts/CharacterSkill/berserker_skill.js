@@ -19,6 +19,7 @@ class BerserkerSkill extends Phaser.GameObjects.Sprite {
         this.body.setCollideWorldBounds(false);
         this.body.allowGravity = false;
 
+        this.scene.physics.add.overlap(this.target, this, this.Damage, null, this);
         // Establecemos el evento update
         this.scene.events.on("update", this.update, this);
 
@@ -52,5 +53,12 @@ class BerserkerSkill extends Phaser.GameObjects.Sprite {
         this.y = character.y;
         this.flipX = character.flipX;
         this.isActive = true;
+    }
+
+    Damage(target, skill){
+        this.isActive = false;
+        // Animación de golpe
+        this.x = RelativePosition(3000, "x");
+        target.userInterface.Damage(skill.damage);
     }
 }

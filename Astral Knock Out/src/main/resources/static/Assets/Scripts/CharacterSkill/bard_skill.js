@@ -19,9 +19,9 @@ class BardSkill extends Phaser.GameObjects.Sprite {
         this.body.setCollideWorldBounds(false);
         this.body.allowGravity = false;
 
+        this.scene.physics.add.overlap(this.target, this, this.Damage, null, this);
         // Establecemos el evento update
         this.scene.events.on("update", this.update, this);
-
     }// Fin constructor
 
     update(time, delta){
@@ -55,5 +55,12 @@ class BardSkill extends Phaser.GameObjects.Sprite {
         this.x = character.x;
         this.y = character.y;
         this.isActive = true;
+    }
+
+    Damage(target, skill){
+        this.isActive = false;
+        // Animación de golpe
+        this.x = RelativePosition(3000, "x");
+        target.userInterface.Damage(skill.damage);
     }
 }

@@ -21,6 +21,7 @@ class WizardSkill extends Phaser.GameObjects.Sprite {
         this.body.setCollideWorldBounds(false);
         this.body.allowGravity = false;
 
+        this.scene.physics.add.overlap(this.target, this, this.Damage, null, this);
         // Establecemos el evento update
         this.scene.events.on("update", this.update, this);
 
@@ -70,5 +71,12 @@ class WizardSkill extends Phaser.GameObjects.Sprite {
         this.body.velocity.x = this.dirX * this.speed * scaleX;
         this.body.velocity.y = this.dirY * this.speed * scaleY;
         this.isActive = true;
+    }
+
+    Damage(target, skill){
+        this.isActive = false;
+        // Animación de golpe
+        this.x = RelativePosition(3000, "x");
+        target.userInterface.Damage(skill.damage);
     }
 }

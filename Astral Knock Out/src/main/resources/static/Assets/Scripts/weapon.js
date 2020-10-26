@@ -1,13 +1,13 @@
 class Weapon {
-    constructor(scene, attackRatio, shots, groupSize){
+    constructor(scene, attackRatio, attacks, groupSize){
         this.scene = scene;
         this.attackRatio = attackRatio;
         //this.shot = shot;
-        this.shots = shots;
+        this.attacks = attacks;
         this.groupSize = groupSize;
         this.currentShot = 0;
-        this.nextShot = 0.0;
-        this.canShoot = true;
+        this.nextAttack = 0.0;
+        this.canAttack = true;
         this.time = 0.0;
         this.character;
 
@@ -18,28 +18,25 @@ class Weapon {
 
     update(time, delta){
         this.time = time;
-        if (this.time > this.nextShot)
+        if (this.time > this.nextAttack)
         {
             // Añadimos la bala al array de balas
             //this.scene.bullets[this.scene.bullets.length] = new Shot(this, 0, this.x, this.y, 10, 10, this.color, 10, 1, 20);
             //this.scene.bullets[this.scene.bullets.length].bulletIndex = this.scene.bullets.length;
             this.canShoot = true;
-            //this.nextShot = time + this.attackRatio;
+            //this.nextAttack = time + this.attackRatio;
         }else{
             this.canShoot = false;
         }
     }// Fin update
 
-    shoot(){
-        console.log("Pium pium");
+    Attack(){
         // Instanciar ataque
         //this.shot.DoSomething(this.character);
         for (var i = 0; i < this.groupSize; i++){
-            this.shots[this.currentShot + i].DoSomething(this.character);
+            this.attacks[this.currentShot + i].DoSomething(this.character);
         }
-        //this.shots[this.currentShot].DoSomething(this.character);
-        this.currentShot = (this.currentShot+this.groupSize) % this.shots.length;
-        console.log(this.currentShot);
-        this.nextShot = this.time + this.attackRatio;
+        this.currentShot = (this.currentShot+this.groupSize) % this.attacks.length;
+        this.nextAttack = this.time + this.attackRatio;
     }
 }

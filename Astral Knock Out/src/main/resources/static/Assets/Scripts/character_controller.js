@@ -11,6 +11,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
         this.numJumps = 2;
         this.maxHP = maxHP;
         this.actualHP = maxHP;
+        this.userInterface = new UserInterface(scene, this, maxHP, 40);
         this.cursors = cursors;
         this.mobileKeys = mobileKeys;
         this.type = type;
@@ -29,7 +30,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
         scene.physics.world.enable(this);
         this.body.maxVelocity.x = moveSpeed*1.5;
         this.body.drag.x = 3000;
-        // this.body.setSize(70,100).setOffset(RelativePosition(100,"x"),RelativePosition(110,"y"));;
+        this.body.setSize(this.width/3,115).setOffset(this.width/3,this.height/3 - 10);
         //this.body.setCollideWorldBounds(true);
         // Variables de control
         this.movingLeft = false;
@@ -42,28 +43,28 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
         // Eventos de movimiento y ataque
         if (this.cursors != undefined){
             this.cursors.jump.on('down', function (event) {
-                that.jump();
+                that.Jump();
             });
             this.cursors.fall.on('down', function (event) {
-                that.fall();
+                that.Fall();
             });
             this.cursors.left.on('down', function (event) {
                 that.flipX = true;
-                that.moveLeft();
+                that.MoveLeft();
             });
             this.cursors.left.on('up', function (event) {
-                that.stopLeft();
+                that.StopLeft();
             });
             this.cursors.right.on('down', function (event) {
                 that.flipX = false;
-                that.moveRight();
+                that.MoveRight();
             });
             this.cursors.right.on('up', function (event) {
-                that.stopRight();
+                that.StopRight();
             });
     
             this.cursors.basicAttack.on('down', function(event){
-                if (!that.attacking && that.basicWeapon.canShoot){
+                if (!that.attacking && that.basicWeapon.canAttack){
                     that.attacking = true;
                     that.body.allowGravity = false;
                     //that.body.velocity.x = 0;
@@ -71,19 +72,19 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
                     // Animación
                     // Este código va en la función onAnimComplete (cuando termine de lanzar el ataque se spawnea)
                     console.log("Básico: ");
-                    that.basicWeapon.shoot();
+                    that.basicWeapon.Attack();
                     that.attacking = false;
                     that.body.allowGravity = true;
                 }
             });
             this.cursors.specialAttack.on('down', function(event){
-                if (!that.attacking && that.specialWeapon.canShoot){
+                if (!that.attacking && that.specialWeapon.canAttack){
                     that.attacking = true;
                     that.body.allowGravity = false;
                     // Animación
                     // Este código va en la función onAnimComplete (cuando termine de lanzar el ataque se spawnea)
                     console.log("Especial: ");
-                    that.specialWeapon.shoot();
+                    that.specialWeapon.Attack();
                     that.attacking = false;
                     that.body.allowGravity = true;
                 }
@@ -92,14 +93,10 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
         // Mobile
         if (options.device == "mobile" && this.mobileKeys != undefined)
         {
-            this.mobileKeys.jumpButton.on('pointerdown',that.jump,this);
-            this.mobileKeys.jumpButton.on('pointerup',that.setButtonNormalColor,this);
+            this.mobileKeys.jumpButton.on('pointerdown',that.Jump,this);
+            this.mobileKeys.jumpButton.on('pointerup',that.SetButtonNormalColor,this);
         }
     }// Fin constructor
-
-    die() {
-        console.log("ME MUEROOOOOO");
-    }
 
     update(time, delta) {
         // Físicas de personaje
@@ -137,7 +134,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
                     this.body.acceleration.x = (this.moveSpeed*6);
                 }
             }else if ((this.mobileKeys.joyStick.angle > 45 && this.mobileKeys.joyStick.angle < 135) && this.mobileKeys.joyStick.force > 16){
-                this.fall();
+                this.Fall();
             }else
             {
                 this.movingRight = false;
@@ -162,7 +159,11 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
 
     }// Fin update
 
-    jump() {
+    Die() {
+        console.log("ME MUEROOOOOO");
+    }
+
+    Jump() {
         this.falling = false;
         if (this.body.onFloor()) {
             this.body.velocity.y = -this.jumpForce;
@@ -175,14 +176,14 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
             this.mobileKeys.jumpButton.setFillStyle(0x888888);
     }
 
-    fall(){
+    Fall(){
         if (this.body.velocity.y < 0){
             this.body.velocity.y = 0;
         }
         this.falling = true;
     }
 
-    moveLeft() {
+    MoveLeft() {
         this.movingLeft = true;
         this.movingRight = false;
         if (this.body.onFloor()) {
@@ -193,7 +194,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
         }
         
     }
-    stopLeft() {
+    StopLeft() {
         this.movingLeft = false;
         if (!this.movingRight) {
             this.body.acceleration.x = 0;
@@ -202,7 +203,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
             }
         }
     }
-    moveRight() {
+    MoveRight() {
         this.movingRight = true;
         this.movingLeft = false;
         if (this.body.onFloor()) {
@@ -214,7 +215,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
         }
         
     }
-    stopRight() {
+    StopRight() {
         this.movingRight = false;
         if (!this.movingLeft) {
             this.body.acceleration.x = 0;
@@ -243,7 +244,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
     }
 
     // Mobile
-    setButtonNormalColor()
+    SetButtonNormalColor()
     {
         this.mobileKeys.jumpButton.setFillStyle(0xdddddd);
     }

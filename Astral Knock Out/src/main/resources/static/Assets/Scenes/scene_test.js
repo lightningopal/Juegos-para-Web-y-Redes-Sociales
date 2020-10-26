@@ -133,103 +133,111 @@ class Scene_Test extends Phaser.Scene {
             this.input.addPointer(2);
         }
 
-        //Plataformas
-        this.transimage = this.physics.add.image(RelativePosition(522.50, "x"), RelativePosition(889.0, "y"), "level_1_trans").setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(2);
-        
-        this.platforms = this.physics.add.staticGroup();
-        this.platforms.create(RelativePosition(960.0,"x"), RelativePosition(1038.0,"y"), "floor")
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        .body.setSize(RelativeScale(1920,"x"),RelativeScale(67,"y")).setOffset(0,RelativePosition(17,"y"));
-
-        this.platforms.create(RelativePosition(1526.0,"x"), RelativePosition(708.0,"y"), "base_big_plat_2")
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        .body.setSize(RelativeScale(378,"x"),RelativeScale(74,"y")).setOffset(0,RelativePosition(12,"y"));
-
-        this.platforms.create(RelativePosition(949.50,"x"), RelativePosition(495.50,"y"), "base_t_plat")
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        .body.setSize(RelativeScale(279,"x"),RelativeScale(34,"y")).setOffset(0,RelativePosition(12,"y"));
-
-        this.platforms.create(RelativePosition(502.5,"x"), RelativePosition(707.50,"y"), "big_plat_1") // 502.5 x 707
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        .body.setSize(RelativeScale(325,"x"),RelativeScale(158,"y")).setOffset(0,RelativePosition(12,"y"));
-
-        this.platforms.create(RelativePosition(1764.0,"x"), RelativePosition(362.5,"y"), "big_plat_2") // 1764 x 362
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        .body.setSize(RelativeScale(341,"x"),RelativeScale(165,"y")).setOffset(0,RelativePosition(12,"y"));
-
-        this.platforms.create(RelativePosition(90.50,"x"), RelativePosition(437.50,"y"), "plat_1")
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        .body.setSize(RelativeScale(181,"x"),RelativeScale(40,"y")).setOffset(0,RelativePosition(10,"y"));
-
-        this.platforms.create(RelativePosition(517.0,"x"), RelativePosition(194.50,"y"), "plat_2")
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        .body.setSize(RelativeScale(218,"x"),RelativeScale(40,"y")).setOffset(0,RelativePosition(10,"y"));
-
-        this.platforms.create(RelativePosition(1229.50,"x"), RelativePosition(107.50,"y"), "plat_3")
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        .body.setSize(RelativeScale(207,"x"),RelativeScale(40,"y")).setOffset(0,RelativePosition(10,"y"));
-
-        this.platforms.create(RelativePosition(946.0,"x"), RelativePosition(392.0,"y"), "t_plat")
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        .body.setSize(RelativeScale(56,"x"),RelativeScale(140,"y")).setOffset(0,RelativePosition(10,"y"));
         // Dummy de prácticas
-        this.dummy = new Character_Controller(this, 0, RelativePosition(1500, "x"), 
-        RelativePosition(500, "y"), "dummy", RelativeScale(), undefined, 
-        undefined, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, undefined, undefined)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1.3, "y"));
+        this.dummy = this.physics.add.image(RelativePosition(1500, "x"), RelativePosition(940, "y"), "dummy")
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        var dummyBar = new UserInterface(this, this.dummy, 100, 0);
+        this.dummy.userInterface = dummyBar; 
+        // this.dummy = new Character_Controller(this, 0, RelativePosition(1500, "x"), 
+        // RelativePosition(500, "y"), "dummy", RelativeScale(), undefined, 
+        // undefined, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, undefined, undefined)
+        // .setScale(RelativeScale(1, "x"), RelativeScale(1.3, "y"));
         this.dummy.body.debugBodyColor = 0xff0000;
         // Pool de habilidades
         /*Bardo*/
-        this.bardAttack = new BardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
-        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        this.bardAttack1 = new BardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         this.bardAttack2 = new BardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
-        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
+        /**/
+        /*Berserker*
+        this.berserkerAttack1 = new BerserkerSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
+        this.berserkerAttack2 = new Berserker(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         /**/
        /*Mago*
         this.wizardAttack1 = new WizardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         this.wizardAttack2 = new WizardSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         this.wizardAttack3 = new WizardSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         this.wizardAttack4 = new WizardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         this.wizardAttack5 = new WizardSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         this.wizardAttack6 = new WizardSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         /**/
         /*Pícaro*
         this.rogueAttack1 = new RogueSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 350, 0)
-        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         this.rogueAttack2 = new RogueSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 2000, 350, 150)
-        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         this.rogueAttack3 = new RogueSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 2000, 350, 300)
-        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         this.rogueAttack4 = new RogueSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 350, 0)
-        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         this.rogueAttack5 = new RogueSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 2000, 350, 150)
-        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         this.rogueAttack6 = new RogueSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 2000, 350, 300)
-        .setScale(RelativeScale(2, "x"), RelativeScale(2, "y")).setDepth(1);
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         /**/
         // Se añade el pool a un array y se pasa al arma del personaje (que maneja el id del ataque a lanzar)
-        var bardBasicAttacks = [this.bardAttack, this.bardAttack2];
+        var bardBasicAttacks = [this.bardAttack1, this.bardAttack2];
+        // var berserkerBasicAttacks = [this.berserkerAttack1, this.berserkerAttack2];
         // var wizardBasicAttacks = [this.wizardAttack1,this.wizardAttack2,this.wizardAttack3, 
             // this.wizardAttack4,this.wizardAttack5,this.wizardAttack6];
         // var rogueBasicAttacks = [this.rogueAttack1,this.rogueAttack2,this.rogueAttack3, 
         //     this.rogueAttack4,this.rogueAttack5,this.rogueAttack6];
         var basicWeapon = new Weapon(this, 700, bardBasicAttacks, 1);
         // Crear el personaje
-        var myPlayer = new Character_Controller(this, 0, RelativePosition(250, "x"), 
-        RelativePosition(900, "y"), "bard", RelativeScale(), this.cursors1, 
+        var myPlayer = new Character_Controller(this, 0, RelativePosition(250, "x"),
+        RelativePosition(850, "y"), "bard", RelativeScale(), this.cursors1, 
         this.mobileKeys, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, basicWeapon, basicWeapon)
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+
+        //Plataformas
+        this.transimage = this.physics.add.image(RelativePosition(522.50, "x"), RelativePosition(889.0, "y"), "level_1_trans").setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(2);
         
-        /*
-        this.platform = this.physics.add.image(RelativePosition(600,"x"), RelativePosition(1030,"y"), "slope")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        */
+        this.platforms = this.physics.add.staticGroup();
+        this.platforms.create(RelativePosition(960.0,"x"), RelativePosition(1038.0,"y"), "floor")
+        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody().setDepth(-1)
+        .body.setSize(RelativeScale(1920,"x"),RelativeScale(84,"y")).setOffset(0,RelativePosition(20,"y"));
+
+        this.platforms.create(RelativePosition(1527.5,"x"), RelativePosition(747.50,"y"), "base_big_plat_2")
+        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
+        .body.setSize(RelativeScale(385,"x"),RelativeScale(75,"y")).setOffset(0,RelativePosition(-10,"y"));
+
+        this.platforms.create(RelativePosition(949.50,"x"), RelativePosition(495.50,"y"), "base_t_plat")
+        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
+        // .body.setSize(RelativeScale(279,"x"),RelativeScale(34,"y")).setOffset(0,RelativePosition(12,"y"));
+
+        this.platforms.create(RelativePosition(503.0,"x"), RelativePosition(717.50,"y"), "big_plat_1") // 502.5 x 707
+        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
+        .body.setSize(RelativeScale(328,"x"),RelativeScale(90,"y")).setOffset(0,RelativePosition(-10,"y"));
+
+        this.platforms.create(RelativePosition(1764.0,"x"), RelativePosition(362.5,"y"), "big_plat_2") // 1764 x 362
+        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
+        // .body.setSize(RelativeScale(341,"x"),RelativeScale(165,"y")).setOffset(0,RelativePosition(12,"y"));
+
+        this.platforms.create(RelativePosition(90.50,"x"), RelativePosition(437.50,"y"), "plat_1")
+        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
+        // .body.setSize(RelativeScale(181,"x"),RelativeScale(40,"y")).setOffset(0,RelativePosition(10,"y"));
+
+        this.platforms.create(RelativePosition(517.0,"x"), RelativePosition(194.50,"y"), "plat_2")
+        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
+        // .body.setSize(RelativeScale(218,"x"),RelativeScale(40,"y")).setOffset(0,RelativePosition(10,"y"));
+
+        this.platforms.create(RelativePosition(1229.50,"x"), RelativePosition(107.50,"y"), "plat_3")
+        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
+        // .body.setSize(RelativeScale(207,"x"),RelativeScale(40,"y")).setOffset(0,RelativePosition(10,"y"));
+
+        this.platforms.create(RelativePosition(946.0,"x"), RelativePosition(392.0,"y"), "t_plat")
+        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
+        // .body.setSize(RelativeScale(56,"x"),RelativeScale(140,"y")).setOffset(0,RelativePosition(10,"y"));
+
         this.hidePlatforms = [this.transimage];
         this.hidePlatforms.forEach(platform => {
             platform.body.setCollideWorldBounds(true);
@@ -257,13 +265,14 @@ class Scene_Test extends Phaser.Scene {
         });
 
         if (this.dummy.body.touching.down){
-            this.dummy.body.velocity.y = RelativeScale(-800,"y");
+            // this.dummy.body.velocity.y = RelativeScale(-800,"y");
         }
 
         var debugText = document.getElementById("debugText");
         debugText.innerHTML = "Posición del ratón: {x: " + x + ", y: " + y + "} | FPS: " + Math.round(game.loop.actualFps);
     } // Fin update
 
+    /** *
     BulletHit(player, bullet) {
         this.DamagePlayer(player, bullet);
         this.RemoveBullet(bullet);
@@ -286,7 +295,7 @@ class Scene_Test extends Phaser.Scene {
         if (player.actualHP <= 0)
             player.die();
     }
-
+    /** */
     // Joystick movil
     DumpJoyStickState() {
         var cursorKeys = this.mobileKeys.joyStick.createCursorKeys();
@@ -305,7 +314,7 @@ class Scene_Test extends Phaser.Scene {
     HidePlatform(platform){
         var tween = this.tweens.add({
             targets: platform,
-            alpha: 0.6,
+            alpha: 0.3,
             ease: 'Sine.easeInOut',
             duration: 200,
         });
