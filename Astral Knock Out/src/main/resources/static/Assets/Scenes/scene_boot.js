@@ -1,9 +1,37 @@
+// Detecta si aun se estan cargando assets
+var isLoading = true;
+
 class Scene_Boot extends Phaser.Scene {
     constructor(){
+<<<<<<< Updated upstream
         super({ key: "scene_boot" });
     }// Fin constructor
+=======
+        super({
+            key: "scene_boot",
+            pack: {
+                files: [
+                    {
+                        type: 'image',
+                        key: 'simple-bg',
+                        url: './Assets/Images/BackGrounds/simple_bg.png'
+                    },
+                    {
+                        type: 'image',
+                        key: 'stars',
+                        url: './Assets/Images/BackGrounds/stars.png'
+                    }
+                ]
+            }
+        });
+    }
+>>>>>>> Stashed changes
 
     preload(){
+        // Background
+        this.add.image(0, 0, "simple-bg").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
+        this.tilesprite = this.add.tileSprite(0, 0, RelativeScale(1920, "x"), RelativeScale(1080, "y"), "stars").setOrigin(0,0);
+
         // Carga de imágenes
         ///Escena de Inicio de Empresa, Boot///
 
@@ -47,7 +75,9 @@ class Scene_Boot extends Phaser.Scene {
         this.load.image("bard", "./Assets/Images/Characters/Bard.png");
         this.load.image("dummy", "./Assets/Images/Characters/Dummy.png");
         this.load.image("projectile", "./Assets/Images/Tests/projectile.png")
+
         // Animaciones Bardo
+<<<<<<< Updated upstream
         this.load.spritesheet("bard_idle", "./Assets/Images/Characters/Animations/IdleAnimation_Bard.png", { frameWidth: 170, frameHeight: 170 });
         this.load.spritesheet("bard_walk", "./Assets/Images/Characters/Animations/WalkAnimation_Bard.png", { frameWidth: 170, frameHeight: 170 });
         this.load.spritesheet("bard_attack", "./Assets/Images/Characters/Animations/AttackAnimation_Bard.png", { frameWidth: 170, frameHeight: 170 });
@@ -62,6 +92,83 @@ class Scene_Boot extends Phaser.Scene {
 
     create(){
         // Creamos las animaciones del bardo
+=======
+        this.load.spritesheet("bard_idle", "./Assets/Images/Characters/Animations/IdleAnimation_Bardo.png", { frameWidth: 170, frameHeight: 170 });
+        this.load.spritesheet("bard_walk", "./Assets/Images/Characters/Animations/WalkAnimation_Bardo.png", { frameWidth: 170, frameHeight: 170 });
+        
+        /// Barra de carga
+
+        let loadingBar = this.add.graphics({
+            lineStyle: {
+                width: 5,
+                color: 0x996600
+            },
+            fillStyle: {
+                color: 0xffff00
+            }
+        });
+
+        let loadingText = this.make.text({
+            x: this.game.renderer.width / 2,
+            y: this.game.renderer.height / 2 - 30,
+            text: 'Please wait...',
+            style: {
+                font: '24px font_Elektora',
+                fill: '#ffffff'
+            }
+        });
+        loadingText.setOrigin(0.5, 0.5);
+
+        let percentText = this.make.text({
+            x: this.game.renderer.width / 2,
+            y: this.game.renderer.height / 2 + 20,
+            text: '0%',
+            style: {
+                font: '20px font_Elektora',
+                fill: '#000000'
+            }
+        });
+        percentText.setOrigin(0.5, 0.5);
+
+        let assetText = this.make.text({
+            x: this.game.renderer.width / 2,
+            y: this.game.renderer.height / 2 + 70,
+            text: '',
+            style: {
+                font: '24px font_Elektora',
+                fill: '#ffffff'
+            }
+        });
+        assetText.setOrigin(0.5, 0.5);
+
+        this.load.on('progress', (percent) => {
+            loadingBar.clear();
+            percentText.setText(parseInt(percent * 100) + '%');
+
+            loadingBar.fillRect(this.game.renderer.width / 2 - this.game.renderer.width / 8,
+                this.game.renderer.height / 2,
+                this.game.renderer.width * percent / 4,
+                40);
+            loadingBar.strokeRect(this.game.renderer.width / 2 - this.game.renderer.width / 8,
+                this.game.renderer.height / 2,
+                this.game.renderer.width / 4,
+                40);
+        })
+
+        this.load.on('fileprogress', (file) => {
+            assetText.setText('Loading: ' + file.key);
+        })
+        this.load.on('complete', () => {
+            isLoading = false;
+            loadingText.setText('Click anywhere to start');
+            assetText.setText('Load complete.');
+        })
+    
+    }
+
+    create(){
+        // Creamos las animaciones
+>>>>>>> Stashed changes
         this.anims.create({
             key: 'bard_idle',
             frames: this.anims.generateFrameNumbers('bard_idle', { start: 1, end: 9 }),
@@ -74,6 +181,7 @@ class Scene_Boot extends Phaser.Scene {
             frameRate: 48,
             repeat: -1
         });
+<<<<<<< Updated upstream
         this.anims.create({
             key: 'bard_attack',
             frames: this.anims.generateFrameNumbers('bard_attack', { start: 0, end: 10 }),
@@ -107,3 +215,18 @@ class Scene_Boot extends Phaser.Scene {
         this.scene.start("scene_main_menu");
     }// Fin upload
 }// Fin SceneBoot
+=======
+
+        this.input.on('pointerdown', function () {
+            if (!isLoading) {
+                this.scene.scene.start("scene_test");
+            }
+        });
+    }
+
+    update(){
+        this.tilesprite.tilePositionX += 0.2;
+        this.tilesprite.tilePositionY += 0.4;
+    }
+}
+>>>>>>> Stashed changes

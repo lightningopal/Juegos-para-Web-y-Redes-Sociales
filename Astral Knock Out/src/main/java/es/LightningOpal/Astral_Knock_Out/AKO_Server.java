@@ -46,7 +46,7 @@ public class AKO_Server implements WebSocketConfigurer {
 			String st;
 			while ((st = br.readLine()) != null) {
 				splitStringInfo = st.split(":");
-				PlayersController.loginInfo.put(splitStringInfo[0], splitStringInfo[1]);
+				UsersController.loginInfo.put(splitStringInfo[0], splitStringInfo[1]);
 			}
 			br.close();
 
@@ -57,9 +57,9 @@ public class AKO_Server implements WebSocketConfigurer {
 			while ((st = br.readLine()) != null) {
 				splitStringInfo = st.split(":");
 				
-				PlayerData playerToAdd = new PlayerData(Integer.parseInt(splitStringInfo[0]), splitStringInfo[1], Integer.parseInt(splitStringInfo[2]),
+				/*User userToAdd = new User(Integer.parseInt(splitStringInfo[0]), splitStringInfo[1], Integer.parseInt(splitStringInfo[2]),
 						Boolean.parseBoolean(splitStringInfo[3]), Boolean.parseBoolean(splitStringInfo[4]), Float.parseFloat(splitStringInfo[5]), Integer.parseInt(splitStringInfo[6]));
-				PlayersController.allUsers.put(playerToAdd.getPlayer_name(), playerToAdd);
+				UsersController.allUsers.put(userToAdd.getUser_name(), userToAdd);*/
 			}
 			br.close();
 

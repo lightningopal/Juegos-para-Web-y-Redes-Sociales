@@ -24,14 +24,21 @@
         <script src="./Assets/Scenes/scene_test.js"></script>
         <script src="./Assets/Scenes/scene_select_character.js"></script>
         <script src="./init.js"></script>
-        <style type="text/css">
-            body {
+        <style media='screen' type='text/css'>
+        body {
                 margin: 0;
             }
-        </style>
+            @font-face {
+              font-family: font_Elektora;
+              src: url('./Assets/Fonts/ELEKTORA.ttf');
+              font-weight:400;
+              font-weight:normal;
+            }
+      </style>
     </head>
     <body>
         <div id="game" onmousemove="showCoords(event)"></div>
-        <h2 id="debugText">Posición del ratón: {x: 0, y: 0} | FPS: 0</h2>    
+        <h2 id="debugText">Posición del ratón: {x: 0, y: 0} | FPS: 0</h2>
+        <div style="font-family:font_Elektora; position:absolute; left:-1000px; visibility:hidden;">.</div>    
     </body>
 </html>
