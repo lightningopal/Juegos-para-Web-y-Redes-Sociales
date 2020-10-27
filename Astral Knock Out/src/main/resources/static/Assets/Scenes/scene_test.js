@@ -9,7 +9,6 @@ class Scene_Test extends Phaser.Scene {
     } // Fin constructor
 
     preload() {
-<<<<<<< Updated upstream
         var that = this;
         
         this.add.image(0, 0, "level_1_bg").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(-5);
@@ -33,22 +32,6 @@ class Scene_Test extends Phaser.Scene {
             duration: 1000,
             yoyo: true,
             repeat: -1
-=======
-        // Mover a escena inicial
-        var os = this.sys.game.device.os;
-        if (os.android || os.iOS || os.iPad || os.iPhone)
-            options.device = "mobile";
-        else
-            options.device = "desktop";
-
-        this.cursors1 = this.input.keyboard.addKeys({
-            'jump': cursors1Keys.jump,
-            'fall': cursors1Keys.fall,
-            'left': cursors1Keys.left,
-            'right': cursors1Keys.right,
-            'basicAttack': cursors1Keys.basicAttack,
-            'specialAttack': cursors1Keys.specialAttack,
->>>>>>> Stashed changes
         });
 
         this.cursors1 = this.input.keyboard.addKeys({
@@ -69,12 +52,7 @@ class Scene_Test extends Phaser.Scene {
     } // Fin preload
 
     create() {
-<<<<<<< Updated upstream
         
-=======
-        this.add.image(0, 0, "level_1_bg").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
-
->>>>>>> Stashed changes
         // Create mobileKeys
         this.mobileKeys = {
             joyStick : null,

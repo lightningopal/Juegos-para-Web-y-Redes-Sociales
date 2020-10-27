@@ -3,10 +3,6 @@ var isLoading = true;
 
 class Scene_Boot extends Phaser.Scene {
     constructor(){
-<<<<<<< Updated upstream
-        super({ key: "scene_boot" });
-    }// Fin constructor
-=======
         super({
             key: "scene_boot",
             pack: {
@@ -25,7 +21,6 @@ class Scene_Boot extends Phaser.Scene {
             }
         });
     }
->>>>>>> Stashed changes
 
     preload(){
         // Background
@@ -77,7 +72,6 @@ class Scene_Boot extends Phaser.Scene {
         this.load.image("projectile", "./Assets/Images/Tests/projectile.png")
 
         // Animaciones Bardo
-<<<<<<< Updated upstream
         this.load.spritesheet("bard_idle", "./Assets/Images/Characters/Animations/IdleAnimation_Bard.png", { frameWidth: 170, frameHeight: 170 });
         this.load.spritesheet("bard_walk", "./Assets/Images/Characters/Animations/WalkAnimation_Bard.png", { frameWidth: 170, frameHeight: 170 });
         this.load.spritesheet("bard_attack", "./Assets/Images/Characters/Animations/AttackAnimation_Bard.png", { frameWidth: 170, frameHeight: 170 });
@@ -87,17 +81,8 @@ class Scene_Boot extends Phaser.Scene {
         // this.load.spritesheet("wizard_attack", "./Assets/Images/Characters/Animations/AttackAnimation_Wizard.png", { frameWidth: 170, frameHeight: 170 });
 
         ///Escena de Fin de Partida///
-        
-    }// Fin preload
 
-    create(){
-        // Creamos las animaciones del bardo
-=======
-        this.load.spritesheet("bard_idle", "./Assets/Images/Characters/Animations/IdleAnimation_Bardo.png", { frameWidth: 170, frameHeight: 170 });
-        this.load.spritesheet("bard_walk", "./Assets/Images/Characters/Animations/WalkAnimation_Bardo.png", { frameWidth: 170, frameHeight: 170 });
-        
         /// Barra de carga
-
         let loadingBar = this.add.graphics({
             lineStyle: {
                 width: 5,
@@ -163,12 +148,11 @@ class Scene_Boot extends Phaser.Scene {
             loadingText.setText('Click anywhere to start');
             assetText.setText('Load complete.');
         })
-    
-    }
+        
+    }// Fin preload
 
     create(){
         // Creamos las animaciones
->>>>>>> Stashed changes
         this.anims.create({
             key: 'bard_idle',
             frames: this.anims.generateFrameNumbers('bard_idle', { start: 1, end: 9 }),
@@ -181,7 +165,6 @@ class Scene_Boot extends Phaser.Scene {
             frameRate: 48,
             repeat: -1
         });
-<<<<<<< Updated upstream
         this.anims.create({
             key: 'bard_attack',
             frames: this.anims.generateFrameNumbers('bard_attack', { start: 0, end: 10 }),
@@ -202,31 +185,24 @@ class Scene_Boot extends Phaser.Scene {
             frameRate: 48,
             repeat: -1
         });
+        
         // this.anims.create({
         //     key: 'wizard_attack',
         //     frames: this.anims.generateFrameNumbers('wizard_attack', { start: 0, end: 0 }),
         //     frameRate: 1,
         //     repeat: -1
         // });
-        
-    }// Fin create
-
-    update(){
-        this.scene.start("scene_main_menu");
-    }// Fin upload
-}// Fin SceneBoot
-=======
 
         this.input.on('pointerdown', function () {
             if (!isLoading) {
-                this.scene.scene.start("scene_test");
+                this.scene.scene.start("scene_main_menu");
             }
         });
-    }
+        
+    } // Fin create
 
     update(){
         this.tilesprite.tilePositionX += 0.2;
         this.tilesprite.tilePositionY += 0.4;
     }
 }
->>>>>>> Stashed changes
