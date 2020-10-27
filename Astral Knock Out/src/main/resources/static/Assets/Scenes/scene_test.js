@@ -15,14 +15,15 @@ class Scene_Test extends Phaser.Scene {
         this.load.image("level_1_bg", "./Assets/Images/BackGrounds/level_1_bg.png");
         this.load.image("level_1_bg_details", "./Assets/Images/BackGrounds/level_1_bg_details.png");
         this.load.image("level_1_bg_move", "./Assets/Images/BackGrounds/level_1_bg_move.png");
-        this.load.image("level_1_trans", "./Assets/Images/BackGrounds/level_1_trans.png");
         this.load.image("level_1_fg_details", "./Assets/Images/BackGrounds/level_1_fg_details.png");
         this.load.image("level_1_fg_move", "./Assets/Images/BackGrounds/level_1_fg_move.png");
+        this.load.image("level_1_plats_floor", "./Assets/Images/BackGrounds/level_1_plats_floor.png");
         // Plataformas
         this.load.image("floor", "./Assets/Images/Platforms/floor.png");
         this.load.image("base_big_plat_2", "./Assets/Images/Platforms/base_big_plat_2.png");
         this.load.image("base_t_plat", "./Assets/Images/Platforms/base_t_plat.png");
         this.load.image("big_plat_1", "./Assets/Images/Platforms/big_plat_1.png");
+        this.load.image("level_1_trans", "./Assets/Images/Platforms/level_1_trans.png");
         this.load.image("big_plat_2", "./Assets/Images/Platforms/big_plat_2.png");
         this.load.image("plat_1", "./Assets/Images/Platforms/plat_1.png");
         this.load.image("plat_2", "./Assets/Images/Platforms/plat_2.png");
@@ -96,6 +97,7 @@ class Scene_Test extends Phaser.Scene {
             yoyo: true,
             repeat: -1
         });
+        this.add.image(0, 0, "level_1_plats_floor").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(-1);
         this.add.image(0, 0, "level_1_fg_details").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(3);
         this.fgMove = this.add.image(0, 0, "level_1_fg_move").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(4);
         this.tweens.add({
@@ -210,7 +212,7 @@ class Scene_Test extends Phaser.Scene {
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         .body.setSize(RelativeScale(385,"x"),RelativeScale(75,"y")).setOffset(0,RelativePosition(-10,"y"));
 
-        this.platforms.create(RelativePosition(949.50,"x"), RelativePosition(495.50,"y"), "base_t_plat")
+        this.platforms.create(RelativePosition(947.0,"x"), RelativePosition(511.0,"y"), "base_t_plat")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         // .body.setSize(RelativeScale(279,"x"),RelativeScale(34,"y")).setOffset(0,RelativePosition(12,"y"));
 
@@ -218,23 +220,23 @@ class Scene_Test extends Phaser.Scene {
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         .body.setSize(RelativeScale(328,"x"),RelativeScale(90,"y")).setOffset(0,RelativePosition(-10,"y"));
 
-        this.platforms.create(RelativePosition(1764.0,"x"), RelativePosition(362.5,"y"), "big_plat_2") // 1764 x 362
+        this.platforms.create(RelativePosition(1763.0,"x"), RelativePosition(370.5,"y"), "big_plat_2") // 1764 x 362
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         // .body.setSize(RelativeScale(341,"x"),RelativeScale(165,"y")).setOffset(0,RelativePosition(12,"y"));
 
-        this.platforms.create(RelativePosition(90.50,"x"), RelativePosition(437.50,"y"), "plat_1")
+        this.platforms.create(RelativePosition(90.50,"x"), RelativePosition(441.0,"y"), "plat_1")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         // .body.setSize(RelativeScale(181,"x"),RelativeScale(40,"y")).setOffset(0,RelativePosition(10,"y"));
 
-        this.platforms.create(RelativePosition(517.0,"x"), RelativePosition(194.50,"y"), "plat_2")
+        this.platforms.create(RelativePosition(517.50,"x"), RelativePosition(213.50,"y"), "plat_2")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         // .body.setSize(RelativeScale(218,"x"),RelativeScale(40,"y")).setOffset(0,RelativePosition(10,"y"));
 
-        this.platforms.create(RelativePosition(1229.50,"x"), RelativePosition(107.50,"y"), "plat_3")
+        this.platforms.create(RelativePosition(1230.50,"x"), RelativePosition(115.0,"y"), "plat_3")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         // .body.setSize(RelativeScale(207,"x"),RelativeScale(40,"y")).setOffset(0,RelativePosition(10,"y"));
 
-        this.platforms.create(RelativePosition(946.0,"x"), RelativePosition(392.0,"y"), "t_plat")
+        this.platforms.create(RelativePosition(945.50,"x"), RelativePosition(371.50,"y"), "t_plat")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         // .body.setSize(RelativeScale(56,"x"),RelativeScale(140,"y")).setOffset(0,RelativePosition(10,"y"));
 
