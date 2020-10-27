@@ -55,7 +55,7 @@ class RogueSkill extends Phaser.GameObjects.Sprite {
     Damage(target, skill){
         this.isActive = false;
         // Animación de golpe
-        this.x = RelativePosition(3000, "x");
+        this.x = RelativeScale(3000, "x");
         target.userInterface.Damage(skill.damage);
     }
 }

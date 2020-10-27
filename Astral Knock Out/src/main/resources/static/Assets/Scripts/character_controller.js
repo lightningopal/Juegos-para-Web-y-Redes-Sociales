@@ -91,7 +91,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
             });
         }
         // Mobile
-        if (options.device == "mobile" && this.mobileKeys != undefined)
+        if (game.options.device == "mobile" && this.mobileKeys != undefined)
         {
             this.mobileKeys.jumpButton.on('pointerdown',that.Jump,this);
             this.mobileKeys.jumpButton.on('pointerup',that.SetButtonNormalColor,this);
@@ -107,7 +107,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
         }
 
         // Movimiento movil
-        if (options.device == "mobile" && this.mobileKeys.joyStick != null)
+        if (game.options.device == "mobile" && this.mobileKeys.joyStick != null)
         {
             // Izquierda
             if ((this.mobileKeys.joyStick.angle < -(90) || this.mobileKeys.joyStick.angle > 135) && this.mobileKeys.joyStick.force > 16)
@@ -172,7 +172,7 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
             this.numJumps--;
         }
 
-        if (options.device == "mobile")
+        if (game.options.device == "mobile")
             this.mobileKeys.jumpButton.setFillStyle(0x888888);
     }
 

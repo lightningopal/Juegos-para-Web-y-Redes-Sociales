@@ -36,7 +36,7 @@ class BerserkerSkill extends Phaser.GameObjects.Sprite {
                 }
             }else{
                 this.isActive = false;
-                this.x = RelativePosition(3000, "x");
+                this.x = RelativeScale(3000, "x");
             }
         }else{
             this.startTime = time;
@@ -58,7 +58,7 @@ class BerserkerSkill extends Phaser.GameObjects.Sprite {
     Damage(target, skill){
         this.isActive = false;
         // Animación de golpe
-        this.x = RelativePosition(3000, "x");
+        this.x = RelativeScale(3000, "x");
         target.userInterface.Damage(skill.damage);
     }
 }

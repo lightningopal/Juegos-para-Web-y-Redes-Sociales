@@ -2,8 +2,6 @@
 // Debug
 var x = 0;
 var y = 0;
-//var rScaleX = scaleX;
-//var rScaleY = 1;
 
 class Scene_Test extends Phaser.Scene {
     constructor() {
@@ -11,81 +9,8 @@ class Scene_Test extends Phaser.Scene {
     } // Fin constructor
 
     preload() {
-        // Fondo
-        this.load.image("level_1_bg", "./Assets/Images/BackGrounds/level_1_bg.png");
-        this.load.image("level_1_bg_details", "./Assets/Images/BackGrounds/level_1_bg_details.png");
-        this.load.image("level_1_bg_move", "./Assets/Images/BackGrounds/level_1_bg_move.png");
-        this.load.image("level_1_fg_details", "./Assets/Images/BackGrounds/level_1_fg_details.png");
-        this.load.image("level_1_fg_move", "./Assets/Images/BackGrounds/level_1_fg_move.png");
-        this.load.image("level_1_plats_floor", "./Assets/Images/BackGrounds/level_1_plats_floor.png");
-        // Plataformas
-        this.load.image("floor", "./Assets/Images/Platforms/floor.png");
-        this.load.image("base_big_plat_2", "./Assets/Images/Platforms/base_big_plat_2.png");
-        this.load.image("base_t_plat", "./Assets/Images/Platforms/base_t_plat.png");
-        this.load.image("big_plat_1", "./Assets/Images/Platforms/big_plat_1.png");
-        this.load.image("level_1_trans", "./Assets/Images/Platforms/level_1_trans.png");
-        this.load.image("big_plat_2", "./Assets/Images/Platforms/big_plat_2.png");
-        this.load.image("plat_1", "./Assets/Images/Platforms/plat_1.png");
-        this.load.image("plat_2", "./Assets/Images/Platforms/plat_2.png");
-        this.load.image("plat_3", "./Assets/Images/Platforms/plat_3.png");
-        this.load.image("t_plat", "./Assets/Images/Platforms/t_plat.png");
-        this.load.image("bard", "./Assets/Images/Characters/Bard.png");
-        this.load.image("dummy", "./Assets/Images/Characters/Dummy.png");
-        this.load.image("projectile", "./Assets/Images/Tests/projectile.png")
-        // Animaciones Bardo
-        this.load.spritesheet("bard_idle", "./Assets/Images/Characters/Animations/IdleAnimation_Bardo.png", { frameWidth: 170, frameHeight: 170 });
-        this.load.spritesheet("bard_walk", "./Assets/Images/Characters/Animations/WalkAnimation_Bardo.png", { frameWidth: 170, frameHeight: 170 });
-        
-
-        // Mover a escena inicial
-        var os = this.sys.game.device.os;
-        if (os.android || os.iOS || os.iPad || os.iPhone)
-            options.device = "mobile";
-        else
-            options.device = "desktop";
-
-        this.cursors1 = this.input.keyboard.addKeys({
-            'jump': cursors1Keys.jump,
-            'fall': cursors1Keys.fall,
-            'left': cursors1Keys.left,
-            'right': cursors1Keys.right,
-            'basicAttack': cursors1Keys.basicAttack,
-            'specialAttack': cursors1Keys.specialAttack,
-        });
-
-        this.cursors2 = this.input.keyboard.addKeys({
-            'jump': cursors2Keys.jump,
-            'fall': cursors1Keys.fall,
-            'left': cursors2Keys.left,
-            'right': cursors2Keys.right,
-            'basicAttack': cursors2Keys.basicAttack,
-            'specialAttack': cursors2Keys.specialAttack,
-        });
-
-        if (options.device == "mobile") {
-            var url;
-            url = './Assets/Plugins/rexvirtualjoystickplugin.min.js';
-            this.load.plugin('rexvirtualjoystickplugin', url, true);
-        }
-        
-    } // Fin preload
-
-    create() {
         var that = this;
-        // Creamos las animaciones
-        this.anims.create({
-            key: 'bard_idle',
-            frames: this.anims.generateFrameNumbers('bard_idle', { start: 1, end: 9 }),
-            frameRate: 8,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'bard_walk',
-            frames: this.anims.generateFrameNumbers('bard_walk', { start: 0, end: 10 }),
-            frameRate: 48,
-            repeat: -1
-        });
-
+        
         this.add.image(0, 0, "level_1_bg").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(-5);
         this.add.image(0, 0, "level_1_bg_details").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(-3);
         this.bgMove = this.add.image(0, 0, "level_1_bg_move").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(-2);
@@ -108,6 +33,26 @@ class Scene_Test extends Phaser.Scene {
             yoyo: true,
             repeat: -1
         });
+
+        this.cursors1 = this.input.keyboard.addKeys({
+            'jump': game.cursors1Keys.jump,
+            'fall': game.cursors1Keys.fall,
+            'left': game.cursors1Keys.left,
+            'right': game.cursors1Keys.right,
+            'basicAttack': game.cursors1Keys.basicAttack,
+            'specialAttack': game.cursors1Keys.specialAttack,
+        });
+
+        if (game.options.device == "mobile") {
+            var url;
+            url = './Assets/Plugins/rexvirtualjoystickplugin.min.js';
+            this.load.plugin('rexvirtualjoystickplugin', url, true);
+        }
+        
+    } // Fin preload
+
+    create() {
+        
         // Create mobileKeys
         this.mobileKeys = {
             joyStick : null,
@@ -115,13 +60,13 @@ class Scene_Test extends Phaser.Scene {
         };
 
         // Si el dispositivo es movil, añadir un joystick y un boton
-        if (options.device == "mobile") {
+        if (game.options.device == "mobile") {
             this.mobileKeys.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
-                x: RelativePosition(100, "x"),
-                y: RelativePosition(630, "y"),
+                x: RelativeScale(100, "x"),
+                y: RelativeScale(630, "y"),
                 radius: 15,
-                base: this.add.circle(0, 0, RelativePosition(60, "x"), 0x888888).setAlpha(0.7).setScale(RelativeScale()).setDepth(1000),
-                thumb: this.add.circle(0, 0, RelativePosition(45, "x"), 0xcccccc).setAlpha(0.7).setScale(RelativeScale()).setDepth(1001),
+                base: this.add.circle(0, 0, RelativeScale(60, "x"), 0x888888).setAlpha(0.7).setScale(RelativeScale()).setDepth(1000),
+                thumb: this.add.circle(0, 0, RelativeScale(45, "x"), 0xcccccc).setAlpha(0.7).setScale(RelativeScale()).setDepth(1001),
                 // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
                 // forceMin: 16,
                 // enable: true
@@ -130,20 +75,16 @@ class Scene_Test extends Phaser.Scene {
             this.text = this.add.text(0, 0);
             this.dumpJoyStickState();
 
-            this.mobileKeys.jumpButton = this.add.circle(RelativePosition(1160, "x"), RelativePosition(630, "y"), 20, 0xdddddd).setAlpha(0.7).setScale(RelativeScale()).setDepth(1000).setInteractive();
+            this.mobileKeys.jumpButton = this.add.circle(RelativeScale(1160, "x"), RelativeScale(630, "y"), 20, 0xdddddd).setAlpha(0.7).setScale(RelativeScale()).setDepth(1000).setInteractive();
             
             this.input.addPointer(2);
         }
 
         // Dummy de prácticas
-        this.dummy = this.physics.add.image(RelativePosition(1500, "x"), RelativePosition(940, "y"), "dummy")
+        this.dummy = this.physics.add.image(RelativeScale(1500, "x"), RelativeScale(940, "y"), "dummy")
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        var dummyBar = new UserInterface(this, this.dummy, 100, 0);
-        this.dummy.userInterface = dummyBar; 
-        // this.dummy = new Character_Controller(this, 0, RelativePosition(1500, "x"), 
-        // RelativePosition(500, "y"), "dummy", RelativeScale(), undefined, 
-        // undefined, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, undefined, undefined)
-        // .setScale(RelativeScale(1, "x"), RelativeScale(1.3, "y"));
+        this.dummyBar = new UserInterface(this, this.dummy, 100, 0);
+        this.dummy.userInterface = this.dummyBar; 
         this.dummy.body.debugBodyColor = 0xff0000;
         // Pool de habilidades
         /*Bardo*/
@@ -187,58 +128,58 @@ class Scene_Test extends Phaser.Scene {
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         /**/
         // Se añade el pool a un array y se pasa al arma del personaje (que maneja el id del ataque a lanzar)
-        var bardBasicAttacks = [this.bardAttack1, this.bardAttack2];
+        this.bardBasicAttacks = [this.bardAttack1, this.bardAttack2];
         // var berserkerBasicAttacks = [this.berserkerAttack1, this.berserkerAttack2];
         // var wizardBasicAttacks = [this.wizardAttack1,this.wizardAttack2,this.wizardAttack3, 
             // this.wizardAttack4,this.wizardAttack5,this.wizardAttack6];
         // var rogueBasicAttacks = [this.rogueAttack1,this.rogueAttack2,this.rogueAttack3, 
         //     this.rogueAttack4,this.rogueAttack5,this.rogueAttack6];
-        var basicWeapon = new Weapon(this, 700, bardBasicAttacks, 1);
+        this.basicWeapon = new Weapon(this, 700, this.bardBasicAttacks, 1);
         // Crear el personaje
-        var myPlayer = new Character_Controller(this, 0, RelativePosition(250, "x"),
-        RelativePosition(850, "y"), "bard", RelativeScale(), this.cursors1, 
-        this.mobileKeys, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, basicWeapon, basicWeapon)
+        this.myPlayer = new Character_Controller(this, 0, RelativeScale(250, "x"),
+        RelativeScale(850, "y"), "bard", RelativeScale(), this.cursors1, 
+        this.mobileKeys, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, this.basicWeapon, this.basicWeapon)
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
         //Plataformas
-        this.transimage = this.physics.add.image(RelativePosition(522.50, "x"), RelativePosition(889.0, "y"), "level_1_trans").setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(2);
+        this.transimage = this.physics.add.image(RelativeScale(522.50, "x"), RelativeScale(889.0, "y"), "level_1_trans").setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(2);
         
         this.platforms = this.physics.add.staticGroup();
-        this.platforms.create(RelativePosition(960.0,"x"), RelativePosition(1038.0,"y"), "floor")
+        this.platforms.create(RelativeScale(960.0,"x"), RelativeScale(1038.0,"y"), "floor")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody().setDepth(-1)
-        .body.setSize(RelativeScale(1920,"x"),RelativeScale(84,"y")).setOffset(0,RelativePosition(20,"y"));
+        .body.setSize(RelativeScale(1920,"x"),RelativeScale(84,"y")).setOffset(0,RelativeScale(20,"y"));
 
-        this.platforms.create(RelativePosition(1527.5,"x"), RelativePosition(747.50,"y"), "base_big_plat_2")
+        this.platforms.create(RelativeScale(1527.5,"x"), RelativeScale(747.50,"y"), "base_big_plat_2")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        .body.setSize(RelativeScale(385,"x"),RelativeScale(75,"y")).setOffset(0,RelativePosition(-10,"y"));
+        .body.setSize(RelativeScale(385,"x"),RelativeScale(75,"y")).setOffset(0,RelativeScale(-10,"y"));
 
-        this.platforms.create(RelativePosition(947.0,"x"), RelativePosition(511.0,"y"), "base_t_plat")
+        this.platforms.create(RelativeScale(947.0,"x"), RelativeScale(511.0,"y"), "base_t_plat")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        // .body.setSize(RelativeScale(279,"x"),RelativeScale(34,"y")).setOffset(0,RelativePosition(12,"y"));
+        // .body.setSize(RelativeScale(279,"x"),RelativeScale(34,"y")).setOffset(0,RelativeScale(12,"y"));
 
-        this.platforms.create(RelativePosition(503.0,"x"), RelativePosition(717.50,"y"), "big_plat_1") // 502.5 x 707
+        this.platforms.create(RelativeScale(503.0,"x"), RelativeScale(717.50,"y"), "big_plat_1") // 502.5 x 707
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        .body.setSize(RelativeScale(328,"x"),RelativeScale(90,"y")).setOffset(0,RelativePosition(-10,"y"));
+        .body.setSize(RelativeScale(328,"x"),RelativeScale(90,"y")).setOffset(0,RelativeScale(-10,"y"));
 
-        this.platforms.create(RelativePosition(1763.0,"x"), RelativePosition(370.5,"y"), "big_plat_2") // 1764 x 362
+        this.platforms.create(RelativeScale(1763.0,"x"), RelativeScale(370.5,"y"), "big_plat_2") // 1764 x 362
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        // .body.setSize(RelativeScale(341,"x"),RelativeScale(165,"y")).setOffset(0,RelativePosition(12,"y"));
+        // .body.setSize(RelativeScale(341,"x"),RelativeScale(165,"y")).setOffset(0,RelativeScale(12,"y"));
 
-        this.platforms.create(RelativePosition(90.50,"x"), RelativePosition(441.0,"y"), "plat_1")
+        this.platforms.create(RelativeScale(90.50,"x"), RelativeScale(441.0,"y"), "plat_1")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        // .body.setSize(RelativeScale(181,"x"),RelativeScale(40,"y")).setOffset(0,RelativePosition(10,"y"));
+        // .body.setSize(RelativeScale(181,"x"),RelativeScale(40,"y")).setOffset(0,RelativeScale(10,"y"));
 
-        this.platforms.create(RelativePosition(517.50,"x"), RelativePosition(213.50,"y"), "plat_2")
+        this.platforms.create(RelativeScale(517.50,"x"), RelativeScale(213.50,"y"), "plat_2")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        // .body.setSize(RelativeScale(218,"x"),RelativeScale(40,"y")).setOffset(0,RelativePosition(10,"y"));
+        // .body.setSize(RelativeScale(218,"x"),RelativeScale(40,"y")).setOffset(0,RelativeScale(10,"y"));
 
-        this.platforms.create(RelativePosition(1230.50,"x"), RelativePosition(115.0,"y"), "plat_3")
+        this.platforms.create(RelativeScale(1230.50,"x"), RelativeScale(115.0,"y"), "plat_3")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        // .body.setSize(RelativeScale(207,"x"),RelativeScale(40,"y")).setOffset(0,RelativePosition(10,"y"));
+        // .body.setSize(RelativeScale(207,"x"),RelativeScale(40,"y")).setOffset(0,RelativeScale(10,"y"));
 
-        this.platforms.create(RelativePosition(945.50,"x"), RelativePosition(371.50,"y"), "t_plat")
+        this.platforms.create(RelativeScale(945.50,"x"), RelativeScale(371.50,"y"), "t_plat")
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        // .body.setSize(RelativeScale(56,"x"),RelativeScale(140,"y")).setOffset(0,RelativePosition(10,"y"));
+        // .body.setSize(RelativeScale(56,"x"),RelativeScale(140,"y")).setOffset(0,RelativeScale(10,"y"));
 
         this.hidePlatforms = [this.transimage];
         this.hidePlatforms.forEach(platform => {
@@ -247,12 +188,12 @@ class Scene_Test extends Phaser.Scene {
         });
 
         //Colisiones
-        var characters = [myPlayer, this.dummy/**, enemyPlayer/**/];
-        var bullets = [];
+        this.characters = [this.myPlayer, this.dummy/**, enemyPlayer/**/];
+        this.bullets = [];
 
         //this.physics.add.overlap(this.characters, this.bullets, this.BulletHit, player, bullet);
-        this.physics.add.collider(characters, this.platforms);
-        this.physics.add.overlap(characters, this.hidePlatforms);
+        this.physics.add.collider(this.characters, this.platforms);
+        this.physics.add.overlap(this.characters, this.hidePlatforms);
     } // Fin create
 
     update() {

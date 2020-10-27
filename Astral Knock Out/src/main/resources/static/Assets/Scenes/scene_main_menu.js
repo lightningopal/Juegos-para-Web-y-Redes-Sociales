@@ -5,12 +5,13 @@ class Scene_Main_Menu extends Phaser.Scene {
     } // Fin constructor
 
     preload() {
-        // Carga de Imágenes
-        this.load.image("main_menu-bg", "./Assets/Images/Tests/test_bg/MainMenu-BG.jpg");
+        var that = this;
+        //Creación de imágenes
+        this.background = this.add.image(0, 0, "main_menu-bg").setOrigin(0,0)
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         
         // Teclas
         this.cursors;
-
         // Opciones de selección
         this.optionSelectedRow;
         this.optionSelectedCol;
@@ -18,15 +19,12 @@ class Scene_Main_Menu extends Phaser.Scene {
 
     create() {
         var that = this;
-        //Fondo
-        this.background = this.add.image(0, 0, "main_menu-bg").setOrigin(0,0)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
         this.cursors = this.input.keyboard.addKeys({
-            'up': cursors1Keys.jump,
-            'down': cursors1Keys.fall,
-            'left': cursors1Keys.left,
-            'right': cursors1Keys.right,
+            'up': game.cursors1Keys.jump,
+            'down': game.cursors1Keys.fall,
+            'left': game.cursors1Keys.left,
+            'right': game.cursors1Keys.right,
             'enter': Phaser.Input.Keyboard.KeyCodes.ENTER,
             'escape': Phaser.Input.Keyboard.KeyCodes.ESC,
         });
@@ -99,4 +97,4 @@ class Scene_Main_Menu extends Phaser.Scene {
     update() {
     } // Fin update
 
-}
+}// Fin Scene_Main_Menu

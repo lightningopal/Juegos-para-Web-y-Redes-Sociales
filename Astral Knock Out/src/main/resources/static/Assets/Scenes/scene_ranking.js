@@ -5,8 +5,9 @@ class Scene_Ranking extends Phaser.Scene {
     } // Fin constructor
 
     preload() {
-        // Carga de Imágenes
-        this.load.image("ranking-bg", "./Assets/Images/Tests/test_bg/Ranking-BG.jpg");
+        //Creación de imágenes
+        this.background = this.add.image(0, 0, "ranking-bg").setOrigin(0,0)
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
         // Teclas
         this.cursors;
@@ -14,9 +15,6 @@ class Scene_Ranking extends Phaser.Scene {
 
     create() {
         var that = this;
-        //Fondo
-        this.background = this.add.image(0, 0, "ranking-bg").setOrigin(0,0)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
         // Opciones de selección
         this.cursors = this.input.keyboard.addKeys({
@@ -32,4 +30,4 @@ class Scene_Ranking extends Phaser.Scene {
     update() {
     } // Fin update
 
-}
+}// Fin Scene_Ranking
