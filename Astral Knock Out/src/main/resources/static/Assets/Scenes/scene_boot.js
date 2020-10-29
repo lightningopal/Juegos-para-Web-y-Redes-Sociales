@@ -9,7 +9,7 @@ class Scene_Boot extends Phaser.Scene {
                 files: [
                     {
                         type: 'image',
-                        key: 'simple-bg',
+                        key: 'simple_bg',
                         url: './Assets/Images/BackGrounds/simple_bg.png'
                     },
                     {
@@ -24,10 +24,11 @@ class Scene_Boot extends Phaser.Scene {
 
     preload(){
         // Background
-        this.add.image(0, 0, "simple-bg").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
+        this.add.image(0, 0, "simple_bg").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
         this.tilesprite = this.add.tileSprite(0, 0, RelativeScale(1920, "x"), RelativeScale(1080, "y"), "stars").setOrigin(0,0);
 
         /// Barra de carga ///
+
         let loadingBar = this.add.graphics({
             lineStyle: {
                 width: 5,
@@ -43,7 +44,7 @@ class Scene_Boot extends Phaser.Scene {
             y: this.game.renderer.height / 2 - 30,
             text: 'Please wait...',
             style: {
-                font: '24px font_Elektora',
+                font: '24px font_Ftb',
                 fill: '#ffffff'
             }
         });
@@ -54,7 +55,7 @@ class Scene_Boot extends Phaser.Scene {
             y: this.game.renderer.height / 2 + 20,
             text: '0%',
             style: {
-                font: '20px font_Elektora',
+                font: '20px font_Ftb',
                 fill: '#000000'
             }
         });
@@ -65,7 +66,7 @@ class Scene_Boot extends Phaser.Scene {
             y: this.game.renderer.height / 2 + 70,
             text: '',
             style: {
-                font: '24px font_Elektora',
+                font: '24px font_Ftb',
                 fill: '#ffffff'
             }
         });
@@ -118,10 +119,18 @@ class Scene_Boot extends Phaser.Scene {
         this.load.image("main_menu_stars", "./Assets/Images/BackGrounds/main_menu_stars.png");
         this.load.image("main_menu_interface", "./Assets/Images/UI/main_menu_interface.png");
 
+        this.load.spritesheet("tournament_button", "./Assets/Images/UI/tournament_button.png", { frameWidth: 972.5, frameHeight: 125 });
+        this.load.spritesheet("gym_button", "./Assets/Images/UI/gym_button.png", { frameWidth: 976, frameHeight: 135 });
+        this.load.spritesheet("ranking_button", "./Assets/Images/UI/ranking_button.png", { frameWidth: 814, frameHeight: 122 });
+        this.load.spritesheet("credits_button", "./Assets/Images/UI/credits_button.png", { frameWidth: 173, frameHeight: 155 });
+        this.load.spritesheet("options_button", "./Assets/Images/UI/options_button.png", { frameWidth: 169, frameHeight: 167 });
+		
         ///Escena de Ranking///
         this.load.image("ranking-bg", "./Assets/Images/Tests/test_bg/Ranking-BG.jpg");
 
         ///Escena de Opciones///
+        this.load.image("options_interface", "./Assets/Images/UI/options_interface.png");
+        this.load.spritesheet("volume_button", "./Assets/Images/UI/volume_button.png", { frameWidth: 76, frameHeight: 143 });
 
         ///Escena de Créditos///
         this.load.image("credits-bg", "./Assets/Images/Tests/test_bg/Credits-BG.jpg");
@@ -211,7 +220,6 @@ class Scene_Boot extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('wizard_attack', { start: 0, end: 10 }),
             frameRate: 1,
             repeat: -1
-
         });
 
         switch (game.global.DEVICE){
@@ -238,7 +246,7 @@ class Scene_Boot extends Phaser.Scene {
     } // Fin create
 
     update(){
-        this.tilesprite.tilePositionX += RelativeScale(0.2, "x");
-        this.tilesprite.tilePositionY += RelativeScale(0.4, "y");
+        this.tilesprite.tilePositionX += 0.2;
+        this.tilesprite.tilePositionY += 0.4;
     }
 }
