@@ -240,6 +240,16 @@ class Character_Controller extends Phaser.GameObjects.Sprite {
                     this.anims.play('bard_walk', true);
                 }
             break;
+            case "wizard":
+                if (Math.abs(this.body.velocity.x) <= 10)
+                {
+                    this.anims.play('wizard_idle', true);
+                }
+                else
+                {
+                    this.anims.play('wizard_walk', true);
+                }
+            break;
         }
     }
 

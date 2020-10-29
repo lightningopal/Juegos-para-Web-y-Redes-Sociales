@@ -28,6 +28,7 @@ window.onload = function () {
         scene: [Scene_Boot,
             Scene_Test,
             Scene_Main_Menu,
+            Scene_Options,
             Scene_Ranking,
             Scene_Credits,
             Scene_Select_Character,
@@ -52,6 +53,7 @@ window.onload = function () {
         scene: [Scene_Boot,
             Scene_Test,
             Scene_Main_Menu,
+            Scene_Options,
             Scene_Ranking,
             Scene_Credits,
             Scene_Select_Character,
@@ -72,7 +74,8 @@ window.onload = function () {
         FPS:            60,
         DEBUG_MODE:     false,
         WS_CONNECTION:  false,
-        socket:         null
+        socket:         null,
+        IP:             "192.168.1.35"
     }
 
     this.game.options = {
@@ -81,15 +84,9 @@ window.onload = function () {
         fullScreen:     false
     }
 
-    this.game.cursors1Keys = {
-        jump:           Phaser.Input.Keyboard.KeyCodes.W,
-        fall:           Phaser.Input.Keyboard.KeyCodes.S,
-        left:           Phaser.Input.Keyboard.KeyCodes.A,
-        right:          Phaser.Input.Keyboard.KeyCodes.D,
-        basicAttack:    Phaser.Input.Keyboard.KeyCodes.O,
-        specialAttack:  Phaser.Input.Keyboard.KeyCodes.P
-    };
+    
 
+    /*
     this.game.server = {
         serverIP:       "192.168.1.35",
         playerID:       -1,
@@ -98,6 +95,35 @@ window.onload = function () {
         characterSel:   -1,
         playerName:     "",
         playerPassword: ""
+    };
+    */
+
+    this.game.mPlayer = {
+        id:             -1,
+        userName:       undefined, // String
+        password:       undefined, // String
+        currency:       0,
+        availableChar:  [],
+        availableSkins: [],
+        ranking: {
+            position:   0,
+            wins:       0,
+            loses:      0,
+            score:      0
+        },
+        characterSel:   undefined, // String
+        skillSel:       -1,
+        difficultySel:  -1,
+        isReady:        false
+    };
+
+    this.game.cursors1Keys = {
+        jump:           Phaser.Input.Keyboard.KeyCodes.W,
+        fall:           Phaser.Input.Keyboard.KeyCodes.S,
+        left:           Phaser.Input.Keyboard.KeyCodes.A,
+        right:          Phaser.Input.Keyboard.KeyCodes.D,
+        basicAttack:    Phaser.Input.Keyboard.KeyCodes.O,
+        specialAttack:  Phaser.Input.Keyboard.KeyCodes.P
     };
 
     if (this.isMobile) {

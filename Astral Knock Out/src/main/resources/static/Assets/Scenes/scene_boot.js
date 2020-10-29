@@ -108,22 +108,27 @@ class Scene_Boot extends Phaser.Scene {
         ///Escena de Inicio de Empresa, Boot///
 
         ///Escena de Inicio de Sesión///
-        this.load.image("simple-bg", "./Assets/Images/BackGrounds/simple_bg.png");
+        this.load.image("simple_bg", "./Assets/Images/BackGrounds/simple_bg.png");
         this.load.image("stars", "./Assets/Images/BackGrounds/stars.png");
 
         ///Escena de Main Menú///
-        this.load.image("main_menu-bg", "./Assets/Images/Tests/test_bg/MainMenu-BG.jpg");
+        this.load.image("main_menu_bg", "./Assets/Images/BackGrounds/main_menu_bg.png");
+        this.load.image("main_menu_nebula", "./Assets/Images/BackGrounds/main_menu_nebula.png");
+        this.load.image("main_menu_stars", "./Assets/Images/BackGrounds/main_menu_stars.png");
+        this.load.image("main_menu_interface", "./Assets/Images/UI/main_menu_interface.png");
+
+        this.load.spritesheet("gym_button", "./Assets/Images/UI/gym_button.png", { frameWidth: 976, frameHeight: 135 });
 
         ///Escena de Ranking///
-        this.load.image("ranking-bg", "./Assets/Images/Tests/test_bg/Ranking-BG.jpg");
+        this.load.image("ranking_bg", "./Assets/Images/Tests/test_bg/Ranking-BG.jpg");
 
         ///Escena de Opciones///
 
         ///Escena de Créditos///
-        this.load.image("credits-bg", "./Assets/Images/Tests/test_bg/Credits-BG.jpg");
+        this.load.image("credits_bg", "./Assets/Images/Tests/test_bg/Credits-BG.jpg");
         
         ///Escena de Selección de Personaje, Habilidad y Escenario///
-        this.load.image("select_character-bg", "./Assets/Images/Tests/test_bg/SelectCharacter-BG.jpg");
+        this.load.image("select_character_bg", "./Assets/Images/Tests/test_bg/SelectCharacter-BG.jpg");
 
         ///Nivel 1///
         // Fondo
@@ -188,13 +193,13 @@ class Scene_Boot extends Phaser.Scene {
         this.anims.create({
             key: 'wizard_idle',
             frames: this.anims.generateFrameNumbers('wizard_idle', { start: 0, end: 9 }),
-            frameRate: 1,
+            frameRate: 8,
             repeat: -1
         });
         this.anims.create({
             key: 'wizard_walk',
             frames: this.anims.generateFrameNumbers('wizard_walk', { start: 0, end: 9 }),
-            frameRate: 1,
+            frameRate: 12,
             repeat: -1
         });
         

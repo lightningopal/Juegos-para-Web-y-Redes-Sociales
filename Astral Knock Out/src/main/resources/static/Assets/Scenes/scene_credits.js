@@ -6,7 +6,7 @@ class Scene_Credits extends Phaser.Scene {
 
     preload() {
         //Creación de imágenes
-        this.background = this.add.image(0, 0, "credits-bg").setOrigin(0,0)
+        this.background = this.add.image(0, 0, "credits_bg").setOrigin(0,0)
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
         // Teclas

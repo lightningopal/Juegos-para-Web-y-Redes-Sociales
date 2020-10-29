@@ -6,7 +6,7 @@ class Scene_Ranking extends Phaser.Scene {
 
     preload() {
         //Creación de imágenes
-        this.background = this.add.image(0, 0, "ranking-bg").setOrigin(0,0)
+        this.background = this.add.image(0, 0, "ranking_bg").setOrigin(0,0)
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
         // Teclas
