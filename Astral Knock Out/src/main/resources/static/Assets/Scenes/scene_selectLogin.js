@@ -11,11 +11,45 @@ class Scene_SelectLogin extends Phaser.Scene {
         this.stars = this.add.tileSprite(0, 0, RelativeScale(1920, "x"), RelativeScale(1080, "y"), "stars")
             .setOrigin(0, 0);
 
+        this.add.image(0, 0, "account_bg").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));;
+
         // Teclas
         this.cursors;
 
         // Opciones de selección
         this.optionSelected;
+
+        // WEBSOCKETS
+        game.global.socket = new WebSocket("wss://" + game.global.IP + ":8080/ako")
+
+        game.global.socket.onopen = () => {
+	        if (game.global.DEBUG_MODE) {
+	            console.log('[DEBUG] WebSocket connection opened.');
+	        }
+
+	        game.global.WS_CONNECTION = true;
+	        //this.scene.start('MatchmakingScene')
+
+	        // In case JOIN message from server failed, we force it
+	        if (typeof game.mPlayer.id == 'undefined') {
+	            if (game.global.DEBUG_MODE) {
+	                console.log("[DEBUG] Forcing joining server...");
+	            }
+	            let message = {
+	                event: 'JOIN'
+	            }
+	            game.global.socket.send(JSON.stringify(message));
+	        }
+	    }
+
+	    game.global.socket.onclose = () => {
+	        if (game.global.DEBUG_MODE) {
+	            console.log('[DEBUG] WebSocket connection closed.');
+	        }
+
+	        game.global.WS_CONNECTION = false;
+	    }
+
     } // Fin preload
 
     create() {
@@ -42,6 +76,7 @@ class Scene_SelectLogin extends Phaser.Scene {
 
         this.cursors.enter.on('down', function (event) {
             that.input.keyboard.removeAllKeys(true);
+            that.game.global.logInOption = that.optionSelected;
             that.scene.start("scene_account");
         });
 

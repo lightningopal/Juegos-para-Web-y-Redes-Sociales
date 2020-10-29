@@ -70,7 +70,7 @@ public class AKO_Server implements WebSocketConfigurer {
 
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(echoHandler(), "/echo").setAllowedOrigins("*");
+		registry.addHandler(echoHandler(), "/ako").setAllowedOrigins("*");
 	}
 
 	@Bean

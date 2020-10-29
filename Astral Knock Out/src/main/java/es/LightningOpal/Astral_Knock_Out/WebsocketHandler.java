@@ -23,16 +23,17 @@ public class WebsocketHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception
 	{
 		User user = new User(userId.incrementAndGet(), session);
-		session.getAttributes().put(USER_ATTRIBUTE, user);
+		//session.getAttributes().put(USER_ATTRIBUTE, user);
 		
 		ObjectNode msg = mapper.createObjectNode();
-		msg.put("event", "LOGIN");
+		msg.put("event", "JOIN");
 		msg.put("id", user.getUserId());
 		user.getSession().sendMessage(new TextMessage(msg.toString()));
 		
+		System.out.println("Conectado " + user.getUserId());
 		//game.addPlayer(player);
 		
-		UsersController.ConnectNewUser("playerConnectedName");
+		//UsersController.ConnectNewUser("playerConnectedName");
 	}
 	
 	@Override

@@ -80,10 +80,11 @@ window.onload = function () {
     this.game.global = {
         DEVICE:         null,
         FPS:            60,
-        DEBUG_MODE:     false,
+        DEBUG_MODE:     true,
         WS_CONNECTION:  false,
         socket:         null,
-        IP:             "192.168.1.35"
+        IP:             "192.168.1.35",
+        logInOption:    0
     }
 
     this.game.options = {
