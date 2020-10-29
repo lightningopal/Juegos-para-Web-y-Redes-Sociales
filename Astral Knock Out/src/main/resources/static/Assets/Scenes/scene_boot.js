@@ -33,6 +33,7 @@ class Scene_Boot extends Phaser.Scene {
         ///Escena de Inicio de Sesión///
         this.load.image("simple-bg", "./Assets/Images/BackGrounds/simple_bg.png");
         this.load.image("stars", "./Assets/Images/BackGrounds/stars.png");
+        this.load.spritesheet('textBox', './Assets/Images/UI/TextBox.png', { frameWidth: 400, frameHeight: 63, startFrame: 0, endFrame: 5 });
 
         ///Escena de Main Menú///
         this.load.image("main_menu-bg", "./Assets/Images/Tests/test_bg/MainMenu-BG.jpg");
@@ -80,9 +81,13 @@ class Scene_Boot extends Phaser.Scene {
         this.load.spritesheet("wizard_walk", "./Assets/Images/Characters/Animations/WalkAnimation_Wizard.png", { frameWidth: 140, frameHeight: 150 });
         // this.load.spritesheet("wizard_attack", "./Assets/Images/Characters/Animations/AttackAnimation_Wizard.png", { frameWidth: 170, frameHeight: 170 });
 
+
         ///Escena de Fin de Partida///
 
-        /// Barra de carga
+        /// Formulario ///
+        this.load.html('nameform', './Assets/Text/loginform.html');
+
+        /// Barra de carga ///
         let loadingBar = this.add.graphics({
             lineStyle: {
                 width: 5,
@@ -185,7 +190,7 @@ class Scene_Boot extends Phaser.Scene {
             frameRate: 48,
             repeat: -1
         });
-        
+
         // this.anims.create({
         //     key: 'wizard_attack',
         //     frames: this.anims.generateFrameNumbers('wizard_attack', { start: 0, end: 0 }),
@@ -195,14 +200,14 @@ class Scene_Boot extends Phaser.Scene {
 
         this.input.on('pointerdown', function () {
             if (!isLoading) {
-                this.scene.scene.start("scene_main_menu");
+                this.scene.scene.start("scene_account");
             }
         });
         
     } // Fin create
 
     update(){
-        this.tilesprite.tilePositionX += 0.2;
-        this.tilesprite.tilePositionY += 0.4;
+        this.tilesprite.tilePositionX += RelativeScale(0.2, "x");
+        this.tilesprite.tilePositionY += RelativeScale(0.4, "y");
     }
 }

@@ -24,6 +24,9 @@ window.onload = function () {
                 debug: true
             }
         },
+        dom: {
+            createContainer: true
+        },
         parent: 'game', // Create the game inside the <div id="game">
         scene: [Scene_Boot,
             Scene_Test,
@@ -31,7 +34,8 @@ window.onload = function () {
             Scene_Ranking,
             Scene_Credits,
             Scene_Select_Character,
-            Scene_Account
+            Scene_Account,
+            Scene_SelectLogin
         ]
     };
 
@@ -48,6 +52,9 @@ window.onload = function () {
                 debug: true
             }
         },
+        dom: {
+            createContainer: true
+        },
         parent: 'game', // Create the game inside the <div id="game">
         scene: [Scene_Boot,
             Scene_Test,
@@ -55,7 +62,8 @@ window.onload = function () {
             Scene_Ranking,
             Scene_Credits,
             Scene_Select_Character,
-            Scene_Account
+            Scene_Account,
+            Scene_SelectLogin
         ]
     };
 
