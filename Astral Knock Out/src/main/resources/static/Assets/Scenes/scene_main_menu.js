@@ -16,7 +16,16 @@ class Scene_Main_Menu extends Phaser.Scene {
         this.add.image(RelativeScale(960.0,"x"), RelativeScale(658.50,"y"), "main_menu_interface")
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         
-        this.gym_btn = this.add.image(RelativeScale(960.0,"x"), RelativeScale(796.50,"y"), "gym_button")
+        this.tournamentBtn = this.add.image(RelativeScale(959.5,"x"), RelativeScale(634.50,"y"), "tournament_button")
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.tournamentBtn.setFrame(1);
+        this.gymBtn = this.add.image(RelativeScale(960.0,"x"), RelativeScale(796.50,"y"), "gym_button")
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.rankingBtn = this.add.image(RelativeScale(960.0,"x"), RelativeScale(982.70,"y"), "ranking_button")
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.creditsBtn = this.add.image(RelativeScale(1801.0,"x"), RelativeScale(887.70,"y"), "credits_button")
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.optionsBtn = this.add.image(RelativeScale(138.50,"x"), RelativeScale(889.0,"y"), "options_button")
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         // Teclas
         this.cursors;
@@ -55,8 +64,7 @@ class Scene_Main_Menu extends Phaser.Scene {
         this.cursors.right.on('down', function(event){
             that.optionSelectedCol = (that.optionSelectedCol + 1) % 3;
             console.log("COL: "+that.optionSelectedCol);
-            // that.gym_btn.setFrame(1);
-            
+            that.CheckOption();
         });
         this.cursors.left.on('down', function(event){
             if (that.optionSelectedCol >= 1){
@@ -65,6 +73,7 @@ class Scene_Main_Menu extends Phaser.Scene {
                 that.optionSelectedCol = 2
             }
             console.log("COL: "+that.optionSelectedCol);
+            that.CheckOption();
         });
 
         this.cursors.up.on('down', function(event){
@@ -75,12 +84,14 @@ class Scene_Main_Menu extends Phaser.Scene {
                     that.optionSelectedRow = 2;
                 }
                 console.log("ROW: "+that.optionSelectedRow);
+                that.CheckOption();
             }
         });
         this.cursors.down.on('down', function(event){
             if (that.optionSelectedCol == 1){
                 that.optionSelectedRow = (that.optionSelectedRow + 1) % 3;
                 console.log("ROW: "+that.optionSelectedRow);
+                that.CheckOption();
             }
         });
         
@@ -114,7 +125,6 @@ class Scene_Main_Menu extends Phaser.Scene {
                 default:
                     break;
             }
-            
         });
         this.cursors.escape.on('down', function(event){
             that.input.keyboard.removeAllKeys(true);
@@ -124,5 +134,52 @@ class Scene_Main_Menu extends Phaser.Scene {
 
     update() {
     } // Fin update
+
+    CheckOption(){
+        switch(this.optionSelectedCol){
+            case 0:
+                // Options
+                this.tournamentBtn.setFrame(0);
+                    this.gymBtn.setFrame(0);
+                    this.rankingBtn.setFrame(0);
+                    this.optionsBtn.setFrame(1);
+                    this.creditsBtn.setFrame(0);
+                break;
+            case 1:
+                if (this.optionSelectedRow == 0){
+                    // Tournament
+                    this.tournamentBtn.setFrame(1);
+                    this.gymBtn.setFrame(0);
+                    this.rankingBtn.setFrame(0);
+                    this.optionsBtn.setFrame(0);
+                    this.creditsBtn.setFrame(0);
+                }else if (this.optionSelectedRow == 1){
+                    // Space Gym
+                    this.tournamentBtn.setFrame(0);
+                    this.gymBtn.setFrame(1);
+                    this.rankingBtn.setFrame(0);
+                    this.optionsBtn.setFrame(0);
+                    this.creditsBtn.setFrame(0);
+                }else {
+                    // Ranking
+                    this.tournamentBtn.setFrame(0);
+                    this.gymBtn.setFrame(0);
+                    this.rankingBtn.setFrame(1);
+                    this.optionsBtn.setFrame(0);
+                    this.creditsBtn.setFrame(0);
+                }
+                break;
+            case 2:
+                // Credits
+                this.tournamentBtn.setFrame(0);
+                    this.gymBtn.setFrame(0);
+                    this.rankingBtn.setFrame(0);
+                    this.optionsBtn.setFrame(0);
+                    this.creditsBtn.setFrame(1);
+                break;
+            default:
+                break;
+        }
+    }// Fin CheckOption
 
 }// Fin Scene_Main_Menu
