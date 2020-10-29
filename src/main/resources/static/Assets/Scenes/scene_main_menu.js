@@ -39,15 +39,107 @@ class Scene_Main_Menu extends Phaser.Scene {
         var tween = this.tweens.add({
             targets: that.nebula,
             angle: 360,
-            duration: 1000000,
+            duration: 500000,
             repeat: -1
         });
         var tween = this.tweens.add({
             targets: that.stars,
             angle: 360,
-            duration: 1500000,
+            duration: 500000,
             repeat: -1
         });
+
+        if (game.global.DEVICE === "mobile"){
+            this.tournamentBtn.setInteractive().on('pointerdown', function(pointer,localX,localY,event){
+                that.tournamentBtn.setFrame(1);
+                that.gymBtn.setFrame(0);
+                that.rankingBtn.setFrame(0);
+                that.optionsBtn.setFrame(0);
+                that.creditsBtn.setFrame(0);
+                if (game.global.DEBUG_MODE){ 
+                    console.log("tournament pulsado");
+                }
+            });
+            this.tournamentBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
+                that.tournamentBtn.setFrame(0);
+                //that.scene.start("scene_tournament");
+                if (game.global.DEBUG_MODE){ 
+                    console.log("tournament soltado");
+                }
+            });
+
+            this.gymBtn.setInteractive().on('pointerdown', function(pointer,localX,localY,event){
+                that.tournamentBtn.setFrame(0);
+                that.gymBtn.setFrame(1);
+                that.rankingBtn.setFrame(0);
+                that.optionsBtn.setFrame(0);
+                that.creditsBtn.setFrame(0);
+                if (game.global.DEBUG_MODE){ 
+                    console.log("gym pulsado");
+                }
+            });
+            this.gymBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
+                that.gymBtn.setFrame(0);
+                that.scene.start("scene_select_character");
+                if (game.global.DEBUG_MODE){ 
+                    console.log("gym soltado");
+                }
+            });
+
+            this.rankingBtn.setInteractive().on('pointerdown', function(pointer,localX,localY,event){
+                that.tournamentBtn.setFrame(0);
+                that.gymBtn.setFrame(0);
+                that.rankingBtn.setFrame(1);
+                that.optionsBtn.setFrame(0);
+                that.creditsBtn.setFrame(0);
+                if (game.global.DEBUG_MODE){ 
+                    console.log("ranking pulsado");
+                }
+            });
+            this.rankingBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
+                that.rankingBtn.setFrame(0);
+                that.scene.start("scene_ranking");
+                if (game.global.DEBUG_MODE){ 
+                    console.log("ranking soltado");
+                }
+            });
+
+            this.optionsBtn.setInteractive().on('pointerdown', function(pointer,localX,localY,event){
+                that.tournamentBtn.setFrame(0);
+                that.gymBtn.setFrame(0);
+                that.rankingBtn.setFrame(0);
+                that.optionsBtn.setFrame(1);
+                that.creditsBtn.setFrame(0);
+                if (game.global.DEBUG_MODE){ 
+                    console.log("options pulsado");
+                }
+            });
+            this.optionsBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
+                that.optionsBtn.setFrame(0);
+                that.scene.start("scene_options");
+                if (game.global.DEBUG_MODE){ 
+                    console.log("options soltado");
+                }
+            });
+
+            this.creditsBtn.setInteractive().on('pointerdown', function(pointer,localX,localY,event){
+                that.tournamentBtn.setFrame(0);
+                that.gymBtn.setFrame(0);
+                that.rankingBtn.setFrame(0);
+                that.optionsBtn.setFrame(0);
+                that.creditsBtn.setFrame(1);
+                if (game.global.DEBUG_MODE){ 
+                    console.log("credits pulsado");
+                }
+            });
+            this.creditsBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
+                that.creditsBtn.setFrame(1);
+                that.scene.start("scene_options");
+                if (game.global.DEBUG_MODE){ 
+                    console.log("credits soltado");
+                }
+            });
+        }// Fin if mobile
 
         this.cursors = this.input.keyboard.addKeys({
             'up': game.cursors1Keys.jump,
@@ -63,7 +155,9 @@ class Scene_Main_Menu extends Phaser.Scene {
 
         this.cursors.right.on('down', function(event){
             that.optionSelectedCol = (that.optionSelectedCol + 1) % 3;
-            console.log("COL: "+that.optionSelectedCol);
+            if (game.global.DEBUG_MODE){ 
+                console.log("COL: "+that.optionSelectedCol);
+            }
             that.CheckOption();
         });
         this.cursors.left.on('down', function(event){
@@ -72,7 +166,9 @@ class Scene_Main_Menu extends Phaser.Scene {
             }else{
                 that.optionSelectedCol = 2
             }
-            console.log("COL: "+that.optionSelectedCol);
+            if (game.global.DEBUG_MODE){ 
+                console.log("COL: "+that.optionSelectedCol);
+            }
             that.CheckOption();
         });
 
@@ -83,14 +179,18 @@ class Scene_Main_Menu extends Phaser.Scene {
                 }else{
                     that.optionSelectedRow = 2;
                 }
-                console.log("ROW: "+that.optionSelectedRow);
+                if (game.global.DEBUG_MODE){ 
+                    console.log("ROW: "+that.optionSelectedRow);
+                }
                 that.CheckOption();
             }
         });
         this.cursors.down.on('down', function(event){
             if (that.optionSelectedCol == 1){
                 that.optionSelectedRow = (that.optionSelectedRow + 1) % 3;
-                console.log("ROW: "+that.optionSelectedRow);
+                if (game.global.DEBUG_MODE){ 
+                    console.log("ROW: "+that.optionSelectedRow);
+                }
                 that.CheckOption();
             }
         });
@@ -140,10 +240,10 @@ class Scene_Main_Menu extends Phaser.Scene {
             case 0:
                 // Options
                 this.tournamentBtn.setFrame(0);
-                    this.gymBtn.setFrame(0);
-                    this.rankingBtn.setFrame(0);
-                    this.optionsBtn.setFrame(1);
-                    this.creditsBtn.setFrame(0);
+                this.gymBtn.setFrame(0);
+                this.rankingBtn.setFrame(0);
+                this.optionsBtn.setFrame(1);
+                this.creditsBtn.setFrame(0);
                 break;
             case 1:
                 if (this.optionSelectedRow == 0){

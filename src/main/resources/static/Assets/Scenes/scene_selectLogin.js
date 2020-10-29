@@ -66,12 +66,17 @@ class Scene_SelectLogin extends Phaser.Scene {
         this.optionSelected = -1;
         this.cursors.right.on('down', function (event) {
             that.optionSelected = (that.optionSelected + 1) % 2;
-            console.log(that.optionSelected);
+            if (game.global.DEBUG_MODE){ 
+                console.log(that.optionSelected);
+            }
+            
 
         });
         this.cursors.left.on('down', function (event) {
             that.optionSelected = (that.optionSelected + 1) % 2;
-            console.log(that.optionSelected);
+            if (game.global.DEBUG_MODE){ 
+                console.log(that.optionSelected);
+            }
         });
 
         this.cursors.enter.on('down', function (event) {
@@ -85,8 +90,6 @@ class Scene_SelectLogin extends Phaser.Scene {
     update() {
         this.stars.tilePositionX += RelativeScale(0.2, "x");
         this.stars.tilePositionY += RelativeScale(0.4, "y");
-
-        //console.log(this);
     } // Fin update
 
 }

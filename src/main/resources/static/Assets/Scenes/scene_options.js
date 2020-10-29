@@ -70,19 +70,30 @@ class Scene_Options extends Phaser.Scene {
             if (that.optionSelected == 0){ // Música
                 game.options.musicVol = Phaser.Math.Clamp(game.options.musicVol + 0.1, 0, 1);
                 that.musicBtn.x = RelativeScale((game.options.musicVol*671) + 962, "x");
+                if (game.global.DEBUG_MODE){ 
+                    console.log(game.options.musicVol);
+                }
             }else{ // SFX
                 game.options.SFXVol = Phaser.Math.Clamp(game.options.SFXVol + 0.1, 0, 1);
                 that.sfxBtn.x = RelativeScale((game.options.SFXVol*671) + 962, "x");
+                if (game.global.DEBUG_MODE){ 
+                    console.log(game.options.SFXVol);
+                }
             }
         });
         this.cursors.left.on('down', function(event){
             if (that.optionSelected == 0){ // Música
                 game.options.musicVol = Phaser.Math.Clamp(game.options.musicVol - 0.1, 0, 1);
                 that.musicBtn.x = RelativeScale((game.options.musicVol*671) + 962, "x");
-                console.log(game.options.musicVol);
+                if (game.global.DEBUG_MODE){ 
+                    console.log(game.options.musicVol);
+                }
             }else{ // SFX
                 game.options.SFXVol = Phaser.Math.Clamp(game.options.SFXVol - 0.1, 0, 1);
                 that.sfxBtn.x = RelativeScale((game.options.SFXVol*671) + 962, "x");
+                if (game.global.DEBUG_MODE){ 
+                    console.log(game.options.SFXVol);
+                }
             }
         });
     }// Fin create

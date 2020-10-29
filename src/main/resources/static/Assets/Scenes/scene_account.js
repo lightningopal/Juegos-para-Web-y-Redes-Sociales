@@ -63,8 +63,6 @@ class Scene_Account extends Phaser.Scene {
     update() {
         this.stars.tilePositionX += RelativeScale(0.2, "x");
         this.stars.tilePositionY += RelativeScale(0.4, "y");
-
-        //console.log(this);
     } // Fin update
 
 }
