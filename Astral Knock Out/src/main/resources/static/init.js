@@ -68,6 +68,7 @@ window.onload = function () {
     window.focus();
 
     this.game.global = {
+        DEVICE:         null,
         FPS:            60,
         DEBUG_MODE:     false,
         WS_CONNECTION:  false,
@@ -75,7 +76,6 @@ window.onload = function () {
     }
 
     this.game.options = {
-        device:         null,
         musicVol:       1.0,
         SFXVol:         1.0,
         fullScreen:     false
@@ -101,10 +101,10 @@ window.onload = function () {
     };
 
     if (this.isMobile) {
-        game.options.device = "mobile";
+        game.global.DEVICE = "mobile";
     }
     else {
-        game.options.device = "desktop";
+        game.global.DEVICE = "desktop";
     }
 
     // Responsive Functions

@@ -43,7 +43,7 @@ class Scene_Test extends Phaser.Scene {
             'specialAttack': game.cursors1Keys.specialAttack,
         });
 
-        if (game.options.device == "mobile") {
+        if (game.global.DEVICE == "mobile") {
             var url;
             url = './Assets/Plugins/rexvirtualjoystickplugin.min.js';
             this.load.plugin('rexvirtualjoystickplugin', url, true);
@@ -60,7 +60,7 @@ class Scene_Test extends Phaser.Scene {
         };
 
         // Si el dispositivo es movil, añadir un joystick y un boton
-        if (game.options.device == "mobile") {
+        if (game.global.DEVICE == "mobile") {
             this.mobileKeys.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
                 x: RelativeScale(100, "x"),
                 y: RelativeScale(630, "y"),
