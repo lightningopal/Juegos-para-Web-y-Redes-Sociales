@@ -20,7 +20,7 @@ class Scene_SelectLogin extends Phaser.Scene {
         this.optionSelected;
 
         // WEBSOCKETS
-        game.global.socket = new WebSocket("wss://" + game.global.IP + ":8080/ako")
+        game.global.socket = new WebSocket("wss://" + astral-knock-out.herokuapp.com + "/ako")
 
         game.global.socket.onopen = () => {
 	        if (game.global.DEBUG_MODE) {
