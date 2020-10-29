@@ -31,13 +31,13 @@ class Scene_Options extends Phaser.Scene {
         var tween = this.tweens.add({
             targets: that.nebula,
             angle: 360,
-            duration: 1000000,
+            duration: 500000,
             repeat: -1
         });
         var tween = this.tweens.add({
             targets: that.stars,
             angle: 360,
-            duration: 1500000,
+            duration: 500000,
             repeat: -1
         });
         // Teclas de selección

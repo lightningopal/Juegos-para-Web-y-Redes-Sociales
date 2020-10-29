@@ -20,7 +20,8 @@ class Scene_SelectLogin extends Phaser.Scene {
         this.optionSelected;
 
         // WEBSOCKETS
-        game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako")
+        //game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
+        game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
 
         game.global.socket.onopen = () => {
 	        if (game.global.DEBUG_MODE) {
@@ -55,6 +56,10 @@ class Scene_SelectLogin extends Phaser.Scene {
     create() {
         var that = this;
 
+        if (game.global.DEVICE === "mobile")
+            this.input.on('pointerdown', function () {
+                this.scene.scene.start("scene_account");
+        });
         // Opciones de selección
         this.cursors = this.input.keyboard.addKeys({
             'left': game.cursors1Keys.left,
