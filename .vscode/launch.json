@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AKO_Server<Astral_Knock_Out>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "es.LightningOpal.Astral_Knock_Out.AKO_Server",
+            "projectName": "Astral_Knock_Out",
+            "args": ""
+        }
+    ]
+}
