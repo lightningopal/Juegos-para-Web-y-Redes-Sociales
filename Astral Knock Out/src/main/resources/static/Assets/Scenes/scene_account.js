@@ -1,7 +1,7 @@
 class Scene_Account extends Phaser.Scene {
 
     constructor() {
-        super({ key: "scene_account" });
+        super({ key: "scene_account"});
     } // Fin constructor
 
     preload() {
@@ -14,42 +14,50 @@ class Scene_Account extends Phaser.Scene {
         // Teclas
         this.cursors;
 
-        // Opciones de selección
-        this.optionSelected;
     } // Fin preload
 
     create() {
         var that = this;
 
-        // Opciones de selección
-        this.cursors = this.input.keyboard.addKeys({
-            'left':     game.cursors1Keys.left,
-            'right':    game.cursors1Keys.right,
-            'enter':    Phaser.Input.Keyboard.KeyCodes.ENTER,
-            'escape':   Phaser.Input.Keyboard.KeyCodes.ESC,
+        // Formulario
+        var element = this.add.dom(RelativeScale((1920/2), "x"), RelativeScale((1080/2), "y")).createFromCache('nameform');
+
+        element.addListener('click');
+    
+        element.on('click', function (event) {
+    
+            if (event.target.name === 'loginButton')
+            {
+                var inputUsername = this.getChildByName('username');
+                var inputPassword = this.getChildByName('password');
+    
+                //  Have they entered anything?
+                if (inputUsername.value !== '' && inputPassword.value !== '')
+                {
+                    //  Turn off the click events
+                    this.removeListener('click');
+    
+                    //  Cosas
+                    that.scene.start("scene_main_menu");
+                }
+                else
+                {
+                    //  Flash the prompt
+                    this.scene.tweens.add({ targets: this, alpha: 0.1, duration: 200, ease: 'Power3', yoyo: true });
+                }
+            }
+    
         });
 
-        this.optionSelected = -1;
-        this.cursors.right.on('down', function(event){
-            that.optionSelected = (that.optionSelected + 1) % 2;
-            console.log(that.optionSelected);
-            
-        });
-        this.cursors.left.on('down', function(event){
-            that.optionSelected = (that.optionSelected + 1) % 2;
-            console.log(that.optionSelected);
-        });
+        //element.setVisible(false);
 
-        this.cursors.enter.on('down', function(event){
-            that.input.keyboard.removeAllKeys(true);
-            that.scene.start("scene_main_menu");
-        });
-        
     } // Fin create
 
     update() {
-        this.stars.tilePositionX += RelativeScale(-0.2, "x");
-        this.stars.tilePositionY += RelativeScale(-0.1, "y");
+        this.stars.tilePositionX += RelativeScale(0.2, "x");
+        this.stars.tilePositionY += RelativeScale(0.4, "y");
+
+        //console.log(this);
     } // Fin update
 
 }

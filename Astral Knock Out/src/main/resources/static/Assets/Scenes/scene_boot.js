@@ -27,7 +27,67 @@ class Scene_Boot extends Phaser.Scene {
         this.add.image(0, 0, "simple-bg").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
         this.tilesprite = this.add.tileSprite(0, 0, RelativeScale(1920, "x"), RelativeScale(1080, "y"), "stars").setOrigin(0,0);
 
-        // Barra de carga
+        // Carga de imágenes
+        ///Escena de Inicio de Empresa, Boot///
+
+        ///Escena de Inicio de Sesión///
+        this.load.image("simple-bg", "./Assets/Images/BackGrounds/simple_bg.png");
+        this.load.image("stars", "./Assets/Images/BackGrounds/stars.png");
+        this.load.spritesheet('textBox', './Assets/Images/UI/TextBox.png', { frameWidth: 400, frameHeight: 63, startFrame: 0, endFrame: 5 });
+
+        ///Escena de Main Menú///
+        this.load.image("main_menu-bg", "./Assets/Images/Tests/test_bg/MainMenu-BG.jpg");
+
+        ///Escena de Ranking///
+        this.load.image("ranking-bg", "./Assets/Images/Tests/test_bg/Ranking-BG.jpg");
+
+        ///Escena de Opciones///
+
+        ///Escena de Créditos///
+        this.load.image("credits-bg", "./Assets/Images/Tests/test_bg/Credits-BG.jpg");
+        
+        ///Escena de Selección de Personaje, Habilidad y Escenario///
+        this.load.image("select_character-bg", "./Assets/Images/Tests/test_bg/SelectCharacter-BG.jpg");
+
+        ///Nivel 1///
+        // Fondo
+        this.load.image("level_1_bg", "./Assets/Images/BackGrounds/level_1_bg.png");
+        this.load.image("level_1_bg_details", "./Assets/Images/BackGrounds/level_1_bg_details.png");
+        this.load.image("level_1_bg_move", "./Assets/Images/BackGrounds/level_1_bg_move.png");
+        this.load.image("level_1_fg_details", "./Assets/Images/BackGrounds/level_1_fg_details.png");
+        this.load.image("level_1_fg_move", "./Assets/Images/BackGrounds/level_1_fg_move.png");
+        this.load.image("level_1_plats_floor", "./Assets/Images/BackGrounds/level_1_plats_floor.png");
+        // Plataformas
+        this.load.image("floor", "./Assets/Images/Platforms/floor.png");
+        this.load.image("base_big_plat_2", "./Assets/Images/Platforms/base_big_plat_2.png");
+        this.load.image("base_t_plat", "./Assets/Images/Platforms/base_t_plat.png");
+        this.load.image("big_plat_1", "./Assets/Images/Platforms/big_plat_1.png");
+        this.load.image("level_1_trans", "./Assets/Images/Platforms/level_1_trans.png");
+        this.load.image("big_plat_2", "./Assets/Images/Platforms/big_plat_2.png");
+        this.load.image("plat_1", "./Assets/Images/Platforms/plat_1.png");
+        this.load.image("plat_2", "./Assets/Images/Platforms/plat_2.png");
+        this.load.image("plat_3", "./Assets/Images/Platforms/plat_3.png");
+        this.load.image("t_plat", "./Assets/Images/Platforms/t_plat.png");
+        this.load.image("bard", "./Assets/Images/Characters/Bard.png");
+        this.load.image("dummy", "./Assets/Images/Characters/Dummy.png");
+        this.load.image("projectile", "./Assets/Images/Tests/projectile.png")
+
+        // Animaciones Bardo
+        this.load.spritesheet("bard_idle", "./Assets/Images/Characters/Animations/IdleAnimation_Bard.png", { frameWidth: 170, frameHeight: 170 });
+        this.load.spritesheet("bard_walk", "./Assets/Images/Characters/Animations/WalkAnimation_Bard.png", { frameWidth: 170, frameHeight: 170 });
+        this.load.spritesheet("bard_attack", "./Assets/Images/Characters/Animations/AttackAnimation_Bard.png", { frameWidth: 170, frameHeight: 170 });
+        // Animaciones Mago
+        this.load.spritesheet("wizard_idle", "./Assets/Images/Characters/Animations/IdleAnimation_Wizard.png", { frameWidth: 140, frameHeight: 150 });
+        this.load.spritesheet("wizard_walk", "./Assets/Images/Characters/Animations/WalkAnimation_Wizard.png", { frameWidth: 140, frameHeight: 150 });
+        // this.load.spritesheet("wizard_attack", "./Assets/Images/Characters/Animations/AttackAnimation_Wizard.png", { frameWidth: 170, frameHeight: 170 });
+
+
+        ///Escena de Fin de Partida///
+
+        /// Formulario ///
+        this.load.html('nameform', './Assets/Text/loginform.html');
+
+        /// Barra de carga ///
         let loadingBar = this.add.graphics({
             lineStyle: {
                 width: 5,
@@ -208,6 +268,7 @@ class Scene_Boot extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('wizard_attack', { start: 0, end: 10 }),
             frameRate: 1,
             repeat: -1
+
         });
 
         switch (game.global.DEVICE){
@@ -234,7 +295,7 @@ class Scene_Boot extends Phaser.Scene {
     } // Fin create
 
     update(){
-        this.tilesprite.tilePositionX += 0.2;
-        this.tilesprite.tilePositionY += 0.4;
+        this.tilesprite.tilePositionX += RelativeScale(0.2, "x");
+        this.tilesprite.tilePositionY += RelativeScale(0.4, "y");
     }
 }
