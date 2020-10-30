@@ -131,6 +131,7 @@ class Scene_Boot extends Phaser.Scene {
         ///Escena de Opciones///
         this.load.image("options_interface", "./Assets/Images/UI/options_interface.png");
         this.load.spritesheet("volume_button", "./Assets/Images/UI/volume_button.png", { frameWidth: 76, frameHeight: 143 });
+        this.load.spritesheet("back_button", "./Assets/Images/UI/back_button.png", { frameWidth: 144, frameHeight: 121 })
 
         ///Escena de Créditos///
         this.load.image("credits_bg", "./Assets/Images/Tests/test_bg/Credits-BG.jpg");
