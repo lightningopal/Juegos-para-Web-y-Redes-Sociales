@@ -111,7 +111,8 @@ class Scene_Boot extends Phaser.Scene {
         ///Escena de Inicio de Sesión///
         this.load.image("simple_bg", "./Assets/Images/BackGrounds/simple_bg.png");
         this.load.image("stars", "./Assets/Images/BackGrounds/stars.png");
-        this.load.image("account_bg", "./Assets/Images/Tests/test_bg/Account-BG.jpg");
+        this.load.spritesheet("log_in_button", "./Assets/Images/UI/log_in_button.png", { frameWidth: 709, frameHeight: 129 });
+        this.load.spritesheet("sign_up_button", "./Assets/Images/UI/sign_up_button.png", { frameWidth: 700, frameHeight: 129 });
 
         ///Escena de Main Menú///
         this.load.image("main_menu_bg", "./Assets/Images/BackGrounds/main_menu_bg.png");
@@ -169,15 +170,20 @@ class Scene_Boot extends Phaser.Scene {
         // Animaciones Mago
         this.load.spritesheet("wizard_idle", "./Assets/Images/Characters/Animations/IdleAnimation_Wizard.png", { frameWidth: 140, frameHeight: 150 });
         this.load.spritesheet("wizard_walk", "./Assets/Images/Characters/Animations/WalkAnimation_Wizard.png", { frameWidth: 140, frameHeight: 150 });
-        // this.load.spritesheet("wizard_attack", "./Assets/Images/Characters/Animations/AttackAnimation_Wizard.png", { frameWidth: 170, frameHeight: 170 });
-
+        this.load.spritesheet("wizard_attack", "./Assets/Images/Characters/Animations/AttackAnimation_Wizard.png", { frameWidth: 140, frameHeight: 150 });
+        // Animaciones Berserker
+        this.load.spritesheet("berserker_idle", "./Assets/Images/Characters/Animations/IdleAnimation_Berserker.png", { frameWidth: 200, frameHeight: 170 });
+        this.load.spritesheet("berserker_walk", "./Assets/Images/Characters/Animations/WalkAnimation_Berserker.png", { frameWidth: 200, frameHeight: 170 });
+        // this.load.spritesheet("berserker_attack", "./Assets/Images/Characters/Animations/AttackAnimation_Berserker.png", { frameWidth: 200, frameHeight: 170 });
+        // Animaciones Pícara
+        // this.load.spritesheet("rogue_idle", "./Assets/Images/Characters/Animations/IdleAnimation_Rogue.png", { frameWidth: 200, frameHeight: 170 });
+        // this.load.spritesheet("rogue_walk", "./Assets/Images/Characters/Animations/WalkAnimation_Rogue.png", { frameWidth: 200, frameHeight: 170 });
+        // this.load.spritesheet("rogue_attack", "./Assets/Images/Characters/Animations/AttackAnimation_Rogue.png", { frameWidth: 200, frameHeight: 170 });
 
         ///Escena de Fin de Partida///
 
         /// Formulario ///
         this.load.html('nameform', './Assets/Text/loginform.html');
-
-        
         
     }// Fin preload
 
@@ -215,13 +221,52 @@ class Scene_Boot extends Phaser.Scene {
             frameRate: 12,
             repeat: -1
         });
-        
         this.anims.create({
             key: 'wizard_attack',
             frames: this.anims.generateFrameNumbers('wizard_attack', { start: 0, end: 10 }),
             frameRate: 1,
             repeat: -1
         });
+
+        // Creamos las animaciones del berserker
+        this.anims.create({
+            key: 'berserker_idle',
+            frames: this.anims.generateFrameNumbers('berserker_idle', { start: 0, end: 9 }),
+            frameRate: 8,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'berserker_walk',
+            frames: this.anims.generateFrameNumbers('berserker_walk', { start: 0, end: 10 }),
+            frameRate: 12,
+            repeat: -1
+        });
+        // this.anims.create({
+        //     key: 'berserker_attack',
+        //     frames: this.anims.generateFrameNumbers('berserker_attack', { start: 0, end: 1 }),
+        //     frameRate: 1,
+        //     repeat: -1
+        // });
+
+        // Creamos las animaciones de la Pícara
+        // this.anims.create({
+        //     key: 'rogue_idle',
+        //     frames: this.anims.generateFrameNumbers('rogue_idle', { start: 0, end: 9 }),
+        //     frameRate: 8,
+        //     repeat: -1
+        // });
+        // this.anims.create({
+        //     key: 'rogue_walk',
+        //     frames: this.anims.generateFrameNumbers('rogue_walk', { start: 0, end: 10 }),
+        //     frameRate: 12,
+        //     repeat: -1
+        // });
+        // this.anims.create({
+        //     key: 'rogue_attack',
+        //     frames: this.anims.generateFrameNumbers('rogue_attack', { start: 0, end: 1 }),
+        //     frameRate: 1,
+        //     repeat: -1
+        // });
 
         switch (game.global.DEVICE){
             case "desktop":
@@ -240,7 +285,6 @@ class Scene_Boot extends Phaser.Scene {
                 });
                 break;
             default:
-
                 break;
         }
         

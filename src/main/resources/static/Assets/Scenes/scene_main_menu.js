@@ -49,8 +49,23 @@ class Scene_Main_Menu extends Phaser.Scene {
             repeat: -1
         });
 
-        if (game.global.DEVICE === "mobile"){
+        this.optionSelectedRow = 0;
+        this.optionSelectedCol = 1;
+        if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE){
+
+            this.input.on('pointerup', function () {
+                that.optionSelectedRow = -1;
+                that.optionSelectedCol = -1;
+                that.tournamentBtn.setFrame(0);
+                that.gymBtn.setFrame(0);
+                that.rankingBtn.setFrame(0);
+                that.optionsBtn.setFrame(0);
+                that.creditsBtn.setFrame(0);
+            });
+
             this.tournamentBtn.setInteractive().on('pointerdown', function(pointer,localX,localY,event){
+                that.optionSelectedRow = 0;
+                that.optionSelectedCol = 1;
                 that.tournamentBtn.setFrame(1);
                 that.gymBtn.setFrame(0);
                 that.rankingBtn.setFrame(0);
@@ -61,14 +76,18 @@ class Scene_Main_Menu extends Phaser.Scene {
                 }
             });
             this.tournamentBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
-                that.tournamentBtn.setFrame(0);
-                //that.scene.start("scene_tournament");
+                if (that.optionSelectedRow == 0 && that.optionSelectedCol == 1){
+                    that.tournamentBtn.setFrame(0);
+                    //that.scene.start("scene_tournament");
+                }
                 if (game.global.DEBUG_MODE){ 
                     console.log("tournament soltado");
                 }
             });
 
             this.gymBtn.setInteractive().on('pointerdown', function(pointer,localX,localY,event){
+                that.optionSelectedRow = 1;
+                that.optionSelectedCol = 1;
                 that.tournamentBtn.setFrame(0);
                 that.gymBtn.setFrame(1);
                 that.rankingBtn.setFrame(0);
@@ -79,14 +98,18 @@ class Scene_Main_Menu extends Phaser.Scene {
                 }
             });
             this.gymBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
-                that.gymBtn.setFrame(0);
-                that.scene.start("scene_select_character");
+                if (that.optionSelectedRow == 1 && that.optionSelectedCol == 1){
+                    that.gymBtn.setFrame(0);
+                    that.scene.start("scene_select_character");
+                }
                 if (game.global.DEBUG_MODE){ 
                     console.log("gym soltado");
                 }
             });
 
             this.rankingBtn.setInteractive().on('pointerdown', function(pointer,localX,localY,event){
+                that.optionSelectedRow = 2;
+                that.optionSelectedCol = 1;
                 that.tournamentBtn.setFrame(0);
                 that.gymBtn.setFrame(0);
                 that.rankingBtn.setFrame(1);
@@ -97,14 +120,18 @@ class Scene_Main_Menu extends Phaser.Scene {
                 }
             });
             this.rankingBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
-                that.rankingBtn.setFrame(0);
-                that.scene.start("scene_ranking");
+                if (that.optionSelectedRow == 2 && that.optionSelectedCol == 1){
+                    that.rankingBtn.setFrame(0);
+                    that.scene.start("scene_ranking");
+                }
                 if (game.global.DEBUG_MODE){ 
                     console.log("ranking soltado");
                 }
             });
 
             this.optionsBtn.setInteractive().on('pointerdown', function(pointer,localX,localY,event){
+                that.optionSelectedRow = -1;
+                that.optionSelectedCol = 0;
                 that.tournamentBtn.setFrame(0);
                 that.gymBtn.setFrame(0);
                 that.rankingBtn.setFrame(0);
@@ -115,14 +142,18 @@ class Scene_Main_Menu extends Phaser.Scene {
                 }
             });
             this.optionsBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
-                that.optionsBtn.setFrame(0);
-                that.scene.start("scene_options");
+                if (that.optionSelectedRow == -1 && that.optionSelectedCol == 0){
+                    that.optionsBtn.setFrame(0);
+                    that.scene.start("scene_options");
+                }
                 if (game.global.DEBUG_MODE){ 
                     console.log("options soltado");
                 }
             });
 
             this.creditsBtn.setInteractive().on('pointerdown', function(pointer,localX,localY,event){
+                that.optionSelectedRow = -1;
+                that.optionSelectedCol = 1;
                 that.tournamentBtn.setFrame(0);
                 that.gymBtn.setFrame(0);
                 that.rankingBtn.setFrame(0);
@@ -133,103 +164,103 @@ class Scene_Main_Menu extends Phaser.Scene {
                 }
             });
             this.creditsBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
-                that.creditsBtn.setFrame(1);
+                if (that.optionSelectedRow == -1 && that.optionSelectedCol == 1){
+                    that.creditsBtn.setFrame(0);
                 that.scene.start("scene_options");
+                }
                 if (game.global.DEBUG_MODE){ 
                     console.log("credits soltado");
                 }
             });
-        }// Fin if mobile
-
-        this.cursors = this.input.keyboard.addKeys({
-            'up': game.cursors1Keys.jump,
-            'down': game.cursors1Keys.fall,
-            'left': game.cursors1Keys.left,
-            'right': game.cursors1Keys.right,
-            'enter': Phaser.Input.Keyboard.KeyCodes.ENTER,
-            'escape': Phaser.Input.Keyboard.KeyCodes.ESC,
-        });
-        // Opciones de selección
-        this.optionSelectedRow = 0;
-        this.optionSelectedCol = 1;
-
-        this.cursors.right.on('down', function(event){
-            that.optionSelectedCol = (that.optionSelectedCol + 1) % 3;
-            if (game.global.DEBUG_MODE){ 
-                console.log("COL: "+that.optionSelectedCol);
-            }
-            that.CheckOption();
-        });
-        this.cursors.left.on('down', function(event){
-            if (that.optionSelectedCol >= 1){
-                that.optionSelectedCol = (that.optionSelectedCol - 1) % 3;
-            }else{
-                that.optionSelectedCol = 2
-            }
-            if (game.global.DEBUG_MODE){ 
-                console.log("COL: "+that.optionSelectedCol);
-            }
-            that.CheckOption();
-        });
-
-        this.cursors.up.on('down', function(event){
-            if (that.optionSelectedCol == 1){
-                if (that.optionSelectedRow >= 1){
-                    that.optionSelectedRow = (that.optionSelectedRow - 1);
+        }else{// Ordenador
+            this.cursors = this.input.keyboard.addKeys({
+                'up': game.cursors1Keys.jump,
+                'down': game.cursors1Keys.fall,
+                'left': game.cursors1Keys.left,
+                'right': game.cursors1Keys.right,
+                'enter': Phaser.Input.Keyboard.KeyCodes.ENTER,
+                'escape': Phaser.Input.Keyboard.KeyCodes.ESC,
+            });
+            // Opciones de selección
+    
+            this.cursors.right.on('down', function(event){
+                that.optionSelectedCol = (that.optionSelectedCol + 1) % 3;
+                if (game.global.DEBUG_MODE){ 
+                    console.log("COL: "+that.optionSelectedCol);
+                }
+                that.CheckOption();
+            });
+            this.cursors.left.on('down', function(event){
+                if (that.optionSelectedCol >= 1){
+                    that.optionSelectedCol = (that.optionSelectedCol - 1) % 3;
                 }else{
-                    that.optionSelectedRow = 2;
+                    that.optionSelectedCol = 2
                 }
                 if (game.global.DEBUG_MODE){ 
-                    console.log("ROW: "+that.optionSelectedRow);
+                    console.log("COL: "+that.optionSelectedCol);
                 }
                 that.CheckOption();
-            }
-        });
-        this.cursors.down.on('down', function(event){
-            if (that.optionSelectedCol == 1){
-                that.optionSelectedRow = (that.optionSelectedRow + 1) % 3;
-                if (game.global.DEBUG_MODE){ 
-                    console.log("ROW: "+that.optionSelectedRow);
-                }
-                that.CheckOption();
-            }
-        });
-        
-        this.cursors.enter.on('down', function(event){
-            switch(that.optionSelectedCol){
-                case 0:
-                    // Options
-                    that.input.keyboard.removeAllKeys(true);
-                    that.scene.start("scene_options");
-                    break;
-                case 1:
-                    if (that.optionSelectedRow == 0){
-                        // Tournament
-                        //that.input.keyboard.removeAllKeys(true);
-                        //that.scene.start("scene_tournament");
-                    }else if (that.optionSelectedRow == 1){
-                        // Space Gym
-                        that.input.keyboard.removeAllKeys(true);
-                        that.scene.start("scene_select_character");
-                    }else {
-                        // Ranking
-                        that.input.keyboard.removeAllKeys(true);
-                        that.scene.start("scene_ranking");
+            });
+    
+            this.cursors.up.on('down', function(event){
+                if (that.optionSelectedCol == 1){
+                    if (that.optionSelectedRow >= 1){
+                        that.optionSelectedRow = (that.optionSelectedRow - 1);
+                    }else{
+                        that.optionSelectedRow = 2;
                     }
-                    break;
-                case 2:
-                    // Credits
-                    that.input.keyboard.removeAllKeys(true);
-                    that.scene.start("scene_credits");
-                    break;
-                default:
-                    break;
-            }
-        });
-        this.cursors.escape.on('down', function(event){
-            that.input.keyboard.removeAllKeys(true);
-            that.scene.start("scene_account");
-        });
+                    if (game.global.DEBUG_MODE){ 
+                        console.log("ROW: "+that.optionSelectedRow);
+                    }
+                    that.CheckOption();
+                }
+            });
+            this.cursors.down.on('down', function(event){
+                if (that.optionSelectedCol == 1){
+                    that.optionSelectedRow = (that.optionSelectedRow + 1) % 3;
+                    if (game.global.DEBUG_MODE){ 
+                        console.log("ROW: "+that.optionSelectedRow);
+                    }
+                    that.CheckOption();
+                }
+            });
+            
+            this.cursors.enter.on('down', function(event){
+                switch(that.optionSelectedCol){
+                    case 0:
+                        // Options
+                        that.input.keyboard.removeAllKeys(true);
+                        that.scene.start("scene_options");
+                        break;
+                    case 1:
+                        if (that.optionSelectedRow == 0){
+                            // Tournament
+                            //that.input.keyboard.removeAllKeys(true);
+                            //that.scene.start("scene_tournament");
+                        }else if (that.optionSelectedRow == 1){
+                            // Space Gym
+                            that.input.keyboard.removeAllKeys(true);
+                            that.scene.start("scene_select_character");
+                        }else {
+                            // Ranking
+                            that.input.keyboard.removeAllKeys(true);
+                            that.scene.start("scene_ranking");
+                        }
+                        break;
+                    case 2:
+                        // Credits
+                        that.input.keyboard.removeAllKeys(true);
+                        that.scene.start("scene_credits");
+                        break;
+                    default:
+                        break;
+                }
+            });
+            this.cursors.escape.on('down', function(event){
+                that.input.keyboard.removeAllKeys(true);
+                that.scene.start("scene_account");
+            });
+        }
     } // Fin create
 
     update() {

@@ -44,7 +44,84 @@ class Scene_Options extends Phaser.Scene {
         });
 
         this.optionSelected = 1;
-        if (game.global.DEVICE === "desktop") { // Odenador
+        if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE){
+
+            this.input.on('pointerup', function () {
+                that.optionSelected = -1;
+                that.backBtn.setFrame(0);
+                that.musicBtn.setFrame(0);
+                that.sfxBtn.setFrame(0);
+            });
+
+            this.backBtn.setInteractive().on('pointerdown', function(pointer,localX,localY,event){
+                that.optionSelected = 0;
+                that.backBtn.setFrame(1);
+                that.musicBtn.setFrame(0);
+                that.sfxBtn.setFrame(0);
+                if (game.global.DEBUG_MODE){ 
+                    console.log("Back pulsado");
+                }
+            });
+            this.backBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
+                if (that.optionSelected == 0){
+                    that.backBtn.setFrame(0);
+                that.scene.start("scene_main_menu");
+                }
+                if (game.global.DEBUG_MODE){ 
+                    console.log("Back soltado");
+                }
+            });
+
+            this.musicBtn.setInteractive({draggable: true}).on('pointerdown', function(pointer,localX,localY,event){
+                that.optionSelected = 1;
+                that.backBtn.setFrame(0);
+                that.musicBtn.setFrame(1);
+                that.sfxBtn.setFrame(0);
+                if (game.global.DEBUG_MODE){ 
+                    console.log("Music pulsado");
+                }
+            });
+            this.musicBtn.setInteractive({draggable: true}).on('drag', function(pointer,dragX,dragY){
+                if (dragX <= RelativeScale(1633,"x") && dragX >= RelativeScale(962,"x")){
+                    that.musicBtn.x = dragX;
+                    game.global.musicVol = (Unscale(dragX,"x")-962) / 671;
+                }
+                if (game.global.DEBUG_MODE){ 
+                    console.log("Music: "+game.global.musicVol);
+                }
+            });
+            this.musicBtn.setInteractive({draggable: true}).on('pointerup', function(pointer,localX,localY,event){
+                that.musicBtn.setFrame(0);
+                if (game.global.DEBUG_MODE){ 
+                    console.log("Music soltado");
+                }
+            });
+
+            this.sfxBtn.setInteractive({draggable: true}).on('pointerdown', function(pointer,localX,localY,event){
+                that.optionSelected = 2;
+                that.backBtn.setFrame(0);
+                that.musicBtn.setFrame(0);
+                that.sfxBtn.setFrame(1);
+                if (game.global.DEBUG_MODE){ 
+                    console.log("SFX pulsado");
+                }
+            });
+            this.sfxBtn.setInteractive({draggable: true}).on('drag', function(pointer,dragX,dragY){
+                if (dragX <= RelativeScale(1633,"x") && dragX >= RelativeScale(962,"x")){
+                    that.sfxBtn.x = dragX;
+                    game.global.SFXVol = (Unscale(dragX,"x")-962) / 671;
+                }
+                if (game.global.DEBUG_MODE){ 
+                    console.log("SFX: "+game.global.SFXVol);
+                }
+            });
+            this.sfxBtn.setInteractive({draggable: true}).on('pointerup', function(pointer,localX,localY,event){
+                that.sfxBtn.setFrame(0);
+                if (game.global.DEBUG_MODE){ 
+                    console.log("SFX soltado");
+                }
+            });
+        }else if (game.global.DEVICE === "desktop") { // Odenador
             // Teclas de selección
             this.cursors = this.input.keyboard.addKeys({
                 'up': game.cursors1Keys.jump,
@@ -115,71 +192,7 @@ class Scene_Options extends Phaser.Scene {
                     }
                 }
             });
-        } else if (game.global.DEVICE === "mobile"){
-            this.backBtn.setInteractive().on('pointerdown', function(pointer,localX,localY,event){
-                that.backBtn.setFrame(1);
-                that.musicBtn.setFrame(0);
-                that.sfxBtn.setFrame(0);
-                if (game.global.DEBUG_MODE){ 
-                    console.log("Back pulsado");
-                }
-            });
-            this.backBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
-                that.backBtn.setFrame(0);
-                that.scene.start("scene_main_menu");
-                if (game.global.DEBUG_MODE){ 
-                    console.log("Back soltado");
-                }
-            });
-
-            this.musicBtn.setInteractive({draggable: true}).on('pointerdown', function(pointer,localX,localY,event){
-                that.backBtn.setFrame(0);
-                that.musicBtn.setFrame(1);
-                that.sfxBtn.setFrame(0);
-                if (game.global.DEBUG_MODE){ 
-                    console.log("Music pulsado");
-                }
-            });
-            this.musicBtn.setInteractive({draggable: true}).on('drag', function(pointer,dragX,dragY){
-                if (dragX <= RelativeScale(1633,"x") && dragX >= RelativeScale(962,"x")){
-                    that.musicBtn.x = dragX;
-                    game.global.musicVol = (Unscale(dragX,"x")-962) / 671;
-                }
-                if (game.global.DEBUG_MODE){ 
-                    console.log("Music: "+game.global.musicVol);
-                }
-            });
-            this.musicBtn.setInteractive({draggable: true}).on('pointerup', function(pointer,localX,localY,event){
-                that.musicBtn.setFrame(0);
-                if (game.global.DEBUG_MODE){ 
-                    console.log("Music soltado");
-                }
-            });
-
-            this.sfxBtn.setInteractive({draggable: true}).on('pointerdown', function(pointer,localX,localY,event){
-                that.backBtn.setFrame(0);
-                that.musicBtn.setFrame(0);
-                that.sfxBtn.setFrame(1);
-                if (game.global.DEBUG_MODE){ 
-                    console.log("SFX pulsado");
-                }
-            });
-            this.sfxBtn.setInteractive({draggable: true}).on('drag', function(pointer,dragX,dragY){
-                if (dragX <= RelativeScale(1633,"x") && dragX >= RelativeScale(962,"x")){
-                    that.sfxBtn.x = dragX;
-                    game.global.SFXVol = (Unscale(dragX,"x")-962) / 671;
-                }
-                if (game.global.DEBUG_MODE){ 
-                    console.log("SFX: "+game.global.SFXVol);
-                }
-            });
-            this.sfxBtn.setInteractive({draggable: true}).on('pointerup', function(pointer,localX,localY,event){
-                that.sfxBtn.setFrame(0);
-                if (game.global.DEBUG_MODE){ 
-                    console.log("SFX soltado");
-                }
-            });
-        }
+        }// Fin if desktop
     }// Fin create
 
     update() {

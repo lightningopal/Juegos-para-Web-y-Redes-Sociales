@@ -81,6 +81,7 @@ window.onload = function () {
         DEVICE:         null,
         FPS:            60,
         DEBUG_MODE:     true,
+        DEBUG_PHONE:    false,
         WS_CONNECTION:  false,
         socket:         null,
         IP:             "192.168.1.35",
@@ -92,8 +93,6 @@ window.onload = function () {
         SFXVol:         1.0,
         fullScreen:     false
     }
-
-    
 
     /*
     this.game.server = {
