@@ -19,37 +19,6 @@ class Scene_SelectLogin extends Phaser.Scene {
         // Opciones de selección
         this.optionSelected; // 0 -> LogIn / 1 -> SignUp
 
-        // WEBSOCKETS
-        game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
-        // game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
-
-        game.global.socket.onopen = () => {
-            if (game.global.DEBUG_MODE) {
-                console.log('[DEBUG] WebSocket connection opened.');
-            }
-
-            game.global.WS_CONNECTION = true;
-
-            // In case JOIN message from server failed, we force it
-            if (typeof game.mPlayer.id == 'undefined') {
-                if (game.global.DEBUG_MODE) {
-                    console.log("[DEBUG] Forcing joining server...");
-                }
-                let message = {
-                    event: 'JOIN'
-                }
-                game.global.socket.send(JSON.stringify(message));
-            }
-        }
-
-        game.global.socket.onclose = () => {
-            if (game.global.DEBUG_MODE) {
-                console.log('[DEBUG] WebSocket connection closed.');
-            }
-
-            game.global.WS_CONNECTION = false;
-        }
-
     } // Fin preload
 
     create() {

@@ -34,10 +34,15 @@ class Scene_Account extends Phaser.Scene {
                 //  Have they entered anything?
                 if (inputUsername.value !== '' && inputPassword.value !== '')
                 {
-                    //  Turn off the click events
+                    // Turn off the click events
                     this.removeListener('click');
     
-                    //  Cosas
+                    // Cosas
+                    if (game.global.logInOption === 0){ // Mensaje de login
+
+                    }else if (game.global.logInOption === 0){ // Mensaje de signup
+                        
+                    }
                     that.scene.start("scene_main_menu");
                 }
                 else
@@ -49,9 +54,7 @@ class Scene_Account extends Phaser.Scene {
     
         });
 
-        // Es un Sign Up
-        if (that.game.global.logInOption == 1)
-        {
+        if (that.game.global.logInOption == 1) { // Es un Sign Up
             var buttonSubmit = document.getElementById("submit");
             buttonSubmit.value = "Sign Up";
         }

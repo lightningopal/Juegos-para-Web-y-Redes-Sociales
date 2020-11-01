@@ -36,7 +36,8 @@ window.onload = function () {
             Scene_Credits,
             Scene_Select_Character,
             Scene_Account,
-            Scene_SelectLogin
+            Scene_SelectLogin,
+            Scene_Score
         ]
     };
 
@@ -65,7 +66,8 @@ window.onload = function () {
             Scene_Credits,
             Scene_Select_Character,
             Scene_Account,
-            Scene_SelectLogin
+            Scene_SelectLogin,
+            Scene_Score
         ]
     };
 
@@ -85,7 +87,7 @@ window.onload = function () {
         WS_CONNECTION:  false,
         socket:         null,
         IP:             "192.168.1.35",
-        logInOption:    0
+        logInOption:    0 // 0->Log In | 1->Sign Up
     }
 
     this.game.options = {
@@ -111,7 +113,7 @@ window.onload = function () {
         userName:       undefined, // String
         password:       undefined, // String
         currency:       0,
-        availableChar:  [],
+        availableChar:  ["bard", "berserker", "wizard"],
         availableSkins: [],
         ranking: {
             position:   0,
@@ -122,6 +124,7 @@ window.onload = function () {
         characterSel:   undefined, // String
         skillSel:       -1,
         difficultySel:  -1,
+        isOnline:       false,
         isReady:        false
     };
 

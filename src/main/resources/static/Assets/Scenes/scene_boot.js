@@ -2,7 +2,7 @@
 var isLoading = true;
 
 class Scene_Boot extends Phaser.Scene {
-    constructor(){
+    constructor() {
         super({
             key: "scene_boot",
             pack: {
@@ -22,10 +22,10 @@ class Scene_Boot extends Phaser.Scene {
         });
     }
 
-    preload(){
+    preload() {
         // Background
-        this.add.image(0, 0, "simple_bg").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
-        this.tilesprite = this.add.tileSprite(0, 0, RelativeScale(1920, "x"), RelativeScale(1080, "y"), "stars").setOrigin(0,0);
+        this.add.image(0, 0, "simple_bg").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.tilesprite = this.add.tileSprite(0, 0, RelativeScale(1920, "x"), RelativeScale(1080, "y"), "stars").setOrigin(0, 0);
 
         /// Barra de carga ///
 
@@ -91,16 +91,48 @@ class Scene_Boot extends Phaser.Scene {
         })
         this.load.on('complete', () => {
             isLoading = false;
-            switch(game.global.DEVICE){
-                case "desktop":
-                    loadingText.setText('Press enter to start');
-                    break;
-                case "mobile":
-                    loadingText.setText('Tap anywhere to start');
-                    break;
-                default:
-                    loadingText.setText('Sorry, your device isn`t available');
-                    break;
+            loadingText.setText('Connecting to server...');
+            // WEBSOCKETS
+            game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
+            // game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
+
+            game.global.socket.onopen = () => {
+                if (game.global.DEBUG_MODE) {
+                    console.log('[DEBUG] WebSocket connection opened.');
+                }
+                game.global.WS_CONNECTION = true;
+
+                switch (game.global.DEVICE) {
+                    case "desktop":
+                        loadingText.setText('Press enter to start');
+                        break;
+                    case "mobile":
+                        loadingText.setText('Tap anywhere to start');
+                        break;
+                    default:
+                        loadingText.setText('Sorry, your device isn`t available');
+                        break;
+                }
+                /**
+                // In case JOIN message from server failed, we force it
+                if (typeof game.mPlayer.id == 'undefined') {
+                    if (game.global.DEBUG_MODE) {
+                        console.log("[DEBUG] Forcing joining server...");
+                    }
+                    let message = {
+                        event: 'JOIN'
+                    }
+                    game.global.socket.send(JSON.stringify(message));
+                }
+                /**/
+            }
+
+            game.global.socket.onclose = () => {
+                if (game.global.DEBUG_MODE) {
+                    console.log('[DEBUG] WebSocket connection closed.');
+                }
+                loadingText.setText('Connection failed, try again later');
+                game.global.WS_CONNECTION = false;
             }
             assetText.setText('Load complete.');
         })
@@ -125,7 +157,7 @@ class Scene_Boot extends Phaser.Scene {
         this.load.spritesheet("ranking_button", "./Assets/Images/UI/ranking_button.png", { frameWidth: 814, frameHeight: 122 });
         this.load.spritesheet("credits_button", "./Assets/Images/UI/credits_button.png", { frameWidth: 173, frameHeight: 155 });
         this.load.spritesheet("options_button", "./Assets/Images/UI/options_button.png", { frameWidth: 169, frameHeight: 167 });
-		
+
         ///Escena de Ranking///
         this.load.image("ranking_bg", "./Assets/Images/Tests/test_bg/Ranking-BG.jpg");
 
@@ -136,7 +168,7 @@ class Scene_Boot extends Phaser.Scene {
 
         ///Escena de Créditos///
         this.load.image("credits_bg", "./Assets/Images/Tests/test_bg/Credits-BG.jpg");
-        
+
         ///Escena de Selección de Personaje, Habilidad y Escenario///
         this.load.image("select_character_bg", "./Assets/Images/Tests/test_bg/SelectCharacter-BG.jpg");
 
@@ -181,13 +213,17 @@ class Scene_Boot extends Phaser.Scene {
         // this.load.spritesheet("rogue_attack", "./Assets/Images/Characters/Animations/AttackAnimation_Rogue.png", { frameWidth: 200, frameHeight: 170 });
 
         ///Escena de Fin de Partida///
+        this.load.image("score_interface", "./Assets/Images/UI/score_interface.png");
+        this.load.image("play_again_screen", "./Assets/Images/UI/play_again_screen.png");
+        // this.load.spritesheet("yes_button", "./Assets/Images/UI/yes_button.png", { frameWidth: 1.0, frameHeight: 1.0 });
+        // this.load.spritesheet("no_button", "./Assets/Images/UI/no_button.png", { frameWidth: 1.0, frameHeight: 1.0 });
 
         /// Formulario ///
         this.load.html('nameform', './Assets/Text/loginform.html');
-        
+
     }// Fin preload
 
-    create(){
+    create() {
         // Creamos las animaciones
         this.anims.create({
             key: 'bard_idle',
@@ -207,7 +243,7 @@ class Scene_Boot extends Phaser.Scene {
             frameRate: 1,
             repeat: -1
         });
-        
+
         // Creamos las animaciones del mago
         this.anims.create({
             key: 'wizard_idle',
@@ -268,10 +304,10 @@ class Scene_Boot extends Phaser.Scene {
         //     repeat: -1
         // });
 
-        switch (game.global.DEVICE){
+        switch (game.global.DEVICE) {
             case "desktop":
-                this.input.keyboard.on('keydown-'+"ENTER", function () {
-                    if (!isLoading) {
+                this.input.keyboard.on('keydown-' + "ENTER", function () {
+                    if (!isLoading /*&& game.global.WS_CONNECTION*/) {
                         this.scene.input.keyboard.removeAllKeys(true);
                         this.scene.scene.start("scene_selectLogin");
                     }
@@ -279,7 +315,7 @@ class Scene_Boot extends Phaser.Scene {
                 break;
             case "mobile":
                 this.input.on('pointerdown', function () {
-                    if (!isLoading) {
+                    if (!isLoading /*&& game.global.WS_CONNECTION*/) {
                         this.scene.scene.start("scene_selectLogin");
                     }
                 });
@@ -287,10 +323,10 @@ class Scene_Boot extends Phaser.Scene {
             default:
                 break;
         }
-        
+
     } // Fin create
 
-    update(){
+    update() {
         this.tilesprite.tilePositionX += 0.2;
         this.tilesprite.tilePositionY += 0.4;
     }
