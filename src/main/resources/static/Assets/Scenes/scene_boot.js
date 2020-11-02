@@ -23,6 +23,7 @@ class Scene_Boot extends Phaser.Scene {
     }
 
     preload() {
+        var that = this;
         // Background
         this.add.image(0, 0, "simple_bg").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.tilesprite = this.add.tileSprite(0, 0, RelativeScale(1920, "x"), RelativeScale(1080, "y"), "stars").setOrigin(0, 0);
@@ -97,10 +98,11 @@ class Scene_Boot extends Phaser.Scene {
             // game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
 
             game.global.socket.onopen = () => {
+                that.SetSocketMessages();
                 if (game.global.DEBUG_MODE) {
                     console.log('[DEBUG] WebSocket connection opened.');
                 }
-                try{
+                try {
                     switch (game.global.DEVICE) {
                         case "desktop":
                             loadingText.setText('Press enter to start');
@@ -113,40 +115,20 @@ class Scene_Boot extends Phaser.Scene {
                             break;
                     }
                 }
-                finally{
+                finally {
                     game.global.WS_CONNECTION = true;
-                /**
-                // In case JOIN message from server failed, we force it
-                if (typeof game.mPlayer.id == 'undefined') {
-                    if (game.global.DEBUG_MODE) {
-                        console.log("[DEBUG] Forcing joining server...");
-                    }
-                    let message = {
-                        event: 'JOIN'
-                    }
-                    game.global.socket.send(JSON.stringify(message));
-                }
-                /**/
-                }
-            }
-
-            game.global.socket.onmessage = (msg) => {
-                var data = JSON.parse(msg.data); // Se convierte el mensaje a JSON
-                if (game.global.DEBUG_MODE){
-                    console.log(data);
-                }
-                switch(data.event){
-                    case "JOIN":
-                        game.mPlayer.id = data.id;
-                        if (game.global.DEBUG_MODE){
-                            console.log(game.mPlayer);
+                    /**
+                    // In case JOIN message from server failed, we force it
+                    if (typeof game.mPlayer.id == 'undefined') {
+                        if (game.global.DEBUG_MODE) {
+                            console.log("[DEBUG] Forcing joining server...");
                         }
-                        break;
-                    default:
-                        if (game.global.DEBUG_MODE){
-                            console.log("Tipo de mensaje no controlado");
+                        let message = {
+                            event: 'JOIN'
                         }
-                        break;
+                        game.global.socket.send(JSON.stringify(message));
+                    }
+                    /**/
                 }
             }
 
@@ -154,13 +136,13 @@ class Scene_Boot extends Phaser.Scene {
                 if (game.global.DEBUG_MODE) {
                     console.log('[DEBUG] WebSocket connection closed.');
                 }
-                try{
+                try {
                     loadingText.setText('Connection failed, try again later');
-                }catch(error){
-                    if (game.global.DEBUG_MODE){
+                } catch (error) {
+                    if (game.global.DEBUG_MODE) {
                         console.log(error);
                     }
-                }finally{
+                } finally {
                     game.global.WS_CONNECTION = false;
                 }
             }
@@ -360,5 +342,53 @@ class Scene_Boot extends Phaser.Scene {
     update() {
         this.tilesprite.tilePositionX += 0.2;
         this.tilesprite.tilePositionY += 0.4;
+    }
+
+    SetSocketMessages() {
+        game.global.socket.onmessage = (msg) => {
+            var data = JSON.parse(msg.data); // Se convierte el mensaje a JSON
+            if (game.global.DEBUG_MODE) {
+                console.log(data);
+            }
+            switch (data.event) {
+                case "JOIN":
+                    this.scene.get('scene_boot').JoinMsg(data);
+                    break;
+                case "ERROR":
+                    this.scene.get('scene_boot').ErrorMsg(data);
+                    break;
+                case "AUTENTICATION_SUCCESS":
+                    this.scene.get('scene_boot').AutenticationSuccess(data);
+                    break;
+                default:
+                    if (game.global.DEBUG_MODE) {
+                        console.log("Tipo de mensaje no controlado");
+                    }
+                    break;
+            }
+        }
+    }
+
+    // PROTOCOLO DE MENSAJES
+
+    JoinMsg(data) {
+        game.mPlayer.id = data.id;
+        if (game.global.DEBUG_MODE) {
+            console.log(game.mPlayer);
+        }
+    }
+
+    ErrorMsg(data){
+        if (game.global.DEBUG_MODE) {
+            console.log(data.message);
+        }
+    }
+
+    AutenticationSuccess(data){
+        game.mPlayer.userName = data.user_name;
+        this.scene.get('scene_account').scene.start("scene_main_menu");
+        if (game.global.DEBUG_MODE) {
+            console.log("Bienvenido/a "+ game.mPlayer.userName);
+        }
     }
 }

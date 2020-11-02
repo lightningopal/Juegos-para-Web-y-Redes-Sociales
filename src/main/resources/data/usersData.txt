@@ -1,2 +1,11 @@
 0:thund3r:-1:false:false:100:0
-1:test:-1:false:false:100:20
+1:test:-1:false:false:100:200:kratser:false:false:100.0:0
+0:kratser:false:false:100.0:0
+0:kratser:false:false:100.0:0
+0:kratser:false:false:100.0:0
+1:asd:false:false:100.0:0
+0:kratser:false:false:100.0:0
+0:kratser:false:false:100.0:0
+0:kratser:[id=-1, type=null, x=0.0, y=0.0]:false:false:100.0:0
+0:kratser:[id=-1, type=null, x=0.0, y=0.0]:false:false:100.0:0
+0:kratser:[id=-1, type=null, x=0.0, y=0.0]:false:false:100.0:0

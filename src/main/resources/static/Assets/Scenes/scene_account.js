@@ -39,11 +39,12 @@ class Scene_Account extends Phaser.Scene {
     
                     // Cosas
                     if (game.global.logInOption === 0){ // Mensaje de login
-
-                    }else if (game.global.logInOption === 0){ // Mensaje de signup
-                        
+                        game.global.socket.send(JSON.stringify({event: "LOG_IN", name: inputUsername.value,
+                        password: inputPassword.value}));
+                    }else if (game.global.logInOption === 1){ // Mensaje de signup
+                        game.global.socket.send(JSON.stringify({event: "SIGN_UP", name: inputUsername.value, 
+                        password: inputPassword.value}));
                     }
-                    that.scene.start("scene_main_menu");
                 }
                 else
                 {

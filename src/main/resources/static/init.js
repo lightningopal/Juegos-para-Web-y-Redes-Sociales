@@ -112,7 +112,13 @@ window.onload = function () {
         id:             -1,
         userName:       undefined, // String
         password:       undefined, // String
-        availableChar:  ["bard", "berserker", "wizard"],
+        characterSel:   -1, // Bardo, Berserker, Mago, Asesina
+        skillSel:       -1,
+        difficultySel:  -1,
+        isOnline:       false, // Para comprobar si está en tournament o en space gym
+        isSearching:    false,
+        room:           -1,
+        availableChar:  [0, 1, 2], // Bardo, Berserker, Mago, Asesina
         availableSkins: [],
         ranking: {
             position:   0,
@@ -120,12 +126,7 @@ window.onload = function () {
             loses:      0,
             score:      0
         },
-        currency:       0,
-        characterSel:   undefined, // String
-        skillSel:       -1,
-        difficultySel:  -1,
-        isOnline:       false,
-        isSearching:        false
+        currency:       0
     };
 
     this.game.cursors1Keys = {

@@ -37,8 +37,8 @@ public class UsersController {
 			try {
 				userWritter = new BufferedWriter(
 						new FileWriter(new File("src/main/resources/data/usersData.txt"), true));
-				userWritter.write(newUser.getUserId() + ":" + newUser.getUser_name() + ":"
-						+ newUser.getCharacter_selected() + ":" + newUser.isUser_searching() + ":"
+				userWritter.write(newUser.getUserId() + ":" + newUser.getUser_name() + ":" +
+						newUser.getPlayer_selected().toString() + ":" + newUser.isUser_searching() + ":"
 						+ newUser.isUser_ready() + ":" + newUser.getElo() + ":" + newUser.getCurrency() + "\n");
 				userWritter.close();
 			} catch (Exception e) {
@@ -54,5 +54,9 @@ public class UsersController {
 	public static void DisconnectUser(String userName) {
 		if (connectedUsers.containsKey(userName))
 			connectedUsers.remove(userName);
+	}
+
+	public static boolean CheckUserConnected(String userName){
+		return connectedUsers.containsKey(userName);
 	}
 }
