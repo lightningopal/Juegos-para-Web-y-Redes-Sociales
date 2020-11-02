@@ -20,11 +20,12 @@ public class UsersController {
 	private static Map<String, Integer> connectedUsers = new ConcurrentHashMap<>();
 	
 	// Method to add a new user to the connected ones
-	public static void ConnectNewUser(String userName) {
+	public static User ConnectNewUser(String userName) {
 		// If exists, add it to connected players. If it doesn't, create the user.
 		if (allUsers.containsKey(userName)) {
 			// Add it to the map of connected players.
 			connectedUsers.put(userName, allUsers.get(userName).getUserId());
+			return allUsers.get(userName);
 		} else {
 			// Create a new PlayerData and establish its id and name.
 			User newUser = new User();
@@ -47,6 +48,7 @@ public class UsersController {
 
 			// Add it to the map of connected players.
 			connectedUsers.put(userName, allUsers.get(userName).getUserId());
+			return newUser;
 		}
 	}
 

@@ -74,10 +74,13 @@ public class WebsocketHandler extends TextWebSocketHandler {
 								}
 							} else {
 								// Pasa el login
-								UsersController.ConnectNewUser(name);
+								User mUser = UsersController.ConnectNewUser(name);
 								msg.put("event", "AUTENTICATION_SUCCESS");
 								msg.put("user_name", name);
-								user.getSession().sendMessage(new TextMessage(msg.toString()));
+								msg.put("id", mUser.getUserId());
+								mUser.setSession(session);
+								session.getAttributes().put(USER_ATTRIBUTE, mUser);
+								mUser.getSession().sendMessage(new TextMessage(msg.toString()));
 								if (DEBUG_MODE) {
 									System.out.println("Usuario conectado: " + name);
 								}
@@ -116,10 +119,13 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					} else {
 						// Se crea el usuario y se le deja pasar
 						UsersController.loginInfo.put(name, password);
-						UsersController.ConnectNewUser(name);
+						User mUser = UsersController.ConnectNewUser(name);
+						mUser.setSession(session);
+						session.getAttributes().put(USER_ATTRIBUTE, mUser);
 						msg.put("event", "AUTENTICATION_SUCCESS");
 						msg.put("user_name", name);
-						user.getSession().sendMessage(new TextMessage(msg.toString()));
+						msg.put("id", mUser.getUserId());
+						mUser.getSession().sendMessage(new TextMessage(msg.toString()));
 						if (DEBUG_MODE) {
 							System.out.println("Nuevo usuario: " + name);
 						}

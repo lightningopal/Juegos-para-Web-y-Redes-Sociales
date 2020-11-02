@@ -372,7 +372,7 @@ class Scene_Boot extends Phaser.Scene {
     // PROTOCOLO DE MENSAJES
 
     JoinMsg(data) {
-        game.mPlayer.id = data.id;
+        //game.mPlayer.id = data.id;
         if (game.global.DEBUG_MODE) {
             console.log(game.mPlayer);
         }
@@ -386,8 +386,10 @@ class Scene_Boot extends Phaser.Scene {
 
     AutenticationSuccess(data){
         game.mPlayer.userName = data.user_name;
+        game.mPlayer.id = data.id;
         this.scene.get('scene_account').scene.start("scene_main_menu");
         if (game.global.DEBUG_MODE) {
+            console.log(game.mPlayer);
             console.log("Bienvenido/a "+ game.mPlayer.userName);
         }
     }
