@@ -112,7 +112,6 @@ window.onload = function () {
         id:             -1,
         userName:       undefined, // String
         password:       undefined, // String
-        currency:       0,
         availableChar:  ["bard", "berserker", "wizard"],
         availableSkins: [],
         ranking: {
@@ -121,11 +120,12 @@ window.onload = function () {
             loses:      0,
             score:      0
         },
+        currency:       0,
         characterSel:   undefined, // String
         skillSel:       -1,
         difficultySel:  -1,
         isOnline:       false,
-        isReady:        false
+        isSearching:        false
     };
 
     this.game.cursors1Keys = {

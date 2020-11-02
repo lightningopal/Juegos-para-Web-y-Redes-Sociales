@@ -11,6 +11,8 @@ public class User {
 	private boolean user_ready;
 	
 	private float elo;
+	private int wins;
+	private int loses;
 	private int currency;
 
 	public User() {
@@ -61,62 +63,50 @@ public class User {
 		return user_name;
 	}
 	
-
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
 	}
 	
-
 	public int getCharacter_selected() {
 		return character_selected;
 	}
 	
-
 	public void setCharacter_selected(int character_selected) {
 		this.character_selected = character_selected;
 	}
 
-	
 	public boolean isUser_searching() {
 		return user_searching;
 	}
 	
-
 	public void setUser_searching(boolean user_searching) {
 		this.user_searching = user_searching;
 	}
 	
-
 	public boolean isUser_ready() {
 		return user_ready;
 	}
 
-	
 	public void setUser_ready(boolean user_ready) {
 		this.user_ready = user_ready;
 	}
 	
-
 	public float getElo() {
 		return elo;
 	}
 	
-
 	public void setElo(float elo) {
 		this.elo = elo;
 	}
 	
-
 	public int getCurrency() {
 		return currency;
 	}
 	
-
 	public void setCurrency(int currency) {
 		this.currency = currency;
 	}
 	
-
 	@Override
 	public String toString() {
 		return "Player [user_name=" + user_name + ", character_selected=" +
