@@ -18,7 +18,6 @@ public class UsersController {
 
 	// Map to save the players on the server memory.
 	private static Map<String, Integer> connectedUsers = new ConcurrentHashMap<>();
-
 	
 	// Method to add a new user to the connected ones
 	public static void ConnectNewUser(String userName) {
@@ -46,7 +45,7 @@ public class UsersController {
 				e.printStackTrace();
 			}
 
-			// Add itto the map of connected players.
+			// Add it to the map of connected players.
 			connectedUsers.put(userName, allUsers.get(userName).getUserId());
 		}
 	}

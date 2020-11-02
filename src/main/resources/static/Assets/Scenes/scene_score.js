@@ -18,13 +18,13 @@ class Scene_Score extends Phaser.Scene {
         this.playAgain = this.add.image(0, 0, "play_again_screen").setOrigin(0,0)
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.playAgain.setActive(false);
-        // this.yesBtn = this.add.image(RelativeScale(587.0,"x"), RelativeScale(616.0,"y"), "yes_button")
-        // .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        // this.yesBtn.setFrame(1);
-        // this.yesBtn.setActive(false);
-        // this.noBtn = this.add.image(RelativeScale(1325.50,"x"), RelativeScale(616.0,"y"), "no_button")
-        // .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        // this.noBtn.setActive(false);
+        this.yesBtn = this.add.image(RelativeScale(587.0,"x"), RelativeScale(616.0,"y"), "yes_button")
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.yesBtn.setFrame(1);
+        this.yesBtn.setActive(false);
+        this.noBtn = this.add.image(RelativeScale(1325.50,"x"), RelativeScale(616.0,"y"), "no_button")
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.noBtn.setActive(false);
 
         // Controles
         this.cursors;
@@ -61,15 +61,14 @@ class Scene_Score extends Phaser.Scene {
     PlayAgainScreen(){
         var that = this;
         this.playAgain.setActive(true);
-        // this.yesBtn.setActive(true);
-        // this.noBtn.setActive(true);
-        /*
+        this.yesBtn.setActive(true);
+        this.noBtn.setActive(true);
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE){
 
             this.input.on('pointerup', function () {
                 that.optionSelected = -1;
-                // that.yesBtn.setFrame(0);
-                // that.noBtn.setFrame(0);
+                that.yesBtn.setFrame(0);
+                that.noBtn.setFrame(0);
             });
 
             this.yesBtn.setInteractive().on('pointerdown', function(pointer,localX,localY,event){
@@ -106,7 +105,7 @@ class Scene_Score extends Phaser.Scene {
                 }
             });
 
-        }else*/ if (game.global.DEVICE === "desktop"){
+        }else if (game.global.DEVICE === "desktop"){
             this.cursors.right.on("down", function(event){
                 that.optionSelected = (that.optionSelected + 1) % 2;
                 that.CheckOption();

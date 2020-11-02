@@ -6,7 +6,12 @@ class Scene_Ranking extends Phaser.Scene {
 
     preload() {
         //Creación de imágenes
-        this.background = this.add.image(0, 0, "ranking_bg").setOrigin(0, 0)
+        this.background = this.add.image(0, 0, "simple_bg").setOrigin(0,0)
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.stars = this.add.tileSprite(0, 0, RelativeScale(1920,"x"),RelativeScale(1080,"y"), "stars")
+        .setOrigin(0,0);
+
+        this.add.image(0, 0, "ranking_interface").setOrigin(0, 0)
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
         this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
@@ -55,6 +60,8 @@ class Scene_Ranking extends Phaser.Scene {
     } // Fin create
 
     update() {
+        this.stars.tilePositionX += RelativeScale(0.2, "x");
+        this.stars.tilePositionY += RelativeScale(0.4, "y");
     } // Fin update
 
 }// Fin Scene_Ranking

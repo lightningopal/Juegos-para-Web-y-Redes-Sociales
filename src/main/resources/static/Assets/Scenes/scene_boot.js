@@ -100,19 +100,21 @@ class Scene_Boot extends Phaser.Scene {
                 if (game.global.DEBUG_MODE) {
                     console.log('[DEBUG] WebSocket connection opened.');
                 }
-                game.global.WS_CONNECTION = true;
-
-                switch (game.global.DEVICE) {
-                    case "desktop":
-                        loadingText.setText('Press enter to start');
-                        break;
-                    case "mobile":
-                        loadingText.setText('Tap anywhere to start');
-                        break;
-                    default:
-                        loadingText.setText('Sorry, your device isn`t available');
-                        break;
+                try{
+                    switch (game.global.DEVICE) {
+                        case "desktop":
+                            loadingText.setText('Press enter to start');
+                            break;
+                        case "mobile":
+                            loadingText.setText('Tap anywhere to start');
+                            break;
+                        default:
+                            loadingText.setText('Sorry, your device isn`t available');
+                            break;
+                    }
                 }
+                finally{
+                    game.global.WS_CONNECTION = true;
                 /**
                 // In case JOIN message from server failed, we force it
                 if (typeof game.mPlayer.id == 'undefined') {
@@ -125,17 +127,45 @@ class Scene_Boot extends Phaser.Scene {
                     game.global.socket.send(JSON.stringify(message));
                 }
                 /**/
+                }
+            }
+
+            game.global.socket.onmessage = (msg) => {
+                var data = JSON.parse(msg.data); // Se convierte el mensaje a JSON
+                if (game.global.DEBUG_MODE){
+                    console.log(data);
+                }
+                switch(data.event){
+                    case "JOIN":
+                        game.mPlayer.id = data.id;
+                        if (game.global.DEBUG_MODE){
+                            console.log(game.mPlayer);
+                        }
+                        break;
+                    default:
+                        if (game.global.DEBUG_MODE){
+                            console.log("Tipo de mensaje no controlado");
+                        }
+                        break;
+                }
             }
 
             game.global.socket.onclose = () => {
                 if (game.global.DEBUG_MODE) {
                     console.log('[DEBUG] WebSocket connection closed.');
                 }
-                loadingText.setText('Connection failed, try again later');
-                game.global.WS_CONNECTION = false;
+                try{
+                    loadingText.setText('Connection failed, try again later');
+                }catch(error){
+                    if (game.global.DEBUG_MODE){
+                        console.log(error);
+                    }
+                }finally{
+                    game.global.WS_CONNECTION = false;
+                }
             }
             assetText.setText('Load complete.');
-        })
+        });
 
         // Carga de imágenes
         ///Escena de Inicio de Empresa, Boot///
@@ -160,6 +190,7 @@ class Scene_Boot extends Phaser.Scene {
 
         ///Escena de Ranking///
         this.load.image("ranking_bg", "./Assets/Images/Tests/test_bg/Ranking-BG.jpg");
+        this.load.image("ranking_interface", "./Assets/Images/UI/ranking_interface.png");
 
         ///Escena de Opciones///
         this.load.image("options_interface", "./Assets/Images/UI/options_interface.png");
@@ -193,7 +224,7 @@ class Scene_Boot extends Phaser.Scene {
         this.load.image("t_plat", "./Assets/Images/Platforms/t_plat.png");
         this.load.image("bard", "./Assets/Images/Characters/Bard.png");
         this.load.image("dummy", "./Assets/Images/Characters/Dummy.png");
-        this.load.image("projectile", "./Assets/Images/Tests/projectile.png")
+        this.load.image("projectile", "./Assets/Images/Tests/projectile.png");
 
         // Animaciones Bardo
         this.load.spritesheet("bard_idle", "./Assets/Images/Characters/Animations/IdleAnimation_Bard.png", { frameWidth: 170, frameHeight: 170 });
@@ -215,8 +246,8 @@ class Scene_Boot extends Phaser.Scene {
         ///Escena de Fin de Partida///
         this.load.image("score_interface", "./Assets/Images/UI/score_interface.png");
         this.load.image("play_again_screen", "./Assets/Images/UI/play_again_screen.png");
-        // this.load.spritesheet("yes_button", "./Assets/Images/UI/yes_button.png", { frameWidth: 1.0, frameHeight: 1.0 });
-        // this.load.spritesheet("no_button", "./Assets/Images/UI/no_button.png", { frameWidth: 1.0, frameHeight: 1.0 });
+        this.load.spritesheet("yes_button", "./Assets/Images/UI/yes_button.png", { frameWidth: 414.0, frameHeight: 128.0 });
+        this.load.spritesheet("no_button", "./Assets/Images/UI/no_button.png", { frameWidth: 393.50, frameHeight: 128.0 });
 
         /// Formulario ///
         this.load.html('nameform', './Assets/Text/loginform.html');
@@ -307,7 +338,7 @@ class Scene_Boot extends Phaser.Scene {
         switch (game.global.DEVICE) {
             case "desktop":
                 this.input.keyboard.on('keydown-' + "ENTER", function () {
-                    if (!isLoading /*&& game.global.WS_CONNECTION*/) {
+                    if (!isLoading && game.global.WS_CONNECTION) {
                         this.scene.input.keyboard.removeAllKeys(true);
                         this.scene.scene.start("scene_selectLogin");
                     }
@@ -315,7 +346,7 @@ class Scene_Boot extends Phaser.Scene {
                 break;
             case "mobile":
                 this.input.on('pointerdown', function () {
-                    if (!isLoading /*&& game.global.WS_CONNECTION*/) {
+                    if (!isLoading && game.global.WS_CONNECTION) {
                         this.scene.scene.start("scene_selectLogin");
                     }
                 });

@@ -153,7 +153,7 @@ class Scene_Main_Menu extends Phaser.Scene {
 
             this.creditsBtn.setInteractive().on('pointerdown', function(pointer,localX,localY,event){
                 that.optionSelectedRow = -1;
-                that.optionSelectedCol = 1;
+                that.optionSelectedCol = 2;
                 that.tournamentBtn.setFrame(0);
                 that.gymBtn.setFrame(0);
                 that.rankingBtn.setFrame(0);
@@ -164,9 +164,9 @@ class Scene_Main_Menu extends Phaser.Scene {
                 }
             });
             this.creditsBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
-                if (that.optionSelectedRow == -1 && that.optionSelectedCol == 1){
+                if (that.optionSelectedRow == -1 && that.optionSelectedCol == 2){
                     that.creditsBtn.setFrame(0);
-                that.scene.start("scene_options");
+                that.scene.start("scene_credits");
                 }
                 if (game.global.DEBUG_MODE){ 
                     console.log("credits soltado");
