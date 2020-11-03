@@ -62,6 +62,9 @@ class Scene_Select_Character extends Phaser.Scene {
             //     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         }
 
+        // Skins
+
+
         this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
@@ -70,6 +73,8 @@ class Scene_Select_Character extends Phaser.Scene {
         // Selectores
         this.characterSelectedRow;
         this.characterSelectedCol;
+        this.skinSelectedRow;
+        this.skinSelectedCol;
 
         this.selectingCharacter;
         this.selectingSkin;
@@ -102,6 +107,8 @@ class Scene_Select_Character extends Phaser.Scene {
 
         this.characterSelectedRow = 0;
         this.characterSelectedCol = 0;
+        this.skinSelectedRow = 0;
+        this.skinSelectedCol = 0;
 
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
 
@@ -135,28 +142,40 @@ class Scene_Select_Character extends Phaser.Scene {
             });
 
             this.cursors.escape.on("down", function (event) {
-                if (that.selectingCharacter) {
+                if (that.selectingCharacter) { // Seleccionando personaje
                     that.input.keyboard.removeAllKeys(true);
                     that.scene.start("scene_main_menu");
-                } else if (that.selectingSkin) {
+                } else if (that.selectingSkin) { // Seleccionando skin
                     that.selectingSkin = false;
-                    game.mPlayer.characterSel = undefined;
+                    game.mPlayer.skinSel = -1;
+                    that.skinSelectedRow = 0;
+                    that.skinSelectedCol = 0;
+                    game.mPlayer.characterSel.type = undefined;
+                    game.mPlayer.characterSel.id = -1;
                     that.selectingCharacter = true;
                 }
             });
 
             this.cursors.down.on("down", function (event) {
-                if (that.selectingCharacter) {
+                if (that.selectingCharacter) { // Seleccionando personaje
                     that.characterSelectedRow = (that.characterSelectedRow + 1) % 2;
                     that.CheckCharacter();
                     if (game.global.DEBUG_MODE) {
                         console.log("fila: " + that.characterSelectedRow);
                     }
+                } else if (that.selectingSkin) { // Seleccionando skin
+                    if (that.skinSelectedRow == -1) {
+                        that.skinSelectedRow = 0;
+                        that.CheckSkin();
+                        if (game.global.DEBUG_MODE) {
+                            console.log("fila: " + that.skinSelectedRow);
+                        }
+                    }
                 }
             });
             this.cursors.up.on("down", function (event) {
-                if (that.selectingCharacter) {
-                    if (that.characterSelectedRow === -1) {
+                if (that.selectingCharacter) { // Seleccionando personaje
+                    if (that.characterSelectedRow == -1) {
                         that.characterSelectedRow = 1;
                     } else {
                         that.characterSelectedRow = (that.characterSelectedRow - 1) % 2
@@ -165,11 +184,21 @@ class Scene_Select_Character extends Phaser.Scene {
                     if (game.global.DEBUG_MODE) {
                         console.log("fila: " + that.characterSelectedRow);
                     }
+                } else if (that.selectingSkin) { // Seleccionando skin
+                    if (that.skinSelectedRow == -1) {
+                        that.skinSelectedRow = 0;
+                    } else {
+                        that.skinSelectedRow -= 1;
+                    }
+                    that.CheckSkin();
+                    if (game.global.DEBUG_MODE) {
+                        console.log("fila: " + that.skinSelectedRow);
+                    }
                 }
             });
 
             this.cursors.right.on("down", function (event) {
-                if (that.selectingCharacter) {
+                if (that.selectingCharacter) { // Seleccionando personaje
                     if (that.characterSelectedRow != -1) {
                         that.characterSelectedCol = (that.characterSelectedCol + 1) % 3;
                         that.CheckCharacter();
@@ -177,10 +206,18 @@ class Scene_Select_Character extends Phaser.Scene {
                             console.log("columna: " + that.characterSelectedCol);
                         }
                     }
+                } else if (that.selectingSkin) { // Seleccionando skin
+                    if (that.skinSelectedRow == 0) {
+                        that.skinSelectedCol = (that.skinSelectedCol + 1) % game.mPlayer.availableSkins[game.mPlayer.characterSel.id].length;
+                        that.CheckSkin();
+                        if (game.global.DEBUG_MODE) {
+                            console.log("columna: " + that.skinSelectedCol);
+                        }
+                    }
                 }
             });
             this.cursors.left.on("down", function (event) {
-                if (that.selectingCharacter) {
+                if (that.selectingCharacter) { // Seleccionando personaje
                     if (that.characterSelectedRow != -1) {
                         if (that.characterSelectedCol === 0) {
                             that.characterSelectedCol = 2;
@@ -192,13 +229,26 @@ class Scene_Select_Character extends Phaser.Scene {
                             console.log("columna: " + that.characterSelectedCol);
                         }
                     }
-
+                } else if (that.selectingSkin) { // Seleccionando skin
+                    if (that.skinSelectedRow == 0) {
+                        if (that.skinSelectedCol == 0) {
+                            that.skinSelectedCol = game.mPlayer.availableSkins[game.mPlayer.characterSel.id].length - 1;
+                        } else {
+                            that.skinSelectedCol = (that.skinSelectedCol - 1) % game.mPlayer.availableSkins[game.mPlayer.characterSel.id].length;
+                        }
+                        that.CheckSkin();
+                        if (game.global.DEBUG_MODE) {
+                            console.log("columna: " + that.skinSelectedCol);
+                        }
+                    }
                 }
             });
 
             this.cursors.enter.on("down", function (event) {
-                if (that.selectingCharacter) {
+                if (that.selectingCharacter) { // Seleccionando personaje
                     that.SelectCharacter();
+                } else if (that.selectingSkin) { // Seleccionando skin
+                    that.SelectSkin();
                 }
             });
         }// Fin mobile/desktop
@@ -288,20 +338,21 @@ class Scene_Select_Character extends Phaser.Scene {
 
     // Selecciona el personaje si está disponible
     SelectCharacter() {
-        if (this.characterSelectedRow === -1) {
+        if (this.characterSelectedRow == -1) {
             this.input.keyboard.removeAllKeys(true);
             this.scene.start("scene_main_menu");
         } else if (this.availableChars[this.characterSelectedRow][this.characterSelectedCol].available) { // Si está disponible
             if (this.availableChars[this.characterSelectedRow][this.characterSelectedCol].purchased) { // Si lo tiene comprado
-                game.mPlayer.characterSel = this.availableChars[this.characterSelectedRow][this.characterSelectedCol].char;
+                game.mPlayer.characterSel.type = this.availableChars[this.characterSelectedRow][this.characterSelectedCol].char;
+                game.mPlayer.characterSel.id = this.characterSelectedCol + (this.characterSelectedRow * 3);
                 this.selectingCharacter = false;
                 this.selectingSkin = true;
                 if (game.global.DEBUG_MODE) {
-                    console.log("Personaje seleccionado: " + game.mPlayer.characterSel);
+                    console.log("Personaje seleccionado: " + game.mPlayer.characterSel.type);
                 }
-            }else{
+            } else {
                 if (game.global.DEBUG_MODE) {
-                    console.log("Debes comprar personaje");
+                    console.log("Debes comprar el personaje");
                 }
             }
         } else {
@@ -310,5 +361,38 @@ class Scene_Select_Character extends Phaser.Scene {
             }
         }
     }// Fin SelectCharacter
+
+    CheckSkin() {
+        if (this.skinSelectedRow == -1) {
+            this.backBtn.setFrame(1);
+        } else {
+            this.backBtn.setFrame(0);
+        }
+    }// Fin CheckSkin
+
+    SelectSkin() {
+        if (this.skinSelectedRow == -1) {
+            this.selectingSkin = false;
+            game.mPlayer.skinSel = -1;
+            this.skinSelectedRow = 0;
+            this.skinSelectedCol = 0;
+            game.mPlayer.characterSel.type = undefined;
+            game.mPlayer.characterSel.id = -1;
+            this.selectingCharacter = true;
+        }else{
+            if (game.mPlayer.availableSkins[game.mPlayer.characterSel.id][this.skinSelectedCol]){
+                // Se puede seleccionar
+                game.mPlayer.skinSel = this.skinSelectedCol;
+                if (game.global.DEBUG_MODE) {
+                    console.log("Skin seleccionada: " + game.mPlayer.skinSel);
+                }
+            }else{
+                // Hay que comprar la skin
+                if (game.global.DEBUG_MODE) {
+                    console.log("Debes comprar la skin");
+                }
+            }
+        }
+    }// Fin SelectSkin
 
 }// Fin Scene_Select_Character
