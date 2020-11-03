@@ -151,6 +151,7 @@ class Scene_Boot extends Phaser.Scene {
 
         // Carga de imágenes
         ///Escena de Inicio de Empresa, Boot///
+        
 
         ///Escena de Inicio de Sesión///
         this.load.image("simple_bg", "./Assets/Images/BackGrounds/simple_bg.png");
@@ -178,6 +179,7 @@ class Scene_Boot extends Phaser.Scene {
         this.load.image("options_interface", "./Assets/Images/UI/options_interface.png");
         this.load.spritesheet("volume_button", "./Assets/Images/UI/volume_button.png", { frameWidth: 76, frameHeight: 143 });
         this.load.spritesheet("back_button", "./Assets/Images/UI/back_button.png", { frameWidth: 144, frameHeight: 121 })
+        this.load.image("back_button_interface", "./Assets/Images/UI/back_button_interface.png");
 
         ///Escena de Créditos///
         this.load.image("credits_bg", "./Assets/Images/Tests/test_bg/Credits-BG.jpg");

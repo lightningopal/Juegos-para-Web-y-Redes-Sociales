@@ -10,6 +10,11 @@ class Scene_Account extends Phaser.Scene {
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.stars = this.add.tileSprite(0, 0, RelativeScale(1920,"x"),RelativeScale(1080,"y"), "stars")
         .setOrigin(0,0);
+        this.add.image(RelativeScale(114.50, "x"), RelativeScale(112.0, "y"), "back_button_interface")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.backBtn.setFrame(1);
 
         // Teclas
         this.cursors;
@@ -19,6 +24,31 @@ class Scene_Account extends Phaser.Scene {
     create() {
         var that = this;
 
+        if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE){
+
+            this.input.on('pointerup', function () {
+                that.backBtn.setFrame(0);
+            });
+
+            this.backBtn.setInteractive().on('pointerdown', function(pointer,localX,localY,event){
+                that.backBtn.setFrame(1);
+                if (game.global.DEBUG_MODE){ 
+                    console.log("Back pulsado");
+                }
+            });
+            this.backBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
+                that.backBtn.setFrame(0);
+                that.scene.start("scene_selectLogin");
+                if (game.global.DEBUG_MODE){ 
+                    console.log("Back soltado");
+                }
+            });
+        }else if(game.global.DEVICE === "desktop"){
+            this.input.keyboard.on('keydown-'+'ESC', function (event) {
+                that.input.keyboard.removeAllKeys(true);
+                that.scene.start("scene_selectLogin");
+            });
+        }// Fin mobile/desktop
         // Formulario
         var element = this.add.dom(RelativeScale((1920/2), "x"), RelativeScale((1080/2), "y")).createFromCache('nameform');
 

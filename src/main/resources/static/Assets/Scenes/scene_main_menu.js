@@ -6,7 +6,7 @@ class Scene_Main_Menu extends Phaser.Scene {
 
     preload() {
         var that = this;
-        //Creación de imágenes
+        // Creación de imágenes
         this.background = this.add.image(0, 0, "main_menu_bg").setOrigin(0,0)
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.nebula = this.add.image(game.config.width/2, game.config.height/2, "main_menu_nebula")
@@ -235,10 +235,12 @@ class Scene_Main_Menu extends Phaser.Scene {
                     case 1:
                         if (that.optionSelectedRow == 0){
                             // Tournament
+                            game.mPlayer.isOnline = true;
                             //that.input.keyboard.removeAllKeys(true);
-                            //that.scene.start("scene_tournament");
+                            //that.scene.start("scene_select_character");
                         }else if (that.optionSelectedRow == 1){
                             // Space Gym
+                            game.mPlayer.isOnline = false;
                             that.input.keyboard.removeAllKeys(true);
                             that.scene.start("scene_select_character");
                         }else {
@@ -256,10 +258,12 @@ class Scene_Main_Menu extends Phaser.Scene {
                         break;
                 }
             });
+            /**
             this.cursors.escape.on('down', function(event){
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_account");
             });
+            /**/
         }
     } // Fin create
 
