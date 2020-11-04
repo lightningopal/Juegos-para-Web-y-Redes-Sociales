@@ -16,6 +16,15 @@ class Scene_Select_Character extends Phaser.Scene {
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
         this.texts = this.add.image(RelativeScale(1459.02, "x"), RelativeScale(410.0, "x"), "description_text")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+        this.skinsSkills = this.add.image(RelativeScale(1476.17, "x"), RelativeScale(777.88, "x"), "skins_skills")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+        this.leftArrowBtn = this.add.image(RelativeScale(1238.75, "x"), RelativeScale(744.07, "x"), "left_arrow_button")
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+        this.rightArrowBtn = this.add.image(RelativeScale(1580.07, "x"), RelativeScale(867.88, "x"), "right_arrow_button")
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+        this.enterBtn = this.add.image(RelativeScale(1810.0, "x"), RelativeScale(1000.0, "x"), "enter_button")
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+        this.enterText;
 
         // Personajes
         this.availableChars = [[{ char: "berserker", purchased: false, available: true }, { char: "wizard", purchased: false, available: true },
@@ -34,7 +43,6 @@ class Scene_Select_Character extends Phaser.Scene {
                     this.berserkerBtn.setAlpha(0.7);
             }
         }
-        this.berserkerBtn.setFrame(1);
 
         for (var i = 0; i < game.mPlayer.availableChar.length; i++){
             if (game.mPlayer.availableChar[i] == 1) { // Si tiene disponible el mago
@@ -96,9 +104,11 @@ class Scene_Select_Character extends Phaser.Scene {
         this.characterSelectedCol;
         this.skinSelectedRow;
         this.skinSelectedCol;
+        this.confirmSkin;
 
         this.selectingCharacter;
         this.selectingSkin;
+        this.confirmingSkin;
         this.selectingSkill;
         this.selectingMap;
     }// Fin preload
@@ -123,6 +133,7 @@ class Scene_Select_Character extends Phaser.Scene {
         // Selectores
         this.selectingCharacter = true;
         this.selectingSkin = false;
+        this.confirmingSkin = false;
         this.selectingSkill = false;
         this.selectingMap = false;
 
@@ -130,9 +141,11 @@ class Scene_Select_Character extends Phaser.Scene {
         this.characterSelectedCol = 0;
         this.skinSelectedRow = 0;
         this.skinSelectedCol = 0;
+        this.confirmSkin = true;
 
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
-
+            this.leftArrowBtn.setFrame(1);
+            this.rightArrowBtn.setFrame(1);
             this.input.on('pointerup', function () {
                 that.backBtn.setFrame(0);
             });
@@ -152,6 +165,14 @@ class Scene_Select_Character extends Phaser.Scene {
                 }
             });
         } else if (game.global.DEVICE === "desktop") {
+            this.enterText = this.add.image(RelativeScale(1350.0, "x"), RelativeScale(1000.0, "x"), "continue_text_desktop")
+                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+            this.enterText.setAlpha(0);
+            this.rightArrowBtn.setAlpha(0);
+            this.leftArrowBtn.setAlpha(0);
+            this.enterBtn.setAlpha(0);
+            this.berserkerBtn.setFrame(1);
+            this.skinsSkills.setAlpha(0.7);
             // Opciones de selección
             this.cursors = this.input.keyboard.addKeys({
                 'left': game.cursors1Keys.left,
@@ -168,11 +189,24 @@ class Scene_Select_Character extends Phaser.Scene {
                     that.scene.start("scene_main_menu");
                 } else if (that.selectingSkin) { // Seleccionando skin
                     that.selectingSkin = false;
-                    this.skinSelectedRow = 0;
-                    this.skinSelectedCol = 0;
+                    that.skinsSkills.setAlpha(0.7);
+                    that.leftArrowBtn.setAlpha(0);
+                    that.rightArrowBtn.setAlpha(0);
+                    that.skinSelectedRow = 0;
+                    that.skinSelectedCol = 0;
                     game.mPlayer.characterSel.type = undefined;
                     game.mPlayer.characterSel.id = -1;
                     that.selectingCharacter = true;
+                } else if (that.confirmingSkin){
+                    game.mPlayer.selectedSkin = -1;
+                    that.skinsSkills.setAlpha(1);
+                    that.leftArrowBtn.setAlpha(1);
+                    that.rightArrowBtn.setAlpha(1);
+                    that.enterBtn.setAlpha(0);
+                    that.enterText.setAlpha(0);
+                    that.confirmingSkin = false;
+                    that.confirmSkin = true;
+                    that.selectingSkin = true;
                 }
             });
 
@@ -190,6 +224,13 @@ class Scene_Select_Character extends Phaser.Scene {
                         if (game.global.DEBUG_MODE) {
                             console.log("fila: " + that.skinSelectedRow);
                         }
+                    }
+                } else if (that.confirmingSkin){
+                    that.confirmSkin = !that.confirmSkin;
+                    if (that.confirmSkin){
+                        that.backBtn.setFrame(0);
+                    }else{
+                        that.backBtn.setFrame(1);
                     }
                 }
             });
@@ -213,6 +254,13 @@ class Scene_Select_Character extends Phaser.Scene {
                     that.CheckSkin();
                     if (game.global.DEBUG_MODE) {
                         console.log("fila: " + that.skinSelectedRow);
+                    }
+                }else if (that.confirmingSkin){
+                    that.confirmSkin = !that.confirmSkin;
+                    if (that.confirmSkin){
+                        that.backBtn.setFrame(0);
+                    }else{
+                        that.backBtn.setFrame(1);
                     }
                 }
             });
@@ -269,6 +317,20 @@ class Scene_Select_Character extends Phaser.Scene {
                     that.SelectCharacter();
                 } else if (that.selectingSkin) { // Seleccionando skin
                     that.SelectSkin();
+                } else if (that.confirmingSkin){
+                    if (that.confirmSkin){
+
+                    }else{
+                        game.mPlayer.selectedSkin = -1;
+                        that.skinsSkills.setAlpha(1);
+                        that.leftArrowBtn.setAlpha(1);
+                        that.rightArrowBtn.setAlpha(1);
+                        that.enterBtn.setAlpha(0);
+                        that.enterText.setAlpha(0);
+                        that.confirmingSkin = false;
+                        that.confirmSkin = true;
+                        that.selectingSkin = true;
+                    }
                 }
             });
         }// Fin mobile/desktop
@@ -283,6 +345,7 @@ class Scene_Select_Character extends Phaser.Scene {
     CheckCharacter() {
         switch (this.characterSelectedRow) {
             case -1:
+                this.skinsSkills.setFrame(4);
                 this.texts.setAlpha(0);
                 this.backBtn.setFrame(1);
                 this.berserkerBtn.setFrame(0);
@@ -300,6 +363,7 @@ class Scene_Select_Character extends Phaser.Scene {
                 switch (this.characterSelectedCol) {
                     case 0:
                         // Berserker
+                        this.skinsSkills.setFrame(0);
                         this.texts.setAlpha(1);
                         this.texts.setFrame(0);
                         this.backBtn.setFrame(0);
@@ -321,6 +385,7 @@ class Scene_Select_Character extends Phaser.Scene {
                         break;
                     case 1:
                         // Wizard
+                        this.skinsSkills.setFrame(1);
                         this.texts.setAlpha(1);
                         this.texts.setFrame(1);
                         this.backBtn.setFrame(0);
@@ -342,6 +407,7 @@ class Scene_Select_Character extends Phaser.Scene {
                         break;
                     case 2:
                         // Bard
+                        this.skinsSkills.setFrame(2);
                         this.texts.setAlpha(1);
                         this.texts.setFrame(2);
                         this.backBtn.setFrame(0);
@@ -367,6 +433,7 @@ class Scene_Select_Character extends Phaser.Scene {
                 switch (this.characterSelectedCol) {
                     case 0:
                         // Rogue
+                        this.skinsSkills.setFrame(3);
                         this.texts.setAlpha(1);
                         this.texts.setFrame(3);
                         this.backBtn.setFrame(0);
@@ -388,6 +455,7 @@ class Scene_Select_Character extends Phaser.Scene {
                         break;
                     case 1:
                         // Blocked
+                        this.skinsSkills.setFrame(4);
                         this.texts.setAlpha(1);
                         this.texts.setFrame(4);
                         this.backBtn.setFrame(0);
@@ -409,6 +477,7 @@ class Scene_Select_Character extends Phaser.Scene {
                         break;
                     case 2:
                         // Blocked
+                        this.skinsSkills.setFrame(4);
                         this.texts.setAlpha(1);
                         this.texts.setFrame(4);
                         this.backBtn.setFrame(0);
@@ -444,6 +513,9 @@ class Scene_Select_Character extends Phaser.Scene {
                 game.mPlayer.characterSel.type = this.availableChars[this.characterSelectedRow][this.characterSelectedCol].char;
                 game.mPlayer.characterSel.id = this.characterSelectedCol + (this.characterSelectedRow * 3);
                 this.selectingCharacter = false;
+                this.skinsSkills.setAlpha(1);
+                this.leftArrowBtn.setAlpha(1);
+                this.rightArrowBtn.setAlpha(1);
                 this.selectingSkin = true;
                 if (game.global.DEBUG_MODE) {
                     console.log("Personaje seleccionado: " + game.mPlayer.characterSel.type);
@@ -477,6 +549,9 @@ class Scene_Select_Character extends Phaser.Scene {
     SelectSkin() {
         if (this.skinSelectedRow == -1) {
             this.selectingSkin = false;
+            this.skinsSkills.setAlpha(0.7);
+            this.leftArrowBtn.setAlpha(0);
+            this.rightArrowBtn.setAlpha(0);
             this.skinSelectedRow = 0;
             this.skinSelectedCol = 0;
             game.mPlayer.characterSel.type = undefined;
@@ -487,6 +562,11 @@ class Scene_Select_Character extends Phaser.Scene {
                 // Se puede seleccionar
                 game.mPlayer.skinSel = this.skinSelectedCol;
                 this.selectingSkin = false;
+                this.leftArrowBtn.setAlpha(0);
+                this.rightArrowBtn.setAlpha(0);
+                this.enterBtn.setAlpha(1);
+                this.enterText.setAlpha(1);
+                this.confirmingSkin = true;
                 if (game.global.DEBUG_MODE) {
                     console.log("Skin seleccionada: " + game.mPlayer.skinSel);
                 }

@@ -192,9 +192,11 @@ class Scene_Boot extends Phaser.Scene {
         this.load.spritesheet("rogue_button", "./Assets/Images/UI/rogue_button.png", { frameWidth: 731, frameHeight: 540 });
         this.load.spritesheet("blocked_button", "./Assets/Images/UI/blocked_button.png", { frameWidth: 731, frameHeight: 429 });
         this.load.spritesheet("description_text", "./Assets/Images/UI/description_text.png", { frameWidth: 731, frameHeight: 599 });
-        this.load.image("previous_skin_button", "./Assets/Images/UI/previous_skin_button.png");
-        this.load.image("next_skin_button", "./Assets/Images/UI/next_skin_button.png");
-        this.load.spritesheet("skin_ui", "./Assets/Images/UI/skin_ui.png", { frameWidth: 1, frameHeight: 1 });
+        this.load.spritesheet("skins_skills", "./Assets/Images/UI/skins_skills.png", { frameWidth: 731, frameHeight: 380 });
+        this.load.spritesheet("right_arrow_button", "./Assets/Images/UI/right_arrow_button.png", { frameWidth: 224.50, frameHeight: 187 });
+        this.load.spritesheet("left_arrow_button", "./Assets/Images/UI/left_arrow_button.png", { frameWidth: 224.50, frameHeight: 187 });
+        this.load.image("enter_button", "./Assets/Images/UI/enter_button.png");
+        this.load.image("continue_text_desktop", "./Assets/Images/UI/continue_text_desktop.png");
 
 
         ///Nivel 1///

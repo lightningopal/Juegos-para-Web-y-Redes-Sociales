@@ -38,7 +38,7 @@ class Scene_Account extends Phaser.Scene {
             });
             this.backBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
                 that.backBtn.setFrame(0);
-                that.scene.start("scene_selectLogin");
+                that.scene.start("scene_select_login");
                 if (game.global.DEBUG_MODE){ 
                     console.log("Back soltado");
                 }
@@ -46,7 +46,7 @@ class Scene_Account extends Phaser.Scene {
         }else if(game.global.DEVICE === "desktop"){
             this.input.keyboard.on('keydown-'+'ESC', function (event) {
                 that.input.keyboard.removeAllKeys(true);
-                that.scene.start("scene_selectLogin");
+                that.scene.start("scene_select_login");
             });
         }// Fin mobile/desktop
         // Formulario

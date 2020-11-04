@@ -1,0 +1,78 @@
+20:12:02 - Server opened.
+20:12:27 - Conected user with session a4481121-0529-c93c-fc97-9bb351532cef.
+20:13:21 - Disconnected user with session a4481121-0529-c93c-fc97-9bb351532cef.
+20:13:25 - Conected user with session 16c6da10-6f2a-a3eb-e370-8f5e3426b318.
+20:16:33 - Disconnected user with session 16c6da10-6f2a-a3eb-e370-8f5e3426b318.
+20:16:54 - Conected user with session 222ea8cb-6d72-3239-5ad9-f9dda034e877.
+20:17:20 - Player connected: Kratser.
+20:18:47 - Player disconnected: Kratser.
+20:18:49 - Conected user with session 4030df2a-ecbd-4e96-7905-28d0cdb65846.
+20:18:55 - Player connected: Kratser.
+20:20:51 - Player disconnected: Kratser.
+20:20:54 - Conected user with session d997ecde-cbbb-1100-90ec-c04a638d8933.
+20:20:59 - Player connected: Kratser.
+20:32:04 - Player disconnected: Kratser.
+20:32:10 - Conected user with session e574c6cf-abb2-f5b6-6a5c-3e13748d83f2.
+20:32:15 - Player connected: Kratser.
+20:32:38 - Player disconnected: Kratser.
+20:32:40 - Conected user with session d4aad50a-0830-d8d3-d67c-cd38ac17442a.
+20:32:49 - Disconnected user with session d4aad50a-0830-d8d3-d67c-cd38ac17442a.
+20:32:55 - Conected user with session b109afc6-8d14-908f-6287-b593c76e435e.
+20:33:07 - Player connected: Kratser.
+20:34:12 - Player disconnected: Kratser.
+20:34:16 - Conected user with session 8555e260-a391-e7dc-69b7-0b0b42816501.
+20:34:21 - Player connected: Kratser.
+20:34:57 - Player disconnected: Kratser.
+20:35:00 - Conected user with session f9dfa7cd-4aec-bfc8-50b6-6718551ac169.
+20:35:17 - Disconnected user with session f9dfa7cd-4aec-bfc8-50b6-6718551ac169.
+20:35:26 - Conected user with session 3e989b12-2c19-2e2a-0c08-bcb21faef4c1.
+21:02:50 - Disconnected user with session 3e989b12-2c19-2e2a-0c08-bcb21faef4c1.
+21:02:53 - Conected user with session 31b53e8f-ef85-bc11-e63b-aa3923357fcc.
+21:03:09 - Disconnected user with session 31b53e8f-ef85-bc11-e63b-aa3923357fcc.
+21:03:12 - Conected user with session b95de7e5-caa3-ef3c-82e5-e2d1f2ca067a.
+21:03:26 - Disconnected user with session b95de7e5-caa3-ef3c-82e5-e2d1f2ca067a.
+21:03:29 - Conected user with session 73f357d0-5a07-f08e-1da2-9dcd2a04de0b.
+21:04:12 - Disconnected user with session 73f357d0-5a07-f08e-1da2-9dcd2a04de0b.
+21:04:24 - Conected user with session 91e3ad72-b631-163a-15ae-35aa9e2fb40b.
+21:04:51 - Disconnected user with session 91e3ad72-b631-163a-15ae-35aa9e2fb40b.
+21:04:54 - Conected user with session ff21f25f-c056-413d-aece-bb11d6f66b87.
+21:05:24 - Disconnected user with session ff21f25f-c056-413d-aece-bb11d6f66b87.
+21:05:27 - Conected user with session c6b2936b-beb4-a30c-1294-1665b911d72f.
+21:05:37 - Disconnected user with session c6b2936b-beb4-a30c-1294-1665b911d72f.
+21:05:40 - Conected user with session b5e5b624-2851-4475-9937-56158801cd99.
+21:06:00 - Disconnected user with session b5e5b624-2851-4475-9937-56158801cd99.
+21:06:03 - Conected user with session 3d28cae9-c32e-1fde-4b9a-71810e07fe8d.
+21:06:26 - Disconnected user with session 3d28cae9-c32e-1fde-4b9a-71810e07fe8d.
+21:06:29 - Conected user with session 9c917b7e-ee50-ca26-a227-f6ec15c8421c.
+21:06:38 - Disconnected user with session 9c917b7e-ee50-ca26-a227-f6ec15c8421c.
+21:06:41 - Conected user with session 3e8d38f2-3b20-174b-93a0-8c3c1c583cce.
+21:06:54 - Disconnected user with session 3e8d38f2-3b20-174b-93a0-8c3c1c583cce.
+21:06:56 - Conected user with session 5f471314-4104-8d3a-cf12-d18246981f92.
+21:18:09 - Disconnected user with session 5f471314-4104-8d3a-cf12-d18246981f92.
+21:18:12 - Conected user with session f4bf7f30-af46-13a3-4580-1c9b9422c2b4.
+21:19:24 - Disconnected user with session f4bf7f30-af46-13a3-4580-1c9b9422c2b4.
+21:19:27 - Conected user with session cba71410-a493-edc4-ebfa-c26c5634aee0.
+21:23:11 - Disconnected user with session cba71410-a493-edc4-ebfa-c26c5634aee0.
+21:23:14 - Conected user with session f16b9a32-3eab-8f54-be38-3150de4b66aa.
+21:24:34 - Disconnected user with session f16b9a32-3eab-8f54-be38-3150de4b66aa.
+21:24:37 - Conected user with session 531375c1-7118-025a-07e4-800c776d58bf.
+21:25:06 - Disconnected user with session 531375c1-7118-025a-07e4-800c776d58bf.
+21:25:08 - Conected user with session a7d21b46-1901-db5e-de2b-cb1f95438c90.
+21:25:32 - Disconnected user with session a7d21b46-1901-db5e-de2b-cb1f95438c90.
+21:25:34 - Conected user with session 8c7a1b8f-5163-6be0-f358-f5624d8e16fb.
+21:25:41 - Disconnected user with session 8c7a1b8f-5163-6be0-f358-f5624d8e16fb.
+21:25:44 - Conected user with session ef234f76-0554-f244-8c6a-2b8307960f62.
+21:26:01 - Disconnected user with session ef234f76-0554-f244-8c6a-2b8307960f62.
+21:26:04 - Conected user with session b1becc2f-c512-adb5-c9ff-f86b7195713f.
+21:29:56 - Disconnected user with session b1becc2f-c512-adb5-c9ff-f86b7195713f.
+21:29:58 - Conected user with session 8666b910-dc06-b485-2f11-3145b64e1fee.
+21:30:12 - Disconnected user with session 8666b910-dc06-b485-2f11-3145b64e1fee.
+21:30:15 - Conected user with session 20a21322-a1f9-01d4-633e-d98bef3fa256.
+21:30:20 - Disconnected user with session 20a21322-a1f9-01d4-633e-d98bef3fa256.
+21:30:22 - Conected user with session 8bf0bf83-0c22-040f-35b4-5585d92a33ed.
+21:30:29 - Disconnected user with session 8bf0bf83-0c22-040f-35b4-5585d92a33ed.
+21:30:31 - Conected user with session da480672-8bd5-e6ee-e0ee-5e94c8e396b9.
+21:30:39 - Disconnected user with session da480672-8bd5-e6ee-e0ee-5e94c8e396b9.
+21:30:41 - Conected user with session 03707561-16f2-bb7a-8fdc-1a10db9b84cb.
+21:30:47 - Disconnected user with session 03707561-16f2-bb7a-8fdc-1a10db9b84cb.
+21:30:49 - Conected user with session 07490bf5-8055-d528-2324-472b711aead7.
