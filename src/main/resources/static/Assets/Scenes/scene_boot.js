@@ -185,7 +185,17 @@ class Scene_Boot extends Phaser.Scene {
         this.load.image("credits_bg", "./Assets/Images/Tests/test_bg/Credits-BG.jpg");
 
         ///Escena de Selección de Personaje, Habilidad y Escenario///
-        this.load.image("select_character_bg", "./Assets/Images/Tests/test_bg/SelectCharacter-BG.jpg");
+        this.load.image("select_character_interface", "./Assets/Images/UI/select_character_interface.png");
+        this.load.spritesheet("berserker_button", "./Assets/Images/UI/berserker_button.png", { frameWidth: 731, frameHeight: 540 });
+        this.load.spritesheet("wizard_button", "./Assets/Images/UI/wizard_button.png", { frameWidth:731, frameHeight: 540 });
+        this.load.spritesheet("bard_button", "./Assets/Images/UI/bard_button.png", { frameWidth: 731, frameHeight: 540 });
+        this.load.spritesheet("rogue_button", "./Assets/Images/UI/rogue_button.png", { frameWidth: 731, frameHeight: 540 });
+        this.load.spritesheet("blocked_button", "./Assets/Images/UI/blocked_button.png", { frameWidth: 731, frameHeight: 429 });
+        this.load.spritesheet("description_text", "./Assets/Images/UI/description_text.png", { frameWidth: 731, frameHeight: 599 });
+        this.load.image("previous_skin_button", "./Assets/Images/UI/previous_skin_button.png");
+        this.load.image("next_skin_button", "./Assets/Images/UI/next_skin_button.png");
+        this.load.spritesheet("skin_ui", "./Assets/Images/UI/skin_ui.png", { frameWidth: 1, frameHeight: 1 });
+
 
         ///Nivel 1///
         // Fondo
@@ -324,7 +334,7 @@ class Scene_Boot extends Phaser.Scene {
                 this.input.keyboard.on('keydown-' + "ENTER", function () {
                     if (!isLoading && game.global.WS_CONNECTION) {
                         this.scene.input.keyboard.removeAllKeys(true);
-                        this.scene.scene.start("scene_selectLogin");
+                        this.scene.scene.start("scene_select_character");
                     }
                 });
                 break;
