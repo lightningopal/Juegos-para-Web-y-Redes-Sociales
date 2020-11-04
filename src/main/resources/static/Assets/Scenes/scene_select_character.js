@@ -21,60 +21,67 @@ class Scene_Select_Character extends Phaser.Scene {
         this.availableChars = [[{ char: "berserker", purchased: false, available: true }, { char: "wizard", purchased: false, available: true },
         { char: "bard", purchased: false, available: true }],
         [{ char: "rogue", purchased: false, available: true }, { char: "character", purchased: false, available: false }]];
-        if (game.mPlayer.availableChar[0] == "berserker") { // Si tiene disponible el berserker
-            this.berserkerBtn = this.add.image(RelativeScale(60.50, "x"), RelativeScale(420.0, "y"), "berserker_button")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-            this.availableChars[0][0].purchased = true;
-            this.berserkerBtn.setFrame(1);
-        } else { // Si no
-            this.berserkerBtn = this.add.image(RelativeScale(67.50, "x"), RelativeScale(420.0, "y"), "purchase_button")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-                this.berserkerBtn.setAlpha(0.7);
+        
+        for (var i = 0; i < game.mPlayer.availableChar.length; i++){
+            if (game.mPlayer.availableChar[i] == 0) { // Si tiene disponible el berserker
+                this.berserkerBtn = this.add.image(RelativeScale(60.50, "x"), RelativeScale(420.0, "y"), "berserker_button")
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                this.availableChars[0][0].purchased = true;
+                break;
+            } else if (i == game.mPlayer.availableChar.length-1){ // Si no
+                this.berserkerBtn = this.add.image(RelativeScale(67.50, "x"), RelativeScale(420.0, "y"), "purchase_button")
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                    this.berserkerBtn.setAlpha(0.7);
+            }
         }
-        // this.berserkerBtn.setFrame(1);
+        this.berserkerBtn.setFrame(1);
 
-        if (game.mPlayer.availableChar[1] == "wizard") { // Si tiene disponible el mago
-            this.wizardBtn = this.add.image(RelativeScale(441.0, "x"), RelativeScale(557.0, "y"), "wizard_button")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-            this.availableChars[0][1].purchased = true;
-            this.wizardBtn.setAlpha(0.7);
-        } else { // Si no
-            this.wizardBtn = this.add.image(RelativeScale(441.0, "x"), RelativeScale(557.0, "y"), "purchase_button")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-            this.wizardBtn.setAlpha(0.7);
+        for (var i = 0; i < game.mPlayer.availableChar.length; i++){
+            if (game.mPlayer.availableChar[i] == 1) { // Si tiene disponible el mago
+                this.wizardBtn = this.add.image(RelativeScale(441.0, "x"), RelativeScale(557.0, "y"), "wizard_button")
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                this.availableChars[0][1].purchased = true;
+                this.wizardBtn.setAlpha(0.7);
+                break;
+            } else if (i == game.mPlayer.availableChar.length-1){ // Si no
+                this.wizardBtn = this.add.image(RelativeScale(441.0, "x"), RelativeScale(557.0, "y"), "purchase_button")
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                this.wizardBtn.setAlpha(0.7);
+            }
         }
-
-        if (game.mPlayer.availableChar[2] == "bard") { // Si tiene disponible el bardo
-            this.bardBtn = this.add.image(RelativeScale(825.50, "x"), RelativeScale(694.0, "y"), "bard_button")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-            this.availableChars[0][2].purchased = true;
-            this.bardBtn.setAlpha(0.7);
-        } else { // Si no
-            this.bardBtn = this.add.image(RelativeScale(825.50, "x"), RelativeScale(694.0, "y"), "purchase_button")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-            this.bardBtn.setAlpha(0.7);
+        
+        for (var i = 0; i < game.mPlayer.availableChar.length; i++){
+            if (game.mPlayer.availableChar[i] == 2) { // Si tiene disponible el bardo
+                this.bardBtn = this.add.image(RelativeScale(825.50, "x"), RelativeScale(694.0, "y"), "bard_button")
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                this.availableChars[0][2].purchased = true;
+                this.bardBtn.setAlpha(0.7);
+                break;
+            } else if (i == game.mPlayer.availableChar.length-1){ // Si no
+                this.bardBtn = this.add.image(RelativeScale(825.50, "x"), RelativeScale(694.0, "y"), "purchase_button")
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                this.bardBtn.setAlpha(0.7);
+            }
         }
-
-        if (game.mPlayer.availableChar[3] == "rogue") { // Si tiene disponible el bardo
-            this.rogueBtn = this.add.image(RelativeScale(59.0, "x"), RelativeScale(694.0, "y"), "rogue_button")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-            this.availableChars[1][0].purchased = true;
-            this.rogueBtn.setAlpha(0.7);
-        } else { // Si no
-            this.rogueBtn = this.add.image(RelativeScale(59.0, "x"), RelativeScale(694.0, "y"), "purchase_button")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-            this.rogueBtn.setAlpha(0.7);
+        
+        for (var i = 0; i < game.mPlayer.availableChar.length; i++){
+            if (game.mPlayer.availableChar[i] == 3) { // Si tiene disponible el bardo
+                this.rogueBtn = this.add.image(RelativeScale(59.0, "x"), RelativeScale(694.0, "y"), "rogue_button")
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                this.availableChars[1][0].purchased = true;
+                this.rogueBtn.setAlpha(0.7);
+                break;
+            } else if (i == game.mPlayer.availableChar.length-1){ // Si no
+                this.rogueBtn = this.add.image(RelativeScale(59.0, "x"), RelativeScale(694.0, "y"), "purchase_button")
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                this.rogueBtn.setAlpha(0.7);
+            }
         }
-
-        if (game.mPlayer.availableChar[4] == "character") { // Si tiene disponible el personaje extra
-            this.blockedBtn = this.add.image(RelativeScale(445.0, "x"), RelativeScale(898.50, "y"), "blocked_button")
+        
+        // Personaje bloqueado
+        this.blockedBtn = this.add.image(RelativeScale(445.0, "x"), RelativeScale(898.50, "y"), "blocked_button")
                 .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-            this.blockedBtn.setAlpha(0.7);
-        } else { // Si no
-            this.blockedBtn = this.add.image(RelativeScale(445.0, "x"), RelativeScale(898.50, "y"), "blocked_button")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-            this.blockedBtn.setAlpha(0.7);
-        }
+        this.blockedBtn.setAlpha(0.7);
 
         // Skins
 
@@ -161,9 +168,8 @@ class Scene_Select_Character extends Phaser.Scene {
                     that.scene.start("scene_main_menu");
                 } else if (that.selectingSkin) { // Seleccionando skin
                     that.selectingSkin = false;
-                    game.mPlayer.skinSel = -1;
-                    that.skinSelectedRow = 0;
-                    that.skinSelectedCol = 0;
+                    this.skinSelectedRow = 0;
+                    this.skinSelectedCol = 0;
                     game.mPlayer.characterSel.type = undefined;
                     game.mPlayer.characterSel.id = -1;
                     that.selectingCharacter = true;
@@ -222,7 +228,7 @@ class Scene_Select_Character extends Phaser.Scene {
                     }
                 } else if (that.selectingSkin) { // Seleccionando skin
                     if (that.skinSelectedRow == 0) {
-                        that.skinSelectedCol = (that.skinSelectedCol + 1) % game.mPlayer.availableSkins[game.mPlayer.characterSel.id].length;
+                        that.skinSelectedCol = (that.skinSelectedCol + 1) % game.skins[game.mPlayer.characterSel.id];
                         that.CheckSkin();
                         if (game.global.DEBUG_MODE) {
                             console.log("columna: " + that.skinSelectedCol);
@@ -246,9 +252,9 @@ class Scene_Select_Character extends Phaser.Scene {
                 } else if (that.selectingSkin) { // Seleccionando skin
                     if (that.skinSelectedRow == 0) {
                         if (that.skinSelectedCol == 0) {
-                            that.skinSelectedCol = game.mPlayer.availableSkins[game.mPlayer.characterSel.id].length - 1;
+                            that.skinSelectedCol = game.skins[game.mPlayer.characterSel.id]-1;
                         } else {
-                            that.skinSelectedCol = (that.skinSelectedCol - 1) % game.mPlayer.availableSkins[game.mPlayer.characterSel.id].length;
+                            that.skinSelectedCol = (that.skinSelectedCol - 1) % game.skins[game.mPlayer.characterSel.id];
                         }
                         that.CheckSkin();
                         if (game.global.DEBUG_MODE) {
@@ -459,22 +465,28 @@ class Scene_Select_Character extends Phaser.Scene {
             this.backBtn.setFrame(1);
         } else {
             this.backBtn.setFrame(0);
+            // Comprobar si el usuario tiene la skin this.skinSelectedCol 
+            if (game.mPlayer.availableSkins[game.mPlayer.characterSel.id].includes(this.skinSelectedCol)){
+                // Guay
+            } else {
+                // No tiene la skin --> ponerlo en gris o algo
+            }
         }
     }// Fin CheckSkin
 
     SelectSkin() {
         if (this.skinSelectedRow == -1) {
             this.selectingSkin = false;
-            game.mPlayer.skinSel = -1;
             this.skinSelectedRow = 0;
             this.skinSelectedCol = 0;
             game.mPlayer.characterSel.type = undefined;
             game.mPlayer.characterSel.id = -1;
             this.selectingCharacter = true;
         }else{
-            if (game.mPlayer.availableSkins[game.mPlayer.characterSel.id][this.skinSelectedCol]){
+            if (game.mPlayer.availableSkins[game.mPlayer.characterSel.id].includes(this.skinSelectedCol)){
                 // Se puede seleccionar
                 game.mPlayer.skinSel = this.skinSelectedCol;
+                this.selectingSkin = false;
                 if (game.global.DEBUG_MODE) {
                     console.log("Skin seleccionada: " + game.mPlayer.skinSel);
                 }

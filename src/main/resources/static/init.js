@@ -119,8 +119,8 @@ window.onload = function () {
         isOnline:       false, // Para comprobar si está en tournament o en space gym
         isSearching:    false,
         room:           -1,
-        availableChar:  ["berserker", "wizard", "bard", "rogue", undefined], // Berserker, Mago, Bardo, Asesina, bloqueado
-        availableSkins: [[true],[true],[true],[true]],
+        availableChar:  [0, 1, 2, 3], // Berserker, Mago, Bardo, Asesina, bloqueado
+        availableSkins: [[0],[0],[0],[0]],
         ranking: {
             position:   0,
             wins:       0,
@@ -129,6 +129,8 @@ window.onload = function () {
         },
         currency:       0
     };
+
+    this.game.skins = [1,1,1,1]; // Número de skins que tiene cada personaje
 
     this.game.cursors1Keys = {
         jump:           Phaser.Input.Keyboard.KeyCodes.W,
