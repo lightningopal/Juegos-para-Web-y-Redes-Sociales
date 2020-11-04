@@ -1,6 +1,10 @@
 package es.LightningOpal.Astral_Knock_Out;
 
-import java.util.concurrent.atomic.AtomicInteger;
+//import java.util.concurrent.atomic.AtomicInteger;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -17,12 +21,11 @@ public class WebsocketHandler extends TextWebSocketHandler {
 	// private SpacewarGame game = SpacewarGame.INSTANCE;
 	private static final String USER_ATTRIBUTE = "USER";
 	private ObjectMapper mapper = new ObjectMapper();
-	private AtomicInteger userId = new AtomicInteger(0);
 	// private AtomicInteger projectileId = new AtomicInteger(0);
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		User user = new User(userId.incrementAndGet(), session);
+		User user = new User(session);
 		session.getAttributes().put(USER_ATTRIBUTE, user);
 
 		ObjectNode msg = mapper.createObjectNode();
@@ -30,11 +33,23 @@ public class WebsocketHandler extends TextWebSocketHandler {
 		msg.put("id", user.getUserId());
 		user.getSession().sendMessage(new TextMessage(msg.toString()));
 		if (DEBUG_MODE) {
-			System.out.println("Conectado " + user.getUserId());
+			System.out.println("Conected user with session " + user.getSession().getId() + ".");
 		}
-		// game.addPlayer(player);
 
-		// UsersController.ConnectNewUser("playerConnectedName");
+		// LogFile Try-Catch
+		try
+		{
+			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+			String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+			AKO_Server.logWriter.write(time + " - Conected user with session " + user.getSession().getId() + ".\n");
+			AKO_Server.logWriter.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		// game.addPlayer(player);
 	}
 
 	@Override
@@ -63,7 +78,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 					// Check if it's correct
 					if (UsersController.loginInfo.containsKey(name)) {
-						if (UsersController.loginInfo.get(name).equals(password)) {
+						if (UsersController.loginInfo.get(name).equals(password.hashCode())) {
 							if (UsersController.CheckUserConnected(name)) {
 								// Si el usuario ya está conectado
 								msg.put("event", "ERROR");
@@ -108,7 +123,18 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					name = node.get("name").asText();
 					password = node.get("password").asText();
 
-					if (UsersController.loginInfo.containsKey(name)) {
+					// Check if already exists
+					boolean userAlreadyExists = false;
+
+					for(String username : UsersController.loginInfo.keySet()){
+						if (name.equalsIgnoreCase(username))
+						{
+							userAlreadyExists = true;
+							break;
+						}
+					}
+
+					if (userAlreadyExists) {
 						// El usuario YA EXISTE
 						msg.put("event", "ERROR");
 						msg.put("message", "User name already exists");
@@ -118,7 +144,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						}
 					} else {
 						// Se crea el usuario y se le deja pasar
-						UsersController.loginInfo.put(name, password);
+						UsersController.RegisterNewUser(name, password);
 						User mUser = UsersController.ConnectNewUser(name);
 						mUser.setSession(session);
 						session.getAttributes().put(USER_ATTRIBUTE, mUser);
@@ -171,7 +197,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 		
 		UsersController.DisconnectUser(user.getUser_name());
 		if (DEBUG_MODE){
-			System.out.println("Usuario desconectado: "+ user.getUser_name());
+			System.out.println("Usuario desconectado: " + user.getUser_name());
 			System.out.println(user);
 		}
 	}

@@ -1,0 +1,4 @@
+18:11:36 - Server opened
+18:11:55 - Conected user with session 0e740d4e-3490-99e9-70b7-18c69c1972f6.
+18:13:03 - Player registered: newUser.
+18:13:37 - Conected user with session 55b7287c-2eef-732a-b0d8-57490cc68df3.

@@ -66,7 +66,12 @@ class Scene_Account extends Phaser.Scene {
                 {
                     // Turn off the click events
                     this.removeListener('click');
-    
+
+                    // Turn on after 200ms
+                    setTimeout(function(){
+                        element.addListener('click');
+                    }, 200);
+
                     // Cosas
                     if (game.global.logInOption === 0){ // Mensaje de login
                         game.global.socket.send(JSON.stringify({event: "LOG_IN", name: inputUsername.value,

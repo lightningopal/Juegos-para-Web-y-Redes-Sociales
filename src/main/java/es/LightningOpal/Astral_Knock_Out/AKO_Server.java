@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.ArrayList;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,7 +24,7 @@ public class AKO_Server implements WebSocketConfigurer {
 
 	// Create a log file
 	public static BufferedWriter logWriter = null;
-	public static String timeLog = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(Calendar.getInstance().getTime());
+	public static String timeLog = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Calendar.getInstance().getTime());
 	public static File logFile;
 
 	public static void main(String[] args) {
@@ -35,7 +36,7 @@ public class AKO_Server implements WebSocketConfigurer {
 
 			logWriter = new BufferedWriter(new FileWriter(logFile));
 			String openTime = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-			logWriter.write(openTime + " - Server opened\n");
+			logWriter.write(openTime + " - Server opened.\n");
 			logWriter.close();
 
 			// Read all users from the userLogin file.
@@ -46,20 +47,49 @@ public class AKO_Server implements WebSocketConfigurer {
 			String st;
 			while ((st = br.readLine()) != null) {
 				splitStringInfo = st.split(":");
-				UsersController.loginInfo.put(splitStringInfo[0], splitStringInfo[1]);
+				UsersController.loginInfo.put(splitStringInfo[0], Integer.parseInt(splitStringInfo[1]));
 			}
 			br.close();
 
-			// Read all users from the userLogin file.
+			// Read all users from the usersData file.
 			File usersFile = new File("src/main/resources/data/usersData.txt");
 			br = new BufferedReader(new FileReader(usersFile));
 
 			while ((st = br.readLine()) != null) {
 				splitStringInfo = st.split(":");
 				
-				/*User userToAdd = new User(Integer.parseInt(splitStringInfo[0]), splitStringInfo[1], Integer.parseInt(splitStringInfo[2]),
-						Boolean.parseBoolean(splitStringInfo[3]), Boolean.parseBoolean(splitStringInfo[4]), Float.parseFloat(splitStringInfo[5]), Integer.parseInt(splitStringInfo[6]));
-				UsersController.allUsers.put(userToAdd.getUser_name(), userToAdd);*/
+				// Add characters and skins from data
+				String[] char_av = splitStringInfo[2].split(","); // Ejemplo: [0,1,2]
+				ArrayList<Integer> characters_available = new ArrayList<Integer>();
+
+				for (int i = 1; i < char_av.length - 1; i++)
+				{
+					characters_available.add(Integer.parseInt(char_av[i]));
+				}
+				
+				String[] skins_av = splitStringInfo[3].split(","); // Ejemplo: [{0-2-3},{},{2},{1-3}]
+				ArrayList<ArrayList<Integer>> skins_available = new ArrayList<ArrayList<Integer>>();
+
+				String[] skinsFromCharacter_av;
+				ArrayList<Integer> auxList;
+
+				for (int i = 1; i < skins_av.length - 1; i++)
+				{
+					skinsFromCharacter_av = skins_av[i].split("-"); // Ejemplo: {0-2-3}
+					auxList = new ArrayList<Integer>();
+					for (int j = 1; j < skinsFromCharacter_av.length - 1; j++)
+					{
+						auxList.add(Integer.parseInt(skinsFromCharacter_av[j]));
+					}
+					skins_available.add(auxList);
+				}
+
+				User userToAdd = new User(Integer.parseInt(splitStringInfo[0]), splitStringInfo[1],
+				characters_available, skins_available,
+				Float.parseFloat(splitStringInfo[4]), Integer.parseInt(splitStringInfo[5]), 
+				Integer.parseInt(splitStringInfo[6]), Integer.parseInt(splitStringInfo[7]));
+
+				UsersController.allUsers.put(splitStringInfo[1], userToAdd);
 			}
 			br.close();
 
