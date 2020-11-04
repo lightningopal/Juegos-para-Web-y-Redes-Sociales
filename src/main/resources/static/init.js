@@ -112,14 +112,15 @@ window.onload = function () {
         id:             -1,
         userName:       undefined, // String
         password:       undefined, // String
-        characterSel:   undefined, // Berserker, Mago, Bardo, Asesina
+        characterSel:   {id: -1, type: undefined}, // Berserker, Mago, Bardo, Asesina
+        skinSel:        -1,
         skillSel:       -1,
         difficultySel:  -1,
         isOnline:       false, // Para comprobar si está en tournament o en space gym
         isSearching:    false,
         room:           -1,
-        availableChar:  ["berserker", "wizard", "bard", undefined, undefined], // Berserker, Mago, Bardo, Asesina, bloqueado
-        availableSkins: [],
+        availableChar:  ["berserker", "wizard", "bard", "rogue", undefined], // Berserker, Mago, Bardo, Asesina, bloqueado
+        availableSkins: [[true],[true],[true],[true]],
         ranking: {
             position:   0,
             wins:       0,

@@ -161,7 +161,7 @@ class Scene_Test extends Phaser.Scene {
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         .body.setSize(RelativeScale(328,"x"),RelativeScale(90,"y")).setOffset(0,RelativeScale(-10,"y"));
 
-        this.platforms.create(RelativeScale(1763.0,"x"), RelativeScale(370.5,"y"), "big_plat_2") // 1764 x 362
+        this.platforms.create(RelativeScale(1763.0,"x"), RelativeScale(371.5,"y"), "big_plat_2") // 1764 x 362
         .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
         // .body.setSize(RelativeScale(341,"x"),RelativeScale(165,"y")).setOffset(0,RelativeScale(12,"y"));
 
