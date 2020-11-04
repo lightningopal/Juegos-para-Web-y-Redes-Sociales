@@ -36,7 +36,7 @@ window.onload = function () {
             Scene_Credits,
             Scene_Select_Character,
             Scene_Account,
-            Scene_SelectLogin,
+            Scene_Select_Login,
             Scene_Score
         ]
     };
@@ -66,7 +66,7 @@ window.onload = function () {
             Scene_Credits,
             Scene_Select_Character,
             Scene_Account,
-            Scene_SelectLogin,
+            Scene_Select_Login,
             Scene_Score
         ]
     };
@@ -82,7 +82,7 @@ window.onload = function () {
     this.game.global = {
         DEVICE:         null,
         FPS:            60,
-        DEBUG_MODE:     true,
+        DEBUG_MODE:     false,
         DEBUG_PHONE:    false,
         WS_CONNECTION:  false,
         socket:         null,

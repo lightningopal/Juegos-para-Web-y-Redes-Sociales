@@ -1,5 +1,7 @@
 package es.LightningOpal.Astral_Knock_Out;
 
+import java.util.ArrayList;
+
 import org.springframework.web.socket.WebSocketSession;
 
 public class User {
@@ -12,8 +14,8 @@ public class User {
 	private boolean user_searching;
 	private boolean user_ready;
 	private int room;
-	private int[] characters_available;
-	private int[] skins_available;
+	private ArrayList<Integer> characters_available;
+	private ArrayList<ArrayList<Integer>> skins_available;
 	private float elo;
 	private int wins;
 	private int loses;
@@ -26,12 +28,25 @@ public class User {
 		this.currency = 0;
 	}
 	
-	public User(int userId, WebSocketSession session) {
-		this.userId = userId;
+	public User(WebSocketSession session) {
 		this.session = session;
 		this.user_name = "";
 		this.player_selected = new Player();
 		// Leer datos de usuario? (elo, currency)
+	}
+
+	// Para añadir a los datos desde los archivos
+	public User(int userId, String user_name, ArrayList<Integer> characters_available,
+	ArrayList<ArrayList<Integer>> skins_available, float elo, int wins, int loses, int currency) {
+		this.userId = userId;
+		this.user_name = user_name;
+		this.characters_available = characters_available;
+		this.skins_available = skins_available;
+		this.elo = elo;
+		this.wins = wins;
+		this.loses = loses;
+		this.currency = currency;
+		this.player_selected = new Player();
 	}
 		
 	/*public User(int userId, WebSocketSession session, String user_name, Player player_selected, boolean user_searching,
@@ -116,6 +131,22 @@ public class User {
 	
 	public void setRoom(int room) {
 		this.room = room;
+	}
+
+	public ArrayList<Integer> getCharacters_available() {
+		return characters_available;
+	}
+
+	public void setCharacters_available(ArrayList<Integer> characters_available) {
+		this.characters_available = characters_available;
+	}
+
+	public ArrayList<ArrayList<Integer>> getSkins_available() {
+		return skins_available;
+	}
+
+	public void setSkins_available(ArrayList<ArrayList<Integer>> skins_available) {
+		this.skins_available = skins_available;
 	}
 	
 	public float getElo() {

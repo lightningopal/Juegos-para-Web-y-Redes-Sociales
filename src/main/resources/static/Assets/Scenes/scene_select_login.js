@@ -1,7 +1,7 @@
-class Scene_SelectLogin extends Phaser.Scene {
+class Scene_Select_Login extends Phaser.Scene {
 
     constructor() {
-        super({ key: "scene_selectLogin" });
+        super({ key: "scene_select_login" });
     } // Fin constructor
 
     preload() {
