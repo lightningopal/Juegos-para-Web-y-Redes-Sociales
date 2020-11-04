@@ -57,19 +57,10 @@ public class UsersController {
 			// Add it to the allUsers map and file data.
 			allUsers.put(userName, newUser);
 
-			/*this.userId = userId;
-			this.user_name = user_name;
-			this.characters_available = characters_available;
-			this.skins_available = skins_available;
-			this.elo = elo;
-			this.wins = wins;
-			this.loses = loses;
-			this.currency = currency;*/
-
 			try {
 				// Format characters and skins BY DEFAULT
-				String characters_available = "[0,1,2]";
-				String skins_available = "[{},{},{},{}}]";
+				String characters_available = "[0,1,2,3]";
+				String skins_available = "[{0},{0},{0},{0}}]";
 
 				userWritter = new BufferedWriter(new FileWriter(new File("src/main/resources/data/usersData.txt"), true));
 

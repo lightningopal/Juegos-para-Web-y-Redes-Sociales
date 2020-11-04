@@ -33,7 +33,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 		msg.put("id", user.getUserId());
 		user.getSession().sendMessage(new TextMessage(msg.toString()));
 		if (DEBUG_MODE) {
-			System.out.println("Conected user with session " + user.getSession().getId() + ".");
+			System.out.println("Connected user with session " + user.getSession().getId() + ".");
 		}
 
 		// LogFile Try-Catch
@@ -194,6 +194,26 @@ public class WebsocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
 		User user = (User) session.getAttributes().get(USER_ATTRIBUTE);
+
+		// LogFile Try-Catch
+		try
+		{
+			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+			String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+			if (user.getUser_name() != "")
+			{
+				AKO_Server.logWriter.write(time + " - Player disconnected: " + user.getUser_name() + ".\n");
+			}
+			else
+			{
+				AKO_Server.logWriter.write(time + " - Disconnected user with session " + user.getSession().getId() + ".\n");
+			}
+			AKO_Server.logWriter.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 		
 		UsersController.DisconnectUser(user.getUser_name());
 		if (DEBUG_MODE){

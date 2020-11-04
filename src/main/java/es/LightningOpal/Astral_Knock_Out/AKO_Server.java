@@ -59,25 +59,32 @@ public class AKO_Server implements WebSocketConfigurer {
 				splitStringInfo = st.split(":");
 				
 				// Add characters and skins from data
-				String[] char_av = splitStringInfo[2].split(","); // Ejemplo: [0,1,2]
+				String[] char_av = splitStringInfo[2].split(","); // Ejemplo: [0,1,2,3]
 				ArrayList<Integer> characters_available = new ArrayList<Integer>();
+				char_av[0] = "" + char_av[0].charAt(1);
+				char_av[char_av.length - 1] = "" + char_av[char_av.length - 1].charAt(0);
 
-				for (int i = 1; i < char_av.length - 1; i++)
+				for (int i = 0; i < char_av.length; i++)
 				{
 					characters_available.add(Integer.parseInt(char_av[i]));
 				}
 				
 				String[] skins_av = splitStringInfo[3].split(","); // Ejemplo: [{0-2-3},{},{2},{1-3}]
 				ArrayList<ArrayList<Integer>> skins_available = new ArrayList<ArrayList<Integer>>();
+				skins_av[0] = skins_av[0].substring(1);
+				skins_av[skins_av.length - 1] = skins_av[skins_av.length - 1].substring(0, skins_av[skins_av.length - 1].length() - 2);
 
 				String[] skinsFromCharacter_av;
 				ArrayList<Integer> auxList;
 
-				for (int i = 1; i < skins_av.length - 1; i++)
+				for (int i = 0; i < skins_av.length; i++)
 				{
 					skinsFromCharacter_av = skins_av[i].split("-"); // Ejemplo: {0-2-3}
 					auxList = new ArrayList<Integer>();
-					for (int j = 1; j < skinsFromCharacter_av.length - 1; j++)
+					skinsFromCharacter_av[0] = "" + skinsFromCharacter_av[0].charAt(1);
+					skinsFromCharacter_av[skinsFromCharacter_av.length - 1] = "" + skinsFromCharacter_av[skinsFromCharacter_av.length - 1].charAt(0);
+
+					for (int j = 0; j < skinsFromCharacter_av.length; j++)
 					{
 						auxList.add(Integer.parseInt(skinsFromCharacter_av[j]));
 					}
