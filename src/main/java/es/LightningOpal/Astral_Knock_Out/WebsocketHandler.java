@@ -94,6 +94,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 								msg.put("user_name", name);
 								msg.put("id", mUser.getUserId());
 								mUser.setSession(session);
+								mUser.getPlayer_selected().setSession(session);
 								session.getAttributes().put(USER_ATTRIBUTE, mUser);
 								mUser.getSession().sendMessage(new TextMessage(msg.toString()));
 								if (DEBUG_MODE) {
@@ -170,7 +171,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 				 * case "JOIN ROOM": msg.put("event", "NEW ROOM"); msg.put("room", "GLOBAL");
 				 * user.getSession().sendMessage(new TextMessage(msg.toString())); break;
 				 */
-				case "UPDATE_MOVEMENT":
+				case "UPDATE_GAME_STATE":
 					/*
 					 * player.loadMovement(node.path("movement").get("thrust").asBoolean(),
 					 * node.path("movement").get("brake").asBoolean(),
@@ -180,6 +181,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					 * Projectile(player, this.projectileId.incrementAndGet());
 					 * game.addProjectile(projectile.getId(), projectile); }
 					 */
+					break;
+					case "UPDATE_SPACE_GYM":
+					// not sure
 					break;
 				default:
 					break;
