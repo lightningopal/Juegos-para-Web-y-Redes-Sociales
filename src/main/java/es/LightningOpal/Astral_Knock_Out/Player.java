@@ -1,10 +1,11 @@
 package es.LightningOpal.Astral_Knock_Out;
 
-public class Player {
+import org.springframework.web.socket.WebSocketSession;
+
+public class Player extends PhysicsObject{
     private int playerId;
+    private WebSocketSession session;
     private String playerType;
-    private float posX;
-    private float posY;
     private float colliderWidth;
     private float colliderHeight;
     private float moveSpeed;
@@ -32,8 +33,8 @@ public class Player {
     public Player(int id, String type, int x, int y, int mSpeed, int jForce, int hp){
         playerId = id;
         playerType = type;
-        posX = x;
-        posY = y;
+        this.setPosX(x);
+        this.setPosY(y);
         switch(type){
             case "bard":
                 colliderWidth = 0;
@@ -64,14 +65,11 @@ public class Player {
     public int getPlayerId(){ return playerId; }
     public void setPlayerId(int id){ playerId = id; }
 
+    public WebSocketSession getSession() {return session;}
+	public void setSession(WebSocketSession session) {this.session = session;}
+
     public String getPlayerType(){ return playerType; }
     public void setPlayerType(String type){ playerType = type; }
-
-    public float getPosX(){ return posX; }
-    public void setPosX(float x){ posX = x; }
-
-    public float getPosY(){ return posY; }
-    public void setPosY(float y){ posY = y; }
 
     public float getColliderW(){ return colliderWidth; }
     public void setColliderW(float cW){ colliderWidth = cW; }
@@ -106,6 +104,6 @@ public class Player {
     // Generales
     @Override
     public String toString(){
-        return "[id="+playerId+", type="+playerType+", x="+posX+", y="+posY+"]";
+        return "[id="+playerId+", type="+playerType+", x="+getPosX()+", y="+getPosY()+"]";
     }
 }

@@ -9,8 +9,16 @@ public class PhysicsObject {
 		return this.posX;
 	}
 
+	public void setPosX(double x) {
+		this.posX = x;
+	}
+
 	public double getPosY() {
 		return this.posY;
+	}
+
+	public void setPosY(double y) {
+		this.posY = y;
 	}
 
 	public boolean IsFlipped() {
