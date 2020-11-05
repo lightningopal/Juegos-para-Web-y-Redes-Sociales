@@ -21,7 +21,7 @@ window.onload = function () {
             default: 'arcade',
             arcade: {
                 gravity: { y: ((window.screen.height / 1.3) / referenceHeight) * 2200 },
-                debug: true
+                debug: false
             }
         },
         dom: {
@@ -29,7 +29,7 @@ window.onload = function () {
         },
         parent: 'game', // Create the game inside the <div id="game">
         scene: [Scene_Boot,
-            Scene_Test,
+            Scene_Space_Gym,
             Scene_Main_Menu,
             Scene_Options,
             Scene_Ranking,
@@ -59,7 +59,7 @@ window.onload = function () {
         },
         parent: 'game', // Create the game inside the <div id="game">
         scene: [Scene_Boot,
-            Scene_Test,
+            Scene_Space_Gym,
             Scene_Main_Menu,
             Scene_Options,
             Scene_Ranking,

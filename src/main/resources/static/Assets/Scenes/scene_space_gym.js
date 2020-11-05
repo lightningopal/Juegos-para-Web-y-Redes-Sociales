@@ -3,9 +3,9 @@
 var x = 0;
 var y = 0;
 
-class Scene_Test extends Phaser.Scene {
+class Scene_Space_Gym extends Phaser.Scene {
     constructor() {
-        super({ key: "scene_test" });
+        super({ key: "scene_space_gym" });
     } // Fin constructor
 
     preload() {
