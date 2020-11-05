@@ -116,7 +116,7 @@ window.onload = function () {
         skinSel:        -1,
         skillSel:       -1,
         difficultySel:  -1,
-        isOnline:       false, // Para comprobar si está en tournament o en space gym
+        isVersus:       false, // Para comprobar si está en tournament o en space gym
         isSearching:    false,
         room:           -1,
         availableChar:  [0, 1, 2, 3], // Berserker, Mago, Bardo, Asesina, bloqueado

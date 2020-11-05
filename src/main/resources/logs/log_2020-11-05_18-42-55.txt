@@ -1,0 +1,15 @@
+18:42:59 - Server opened.
+18:43:08 - Conected user with session 4c716425-ebfd-42ec-3310-4f97fa25d448.
+18:43:23 - Disconnected user with session 4c716425-ebfd-42ec-3310-4f97fa25d448.
+18:43:26 - Conected user with session b359fc56-66a9-c759-31ae-b6794009d4c5.
+18:44:51 - Disconnected user with session b359fc56-66a9-c759-31ae-b6794009d4c5.
+18:44:54 - Conected user with session fabe73c2-f954-0318-6cf9-09a2a53d62e8.
+18:45:09 - Disconnected user with session fabe73c2-f954-0318-6cf9-09a2a53d62e8.
+18:45:12 - Conected user with session 1516357d-8d96-0b74-4cf9-d76bfcd5c170.
+18:45:27 - Disconnected user with session 1516357d-8d96-0b74-4cf9-d76bfcd5c170.
+18:45:29 - Conected user with session 11e2738a-70e7-2803-3e65-6b368a284fe4.
+18:45:50 - Disconnected user with session 11e2738a-70e7-2803-3e65-6b368a284fe4.
+18:45:52 - Conected user with session 4436b74e-7ccc-ba65-0f14-3095c5ad25c4.
+18:46:15 - Disconnected user with session 4436b74e-7ccc-ba65-0f14-3095c5ad25c4.
+18:46:17 - Conected user with session c6a74d2f-78dc-7385-7d8c-2f595e877e21.
+18:47:17 - Disconnected user with session c6a74d2f-78dc-7385-7d8c-2f595e877e21.

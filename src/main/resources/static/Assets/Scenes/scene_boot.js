@@ -197,6 +197,7 @@ class Scene_Boot extends Phaser.Scene {
         this.load.spritesheet("left_arrow_button", "./Assets/Images/UI/left_arrow_button.png", { frameWidth: 224.50, frameHeight: 187 });
         this.load.image("enter_button", "./Assets/Images/UI/enter_button.png");
         this.load.image("continue_text_desktop", "./Assets/Images/UI/continue_text_desktop.png");
+        this.load.image("continue_text_mobile", "./Assets/Images/UI/continue_text_mobile.png");
 
 
         ///Nivel 1///
@@ -334,7 +335,7 @@ class Scene_Boot extends Phaser.Scene {
         switch (game.global.DEVICE) {
             case "desktop":
                 this.input.keyboard.on('keydown-' + "ENTER", function () {
-                    if (!isLoading && game.global.WS_CONNECTION) {
+                    if (!isLoading /**/&& game.global.WS_CONNECTION/**/) {
                         this.scene.input.keyboard.removeAllKeys(true);
                         this.scene.scene.start("scene_select_login");
                     }
@@ -342,7 +343,7 @@ class Scene_Boot extends Phaser.Scene {
                 break;
             case "mobile":
                 this.input.on('pointerdown', function () {
-                    if (!isLoading && game.global.WS_CONNECTION) {
+                    if (!isLoading /**/&& game.global.WS_CONNECTION/**/) {
                         this.scene.scene.start("scene_select_login");
                     }
                 });

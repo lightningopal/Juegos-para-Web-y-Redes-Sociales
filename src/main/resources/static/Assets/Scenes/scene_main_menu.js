@@ -235,12 +235,12 @@ class Scene_Main_Menu extends Phaser.Scene {
                     case 1:
                         if (that.optionSelectedRow == 0){
                             // Tournament
-                            game.mPlayer.isOnline = true;
+                            game.mPlayer.isVersus = true;
                             //that.input.keyboard.removeAllKeys(true);
                             //that.scene.start("scene_select_character");
                         }else if (that.optionSelectedRow == 1){
                             // Space Gym
-                            game.mPlayer.isOnline = false;
+                            game.mPlayer.isVersus = false;
                             that.input.keyboard.removeAllKeys(true);
                             that.scene.start("scene_select_character");
                         }else {
