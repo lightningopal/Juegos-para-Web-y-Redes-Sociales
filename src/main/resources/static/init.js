@@ -116,6 +116,7 @@ window.onload = function () {
         skinSel:        -1,
         skillSel:       -1,
         difficultySel:  -1,
+        image:          undefined,
         isVersus:       false, // Para comprobar si está en tournament o en space gym
         isSearching:    false,
         room:           -1,

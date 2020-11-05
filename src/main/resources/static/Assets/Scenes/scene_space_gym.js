@@ -48,6 +48,10 @@ class Scene_Space_Gym extends Phaser.Scene {
             url = './Assets/Plugins/rexvirtualjoystickplugin.min.js';
             this.load.plugin('rexvirtualjoystickplugin', url, true);
         }
+
+        this.movingLeft;
+        this.movingRight;
+        this.falling;
         
     } // Fin preload
 
@@ -81,13 +85,12 @@ class Scene_Space_Gym extends Phaser.Scene {
         }
 
         // Dummy de prácticas
-        this.dummy = this.physics.add.image(RelativeScale(1500, "x"), RelativeScale(940, "y"), "dummy")
+        this.dummy = this.add.image(RelativeScale(1500, "x"), RelativeScale(940, "y"), "dummy")
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.dummyBar = new UserInterface(this, this.dummy, 100, 0);
         this.dummy.userInterface = this.dummyBar; 
-        this.dummy.body.debugBodyColor = 0xff0000;
         // Pool de habilidades
-        /*Bardo*/
+        /*Bardo*
         this.bardAttack1 = new BardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         this.bardAttack2 = new BardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
@@ -127,6 +130,7 @@ class Scene_Space_Gym extends Phaser.Scene {
         this.rogueAttack6 = new RogueSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 2000, 350, 300)
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         /**/
+        /**
         // Se añade el pool a un array y se pasa al arma del personaje (que maneja el id del ataque a lanzar)
         this.bardBasicAttacks = [this.bardAttack1, this.bardAttack2];
         // var berserkerBasicAttacks = [this.berserkerAttack1, this.berserkerAttack2];
@@ -135,11 +139,40 @@ class Scene_Space_Gym extends Phaser.Scene {
         // var rogueBasicAttacks = [this.rogueAttack1,this.rogueAttack2,this.rogueAttack3, 
         //     this.rogueAttack4,this.rogueAttack5,this.rogueAttack6];
         this.basicWeapon = new Weapon(this, 700, this.bardBasicAttacks, 1);
+        /**/
         // Crear el personaje
-        this.myPlayer = new Character_Controller(this, 0, RelativeScale(250, "x"),
-        RelativeScale(850, "y"), "bard", RelativeScale(), this.cursors1, 
-        this.mobileKeys, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, this.basicWeapon, this.basicWeapon)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        // this.myPlayer = new Character_Controller(this, 0, RelativeScale(250, "x"),
+        // RelativeScale(850, "y"), "bard", RelativeScale(), this.cursors1, 
+        // this.mobileKeys, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, this.basicWeapon, this.basicWeapon)
+        // .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.movingLeft = false;
+        this.movingRight = false;
+        this.falling = false;
+        switch(game.mPlayer.characterSel.type){
+            case "berserker":
+                game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "berserker")
+                .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
+                break;
+            case "wizard":
+                game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "wizard")
+                .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
+                break;
+            case "bard":
+                game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
+                .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
+                game.mPlayer.image.anims.add("idle", "bard_idle");
+                break;
+            case "rogue":
+                game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "rogue")
+                .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
+                break;
+            default:
+                game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
+                .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
+                console.log(game.mPlayer.image);
+                game.mPlayer.image.anims.play("bard_idle");
+                break;
+        }
 
         //Plataformas
         this.transimage = this.physics.add.image(RelativeScale(522.50, "x"), RelativeScale(889.0, "y"), "level_1_trans").setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(2);
@@ -188,15 +221,16 @@ class Scene_Space_Gym extends Phaser.Scene {
         });
 
         //Colisiones
-        this.characters = [this.myPlayer, this.dummy/**, enemyPlayer/**/];
-        this.bullets = [];
+        //this.characters = [this.myPlayer, this.dummy/**, enemyPlayer/**/];
+        //this.bullets = [];
 
         //this.physics.add.overlap(this.characters, this.bullets, this.BulletHit, player, bullet);
-        this.physics.add.collider(this.characters, this.platforms);
-        this.physics.add.overlap(this.characters, this.hidePlatforms);
+        //this.physics.add.collider(this.characters, this.platforms);
+        //this.physics.add.overlap(this.characters, this.hidePlatforms);
     } // Fin create
 
     update() {
+        /*
         // Mostrar u ocultar las plataformas al pasar por encima
         this.hidePlatforms.forEach(platform => {
             if (platform.body.embedded) platform.body.touching.none = false;
@@ -210,7 +244,7 @@ class Scene_Space_Gym extends Phaser.Scene {
         if (this.dummy.body.touching.down){
             // this.dummy.body.velocity.y = RelativeScale(-800,"y");
         }
-
+        */
         var debugText = document.getElementById("debugText");
         debugText.innerHTML = "Posición del ratón: {x: " + x + ", y: " + y + "} | FPS: " + Math.round(game.loop.actualFps);
     } // Fin update
