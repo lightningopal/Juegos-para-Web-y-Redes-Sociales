@@ -157,7 +157,6 @@ public class WebsocketHandler extends TextWebSocketHandler {
 							System.out.println("Nuevo usuario: " + name);
 						}
 					}
-
 					break;
 				case "REQUEST_RANKING":
 					break;
@@ -182,8 +181,17 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					 * game.addProjectile(projectile.getId(), projectile); }
 					 */
 					break;
-					case "UPDATE_SPACE_GYM":
-					// not sure
+					case "CREATE_SPACE_GYM":
+					name = node.get("name").asText();
+					//user.setPlayer_selected(player_selected);
+					GamesManager.INSTANCE.startSpaceGym(user.getPlayer_selected());
+
+					msg.put("event", "CREATED_SPACE_GYM");
+					user.getSession().sendMessage(new TextMessage(msg.toString()));
+					if (DEBUG_MODE) {
+						System.out.println("Space Gym: " + name);
+					}
+
 					break;
 				default:
 					break;
