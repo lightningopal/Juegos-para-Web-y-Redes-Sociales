@@ -162,7 +162,7 @@ class Scene_Space_Gym extends Phaser.Scene {
             case "bard":
                 game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
                 .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
-                game.mPlayer.image.anims.add("idle", "bard_idle");
+                game.mPlayer.image.anims.play("bard_idle");
                 break;
             case "rogue":
                 game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "rogue")
