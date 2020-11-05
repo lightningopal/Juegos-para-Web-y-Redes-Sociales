@@ -19,76 +19,77 @@ class Scene_Select_Character extends Phaser.Scene {
         this.skinsSkills = this.add.image(RelativeScale(1476.17, "x"), RelativeScale(777.88, "x"), "skins_skills")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
         this.leftArrowBtn = this.add.image(RelativeScale(1238.75, "x"), RelativeScale(744.07, "x"), "left_arrow_button")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
         this.rightArrowBtn = this.add.image(RelativeScale(1580.07, "x"), RelativeScale(867.88, "x"), "right_arrow_button")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
         this.enterBtn = this.add.image(RelativeScale(1810.0, "x"), RelativeScale(1000.0, "x"), "enter_button")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2);
         this.enterText;
 
         // Personajes
         this.availableChars = [[{ char: "berserker", purchased: false, available: true }, { char: "wizard", purchased: false, available: true },
         { char: "bard", purchased: false, available: true }],
         [{ char: "rogue", purchased: false, available: true }, { char: "character", purchased: false, available: false }]];
-        
-        for (var i = 0; i < game.mPlayer.availableChar.length; i++){
+
+        for (var i = 0; i < game.mPlayer.availableChar.length; i++) {
             if (game.mPlayer.availableChar[i] == 0) { // Si tiene disponible el berserker
                 this.berserkerBtn = this.add.image(RelativeScale(60.50, "x"), RelativeScale(420.0, "y"), "berserker_button")
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 this.availableChars[0][0].purchased = true;
+                this.berserkerBtn.setAlpha(0.7);
                 break;
-            } else if (i == game.mPlayer.availableChar.length-1){ // Si no
+            } else if (i == game.mPlayer.availableChar.length - 1) { // Si no
                 this.berserkerBtn = this.add.image(RelativeScale(67.50, "x"), RelativeScale(420.0, "y"), "purchase_button")
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-                    this.berserkerBtn.setAlpha(0.7);
+                this.berserkerBtn.setAlpha(0.7);
             }
         }
 
-        for (var i = 0; i < game.mPlayer.availableChar.length; i++){
+        for (var i = 0; i < game.mPlayer.availableChar.length; i++) {
             if (game.mPlayer.availableChar[i] == 1) { // Si tiene disponible el mago
                 this.wizardBtn = this.add.image(RelativeScale(441.0, "x"), RelativeScale(557.0, "y"), "wizard_button")
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 this.availableChars[0][1].purchased = true;
                 this.wizardBtn.setAlpha(0.7);
                 break;
-            } else if (i == game.mPlayer.availableChar.length-1){ // Si no
+            } else if (i == game.mPlayer.availableChar.length - 1) { // Si no
                 this.wizardBtn = this.add.image(RelativeScale(441.0, "x"), RelativeScale(557.0, "y"), "purchase_button")
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 this.wizardBtn.setAlpha(0.7);
             }
         }
-        
-        for (var i = 0; i < game.mPlayer.availableChar.length; i++){
+
+        for (var i = 0; i < game.mPlayer.availableChar.length; i++) {
             if (game.mPlayer.availableChar[i] == 2) { // Si tiene disponible el bardo
                 this.bardBtn = this.add.image(RelativeScale(825.50, "x"), RelativeScale(694.0, "y"), "bard_button")
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 this.availableChars[0][2].purchased = true;
                 this.bardBtn.setAlpha(0.7);
                 break;
-            } else if (i == game.mPlayer.availableChar.length-1){ // Si no
+            } else if (i == game.mPlayer.availableChar.length - 1) { // Si no
                 this.bardBtn = this.add.image(RelativeScale(825.50, "x"), RelativeScale(694.0, "y"), "purchase_button")
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 this.bardBtn.setAlpha(0.7);
             }
         }
-        
-        for (var i = 0; i < game.mPlayer.availableChar.length; i++){
+
+        for (var i = 0; i < game.mPlayer.availableChar.length; i++) {
             if (game.mPlayer.availableChar[i] == 3) { // Si tiene disponible el bardo
                 this.rogueBtn = this.add.image(RelativeScale(59.0, "x"), RelativeScale(694.0, "y"), "rogue_button")
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 this.availableChars[1][0].purchased = true;
                 this.rogueBtn.setAlpha(0.7);
                 break;
-            } else if (i == game.mPlayer.availableChar.length-1){ // Si no
+            } else if (i == game.mPlayer.availableChar.length - 1) { // Si no
                 this.rogueBtn = this.add.image(RelativeScale(59.0, "x"), RelativeScale(694.0, "y"), "purchase_button")
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 this.rogueBtn.setAlpha(0.7);
             }
         }
-        
+
         // Personaje bloqueado
         this.blockedBtn = this.add.image(RelativeScale(445.0, "x"), RelativeScale(898.50, "y"), "blocked_button")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.blockedBtn.setAlpha(0.7);
 
         // Skins
@@ -129,7 +130,6 @@ class Scene_Select_Character extends Phaser.Scene {
             repeat: -1
         });
 
-
         // Selectores
         this.selectingCharacter = true;
         this.selectingSkin = false;
@@ -144,6 +144,10 @@ class Scene_Select_Character extends Phaser.Scene {
         this.confirmSkin = true;
 
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
+            this.enterText = this.add.image(RelativeScale(1650.0, "x"), RelativeScale(910.0, "x"), "continue_text_mobile")
+                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+            this.texts.setAlpha(0);
+            this.skinsSkills.setFrame(4);
             this.leftArrowBtn.setFrame(1);
             this.rightArrowBtn.setFrame(1);
             this.input.on('pointerup', function () {
@@ -164,6 +168,124 @@ class Scene_Select_Character extends Phaser.Scene {
                     console.log("Back soltado");
                 }
             });
+
+            this.berserkerBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                that.characterSelectedRow = 0;
+                that.characterSelectedCol = 0;
+                that.CheckCharacter();
+                that.SelectCharacter();
+                if (game.global.DEBUG_MODE) {
+                    console.log("Berserker pulsado");
+                }
+            });
+            this.berserkerBtn.input.hitArea.setTo(185, 255.0, 375, 150);
+
+            this.wizardBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                that.characterSelectedRow = 0;
+                that.characterSelectedCol = 1;
+                that.CheckCharacter();
+                that.SelectCharacter();
+                if (game.global.DEBUG_MODE) {
+                    console.log("Wizard pulsado");
+                }
+            });
+            this.wizardBtn.input.hitArea.setTo(185, 255.0, 375, 150);
+
+            this.bardBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                that.characterSelectedRow = 0;
+                that.characterSelectedCol = 2;
+                that.CheckCharacter();
+                that.SelectCharacter();
+                if (game.global.DEBUG_MODE) {
+                    console.log("Bard pulsado");
+                }
+            });
+            this.bardBtn.input.hitArea.setTo(185, 255.0, 375, 150);
+
+            this.rogueBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                that.characterSelectedRow = 1;
+                that.characterSelectedCol = 0;
+                that.CheckCharacter();
+                that.SelectCharacter();
+                if (game.global.DEBUG_MODE) {
+                    console.log("Rogue pulsado");
+                }
+            });
+            this.rogueBtn.input.hitArea.setTo(185, 255.0, 375, 150);
+
+            this.blockedBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                that.characterSelectedRow = 1;
+                that.characterSelectedCol = 1;
+                game.mPlayer.characterSel.id = -1;
+                game.mPlayer.characterSel.type = undefined;
+                that.CheckCharacter();
+                that.SelectCharacter();
+                if (game.global.DEBUG_MODE) {
+                    console.log("Blocked pulsado");
+                }
+            });
+            this.blockedBtn.input.hitArea.setTo(178, 140, 375, 150);
+
+            this.rightArrowBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                if (game.mPlayer.characterSel.id != -1) {
+                    that.skinSelectedCol = (that.skinSelectedCol + 1) % game.skins[game.mPlayer.characterSel.id];
+                    that.CheckSkin();
+                    if (game.global.DEBUG_MODE) {
+                        console.log("columna: " + that.skinSelectedCol);
+                    }
+                    if (game.mPlayer.availableSkins[game.mPlayer.characterSel.id].includes(that.skinSelectedCol)) {
+                        game.mPlayer.skinSel = that.skinSelectedCol;
+                        that.selectingSkin = false;
+                        that.confirmingSkin = true;
+                        if (game.global.DEBUG_MODE) {
+                            console.log("Skin seleccionada: " + game.mPlayer.skinSel);
+                        }
+                    } else {
+                        // Hay que comprar la skin
+                        if (game.global.DEBUG_MODE) {
+                            console.log("Debes comprar la skin");
+                        }
+                    }
+                }
+
+            });
+            this.leftArrowBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                if (game.mPlayer.characterSel.id != -1) {
+                    if (that.skinSelectedCol == 0) {
+                        that.skinSelectedCol = game.skins[game.mPlayer.characterSel.id] - 1;
+                    } else {
+                        that.skinSelectedCol = (that.skinSelectedCol - 1) % game.skins[game.mPlayer.characterSel.id];
+                    }
+                    that.CheckSkin();
+                    if (game.global.DEBUG_MODE) {
+                        console.log("columna: " + that.skinSelectedCol);
+                    }
+                    if (game.mPlayer.availableSkins[game.mPlayer.characterSel.id].includes(that.skinSelectedCol)) {
+                        game.mPlayer.skinSel = that.skinSelectedCol;
+                        that.selectingSkin = false;
+                        that.confirmingSkin = true;
+                        if (game.global.DEBUG_MODE) {
+                            console.log("Skin seleccionada: " + game.mPlayer.skinSel);
+                        }
+                    } else {
+                        // Hay que comprar la skin
+                        if (game.global.DEBUG_MODE) {
+                            console.log("Debes comprar la skin");
+                        }
+                    }
+                }
+            });
+
+            this.enterBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                if (game.mPlayer.characterSel.id != -1){
+                    if (game.mPlayer.isVersus){
+                        // Selección de Skill/Mapa
+                    }else{
+                        // Selección de Skill -> SpaceGym
+                    }
+                }
+            });
+
         } else if (game.global.DEVICE === "desktop") {
             this.enterText = this.add.image(RelativeScale(1350.0, "x"), RelativeScale(1000.0, "x"), "continue_text_desktop")
                 .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
@@ -172,6 +294,7 @@ class Scene_Select_Character extends Phaser.Scene {
             this.leftArrowBtn.setAlpha(0);
             this.enterBtn.setAlpha(0);
             this.berserkerBtn.setFrame(1);
+            this.berserkerBtn.setAlpha(1);
             this.skinsSkills.setAlpha(0.7);
             // Opciones de selección
             this.cursors = this.input.keyboard.addKeys({
@@ -197,7 +320,7 @@ class Scene_Select_Character extends Phaser.Scene {
                     game.mPlayer.characterSel.type = undefined;
                     game.mPlayer.characterSel.id = -1;
                     that.selectingCharacter = true;
-                } else if (that.confirmingSkin){
+                } else if (that.confirmingSkin) {
                     game.mPlayer.selectedSkin = -1;
                     that.skinsSkills.setAlpha(1);
                     that.leftArrowBtn.setAlpha(1);
@@ -225,11 +348,11 @@ class Scene_Select_Character extends Phaser.Scene {
                             console.log("fila: " + that.skinSelectedRow);
                         }
                     }
-                } else if (that.confirmingSkin){
+                } else if (that.confirmingSkin) {
                     that.confirmSkin = !that.confirmSkin;
-                    if (that.confirmSkin){
+                    if (that.confirmSkin) {
                         that.backBtn.setFrame(0);
-                    }else{
+                    } else {
                         that.backBtn.setFrame(1);
                     }
                 }
@@ -255,11 +378,11 @@ class Scene_Select_Character extends Phaser.Scene {
                     if (game.global.DEBUG_MODE) {
                         console.log("fila: " + that.skinSelectedRow);
                     }
-                }else if (that.confirmingSkin){
+                } else if (that.confirmingSkin) {
                     that.confirmSkin = !that.confirmSkin;
-                    if (that.confirmSkin){
+                    if (that.confirmSkin) {
                         that.backBtn.setFrame(0);
-                    }else{
+                    } else {
                         that.backBtn.setFrame(1);
                     }
                 }
@@ -300,7 +423,7 @@ class Scene_Select_Character extends Phaser.Scene {
                 } else if (that.selectingSkin) { // Seleccionando skin
                     if (that.skinSelectedRow == 0) {
                         if (that.skinSelectedCol == 0) {
-                            that.skinSelectedCol = game.skins[game.mPlayer.characterSel.id]-1;
+                            that.skinSelectedCol = game.skins[game.mPlayer.characterSel.id] - 1;
                         } else {
                             that.skinSelectedCol = (that.skinSelectedCol - 1) % game.skins[game.mPlayer.characterSel.id];
                         }
@@ -317,10 +440,10 @@ class Scene_Select_Character extends Phaser.Scene {
                     that.SelectCharacter();
                 } else if (that.selectingSkin) { // Seleccionando skin
                     that.SelectSkin();
-                } else if (that.confirmingSkin){
-                    if (that.confirmSkin){
+                } else if (that.confirmingSkin) {
+                    if (that.confirmSkin) {
 
-                    }else{
+                    } else {
                         game.mPlayer.selectedSkin = -1;
                         that.skinsSkills.setAlpha(1);
                         that.leftArrowBtn.setAlpha(1);
@@ -354,7 +477,7 @@ class Scene_Select_Character extends Phaser.Scene {
                 this.rogueBtn.setFrame(0);
                 this.blockedBtn.setFrame(0);
                 this.tweens.add({
-                    targets: [this.berserkerBtn, this.wizardBtn, this.bardBtn, this.rogueBtn, this.blockedBtn], 
+                    targets: [this.berserkerBtn, this.wizardBtn, this.bardBtn, this.rogueBtn, this.blockedBtn],
                     alpha: 0.7,
                     duration: 250,
                 });
@@ -373,12 +496,12 @@ class Scene_Select_Character extends Phaser.Scene {
                         this.rogueBtn.setFrame(0);
                         this.blockedBtn.setFrame(0);
                         this.tweens.add({
-                            targets: [this.wizardBtn, this.bardBtn, this.rogueBtn, this.blockedBtn], 
+                            targets: [this.wizardBtn, this.bardBtn, this.rogueBtn, this.blockedBtn],
                             alpha: 0.7,
                             duration: 250,
                         });
                         this.tweens.add({
-                            targets: [this.berserkerBtn], 
+                            targets: [this.berserkerBtn],
                             alpha: 1,
                             duration: 250,
                         });
@@ -395,12 +518,12 @@ class Scene_Select_Character extends Phaser.Scene {
                         this.rogueBtn.setFrame(0);
                         this.blockedBtn.setFrame(0);
                         this.tweens.add({
-                            targets: [this.berserkerBtn, this.bardBtn, this.rogueBtn, this.blockedBtn], 
+                            targets: [this.berserkerBtn, this.bardBtn, this.rogueBtn, this.blockedBtn],
                             alpha: 0.7,
                             duration: 250,
                         });
                         this.tweens.add({
-                            targets: [this.wizardBtn], 
+                            targets: [this.wizardBtn],
                             alpha: 1,
                             duration: 250,
                         });
@@ -417,12 +540,12 @@ class Scene_Select_Character extends Phaser.Scene {
                         this.rogueBtn.setFrame(0);
                         this.blockedBtn.setFrame(0);
                         this.tweens.add({
-                            targets: [this.berserkerBtn, this.wizardBtn, this.rogueBtn, this.blockedBtn], 
+                            targets: [this.berserkerBtn, this.wizardBtn, this.rogueBtn, this.blockedBtn],
                             alpha: 0.7,
                             duration: 250,
                         });
                         this.tweens.add({
-                            targets: [this.bardBtn], 
+                            targets: [this.bardBtn],
                             alpha: 1,
                             duration: 250,
                         });
@@ -443,12 +566,12 @@ class Scene_Select_Character extends Phaser.Scene {
                         this.rogueBtn.setFrame(1);
                         this.blockedBtn.setFrame(0);
                         this.tweens.add({
-                            targets: [this.berserkerBtn, this.wizardBtn, this.bardBtn, this.blockedBtn], 
+                            targets: [this.berserkerBtn, this.wizardBtn, this.bardBtn, this.blockedBtn],
                             alpha: 0.7,
                             duration: 250,
                         });
                         this.tweens.add({
-                            targets: [this.rogueBtn], 
+                            targets: [this.rogueBtn],
                             alpha: 1,
                             duration: 250,
                         });
@@ -465,12 +588,12 @@ class Scene_Select_Character extends Phaser.Scene {
                         this.rogueBtn.setFrame(0);
                         this.blockedBtn.setFrame(1);
                         this.tweens.add({
-                            targets: [this.berserkerBtn, this.wizardBtn, this.bardBtn, this.rogueBtn], 
+                            targets: [this.berserkerBtn, this.wizardBtn, this.bardBtn, this.rogueBtn],
                             alpha: 0.7,
                             duration: 250,
                         });
                         this.tweens.add({
-                            targets: [this.blockedBtn], 
+                            targets: [this.blockedBtn],
                             alpha: 1,
                             duration: 250,
                         });
@@ -488,12 +611,12 @@ class Scene_Select_Character extends Phaser.Scene {
                         this.blockedBtn.setFrame(1);
                         this.characterSelectedCol = 1;
                         this.tweens.add({
-                            targets: [this.berserkerBtn, this.wizardBtn, this.bardBtn, this.rogueBtn], 
+                            targets: [this.berserkerBtn, this.wizardBtn, this.bardBtn, this.rogueBtn],
                             alpha: 0.7,
                             duration: 250,
                         });
                         this.tweens.add({
-                            targets: [this.blockedBtn], 
+                            targets: [this.blockedBtn],
                             alpha: 1,
                             duration: 250,
                         });
@@ -538,7 +661,7 @@ class Scene_Select_Character extends Phaser.Scene {
         } else {
             this.backBtn.setFrame(0);
             // Comprobar si el usuario tiene la skin this.skinSelectedCol 
-            if (game.mPlayer.availableSkins[game.mPlayer.characterSel.id].includes(this.skinSelectedCol)){
+            if (game.mPlayer.availableSkins[game.mPlayer.characterSel.id].includes(this.skinSelectedCol)) {
                 // Guay
             } else {
                 // No tiene la skin --> ponerlo en gris o algo
@@ -557,8 +680,8 @@ class Scene_Select_Character extends Phaser.Scene {
             game.mPlayer.characterSel.type = undefined;
             game.mPlayer.characterSel.id = -1;
             this.selectingCharacter = true;
-        }else{
-            if (game.mPlayer.availableSkins[game.mPlayer.characterSel.id].includes(this.skinSelectedCol)){
+        } else {
+            if (game.mPlayer.availableSkins[game.mPlayer.characterSel.id].includes(this.skinSelectedCol)) {
                 // Se puede seleccionar
                 game.mPlayer.skinSel = this.skinSelectedCol;
                 this.selectingSkin = false;
@@ -570,7 +693,7 @@ class Scene_Select_Character extends Phaser.Scene {
                 if (game.global.DEBUG_MODE) {
                     console.log("Skin seleccionada: " + game.mPlayer.skinSel);
                 }
-            }else{
+            } else {
                 // Hay que comprar la skin
                 if (game.global.DEBUG_MODE) {
                     console.log("Debes comprar la skin");
