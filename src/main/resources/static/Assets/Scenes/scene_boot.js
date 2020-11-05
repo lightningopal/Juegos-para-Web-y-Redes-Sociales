@@ -375,6 +375,11 @@ class Scene_Boot extends Phaser.Scene {
                 case "AUTENTICATION_SUCCESS":
                     this.scene.get('scene_boot').AutenticationSuccess(data);
                     break;
+                case "CREATED_SPACE_GYM":
+                    if (game.global.DEBUG_MODE) {
+                        console.log("creado el space gym");
+                    }
+                    break;
                 default:
                     if (game.global.DEBUG_MODE) {
                         console.log("Tipo de mensaje no controlado");

@@ -46,7 +46,7 @@ public class SpaceGym_Game {
 
     public void startGameLoop(ScheduledExecutorService scheduler_) {
         scheduler = scheduler_;
-        scheduler = Executors.newScheduledThreadPool(1);
+        //scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> tick(), TICK_DELAY, TICK_DELAY, TimeUnit.MILLISECONDS);
     }
 
@@ -63,6 +63,7 @@ public class SpaceGym_Game {
             System.err.println("Exception sending message to player " + player.getSession().getId());
             ex.printStackTrace(System.err);
             GamesManager.INSTANCE.stopSpaceGym(player);
+            System.out.println("Deberia cerrarse el game");
             // habría que borrar el game de la lista de GamesManager
         }
     }

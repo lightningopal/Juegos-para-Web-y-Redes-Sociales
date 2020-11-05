@@ -242,7 +242,7 @@ class Scene_Main_Menu extends Phaser.Scene {
                             // Space Gym
                             game.mPlayer.isVersus = false;
                             that.input.keyboard.removeAllKeys(true);
-                            that.scene.start("scene_select_character");
+                            that.scene.start("scene_space_gym");
                         }else {
                             // Ranking
                             that.input.keyboard.removeAllKeys(true);
