@@ -152,10 +152,12 @@ class Scene_Space_Gym extends Phaser.Scene {
             case "berserker":
                 game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "berserker")
                 .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
+                game.mPlayer.image.anims.play("berserker_idle");
                 break;
             case "wizard":
                 game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "wizard")
                 .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
+                game.mPlayer.image.anims.play("wizard_idle");
                 break;
             case "bard":
                 game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
@@ -165,11 +167,11 @@ class Scene_Space_Gym extends Phaser.Scene {
             case "rogue":
                 game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "rogue")
                 .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
+                game.mPlayer.image.anims.play("rogue_idle");
                 break;
             default:
                 game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
                 .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
-                console.log(game.mPlayer.image);
                 game.mPlayer.image.anims.play("bard_idle");
                 break;
         }

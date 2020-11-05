@@ -163,6 +163,7 @@ class Scene_Select_Character extends Phaser.Scene {
             });
             this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
                 that.backBtn.setFrame(0);
+                that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_main_menu");
                 if (game.global.DEBUG_MODE) {
                     console.log("Back soltado");
@@ -282,6 +283,8 @@ class Scene_Select_Character extends Phaser.Scene {
                         // Selección de Skill/Mapa
                     }else{
                         // Selección de Skill -> SpaceGym
+                        that.input.keyboard.removeAllKeys(true);
+                        that.scene.start("scene_space_gym");
                     }
                 }
             });
@@ -442,7 +445,8 @@ class Scene_Select_Character extends Phaser.Scene {
                     that.SelectSkin();
                 } else if (that.confirmingSkin) {
                     if (that.confirmSkin) {
-
+                        that.input.keyboard.removeAllKeys(true);
+                        that.scene.start("scene_space_gym");
                     } else {
                         game.mPlayer.selectedSkin = -1;
                         that.skinsSkills.setAlpha(1);
