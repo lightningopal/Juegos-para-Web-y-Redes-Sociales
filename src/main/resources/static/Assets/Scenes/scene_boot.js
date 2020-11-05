@@ -336,14 +336,14 @@ class Scene_Boot extends Phaser.Scene {
                 this.input.keyboard.on('keydown-' + "ENTER", function () {
                     if (!isLoading && game.global.WS_CONNECTION) {
                         this.scene.input.keyboard.removeAllKeys(true);
-                        this.scene.scene.start("scene_select_login");
+                        this.scene.scene.start("scene_space_gym");
                     }
                 });
                 break;
             case "mobile":
                 this.input.on('pointerdown', function () {
                     if (!isLoading && game.global.WS_CONNECTION) {
-                        this.scene.scene.start("scene_select_login");
+                        this.scene.scene.start("scene_space_gym");
                     }
                 });
                 break;
