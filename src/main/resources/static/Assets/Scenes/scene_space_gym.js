@@ -60,7 +60,7 @@ class Scene_Space_Gym extends Phaser.Scene {
         };
 
         // Si el dispositivo es movil, añadir un joystick y un boton
-        if (game.global.DEVICE == "mobile") {
+        if (game.global.DEVICE == "mobile" || game.global.DEBUG_PHONE) {
             this.mobileKeys.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
                 x: RelativeScale(100, "x"),
                 y: RelativeScale(630, "y"),
