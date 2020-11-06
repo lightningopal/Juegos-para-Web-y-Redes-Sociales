@@ -358,9 +358,9 @@ class Scene_Boot extends Phaser.Scene {
     SetSocketMessages() {
         game.global.socket.onmessage = (msg) => {
             var data = JSON.parse(msg.data); // Se convierte el mensaje a JSON
-            if (game.global.DEBUG_MODE) {
+            /*if (game.global.DEBUG_MODE) {
                 console.log(data);
-            }
+            }*/
             switch (data.event) {
                 case "JOIN":
                     this.scene.get('scene_boot').JoinMsg(data);

@@ -185,17 +185,38 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					 */
 					break;
 					case "CREATE_SPACE_GYM":
-					name = node.get("name").asText();
-					//user.setPlayer_selected(player_selected);
+					// Obtener atributos elegidos
+					String playerType = node.get("playerType").asText();
+					int secondarySkill = node.get("skill").asInt();
+
+					// Asignar los atributos
+					user.getPlayer_selected().setPlayerType(playerType);
+					user.getPlayer_selected().setSkill(secondarySkill);
+					user.getPlayer_selected().setPosX(SpaceGym_Game.playerPosX);
+					user.getPlayer_selected().setPosY(SpaceGym_Game.playerPosY);
+					
+					// Crear la partida de space gym
 					GamesManager.INSTANCE.startSpaceGym(user.getPlayer_selected());
 
+					// Crear y enviar un mensaje al usuario que indica que se ha creado su partida de space gym
 					msg.put("event", "CREATED_SPACE_GYM");
-					// Put space_gym.ID para asignar la sala al jugador y que pueda enviar mensajes
 					user.getSession().sendMessage(new TextMessage(msg.toString()));
+
 					if (DEBUG_MODE) {
+						name = user.getUser_name();
 						System.out.println("Space Gym: " + name);
 					}
+					break;
+					case "UPDATE_SPACE_GYM":
+						Player thisPlayer = user.getPlayer_selected();
+						SpaceGym_Game thisGame = GamesManager.INSTANCE.spaceGym_games.get(thisPlayer);
 
+						boolean movingLeft = node.get("movingLeft").asBoolean();
+						boolean movingRight = node.get("movingRight").asBoolean();
+						boolean falling = node.get("falling").asBoolean();
+
+						thisPlayer.updatePlayerValues(movingLeft, movingRight, falling);
+						
 					break;
 				default:
 					break;

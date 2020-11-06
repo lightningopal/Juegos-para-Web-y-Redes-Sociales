@@ -49,9 +49,6 @@ class Scene_Space_Gym extends Phaser.Scene {
             this.load.plugin('rexvirtualjoystickplugin', url, true);
         }
 
-        // Request space_gym open
-        // game.global.socket.send(JSON.stringify({event: "CREATE_SPACE_GYM", name: game.mPlayer.userName}));
-
         // Variables encargadas del control del personaje
         this.movingLeft;
         this.movingRight;

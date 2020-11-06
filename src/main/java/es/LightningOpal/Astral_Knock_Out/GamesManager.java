@@ -12,7 +12,7 @@ public class GamesManager {
 
     private ScheduledExecutorService scheduler_spaceGym = Executors.newScheduledThreadPool(1);
 
-    private Map<Player, SpaceGym_Game> spaceGym_games = new ConcurrentHashMap<>();
+    public Map<Player, SpaceGym_Game> spaceGym_games = new ConcurrentHashMap<>();
 
     private GamesManager()
     {

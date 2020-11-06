@@ -2,7 +2,7 @@ package es.LightningOpal.Astral_Knock_Out;
 
 public class PhysicsObject {
 	private int collisionFactor; // sobra, está para que no de error
-	private double posX, posY, velX, velY, accelX, accelY, halfWidth, halfHeight;
+	private double posX, posY, velX, velY, accelX, accelY, halfWidth, halfHeight, jumpForce, moveSpeed;
 	private boolean isFlipped, onFloor, isStatic;
 
 	public double getPosX() {
@@ -73,6 +73,54 @@ public class PhysicsObject {
 	public void applyVelocity2Position() {
 		this.posX += this.velX;
 		this.posY += this.velY;
+	}
+
+	public double getAccelX() {
+		return accelX;
+	}
+
+	public void setAccelX(double accelX) {
+		this.accelX = accelX;
+	}
+
+	public double getAccelY() {
+		return accelY;
+	}
+
+	public void setAccelY(double accelY) {
+		this.accelY = accelY;
+	}
+
+	public double getHalfWidth() {
+		return halfWidth;
+	}
+
+	public void setHalfWidth(double halfWidth) {
+		this.halfWidth = halfWidth;
+	}
+
+	public double getHalfHeight() {
+		return halfHeight;
+	}
+
+	public void setHalfHeight(double halfHeight) {
+		this.halfHeight = halfHeight;
+	}
+
+	public double getJumpForce() {
+		return jumpForce;
+	}
+
+	public void setJumpForce(double jumpForce) {
+		this.jumpForce = jumpForce;
+	}
+
+	public double getMoveSpeed() {
+		return moveSpeed;
+	}
+
+	public void setMoveSpeed(double moveSpeed) {
+		this.moveSpeed = moveSpeed;
 	}
 
 	public int getCollisionFactor() {

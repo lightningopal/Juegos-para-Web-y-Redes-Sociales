@@ -6,10 +6,7 @@ public class Player extends PhysicsObject{
     private int playerId;
     private WebSocketSession session;
     private String playerType;
-    private float colliderWidth;
-    private float colliderHeight;
-    private float moveSpeed;
-    private float jumpForce;
+    private int skill;
     private int numJumps;
     private int maxHP;
     private int currentHP;
@@ -30,33 +27,34 @@ public class Player extends PhysicsObject{
         numJumps = 2;
     }
 
-    public Player(int id, String type, int x, int y, int mSpeed, int jForce, int hp){
+    public Player(int id, String type, int skill, int x, int y, int mSpeed, int jForce, int hp){
         playerId = id;
         playerType = type;
+        this.skill = skill;
         this.setPosX(x);
         this.setPosY(y);
         switch(type){
             case "bard":
-                colliderWidth = 0;
-                colliderHeight = 0;
+                this.setHalfHeight(0);
+                this.setHalfWidth(0);
                 break;
             case "berserker":
-                colliderWidth = 10;
-                colliderHeight = 10;
+                this.setHalfHeight(10);
+                this.setHalfWidth(10);
                 break;
             case "wizard":
-                colliderWidth = 20;
-                colliderHeight = 20;
+                this.setHalfHeight(20);
+                this.setHalfWidth(20);
                 break;
             case "rogue":
-                colliderWidth = 30;
-                colliderHeight = 30;
+                this.setHalfHeight(30);
+                this.setHalfWidth(30);
                 break;
             default:
                 break;
         }
-        moveSpeed = mSpeed;
-        jumpForce = jForce;
+        this.setMoveSpeed(mSpeed);
+        this.setJumpForce(jForce);
         numJumps = 2;
         maxHP = hp;
         currentHP = hp;
@@ -71,17 +69,8 @@ public class Player extends PhysicsObject{
     public String getPlayerType(){ return playerType; }
     public void setPlayerType(String type){ playerType = type; }
 
-    public float getColliderW(){ return colliderWidth; }
-    public void setColliderW(float cW){ colliderWidth = cW; }
-
-    public float getColliderH(){ return colliderHeight; }
-    public void setColliderH(float cH){ colliderHeight = cH; }
-
-    public float getMoveSpeed(){ return moveSpeed; }
-    public void setMoveSpeed(float mS){ moveSpeed = mS; }
-
-    public float getJumpForce(){ return jumpForce; }
-    public void setJumpForce(float jF){ jumpForce = jF; }
+    public int getSkill() {return skill;}
+    public void setSkill(int skill) {this.skill = skill;}
 
     public int getNumJumps(){ return numJumps; }
     public void setNumJumps(int nJ){ numJumps = nJ; }
@@ -102,6 +91,30 @@ public class Player extends PhysicsObject{
     public int damage (int dmg) { return currentHP -= dmg; }
 
     // Generales
+    public void updatePlayerValues(boolean movingLeft_, boolean movingRight_, boolean falling_)
+    {
+        movingLeft = movingLeft_;
+        movingRight = movingRight_;
+        falling = falling_;
+    }
+
+    public void calculateMovement()
+    {
+        if (movingLeft)
+        {
+            double posX = this.getPosX() - this.getMoveSpeed();
+            this.setPosX(posX);
+        }
+
+        if (movingRight)
+        {
+            double posX = this.getPosX() + this.getMoveSpeed();
+            this.setPosX(posX);
+        }
+    }
+
+
+
     @Override
     public String toString(){
         return "[id="+playerId+", type="+playerType+", x="+getPosX()+", y="+getPosY()+"]";

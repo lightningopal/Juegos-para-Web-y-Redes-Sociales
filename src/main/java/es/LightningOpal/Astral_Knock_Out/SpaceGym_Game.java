@@ -20,6 +20,12 @@ public class SpaceGym_Game {
     private final static long TICK_DELAY = 1000 / FPS;
     public final static boolean DEBUG_MODE = true;
     public final static boolean VERBOSE_MODE = true;
+
+    public final static int playerPosX = 250;
+    public final static int playerPosY = 850;
+    public final static int dummyPosX = 1500;
+    public final static int dummyPosY = 940;
+
     // Room ID ?
 
     ObjectMapper mapper = new ObjectMapper();
@@ -47,13 +53,14 @@ public class SpaceGym_Game {
 
     public void startGameLoop(ScheduledExecutorService scheduler_) {
         scheduler = scheduler_;
-        //scheduler = Executors.newScheduledThreadPool(1);
+        scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> tick(), TICK_DELAY, TICK_DELAY, TimeUnit.MILLISECONDS);
     }
 
     public void stopGameLoop() {
         if (scheduler != null) {
             scheduler.shutdown();
+            System.out.println("SE HA CERRADO EL SCHEDULER");
         }
     }
 
@@ -61,8 +68,8 @@ public class SpaceGym_Game {
         try {
             player.getSession().sendMessage(new TextMessage(message.toString()));
         } catch (Throwable ex) {
-            System.err.println("Exception sending message to player " + player.getSession().getId());
-            ex.printStackTrace(System.err);
+            //System.err.println("Exception sending message to player " + player.getSession().getId());
+            //ex.printStackTrace(System.err);
             GamesManager.INSTANCE.stopSpaceGym(player);
             System.out.println("Deberia cerrarse el game");
             // habría que borrar el game de la lista de GamesManager
@@ -81,9 +88,7 @@ public class SpaceGym_Game {
 
         try {
             // Update player
-            // player.calculateMovement();
-            jsonPlayer.put("id", player.getPlayerId());
-            jsonPlayer.put("playerType", player.getPlayerType());
+            player.calculateMovement();
             jsonPlayer.put("posX", player.getPosX());
             jsonPlayer.put("posY", player.getPosY());
             jsonPlayer.put("flipped", player.IsFlipped());
