@@ -37,28 +37,36 @@ public class Player extends PhysicsObject{
             case "bard":
                 this.setHalfHeight(0);
                 this.setHalfWidth(0);
-                this.setMoveSpeed(1);
+                this.setMoveSpeed(3);
+                this.setMaxSpeed(15);
+                this.setGroundDrag(3);
                 this.setJumpForce(1);
                 this.setMaxHP(100);
                 break;
             case "berserker":
-                this.setHalfHeight(10);
-                this.setHalfWidth(10);
-                this.setMoveSpeed(1);
+                this.setHalfHeight(0);
+                this.setHalfWidth(0);
+                this.setMoveSpeed(2);
+                this.setMaxSpeed(15);
+                this.setGroundDrag(4);
                 this.setJumpForce(1);
                 this.setMaxHP(100);
                 break;
             case "wizard":
-                this.setHalfHeight(20);
-                this.setHalfWidth(20);
+                this.setHalfHeight(0);
+                this.setHalfWidth(0);
                 this.setMoveSpeed(1);
+                this.setMaxSpeed(25);
+                this.setGroundDrag(6);
                 this.setJumpForce(1);
                 this.setMaxHP(100);
                 break;
             case "rogue":
-                this.setHalfHeight(30);
-                this.setHalfWidth(30);
-                this.setMoveSpeed(1);
+                this.setHalfHeight(0);
+                this.setHalfWidth(0);
+                this.setMoveSpeed(3);
+                this.setMaxSpeed(30);
+                this.setGroundDrag(4);
                 this.setJumpForce(1);
                 this.setMaxHP(100);
                 break;
@@ -113,11 +121,12 @@ public class Player extends PhysicsObject{
         {
             SetFlipped(true);
             this.setAccelX(-this.getMoveSpeed());
-        }
-        if (movingRight)
+        }else if (movingRight)
         {
             SetFlipped(false);
             this.setAccelX(this.getMoveSpeed());
+        }else{
+            this.setAccelX(0);
         }
         calculateMovement();
     }
