@@ -151,7 +151,7 @@ class Scene_Boot extends Phaser.Scene {
 
         // Carga de imágenes
         ///Escena de Inicio de Empresa, Boot///
-        
+
 
         ///Escena de Inicio de Sesión///
         this.load.image("simple_bg", "./Assets/Images/BackGrounds/simple_bg.png");
@@ -187,7 +187,7 @@ class Scene_Boot extends Phaser.Scene {
         ///Escena de Selección de Personaje, Habilidad y Escenario///
         this.load.image("select_character_interface", "./Assets/Images/UI/select_character_interface.png");
         this.load.spritesheet("berserker_button", "./Assets/Images/UI/berserker_button.png", { frameWidth: 731, frameHeight: 540 });
-        this.load.spritesheet("wizard_button", "./Assets/Images/UI/wizard_button.png", { frameWidth:731, frameHeight: 540 });
+        this.load.spritesheet("wizard_button", "./Assets/Images/UI/wizard_button.png", { frameWidth: 731, frameHeight: 540 });
         this.load.spritesheet("bard_button", "./Assets/Images/UI/bard_button.png", { frameWidth: 731, frameHeight: 540 });
         this.load.spritesheet("rogue_button", "./Assets/Images/UI/rogue_button.png", { frameWidth: 731, frameHeight: 540 });
         this.load.spritesheet("blocked_button", "./Assets/Images/UI/blocked_button.png", { frameWidth: 731, frameHeight: 429 });
@@ -331,7 +331,7 @@ class Scene_Boot extends Phaser.Scene {
         switch (game.global.DEVICE) {
             case "desktop":
                 this.input.keyboard.on('keydown-' + "ENTER", function () {
-                    if (!isLoading /**/&& game.global.WS_CONNECTION/**/) {
+                    if (!isLoading /**/ && game.global.WS_CONNECTION/**/) {
                         this.scene.input.keyboard.removeAllKeys(true);
                         this.scene.scene.start("scene_select_login");
                     }
@@ -339,7 +339,7 @@ class Scene_Boot extends Phaser.Scene {
                 break;
             case "mobile":
                 this.input.on('pointerdown', function () {
-                    if (!isLoading /**/&& game.global.WS_CONNECTION/**/) {
+                    if (!isLoading /**/ && game.global.WS_CONNECTION/**/) {
                         this.scene.scene.start("scene_select_login");
                     }
                 });
@@ -372,15 +372,14 @@ class Scene_Boot extends Phaser.Scene {
                     this.scene.get('scene_boot').AutenticationSuccess(data);
                     break;
                 case "CREATED_SPACE_GYM":
-                    this.scene.get('scene_select_character').input.keyboard.removeAllKeys(true);
-                    this.scene.get('scene_select_character').scene.start("scene_space_gym");
-                    if (game.global.DEBUG_MODE) {
-                        console.log("creado el space gym");
-                    }
+                    this.scene.get('scene_boot').JoinSpaceGym(data);
+                    break;
+                case "UPDATE_SPACE_GYM":
+                    this.scene.get('scene_boot').UpdateSpaceGym(data);
                     break;
                 default:
                     if (game.global.DEBUG_MODE) {
-                        console.log("Tipo de mensaje no controlado:" + data.event);
+                        console.log("Tipo de mensaje no controlado");
                     }
                     break;
             }
@@ -396,19 +395,33 @@ class Scene_Boot extends Phaser.Scene {
         }
     }
 
-    ErrorMsg(data){
+    ErrorMsg(data) {
         if (game.global.DEBUG_MODE) {
             console.log(data.message);
         }
     }
 
-    AutenticationSuccess(data){
+    AutenticationSuccess(data) {
         game.mPlayer.userName = data.user_name;
         game.mPlayer.id = data.id;
         this.scene.get('scene_account').scene.start("scene_main_menu");
         if (game.global.DEBUG_MODE) {
             console.log(game.mPlayer);
-            console.log("Bienvenido/a "+ game.mPlayer.userName);
+            console.log("Bienvenido/a " + game.mPlayer.userName);
         }
+    }
+
+    JoinSpaceGym(data) {
+        this.scene.get('scene_select_character').input.keyboard.removeAllKeys(true);
+        this.scene.get('scene_select_character').scene.start("scene_space_gym");
+        if (game.global.DEBUG_MODE) {
+            console.log("creado el space gym");
+        }
+    }
+
+    UpdateSpaceGym(data){
+        game.mPlayer.image.x = RelativeScale(data.posX, "x");
+        game.mPlayer.image.y = RelativeScale(data.posY, "y");
+        game.mPlayer.image.flipX = data.flipped;
     }
 }
