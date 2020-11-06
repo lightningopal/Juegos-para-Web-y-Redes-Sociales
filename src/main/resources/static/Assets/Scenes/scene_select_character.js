@@ -278,14 +278,14 @@ class Scene_Select_Character extends Phaser.Scene {
             });
 
             this.enterBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-                if (game.mPlayer.characterSel.id != -1){
-                    if (game.mPlayer.isVersus){
+                if (game.mPlayer.characterSel.id != -1) {
+                    if (game.mPlayer.isVersus) {
                         // Selección de Skill/Mapa
-                    }else{
+                    } else {
                         // Selección de Skill -> SpaceGym
                         // that.input.keyboard.removeAllKeys(true);
                         // that.scene.start("scene_space_gym");
-                        game.global.socket.send(JSON.stringify({event: "CREATE_SPACE_GYM", name: game.mPlayer.userName}));
+                        game.global.socket.send(JSON.stringify({ event: "CREATE_SPACE_GYM", name: game.mPlayer.userName }));
                     }
                 }
             });
@@ -446,9 +446,14 @@ class Scene_Select_Character extends Phaser.Scene {
                     that.SelectSkin();
                 } else if (that.confirmingSkin) {
                     if (that.confirmSkin) {
-                        // that.input.keyboard.removeAllKeys(true);
-                        // that.scene.start("scene_space_gym");
-                        game.global.socket.send(JSON.stringify({event: "CREATE_SPACE_GYM", name: game.mPlayer.userName}));
+                        if (game.mPlayer.isVersus) {
+                            // Selección de Skill/Mapa
+                        } else {
+                            // that.input.keyboard.removeAllKeys(true);
+                            // that.scene.start("scene_space_gym");
+                            // debería pasar a seleccionar habilidad
+                            game.global.socket.send(JSON.stringify({ event: "CREATE_SPACE_GYM", playerType: game.characterSel.type, skill: game.mPlayer.skillSel }));
+                        }
                     } else {
                         game.mPlayer.selectedSkin = -1;
                         that.skinsSkills.setAlpha(1);

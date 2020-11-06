@@ -187,7 +187,6 @@ class Scene_Space_Gym extends Phaser.Scene {
             this.cursors1.left.on("down", function(event){
                 that.movingRight = false;
                 that.movingLeft = true;
-                game.mPlayer.image.flipX = true;
             });
             this.cursors1.left.on("up", function(event){
                 that.movingLeft = false;
@@ -196,7 +195,6 @@ class Scene_Space_Gym extends Phaser.Scene {
             this.cursors1.right.on("down", function(event){
                 that.movingRight = true;
                 that.movingLeft = false;
-                game.mPlayer.image.flipX = false;
             });
             this.cursors1.right.on("up", function(event){
                 that.movingRight = false;
@@ -215,7 +213,6 @@ class Scene_Space_Gym extends Phaser.Scene {
                 }
             });
         }// Fin DEVICE == desktop
-        
 
         game.mPlayer.image.on("animationcomplete", function(anim){
             if (anim.key === game.mPlayer.characterSel.type+"_attack"){
@@ -224,7 +221,6 @@ class Scene_Space_Gym extends Phaser.Scene {
             if (game.global.DEBUG_MODE){
                 console.log("Fin de animación: "+ anim.key);
             }
-            
         }, this);
 
         //Plataformas
@@ -292,6 +288,7 @@ class Scene_Space_Gym extends Phaser.Scene {
                 game.mPlayer.image.anims.play(game.mPlayer.characterSel.type+"_idle",true);
             }
         }
+        this.UpdateGameState();
         /*
         // Mostrar u ocultar las plataformas al pasar por encima
         this.hidePlatforms.forEach(platform => {
@@ -335,6 +332,25 @@ class Scene_Space_Gym extends Phaser.Scene {
             player.die();
     }
     /** */
+
+    // Comunicación de estado con el servidor
+    UpdateGameState(){
+        game.global.socket.send(JSON.stringify({event: "UPDATE_SPACE_GYM",
+            movingLeft: this.movingLeft, movingRight: this.movingRight, falling: this.falling}));
+    }
+    // Petición de salto del personaje
+    Jump(){
+        // game.global.socket.send(JSON.stringify({event: ""}));
+    }
+    // Petición de ataque básico
+    BasicAttack(){
+
+    }
+    // Petición de ataque especial
+    SpecialAttack(){
+
+    }
+
     // Joystick movil
     DumpJoyStickState() {
         var cursorKeys = this.mobileKeys.joyStick.createCursorKeys();
