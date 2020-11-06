@@ -173,12 +173,12 @@ public class PhysicsObject {
 	public void applyDrag() {
 		// Se aplica una aceleración contraria a la velocidad si la aceleración es 0
 		// hasta frenar al pesonaje
-		double currentDrag = this.groundDrag * (((maxSpeed) - Math.abs(velX)) / (maxSpeed));
+		double currentDrag = this.groundDrag * (Math.abs(velX) / (maxSpeed));
 		// Drag aplicado en dirección contraria a la velocidad
 		if (this.velX > EPSILON) {
-			this.velX -= this.groundDrag - currentDrag;
+			this.velX -= currentDrag;
 		} else if (this.velX < -EPSILON) {
-			this.velX += this.groundDrag - currentDrag;
+			this.velX += currentDrag;
 		} else {
 			this.velX = 0;
 		}
