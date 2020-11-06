@@ -1,5 +1,6 @@
 package es.LightningOpal.Astral_Knock_Out;
 
+/// Imports
 //import java.util.concurrent.atomic.AtomicInteger;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -15,28 +16,42 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+// Clase WebsocketHandler, que gestiona los mensajes websocket
 public class WebsocketHandler extends TextWebSocketHandler {
-
+	/// Variables
 	private static final boolean DEBUG_MODE = true;
-	// private SpacewarGame game = SpacewarGame.INSTANCE;
 	private static final String USER_ATTRIBUTE = "USER";
 	private ObjectMapper mapper = new ObjectMapper();
-	// private AtomicInteger projectileId = new AtomicInteger(0);
 
+	/// Métodos
+	// Método afterConnectionEstablished, que se ejecuta cuando se establece una conexión al servidor
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		User user = new User(session);
+		// Se crea un usuario para esa sesión
+		User user = new User();
+
+		// Se establece su sesión y la del player
+		user.setSession(session);
+		user.getPlayer_selected().setSession(session);
+
+		// Se añade el usuario al mapa de atributos
 		session.getAttributes().put(USER_ATTRIBUTE, user);
 
+		// ObjectNode 'msg', que guarda la información del mensaje a enviar
 		ObjectNode msg = mapper.createObjectNode();
+
+		// Se guarda en el ObjectNode 'msg' el evento y la id del usuario
 		msg.put("event", "JOIN");
 		msg.put("id", user.getUserId());
+
+		// Se envía el mensaje al usuario
 		user.getSession().sendMessage(new TextMessage(msg.toString()));
+
 		if (DEBUG_MODE) {
 			System.out.println("Connected user with session " + user.getSession().getId() + ".");
 		}
 
-		// LogFile Try-Catch
+		// Se intenta escribir la información en el log
 		try
 		{
 			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
@@ -46,85 +61,121 @@ public class WebsocketHandler extends TextWebSocketHandler {
 		}
 		catch (Exception e)
 		{
+			// Si falla, se muestra el error
 			e.printStackTrace();
 		}
-
-		// game.addPlayer(player);
 	}
 
+	// Método handleTextMessage, que controla los mensajes que le llegan al servidor
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		try {
+			// Lee la información del mensaje en un JsonNode 'node'
 			JsonNode node = mapper.readTree(message.getPayload());
+
+			// Crea un ObjectNode 'msg' para almacenar el mensaje que será enviado posteriormente
 			ObjectNode msg = mapper.createObjectNode();
+
+			// Obtiene el usuario que ha enviado el mensaje
 			User user = (User) session.getAttributes().get(USER_ATTRIBUTE);
 
+			// Variables nombre y contraseña
 			String name, password;
 
 			if (DEBUG_MODE) {
-				System.out.println(node.get("event").asText());
+				//System.out.println(node.get("event").asText());
 			}
 
+			// Dependiendo del tipo de evento en el mensaje, ejecuta distintas funciones
 			switch (node.get("event").asText()) {
+				// Cuando un usuario se une al servidor
 				case "JOIN":
+					// Asignar evento e id de usuario en el ObjectNode 'msg'
 					msg.put("event", "JOIN");
 					msg.put("id", user.getUserId());
-					// msg.put("shipType", player.getShipType());
+
+					// Enviar el mensaje
 					user.getSession().sendMessage(new TextMessage(msg.toString()));
 					break;
+				// Cuando un usuario se logea en el servidor
 				case "LOG_IN":
+					// Obtener nombre y contraseña del usuario
 					name = node.get("name").asText();
 					password = node.get("password").asText();
 
-					// Check if it's correct
+					// Si existe el nombre en los datos, comprueba que coincidan
 					if (UsersController.loginInfo.containsKey(name)) {
+						// Si coinciden los datos, comprueba si el usuario está ya conectado
 						if (UsersController.loginInfo.get(name).equals(password.hashCode())) {
+							// Si el usuario ya está conectado
 							if (UsersController.CheckUserConnected(name)) {
-								// Si el usuario ya está conectado
+								// Asignar evento y mensaje a enviar en el ObjectNode 'msg'
 								msg.put("event", "ERROR");
 								msg.put("message", "User already playing");
+
+								//Enviar el mensaje
 								user.getSession().sendMessage(new TextMessage(msg.toString()));
+
 								if (DEBUG_MODE) {
 									System.out.println("Usuario ya conectado");
 								}
+							// Si el usuario no está conectado, pasa el login
 							} else {
-								// Pasa el login
-								User mUser = UsersController.ConnectNewUser(name);
+								// Se conecta el usuario al servidor
+								User thisUser = UsersController.ConnectUser(name);
+
+								// Se establece la sesión en usuario y jugador
+								thisUser.setSession(session);
+								thisUser.getPlayer_selected().setSession(session);
+
+								// Se añade el usuario al mapa de atributos
+								session.getAttributes().put(USER_ATTRIBUTE, thisUser);
+
+								// Asignar evento, nombre de usuario e id en el ObjectNode 'msg'
 								msg.put("event", "AUTENTICATION_SUCCESS");
 								msg.put("user_name", name);
-								msg.put("id", mUser.getUserId());
-								mUser.setSession(session);
-								mUser.getPlayer_selected().setSession(session);
-								session.getAttributes().put(USER_ATTRIBUTE, mUser);
-								mUser.getSession().sendMessage(new TextMessage(msg.toString()));
+								msg.put("id", thisUser.getUserId());
+
+								// Enviar el mensaje
+								user.getSession().sendMessage(new TextMessage(msg.toString()));
+
 								if (DEBUG_MODE) {
 									System.out.println("Usuario conectado: " + name);
 								}
 							}
+						// Si los datos no coinciden, la contraseña es incorrecta
 						} else {
-							// La contraseña es incorrecta
+							// Asignar evento y mensaje a enviar en el ObjectNode 'msg'
 							msg.put("event", "ERROR");
 							msg.put("message", "Wrong password");
+
+							// Enviar el mensaje
 							user.getSession().sendMessage(new TextMessage(msg.toString()));
+
 							if (DEBUG_MODE) {
 								System.out.println("Contraseña incorrecta");
 							}
 						}
 					} else {
-						// El usuario no existe
+						// Asignar evento y mensaje a enviar en el ObjectNode 'msg'
 						msg.put("event", "ERROR");
 						msg.put("message", "Wrong user name");
+
+						// Enviar el mensaje
 						user.getSession().sendMessage(new TextMessage(msg.toString()));
+
 						if (DEBUG_MODE) {
 							System.out.println("El usuario no existe");
 						}
 					}
 					break;
+				// Cuando un usuario se registra en el servidor
 				case "SIGN_UP":
+					// Obtener nombre y contraseña del usuario
 					name = node.get("name").asText();
 					password = node.get("password").asText();
 
-					// Check if already exists
+					// Comprobar si ya existe un usuario con ese nombre en el servidor
 					boolean userAlreadyExists = false;
 
 					for(String username : UsersController.loginInfo.keySet()){
@@ -135,24 +186,41 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						}
 					}
 
+					// Si el usuario ya existe
 					if (userAlreadyExists) {
-						// El usuario YA EXISTE
+						// Asignar evento y mensaje a enviar en el ObjectNode 'msg'
 						msg.put("event", "ERROR");
 						msg.put("message", "User name already exists");
+
+						// Enviar el mensaje
 						user.getSession().sendMessage(new TextMessage(msg.toString()));
+
 						if (DEBUG_MODE) {
 							System.out.println("Ya existe un usuario con ese nombre");
 						}
+					// Si el usuario no existe, se crea
 					} else {
-						// Se crea el usuario y se le deja pasar
-						UsersController.RegisterNewUser(name, password);
-						User mUser = UsersController.ConnectNewUser(name);
-						mUser.setSession(session);
-						session.getAttributes().put(USER_ATTRIBUTE, mUser);
+						// Se registra al nuevo usuario
+						User thisUser = UsersController.RegisterNewUser(name, password);
+
+						// Se conecta el nuevo usuario
+						UsersController.ConnectNewUser(thisUser);
+
+						// Se establece la sesión en usuario y jugador
+						thisUser.setSession(session);
+						thisUser.getPlayer_selected().setSession(session);
+
+						// Se añade el usuario al mapa de atributos
+						session.getAttributes().put(USER_ATTRIBUTE, thisUser);
+
+						// Asignar evento, nombre de usuario e id en el ObjectNode 'msg'
 						msg.put("event", "AUTENTICATION_SUCCESS");
 						msg.put("user_name", name);
-						msg.put("id", mUser.getUserId());
-						mUser.getSession().sendMessage(new TextMessage(msg.toString()));
+						msg.put("id", user.getUserId());
+
+						// Enviar el mensaje
+						user.getSession().sendMessage(new TextMessage(msg.toString()));
+
 						if (DEBUG_MODE) {
 							System.out.println("Nuevo usuario: " + name);
 						}
@@ -184,20 +252,23 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					 * game.addProjectile(projectile.getId(), projectile); }
 					 */
 					break;
+					// Cuando se solicita la creación de una partida de "space gym"
 					case "CREATE_SPACE_GYM":
-					// Obtener atributos elegidos
+					// Se obtienen los atributos elegidos
 					String playerType = node.get("playerType").asText();
 					int secondarySkill = node.get("skill").asInt();
 
-					// Asignar los atributos
+					// Se asignan los atributos
 					user.setPlayer_selected(new Player(user.getSession(), -1, playerType, secondarySkill,
 					 SpaceGym_Game.playerPosX, SpaceGym_Game.playerPosY));
 					
-					// Crear la partida de space gym
+					// Se crea la partida de space gym
 					GamesManager.INSTANCE.startSpaceGym(user.getPlayer_selected());
 
-					// Crear y enviar un mensaje al usuario que indica que se ha creado su partida de space gym
+					// Asignar evento en el ObjectNode 'msg'
 					msg.put("event", "CREATED_SPACE_GYM");
+
+					// Enviar el mensaje
 					user.getSession().sendMessage(new TextMessage(msg.toString()));
 
 					if (DEBUG_MODE) {
@@ -205,32 +276,38 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						System.out.println("Space Gym: " + name);
 					}
 					break;
+					// Cuando se reciben los datos del usuario para actualizar el space gym
 					case "UPDATE_SPACE_GYM":
+						// Se obtiene el jugador del usuario
 						Player thisPlayer = user.getPlayer_selected();
-						SpaceGym_Game thisGame = GamesManager.INSTANCE.spaceGym_games.get(thisPlayer);
 
+						// Se obtiene la información de movimiento del nodo
 						boolean movingLeft = node.get("movingLeft").asBoolean();
 						boolean movingRight = node.get("movingRight").asBoolean();
 						boolean falling = node.get("falling").asBoolean();
 
+						// Se actualizan los valores de información de movimiento del jugador
 						thisPlayer.updatePlayerValues(movingLeft, movingRight, falling);
 						
 					break;
+					// En cualquier otro caso
 				default:
 					break;
 			}
-
 		} catch (Exception e) {
+			// Si se produce un error, se imprime
 			System.err.println("Exception processing message " + message.getPayload());
 			e.printStackTrace(System.err);
 		}
 	}
 
+	// Método afterConnectionClosed, que se ejecuta tras el cierre de una conexión
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
+		// Obtiene el usuario de los atributos de sesión
 		User user = (User) session.getAttributes().get(USER_ATTRIBUTE);
 
-		// LogFile Try-Catch
+		// Intenta escribir la información en el archivo de log
 		try
 		{
 			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
@@ -247,10 +324,13 @@ public class WebsocketHandler extends TextWebSocketHandler {
 		}
 		catch (Exception e)
 		{
+			// Si falla, se muestra el error
 			e.printStackTrace();
 		}
 		
+		// Desconecta al usuario
 		UsersController.DisconnectUser(user.getUser_name());
+
 		if (DEBUG_MODE){
 			System.out.println("Usuario desconectado: " + user.getUser_name());
 		}

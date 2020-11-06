@@ -1,0 +1,5 @@
+00:08:36 - Server opened.
+00:08:46 - Conected user with session 71e2761d-92af-8a2c-35d2-ff28bd405329.
+00:09:01 - Player registered: pruebaUser.
+00:09:30 - Player disconnected: pruebaUser.
+00:09:47 - Conected user with session e19b32f0-0f92-d661-32f2-ffbba49aaa92.
