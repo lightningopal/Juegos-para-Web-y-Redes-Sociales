@@ -190,10 +190,8 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					int secondarySkill = node.get("skill").asInt();
 
 					// Asignar los atributos
-					user.getPlayer_selected().setPlayerType(playerType);
-					user.getPlayer_selected().setSkill(secondarySkill);
-					user.getPlayer_selected().setPosX(SpaceGym_Game.playerPosX);
-					user.getPlayer_selected().setPosY(SpaceGym_Game.playerPosY);
+					user.setPlayer_selected(new Player(user.getSession(), -1, playerType, secondarySkill,
+					 SpaceGym_Game.playerPosX, SpaceGym_Game.playerPosY));
 					
 					// Crear la partida de space gym
 					GamesManager.INSTANCE.startSpaceGym(user.getPlayer_selected());
@@ -255,7 +253,6 @@ public class WebsocketHandler extends TextWebSocketHandler {
 		UsersController.DisconnectUser(user.getUser_name());
 		if (DEBUG_MODE){
 			System.out.println("Usuario desconectado: " + user.getUser_name());
-			System.out.println(user);
 		}
 	}
 }

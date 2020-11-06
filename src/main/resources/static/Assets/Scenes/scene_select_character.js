@@ -452,7 +452,7 @@ class Scene_Select_Character extends Phaser.Scene {
                             // that.input.keyboard.removeAllKeys(true);
                             // that.scene.start("scene_space_gym");
                             // debería pasar a seleccionar habilidad
-                            game.global.socket.send(JSON.stringify({ event: "CREATE_SPACE_GYM", playerType: game.characterSel.type, skill: game.mPlayer.skillSel }));
+                            game.global.socket.send(JSON.stringify({ event: "CREATE_SPACE_GYM", playerType: game.mPlayer.characterSel.type, skill: game.mPlayer.skillSel }));
                         }
                     } else {
                         game.mPlayer.selectedSkin = -1;

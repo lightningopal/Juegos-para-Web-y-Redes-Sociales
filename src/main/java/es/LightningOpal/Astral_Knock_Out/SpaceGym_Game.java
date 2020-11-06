@@ -88,7 +88,7 @@ public class SpaceGym_Game {
 
         try {
             // Update player
-            player.calculateMovement();
+            player.calculatePhysics();
             jsonPlayer.put("posX", player.getPosX());
             jsonPlayer.put("posY", player.getPosY());
             jsonPlayer.put("flipped", player.IsFlipped());

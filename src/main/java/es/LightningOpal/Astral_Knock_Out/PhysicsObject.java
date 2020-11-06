@@ -131,6 +131,12 @@ public class PhysicsObject {
 		this.collisionFactor = radius;
 	}
 
+	public void calculateMovement(){
+		// posX = this.getPosX() - this.getMoveSpeed();
+		this.velX += this.accelX;
+		this.posX += this.velX;
+	}
+
 	// Handle collision (HAY QUE CAMBIARLO)
 	public boolean intersect(PhysicsObject other) {
 		int maxRadiusToCollide = this.collisionFactor + other.getCollisionFactor();

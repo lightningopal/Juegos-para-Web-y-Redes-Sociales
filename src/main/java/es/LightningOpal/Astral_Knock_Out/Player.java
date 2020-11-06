@@ -16,7 +16,6 @@ public class Player extends PhysicsObject{
     private boolean movingRight;
     private boolean falling;
 
-
     public Player(){
         playerId = -1;
         numJumps = 2;
@@ -27,7 +26,8 @@ public class Player extends PhysicsObject{
         numJumps = 2;
     }
 
-    public Player(int id, String type, int skill, int x, int y, int mSpeed, int jForce, int hp){
+    public Player(WebSocketSession session, int id, String type, int skill, int x, int y/*, int mSpeed, int jForce, int hp*/){
+        this.session = session;
         playerId = id;
         playerType = type;
         this.skill = skill;
@@ -37,27 +37,36 @@ public class Player extends PhysicsObject{
             case "bard":
                 this.setHalfHeight(0);
                 this.setHalfWidth(0);
+                this.setMoveSpeed(1);
+                this.setJumpForce(1);
+                this.setMaxHP(100);
                 break;
             case "berserker":
                 this.setHalfHeight(10);
                 this.setHalfWidth(10);
+                this.setMoveSpeed(1);
+                this.setJumpForce(1);
+                this.setMaxHP(100);
                 break;
             case "wizard":
                 this.setHalfHeight(20);
                 this.setHalfWidth(20);
+                this.setMoveSpeed(1);
+                this.setJumpForce(1);
+                this.setMaxHP(100);
                 break;
             case "rogue":
                 this.setHalfHeight(30);
                 this.setHalfWidth(30);
+                this.setMoveSpeed(1);
+                this.setJumpForce(1);
+                this.setMaxHP(100);
                 break;
             default:
                 break;
         }
-        this.setMoveSpeed(mSpeed);
-        this.setJumpForce(jForce);
         numJumps = 2;
-        maxHP = hp;
-        currentHP = hp;
+        currentHP = maxHP;
     }
 
     public int getPlayerId(){ return playerId; }
@@ -98,19 +107,19 @@ public class Player extends PhysicsObject{
         falling = falling_;
     }
 
-    public void calculateMovement()
+    public void calculatePhysics()
     {
         if (movingLeft)
         {
-            double posX = this.getPosX() - this.getMoveSpeed();
-            this.setPosX(posX);
+            SetFlipped(true);
+            this.setAccelX(-this.getMoveSpeed());
         }
-
         if (movingRight)
         {
-            double posX = this.getPosX() + this.getMoveSpeed();
-            this.setPosX(posX);
+            SetFlipped(false);
+            this.setAccelX(this.getMoveSpeed());
         }
+        calculateMovement();
     }
 
 

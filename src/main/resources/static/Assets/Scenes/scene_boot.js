@@ -420,8 +420,8 @@ class Scene_Boot extends Phaser.Scene {
     }
 
     UpdateSpaceGym(data){
-        game.mPlayer.image.x = RelativeScale(data.posX, "x");
-        game.mPlayer.image.y = RelativeScale(data.posY, "y");
-        game.mPlayer.image.flipX = data.flipped;
+        game.mPlayer.image.x = RelativeScale(data.player.posX, "x");
+        game.mPlayer.image.y = RelativeScale(data.player.posY, "y");
+        game.mPlayer.image.flipX = data.player.flipped;
     }
 }

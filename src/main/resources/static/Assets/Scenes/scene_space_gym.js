@@ -215,9 +215,6 @@ class Scene_Space_Gym extends Phaser.Scene {
             if (anim.key === game.mPlayer.characterSel.type+"_attack"){
                 that.attacking = false;
             }
-            if (game.global.DEBUG_MODE){
-                console.log("Fin de animación: "+ anim.key);
-            }
         }, this);
 
         //Plataformas
