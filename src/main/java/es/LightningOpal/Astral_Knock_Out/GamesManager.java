@@ -23,7 +23,7 @@ public class GamesManager {
     {
         SpaceGym_Game newGame = new SpaceGym_Game(thisPlayer);
         newGame.startGameLoop(scheduler_spaceGym);
-        spaceGym_games.put(thisPlayer, newGame);
+        spaceGym_games.put(thisPlayer, newGame); // Yo haría el mapa con <roomId, SpaceGtm_Game> (Mario)
     }
 
     public void stopSpaceGym(Player thisPlayer)

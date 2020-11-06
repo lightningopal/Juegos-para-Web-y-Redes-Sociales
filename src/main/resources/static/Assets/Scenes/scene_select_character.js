@@ -283,8 +283,9 @@ class Scene_Select_Character extends Phaser.Scene {
                         // Selección de Skill/Mapa
                     }else{
                         // Selección de Skill -> SpaceGym
-                        that.input.keyboard.removeAllKeys(true);
-                        that.scene.start("scene_space_gym");
+                        // that.input.keyboard.removeAllKeys(true);
+                        // that.scene.start("scene_space_gym");
+                        game.global.socket.send(JSON.stringify({event: "CREATE_SPACE_GYM", name: game.mPlayer.userName}));
                     }
                 }
             });
@@ -445,8 +446,9 @@ class Scene_Select_Character extends Phaser.Scene {
                     that.SelectSkin();
                 } else if (that.confirmingSkin) {
                     if (that.confirmSkin) {
-                        that.input.keyboard.removeAllKeys(true);
-                        that.scene.start("scene_space_gym");
+                        // that.input.keyboard.removeAllKeys(true);
+                        // that.scene.start("scene_space_gym");
+                        game.global.socket.send(JSON.stringify({event: "CREATE_SPACE_GYM", name: game.mPlayer.userName}));
                     } else {
                         game.mPlayer.selectedSkin = -1;
                         that.skinsSkills.setAlpha(1);

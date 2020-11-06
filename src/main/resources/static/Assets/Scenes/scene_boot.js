@@ -372,13 +372,15 @@ class Scene_Boot extends Phaser.Scene {
                     this.scene.get('scene_boot').AutenticationSuccess(data);
                     break;
                 case "CREATED_SPACE_GYM":
+                    this.scene.get('scene_select_character').input.keyboard.removeAllKeys(true);
+                    this.scene.get('scene_select_character').scene.start("scene_space_gym");
                     if (game.global.DEBUG_MODE) {
                         console.log("creado el space gym");
                     }
                     break;
                 default:
                     if (game.global.DEBUG_MODE) {
-                        console.log("Tipo de mensaje no controlado");
+                        console.log("Tipo de mensaje no controlado:" + data.event);
                     }
                     break;
             }

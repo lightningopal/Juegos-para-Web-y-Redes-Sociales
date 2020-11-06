@@ -50,7 +50,7 @@ class Scene_Space_Gym extends Phaser.Scene {
         }
 
         // Request space_gym open
-        game.global.socket.send(JSON.stringify({event: "CREATE_SPACE_GYM", name: game.mPlayer.userName}));
+        // game.global.socket.send(JSON.stringify({event: "CREATE_SPACE_GYM", name: game.mPlayer.userName}));
 
         // Variables encargadas del control del personaje
         this.movingLeft;
@@ -221,7 +221,7 @@ class Scene_Space_Gym extends Phaser.Scene {
             if (anim.key === game.mPlayer.characterSel.type+"_attack"){
                 that.attacking = false;
             }
-            if (game.globla.DEBUG_MODE){
+            if (game.global.DEBUG_MODE){
                 console.log("Fin de animación: "+ anim.key);
             }
             

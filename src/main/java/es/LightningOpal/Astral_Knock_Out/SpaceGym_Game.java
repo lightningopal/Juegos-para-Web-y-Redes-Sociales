@@ -20,6 +20,7 @@ public class SpaceGym_Game {
     private final static long TICK_DELAY = 1000 / FPS;
     public final static boolean DEBUG_MODE = true;
     public final static boolean VERBOSE_MODE = true;
+    // Room ID ?
 
     ObjectMapper mapper = new ObjectMapper();
     private ScheduledExecutorService scheduler;

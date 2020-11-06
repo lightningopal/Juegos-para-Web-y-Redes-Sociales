@@ -171,6 +171,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 				 * user.getSession().sendMessage(new TextMessage(msg.toString())); break;
 				 */
 				case "UPDATE_GAME_STATE":
+					// Recibir datos de control (movingLeft,movingRight...)
+					// Recibir Id de la sala
+					// Recibir isVersus para comunicar a SpaceGym_Game o a Tournament_Game
 					/*
 					 * player.loadMovement(node.path("movement").get("thrust").asBoolean(),
 					 * node.path("movement").get("brake").asBoolean(),
@@ -187,6 +190,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					GamesManager.INSTANCE.startSpaceGym(user.getPlayer_selected());
 
 					msg.put("event", "CREATED_SPACE_GYM");
+					// Put space_gym.ID para asignar la sala al jugador y que pueda enviar mensajes
 					user.getSession().sendMessage(new TextMessage(msg.toString()));
 					if (DEBUG_MODE) {
 						System.out.println("Space Gym: " + name);
