@@ -268,8 +268,7 @@ class Scene_Boot extends Phaser.Scene {
         this.anims.create({
             key: 'bard_attack',
             frames: this.anims.generateFrameNumbers('bard_attack', { start: 0, end: 10 }),
-            frameRate: 12,
-            repeat: -1
+            frameRate: 12
         });
 
         // Creamos las animaciones del mago
@@ -288,8 +287,7 @@ class Scene_Boot extends Phaser.Scene {
         this.anims.create({
             key: 'wizard_attack',
             frames: this.anims.generateFrameNumbers('wizard_attack', { start: 0, end: 10 }),
-            frameRate: 12,
-            repeat: -1
+            frameRate: 12
         });
 
         // Creamos las animaciones del berserker
@@ -308,8 +306,7 @@ class Scene_Boot extends Phaser.Scene {
         this.anims.create({
             key: 'berserker_attack',
             frames: this.anims.generateFrameNumbers('berserker_attack', { start: 0, end: 9 }),
-            frameRate: 12,
-            repeat: -1
+            frameRate: 12
         });
 
         // Creamos las animaciones de la Pícara
@@ -328,8 +325,7 @@ class Scene_Boot extends Phaser.Scene {
         this.anims.create({
             key: 'rogue_attack',
             frames: this.anims.generateFrameNumbers('rogue_attack', { start: 0, end: 5 }),
-            frameRate: 12,
-            repeat: -1
+            frameRate: 12
         });
 
         switch (game.global.DEVICE) {

@@ -3,7 +3,7 @@ package es.LightningOpal.Astral_Knock_Out;
 public class PhysicsObject {
 	private int collisionFactor; // sobra, está para que no de error
 	private double posX, posY, velX, velY, accelX, accelY, halfWidth, halfHeight;
-	private boolean isFlipped, isStatic;
+	private boolean isFlipped, onFloor, isStatic;
 
 	public double getPosX() {
 		return this.posX;
@@ -27,6 +27,14 @@ public class PhysicsObject {
 
 	public void SetFlipped(boolean flipped) {
 		this.isFlipped = flipped;
+	}
+
+	public boolean IsOnFloor() {
+		return this.onFloor;
+	}
+
+	public void SetOnFloor(boolean onFloor) {
+		this.onFloor = onFloor;
 	}
 
 	public boolean IsStatic() {

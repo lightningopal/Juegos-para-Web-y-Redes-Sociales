@@ -52,13 +52,16 @@ class Scene_Space_Gym extends Phaser.Scene {
         // Request space_gym open
         game.global.socket.send(JSON.stringify({event: "CREATE_SPACE_GYM", name: game.mPlayer.userName}));
 
+        // Variables encargadas del control del personaje
         this.movingLeft;
         this.movingRight;
         this.falling;
+        this.attacking;
         
     } // Fin preload
 
     create() {
+        var that = this;
         
         // Create mobileKeys
         this.mobileKeys = {
@@ -151,6 +154,7 @@ class Scene_Space_Gym extends Phaser.Scene {
         this.movingLeft = false;
         this.movingRight = false;
         this.falling = false;
+        this.attacking = false;
         switch(game.mPlayer.characterSel.type){
             case "berserker":
                 game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "berserker")
@@ -178,6 +182,50 @@ class Scene_Space_Gym extends Phaser.Scene {
                 game.mPlayer.image.anims.play("bard_idle");
                 break;
         }
+
+        if (game.global.DEVICE === "desktop"){
+            this.cursors1.left.on("down", function(event){
+                that.movingRight = false;
+                that.movingLeft = true;
+                game.mPlayer.image.flipX = true;
+            });
+            this.cursors1.left.on("up", function(event){
+                that.movingLeft = false;
+            });
+    
+            this.cursors1.right.on("down", function(event){
+                that.movingRight = true;
+                that.movingLeft = false;
+                game.mPlayer.image.flipX = false;
+            });
+            this.cursors1.right.on("up", function(event){
+                that.movingRight = false;
+            });
+    
+            this.cursors1.basicAttack.on("down", function(event){
+                if (!that.attacking){
+                    that.attacking = true;
+                    game.mPlayer.image.anims.play(game.mPlayer.characterSel.type+"_attack", true);
+                }
+            });
+            this.cursors1.specialAttack.on("down", function(event){
+                if (!that.attacking){
+                    that.attacking = true;
+                    game.mPlayer.image.anims.play(game.mPlayer.characterSel.type+"_attack", true);
+                }
+            });
+        }// Fin DEVICE == desktop
+        
+
+        game.mPlayer.image.on("animationcomplete", function(anim){
+            if (anim.key === game.mPlayer.characterSel.type+"_attack"){
+                that.attacking = false;
+            }
+            if (game.globla.DEBUG_MODE){
+                console.log("Fin de animación: "+ anim.key);
+            }
+            
+        }, this);
 
         //Plataformas
         this.transimage = this.physics.add.image(RelativeScale(522.50, "x"), RelativeScale(889.0, "y"), "level_1_trans").setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(2);
@@ -235,6 +283,15 @@ class Scene_Space_Gym extends Phaser.Scene {
     } // Fin create
 
     update() {
+        if (this.movingLeft || this.movingRight){
+            if (!this.attacking){
+                game.mPlayer.image.anims.play(game.mPlayer.characterSel.type+"_walk", true);
+            }
+        }else{
+            if (!this.attacking){
+                game.mPlayer.image.anims.play(game.mPlayer.characterSel.type+"_idle",true);
+            }
+        }
         /*
         // Mostrar u ocultar las plataformas al pasar por encima
         this.hidePlatforms.forEach(platform => {
