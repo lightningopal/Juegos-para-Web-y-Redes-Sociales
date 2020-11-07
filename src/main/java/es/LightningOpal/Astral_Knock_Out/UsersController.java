@@ -184,13 +184,24 @@ public class UsersController {
 			}
 
 			// Escribimos en el ranking los valores del jugador
-			int wins = allUsers.get(userName).getWins();
-			int loses = allUsers.get(userName).getLoses();
-			int points = Math.round(allUsers.get(userName).getElo());
-			ranking[i] = new RankingUser(userName, wins, loses, points);
+			if (userName != "")
+			{
+				int wins = allUsers.get(userName).getWins();
+				int loses = allUsers.get(userName).getLoses();
+				int points = Math.round(allUsers.get(userName).getElo());
+				ranking[i] = new RankingUser(userName, wins, loses, points);
 
 			// Aumentamos el número de usuarios en el ranking
 			usersInRanking++;
+			}
+			else
+			{
+				for (int x = i; x < ranking.length - 1; x++)
+				{
+					ranking[x] = new RankingUser();
+				}
+				break;
+			}
 		}
 
 		// En la última posición, escribimos los valores del jugador que solicita el ranking

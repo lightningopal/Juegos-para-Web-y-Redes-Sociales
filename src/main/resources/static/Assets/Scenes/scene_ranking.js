@@ -28,11 +28,18 @@ class Scene_Ranking extends Phaser.Scene {
 
         for (var i = 0; i < game.ranking.length - 1; i++)
         {
-            var winsLosesString = game.ranking[i].winsCount + " / " + game.ranking[i].losesCount;
+            if (game.ranking[i].userName != "")
+            {
+                var winsLosesString = game.ranking[i].winsCount + " / " + game.ranking[i].losesCount;
 
-            rankingNameTexts[i] = this.add.text(RelativeScale(250), RelativeScale(398 + (67 * i)), game.ranking[i].userName);
-            rankingWinsLosesTexts[i] = this.add.text(RelativeScale(620), RelativeScale(398 + (67 * i)), winsLosesString);
-            rankingPointsTexts[i] = this.add.text(RelativeScale(910), RelativeScale(398 + (67 * i)), game.ranking[i].points);
+                rankingNameTexts[i] = this.add.text(RelativeScale(250), RelativeScale(398 + (67 * i)), game.ranking[i].userName);
+                rankingWinsLosesTexts[i] = this.add.text(RelativeScale(620), RelativeScale(398 + (67 * i)), winsLosesString);
+                rankingPointsTexts[i] = this.add.text(RelativeScale(910), RelativeScale(398 + (67 * i)), game.ranking[i].points);
+            }
+            else
+            {
+                break;
+            }
         }
 
         // Usuario
