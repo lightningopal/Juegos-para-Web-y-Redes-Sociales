@@ -1,0 +1,18 @@
+19:33:39 - Server opened.
+19:33:49 - Conected user with session 38dbc50a-bdb8-d9ea-70b6-e0d74892b199.
+19:34:06 - Player connected: Thund3r.
+19:36:52 - Player disconnected: Thund3r.
+19:36:57 - Conected user with session f1a5ee9d-ec7b-f053-acd7-33228cb6dbf0.
+19:37:06 - Player connected: Thund3r.
+19:38:47 - Player disconnected: Thund3r.
+19:38:52 - Conected user with session 8fc8d2f5-ef37-786a-ccaf-2510a58b2add.
+19:38:58 - Player connected: Thund3r.
+19:39:42 - Player disconnected: Thund3r.
+19:39:49 - Conected user with session 1a5b8841-34ea-8e4c-6cf1-89708ac1ded0.
+19:39:59 - Player connected: Thund3r.
+19:41:19 - Player disconnected: Thund3r.
+19:41:25 - Conected user with session f3209d3d-cce7-25b6-6dfe-b25ee479acfe.
+19:41:31 - Player connected: Thund3r.
+19:42:23 - Player disconnected: Thund3r.
+19:42:39 - Conected user with session 059fe535-9409-1164-520b-c0faceca2d70.
+19:42:50 - Player connected: Thund3r.

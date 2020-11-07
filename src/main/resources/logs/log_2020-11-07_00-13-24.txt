@@ -1,4 +1,0 @@
-00:13:27 - Server opened.
-00:13:47 - Conected user with session 3ff7e076-0f1e-9f36-dc7c-3c44727b9165.
-00:14:10 - Player connected: pruebaUser.
-00:14:57 - Player disconnected: pruebaUser.

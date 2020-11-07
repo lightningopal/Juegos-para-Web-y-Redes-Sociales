@@ -19,6 +19,29 @@ class Scene_Ranking extends Phaser.Scene {
 
         // Teclas
         this.cursors;
+
+        // Textos
+        // Propio Ranking
+        var rankingNameTexts = [];
+        var rankingWinsLosesTexts = [];
+        var rankingPointsTexts = [];
+
+        for (var i = 0; i < game.ranking.length - 1; i++)
+        {
+            var winsLosesString = game.ranking[i].winsCount + " / " + game.ranking[i].losesCount;
+
+            rankingNameTexts[i] = this.add.text(RelativeScale(250), RelativeScale(398 + (67 * i)), game.ranking[i].userName);
+            rankingWinsLosesTexts[i] = this.add.text(RelativeScale(620), RelativeScale(398 + (67 * i)), winsLosesString);
+            rankingPointsTexts[i] = this.add.text(RelativeScale(910), RelativeScale(398 + (67 * i)), game.ranking[i].points);
+        }
+
+        // Usuario
+        var winsLosesString = game.ranking[10].winsCount + " / " + game.ranking[10].losesCount;
+
+        rankingNameTexts[10] = this.add.text(RelativeScale(1605), RelativeScale(680), game.ranking[10].userName);
+        rankingWinsLosesTexts[10] = this.add.text(RelativeScale(1605), RelativeScale(795), winsLosesString);
+        rankingPointsTexts[10] = this.add.text(RelativeScale(1605), RelativeScale(900), game.ranking[10].points);
+
     } // Fin preload
 
     create() {

@@ -14,6 +14,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 // Clase WebsocketHandler, que gestiona los mensajes websocket
@@ -226,7 +227,40 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						}
 					}
 					break;
+				// Cuando un usuario solicita el ranking
 				case "REQUEST_RANKING":
+					// Obtenemos los datos del ranking
+					RankingUser[] ranking = UsersController.getRankingData(user);
+
+					// Creamos un ArrayNode 'rankingNode' para guardar a los jugadores
+					ArrayNode rankingNode = mapper.createArrayNode();
+
+					// Asignamos los datos en el ArrayNode 'rankingNode'
+					for (int i = 0; i < ranking.length; i++)
+					{
+						// Creamos un ObjectNode 'rankingPlayer' para cada jugador
+						ObjectNode rankingPlayer = mapper.createObjectNode();
+
+						// Asignamos los datos del ObjectNode 'rankingPlayer' para este jugador
+						rankingPlayer.put("name", ranking[i].getUserName());
+						rankingPlayer.put("wins", ranking[i].getWinsCount());
+						rankingPlayer.put("loses", ranking[i].getLosesCount());
+						rankingPlayer.put("points", ranking[i].getPoints());
+
+						// Añadimos el ObjectNode 'rankingPlayer' al ArrayNode 'rankingNode'
+						rankingNode.addPOJO(rankingPlayer);
+					}
+
+					// Asignar evento y datos en el ObjectNode 'msg'
+					msg.put("event", "RANKING_RESULTS");
+					msg.putPOJO("ranking", rankingNode);
+
+					// Enviar el mensaje
+					user.getSession().sendMessage(new TextMessage(msg.toString()));
+
+					if (DEBUG_MODE) {
+						System.out.println("Ranking Solicitado: " + user.getUser_name());
+					}
 					break;
 				case "SEARCHING_GAME":
 					break;

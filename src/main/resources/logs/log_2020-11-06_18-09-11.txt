@@ -1,5 +1,0 @@
-18:09:19 - Server opened.
-18:10:25 - Conected user with session c9b37cde-4c64-723b-555e-398ee6f9debf.
-18:10:31 - Player connected: Kratser.
-18:11:30 - Player disconnected: Kratser.
-18:11:35 - Conected user with session 2c3efcc0-223e-db96-447e-a044f8f4a81b.

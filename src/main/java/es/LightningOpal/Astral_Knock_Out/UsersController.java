@@ -136,4 +136,71 @@ public class UsersController {
 		// Devuelve el usuario
 		return newUser;
 	}
+
+	// Método getRankingData, que devuelve los datos del ranking de jugadores
+	public static RankingUser[] getRankingData(User thisUser) {
+		// Creamos el array de datos del ranking de 11 posiciones (10 jugadores + el propio jugador)
+		RankingUser[] ranking = new RankingUser[11];
+
+		// Definimos una variable que controle quien tiene mejor elo y el nombre del jugador
+		float maxElo;
+		String userName;
+
+		// Definimos una variable que controle el numero de usuarios ya en el ranking
+		int usersInRanking = 0;
+
+		// Recorremos los usuarios para saber quienes tienen más elo
+		for (int i = 0; i < ranking.length - 1; i++)
+		{
+			// Reseteamos la variable que controla el elo máximo y el nombre del jugador
+			maxElo = 0;
+			userName = "";
+
+			// En cada iteración comprobamos por cada usuario quien tiene más elo
+			for (User user : allUsers.values()) {
+				// Si el elo del usuario supera al máximo actual
+				if (user.getElo() > maxElo)
+				{
+					// Comprobamos que el usuario no esté ya en el ranking
+					boolean alreadyOnRanking = false;
+
+					for (int j = 0; j < usersInRanking; j++)
+					{
+						if (user.getUser_name().equals(ranking[j].getUserName()))
+						{
+							alreadyOnRanking = true;
+							break;
+						}
+					}
+
+					// Si no está en el ranking
+					if (!alreadyOnRanking)
+					{
+						// Actualizar el elo máximo y el nombre de usuario de quien lo tiene
+						maxElo = user.getElo();
+						userName = user.getUser_name();
+					}
+				}
+			}
+
+			// Escribimos en el ranking los valores del jugador
+			int wins = allUsers.get(userName).getWins();
+			int loses = allUsers.get(userName).getLoses();
+			int points = Math.round(allUsers.get(userName).getElo());
+			ranking[i] = new RankingUser(userName, wins, loses, points);
+
+			// Aumentamos el número de usuarios en el ranking
+			usersInRanking++;
+		}
+
+		// En la última posición, escribimos los valores del jugador que solicita el ranking
+		int wins = thisUser.getWins();
+		int loses = thisUser.getLoses();
+		int points = Math.round(thisUser.getElo());
+		String thisUserName = thisUser.getUser_name();
+		ranking[10] = new RankingUser(thisUserName, wins, loses, points);
+
+		// Devolvemos el ranking
+		return ranking;
+	}
 }

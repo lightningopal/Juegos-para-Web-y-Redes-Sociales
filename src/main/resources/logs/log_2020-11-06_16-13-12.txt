@@ -1,2 +1,0 @@
-16:13:24 - Server opened.
-16:13:40 - Conected user with session 377ea34c-1aa2-7ca6-6d8a-ceaa6c3e0c15.
