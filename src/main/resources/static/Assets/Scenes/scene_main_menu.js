@@ -15,6 +15,8 @@ class Scene_Main_Menu extends Phaser.Scene {
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.add.image(RelativeScale(960.0,"x"), RelativeScale(658.50,"y"), "main_menu_interface")
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.add.image(RelativeScale(943.50,"x"), RelativeScale(332.0,"y"), "main_menu_logo")
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         
         this.tournamentBtn = this.add.image(RelativeScale(959.5,"x"), RelativeScale(634.50,"y"), "tournament_button")
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));

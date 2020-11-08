@@ -167,6 +167,7 @@ class Scene_Boot extends Phaser.Scene {
         this.load.image("main_menu_nebula", "./Assets/Images/BackGrounds/main_menu_nebula.png");
         this.load.image("main_menu_stars", "./Assets/Images/BackGrounds/main_menu_stars.png");
         this.load.image("main_menu_interface", "./Assets/Images/UI/main_menu_interface.png");
+        this.load.image("main_menu_logo", "./Assets/Images/UI/main_menu_logo.png");
 
         this.load.spritesheet("tournament_button", "./Assets/Images/UI/tournament_button.png", { frameWidth: 972.5, frameHeight: 125 });
         this.load.spritesheet("gym_button", "./Assets/Images/UI/gym_button.png", { frameWidth: 976, frameHeight: 135 });

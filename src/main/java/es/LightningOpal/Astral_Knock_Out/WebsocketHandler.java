@@ -325,6 +325,12 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						thisPlayer.updatePlayerValues(movingLeft, movingRight, falling);
 						
 					break;
+					case "JUMP":
+						user.getPlayer_selected().jump();
+					break;
+					case "FALL":
+						user.getPlayer_selected().fall();
+					break;
 					// En cualquier otro caso
 				default:
 					break;

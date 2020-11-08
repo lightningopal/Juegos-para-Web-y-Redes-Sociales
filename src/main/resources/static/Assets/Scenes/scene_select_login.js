@@ -10,10 +10,13 @@ class Scene_Select_Login extends Phaser.Scene {
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.stars = this.add.tileSprite(0, 0, RelativeScale(1920, "x"), RelativeScale(1080, "y"), "stars")
             .setOrigin(0, 0);
-        this.logInBtn = this.add.image(RelativeScale(480.16,"x"), RelativeScale(549.19,"y"), "log_in_button")
+        this.add.image(RelativeScale(943.50,"x"), RelativeScale(332.0,"y"), "main_menu_logo")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+
+        this.logInBtn = this.add.image(RelativeScale(480.16,"x"), RelativeScale(725.0,"y"), "log_in_button")
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.logInBtn.setFrame(1);
-        this.signUpBtn = this.add.image(RelativeScale(1440.0,"x"), RelativeScale(549.19,"y"), "sign_up_button")
+        this.signUpBtn = this.add.image(RelativeScale(1440.0,"x"), RelativeScale(725.0,"y"), "sign_up_button")
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
         // Opciones de selección

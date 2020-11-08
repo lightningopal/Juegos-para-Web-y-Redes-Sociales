@@ -73,6 +73,20 @@ public class PhysicsObject {
 		this.velY = y;
 	}
 
+	public double getVelX(){
+		return this.velX;
+	}
+	public void setVelX(double velX){
+		this.velX = velX;
+	}
+
+	public double getVelY(){
+		return this.velY;
+	}
+	public void setVelY(double velY){
+		this.velY = velY;
+	}
+
 	public void setAcceleration(double x, double y) {
 		this.accelX = x;
 		this.accelY = y;
@@ -254,19 +268,26 @@ public class PhysicsObject {
 			if (colHeight >= colWidth){ // Se prioriza el ancho
 				// this.velX = 0;
 				if (this.posX >= other.getPosX()){ // Se encuentra a la derecha del objeto
-					// this.posX = (other.getPosX()+other.getOffsetX()) + minDistanceX;
+					if (this.velX <= 0){
+						this.velX = 0;
+					}
 					this.posX += colWidth;
 				}else{ // Se encuentra a la izquierda del objeto
-					// this.posX = (other.getPosX()+other.getOffsetX()) - minDistanceX;
+					if (this.velX >= 0){
+						this.velX = 0;
+					}
 					this.posX -= colWidth;
 				}
 			}else{ // Alto
-				this.velY = 0;
 				if (this.posY <= other.getPosY()){ // Se encuentra encima del objeto
-					// this.posY = (other.getPosY()+other.getOffsetY()) - minDistanceY;
+					if (this.velY >= 0){
+						this.velY = 0;
+					}
 					this.posY -= colHeight;
 				}else{ // Se encuentra debajo del objeto
-					// this.posY = (other.getPosY()+other.getOffsetY()) + minDistanceY;
+					if (this.velY <= 0){
+						this.velY = 0;
+					}
 					this.posY += colHeight;
 				}
 			}
