@@ -7,8 +7,8 @@ class UserInterface{
         this.currentHP = this.maxHP;
         this.offset = offset;
 
-        this.x = character.x  - RelativeScale(character.width/2 - offset, "x");
-        this.y = character.y  - RelativeScale(character.height/2 + 20, "y");
+        this.x = character.x - RelativeScale(55, "x");
+        this.y = character.y - RelativeScale(offset, "y");
 
         this.Draw();
         this.scene.events.on("update", this.update, this);
@@ -16,8 +16,8 @@ class UserInterface{
     }
 
     update(time, delta){
-        this.x = this.character.x  - RelativeScale(this.character.width/2 - this.offset, "x");
-        this.y = this.character.y  - RelativeScale(this.character.height/2 + 20, "y");
+        this.x = this.character.x - RelativeScale(55, "x");
+        this.y = this.character.y - RelativeScale(this.offset, "y");
         this.Draw();
     }
 
@@ -53,8 +53,6 @@ class UserInterface{
         if (this.currentHP <= 0){
             if (this.character.texture.key == "dummy"){
                 this.currentHP = this.maxHP;
-            }else{
-                this.character.Die();
             }
         }
     }

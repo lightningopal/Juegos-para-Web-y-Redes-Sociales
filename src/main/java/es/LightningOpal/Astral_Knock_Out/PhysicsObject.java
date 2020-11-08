@@ -209,7 +209,7 @@ public class PhysicsObject {
 		} else if (this.velX < -this.maxSpeed) {
 			this.velX = -this.maxSpeed;
 		}
-		if(this.accelX == 0){
+		if(this.accelX == 0 || this.accelX / this.velX < 0){
 			applyDrag();
 		}
 		
@@ -254,6 +254,7 @@ public class PhysicsObject {
 	}
 
 	public void collide(PhysicsObject other){
+
 		double minDistanceX = this.halfWidth + other.getHalfWidth();
 		double minDistanceY = this.halfHeight + other.getHalfHeight();
 
@@ -266,7 +267,6 @@ public class PhysicsObject {
 
 		if (colWidth >= 0 && colHeight >= 0){
 			if (colHeight >= colWidth){ // Se prioriza el ancho
-				// this.velX = 0;
 				if (this.posX >= other.getPosX()){ // Se encuentra a la derecha del objeto
 					if (this.velX <= 0){
 						this.velX = 0;
@@ -284,6 +284,7 @@ public class PhysicsObject {
 						this.velY = 0;
 					}
 					this.posY -= colHeight;
+					this.onFloor = true;
 				}else{ // Se encuentra debajo del objeto
 					if (this.velY <= 0){
 						this.velY = 0;
@@ -292,5 +293,5 @@ public class PhysicsObject {
 				}
 			}
 		}
-	}
+	}// Fin collide
 }

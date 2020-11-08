@@ -23,13 +23,13 @@ public class Player extends PhysicsObject{
     // Constructor vacío de la clase
     public Player(){
         playerId = -1;
-        numJumps = 2;
+        numJumps = 1;
     }
 
     // Constructor de la clase por id
     public Player(int id){
         playerId = id;
-        numJumps = 2;
+        numJumps = 1;
     }
 
     // Constructor de la clase por atributos
@@ -88,7 +88,7 @@ public class Player extends PhysicsObject{
             default:
                 break;
         }
-        numJumps = 2;
+        numJumps = 1;
         currentHP = maxHP;
     }
 
@@ -133,7 +133,12 @@ public class Player extends PhysicsObject{
     }
 
     public void jump(){
-        this.setVelY(-this.getJumpForce());
+        if (!IsOnFloor() && this.numJumps >= 1){
+            this.numJumps--;
+            this.setVelY(-this.getJumpForce());
+        }else if (IsOnFloor()){
+            this.setVelY(-this.getJumpForce());
+        }
     }
 
     public void fall(){
@@ -145,6 +150,9 @@ public class Player extends PhysicsObject{
     // Método calculatePhysics, que calcula las físicas del jugador
     public void calculatePhysics()
     {
+        if (IsOnFloor()){
+            this.numJumps = 1;
+        }
         if (movingLeft)
         {
             SetFlipped(true);
