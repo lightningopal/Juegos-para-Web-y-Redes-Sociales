@@ -12,6 +12,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import ch.qos.logback.core.joran.conditional.ElseAction;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -260,7 +262,51 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					user.getSession().sendMessage(new TextMessage(msg.toString()));
 
 					if (DEBUG_MODE) {
-						System.out.println("Ranking Solicitado: " + user.getUser_name());
+						System.out.println("Ranking solicitado: " + user.getUser_name());
+					}
+					break;
+				// Cuando un usuario se conecta, para recibir sus datos
+				case "REQUEST_OPTIONS_DATA":
+					// Asignar evento y datos en el ObjectNode 'msg'
+					msg.put("event", "OPTIONS_RESULTS");
+					msg.put("musicVol", user.getMusicVol());
+					msg.put("sfxVol", user.getSfxVol());
+					msg.put("name", user.getUser_name());
+					msg.put("currency", user.getCurrency());
+
+					// Enviar el mensaje
+					user.getSession().sendMessage(new TextMessage(msg.toString()));
+
+					if (DEBUG_MODE) {
+						System.out.println("Datos de opciones solicitados: " + user.getUser_name());
+					}
+					break;
+				case "UPDATE_VOL":
+					// Esta vez no enviaremos mensaje de vuelta, ya que queremos
+					// que se actualize directamente en el cliente
+
+					// Obtenemos los datos del mensaje
+					String volType = node.get("volType").asText();
+					float value = (float)node.get("value").asDouble();
+
+					// Actualizamos el valor
+					if (volType.equals("musicVol"))
+					{
+						user.setMusicVol(value);
+					}
+					else if (volType.equals("sfxVol"))
+					{
+						user.setSfxVol(value);
+					}
+					else
+					{
+						if (DEBUG_MODE) {
+							System.out.println("Tipo de volumen no reconocido: " + volType + " - " + user.getUser_name());
+						}
+					}
+
+					if (DEBUG_MODE) {
+						System.out.println("Actualizado volumen: " + volType + " - " + user.getUser_name());
 					}
 					break;
 				case "SEARCHING_GAME":
