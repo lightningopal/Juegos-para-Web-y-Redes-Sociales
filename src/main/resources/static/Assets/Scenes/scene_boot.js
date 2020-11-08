@@ -482,5 +482,8 @@ class Scene_Boot extends Phaser.Scene {
         game.mPlayer.image.x = RelativeScale(data.player.posX, "x");
         game.mPlayer.image.y = RelativeScale(data.player.posY, "y");
         game.mPlayer.image.flipX = data.player.flipped;
+        if (data.player.onFloor){
+            this.scene.get('scene_space_gym').falling = false;
+        }
     }
 }

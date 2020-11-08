@@ -49,7 +49,7 @@ public class SpaceGym_Game {
         //Plataformas
         platforms.add(new PhysicsObject(true, 960.0, 1038.0, 960.0, 33.0, 0.0, 9.0)); // floor
         platforms.add(new PhysicsObject(true, 1527.50, 747.50, 187.50, 37.50, 0.0, -41.0)); // base_big_plat_2
-        platforms.add(new PhysicsObject(true, 947.0, 511.0, 190.50, 30.0, 0.0, -39.0)); // base_t_plat
+        platforms.add(new PhysicsObject(true, 947.0, 511.0, 140.50, 30.0, 0.0, -39.0)); // base_t_plat
         platforms.add(new PhysicsObject(true, 503.0, 717.50, 164.0, 43.50, 0.0, -4.50)); // big_plat_1
         platforms.add(new PhysicsObject(true, 1763.0, 371.50, 157.0, 46.0, 0.0, -5.0)); // big_plat_2
         platforms.add(new PhysicsObject(true, 90.50, 441.0, 90.50, 28.0, 0.0, -5.0)); // plat_1
@@ -119,6 +119,7 @@ public class SpaceGym_Game {
             // Calcula las fisicas
             player.incVelocity(0, GRAVITY); // Gravedad
             player.calculatePhysics();
+            player.SetOnFloor(false);
             for (PhysicsObject platform : platforms) {
                 player.collide(platform);
             }
@@ -126,6 +127,7 @@ public class SpaceGym_Game {
             jsonPlayer.put("posX", player.getPosX());
             jsonPlayer.put("posY", player.getPosY());
             jsonPlayer.put("flipped", player.IsFlipped());
+            jsonPlayer.put("onFloor", player.IsOnFloor());
 
             // Update bullets and handle collision
             /*
