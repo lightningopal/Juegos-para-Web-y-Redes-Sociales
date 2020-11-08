@@ -90,8 +90,8 @@ class Scene_Space_Gym extends Phaser.Scene {
         // Dummy de prácticas
         this.dummy = this.add.image(RelativeScale(1500, "x"), RelativeScale(940, "y"), "dummy")
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.dummyBar = new UserInterface(this, this.dummy, 100, 0);
-        this.dummy.userInterface = this.dummyBar; 
+        this.dummyBar = new UserInterface(this, this.dummy, 100, 80);
+        this.dummy.userInterface = this.dummyBar;
         // Pool de habilidades
         /*Bardo*
         this.bardAttack1 = new BardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
@@ -154,31 +154,38 @@ class Scene_Space_Gym extends Phaser.Scene {
         this.attacking = false;
         switch(game.mPlayer.characterSel.type){
             case "berserker":
-                game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "berserker")
+                game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "berserker")
                 .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
                 game.mPlayer.image.anims.play("berserker_idle");
+                this.myHP = new UserInterface(this, game.mPlayer.image, 100, 100);
                 break;
             case "wizard":
-                game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "wizard")
+                game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "wizard")
                 .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
                 game.mPlayer.image.anims.play("wizard_idle");
+                this.myHP = new UserInterface(this, game.mPlayer.image, 100, 100);
                 break;
             case "bard":
-                game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
+                game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
                 .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
                 game.mPlayer.image.anims.play("bard_idle");
+                this.myHP = new UserInterface(this, game.mPlayer.image, 100, 100);
                 break;
             case "rogue":
-                game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "rogue")
+                game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "rogue")
                 .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
                 game.mPlayer.image.anims.play("rogue_idle");
+                this.myHP = new UserInterface(this, game.mPlayer.image, 100, 75);
                 break;
             default:
-                game.mPlayer.image = this.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
+                game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
                 .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
                 game.mPlayer.image.anims.play("bard_idle");
+                this.myHP = new UserInterface(this, game.mPlayer.image, 100, 50);
                 break;
         }
+        game.mPlayer.image.body.setSize(0,0);
+        game.mPlayer.image.body.allowGravity = false;
 
         if (game.global.DEVICE === "desktop"){
             this.cursors1.left.on("down", function(event){
@@ -272,12 +279,12 @@ class Scene_Space_Gym extends Phaser.Scene {
         });
 
         //Colisiones
-        //this.characters = [this.myPlayer, this.dummy/**, enemyPlayer/**/];
+        this.characters = [game.mPlayer.image, this.dummy/**, enemyPlayer/**/];
         //this.bullets = [];
 
         //this.physics.add.overlap(this.characters, this.bullets, this.BulletHit, player, bullet);
         //this.physics.add.collider(this.characters, this.platforms);
-        //this.physics.add.overlap(this.characters, this.hidePlatforms);
+        this.physics.add.overlap(this.characters, this.hidePlatforms);
     } // Fin create
 
     update() {
@@ -291,7 +298,7 @@ class Scene_Space_Gym extends Phaser.Scene {
             }
         }
         this.UpdateGameState();
-        /*
+        
         // Mostrar u ocultar las plataformas al pasar por encima
         this.hidePlatforms.forEach(platform => {
             if (platform.body.embedded) platform.body.touching.none = false;
@@ -301,7 +308,7 @@ class Scene_Space_Gym extends Phaser.Scene {
                 this.ShowPlatform(platform);
             }
         });
-
+        /*
         if (this.dummy.body.touching.down){
             // this.dummy.body.velocity.y = RelativeScale(-800,"y");
         }

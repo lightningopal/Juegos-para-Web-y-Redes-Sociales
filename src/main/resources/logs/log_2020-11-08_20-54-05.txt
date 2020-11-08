@@ -1,0 +1,27 @@
+20:54:10 - Server opened.
+20:54:15 - Conected user with session d4242db2-4a7a-0a08-307a-931011527171.
+20:54:22 - Player connected: Kratser.
+20:54:41 - Player disconnected: Kratser.
+20:54:51 - Conected user with session 54f0ab33-00a3-6e06-046e-b20dcc90f51e.
+20:54:55 - Player connected: Kratser.
+20:59:08 - Player disconnected: Kratser.
+20:59:11 - Conected user with session 4daf38d1-d868-4045-d84b-47b12d0f7a4a.
+20:59:15 - Player connected: Kratser.
+21:00:32 - Player disconnected: Kratser.
+21:00:35 - Conected user with session 1089a470-5af9-48a6-fbee-f1c33148497f.
+21:00:39 - Player connected: Kratser.
+21:01:47 - Player disconnected: Kratser.
+21:01:50 - Conected user with session f8f4daaa-3732-ae62-c943-95f242940bcd.
+21:01:55 - Player connected: Kratser.
+21:02:56 - Player disconnected: Kratser.
+21:03:02 - Conected user with session 870c0c2a-9ef2-f319-7560-6832a8ccfe8b.
+21:03:05 - Player connected: Kratser.
+21:04:41 - Player disconnected: Kratser.
+21:04:44 - Conected user with session cf5b2779-cdad-b054-08e6-f91b3f32400e.
+21:04:52 - Player connected: Kratser.
+21:06:15 - Player disconnected: Kratser.
+21:06:19 - Conected user with session 13d488ab-ea12-6032-a8ed-19c06a8b4125.
+21:06:22 - Player connected: Kratser.
+21:06:59 - Player disconnected: Kratser.
+21:07:02 - Conected user with session adc4af9d-12de-1785-1d06-1ffe47ad9d06.
+21:07:06 - Player connected: Kratser.

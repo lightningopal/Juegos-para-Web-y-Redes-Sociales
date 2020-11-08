@@ -209,7 +209,7 @@ public class PhysicsObject {
 		} else if (this.velX < -this.maxSpeed) {
 			this.velX = -this.maxSpeed;
 		}
-		if(this.accelX == 0){
+		if(this.accelX == 0 || this.accelX / this.velX < 0){
 			applyDrag();
 		}
 		
