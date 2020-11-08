@@ -23,13 +23,13 @@ public class Player extends PhysicsObject{
     // Constructor vacío de la clase
     public Player(){
         playerId = -1;
-        numJumps = 2;
+        numJumps = 1;
     }
 
     // Constructor de la clase por id
     public Player(int id){
         playerId = id;
-        numJumps = 2;
+        numJumps = 1;
     }
 
     // Constructor de la clase por atributos
@@ -88,7 +88,7 @@ public class Player extends PhysicsObject{
             default:
                 break;
         }
-        numJumps = 2;
+        numJumps = 1;
         currentHP = maxHP;
     }
 
