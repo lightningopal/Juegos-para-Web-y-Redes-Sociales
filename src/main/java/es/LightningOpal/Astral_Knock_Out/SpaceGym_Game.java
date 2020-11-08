@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -36,7 +37,7 @@ public class SpaceGym_Game {
     private Player player;
     private String userName;
     
-    // private Map<String, Platform> platforms = new ConcurrentHashMap<>();
+    private ArrayList<PhysicsObject> platforms = new ArrayList<PhysicsObject>(9);
     // private Map<Integer, Projectile> projectiles = new ConcurrentHashMap<>();
 
     /// Métodos
@@ -45,6 +46,16 @@ public class SpaceGym_Game {
         player = player_;
         User thisUser = (User) player.getSession().getAttributes().get("USER");
         userName = thisUser.getUser_name();
+        //Plataformas
+        platforms.add(new PhysicsObject(true, 960.0, 1038.0, 960.0, 33.0, 0.0, -10.0)); // floor
+        platforms.add(new PhysicsObject(true, 1527.50, 747.50, 187.50, 37.50, 0.0, -41.0)); // base_big_plat_2
+        platforms.add(new PhysicsObject(true, 947.0, 511.0, 190.50, 30.0, 0.0, -39.0)); // base_t_plat
+        platforms.add(new PhysicsObject(true, 503.0, 717.50, 164.0, 43.50, 0.0, -4.50)); // big_plat_1
+        platforms.add(new PhysicsObject(true, 1763.0, 371.50, 157.0, 46.0, 0.0, -5.0)); // big_plat_2
+        platforms.add(new PhysicsObject(true, 90.50, 441.0, 90.50, 28.0, 0.0, -5.0)); // plat_1
+        platforms.add(new PhysicsObject(true, 517.50, 213.50, 109.0, 30.0, 0.0, -26.0)); // plat_2
+        platforms.add(new PhysicsObject(true, 1230.50, 115.0, 104.50, 32.50, 0.0, -9.0)); // plat_3
+        platforms.add(new PhysicsObject(true, 945.50, 371.50, 34.0, 84.50, 0.0, -4.50)); // t_plat
     }
 
     /*
