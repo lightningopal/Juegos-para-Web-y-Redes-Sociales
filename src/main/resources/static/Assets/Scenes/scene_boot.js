@@ -94,8 +94,8 @@ class Scene_Boot extends Phaser.Scene {
             isLoading = false;
             loadingText.setText('Connecting to server...');
             // WEBSOCKETS
-            game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
-            // game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
+            //game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
+            game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
 
             game.global.socket.onopen = () => {
                 that.SetSocketMessages();
