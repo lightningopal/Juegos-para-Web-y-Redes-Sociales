@@ -111,8 +111,8 @@ public class WebsocketHandler extends TextWebSocketHandler {
 							// Si el usuario ya está conectado
 							if (UsersController.CheckUserConnected(name)) {
 								// Asignar evento y mensaje a enviar en el ObjectNode 'msg'
-								msg.put("event", "ERROR");
-								msg.put("message", "User already playing");
+								msg.put("event", "AUTHENTICATION_ERROR");
+								msg.put("message", "User is already connected");
 
 								//Enviar el mensaje
 								user.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -133,7 +133,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 								session.getAttributes().put(USER_ATTRIBUTE, thisUser);
 
 								// Asignar evento, nombre de usuario e id en el ObjectNode 'msg'
-								msg.put("event", "AUTENTICATION_SUCCESS");
+								msg.put("event", "AUTHENTICATION_SUCCESS");
 								msg.put("user_name", name);
 								msg.put("id", thisUser.getUserId());
 
@@ -147,8 +147,8 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						// Si los datos no coinciden, la contraseña es incorrecta
 						} else {
 							// Asignar evento y mensaje a enviar en el ObjectNode 'msg'
-							msg.put("event", "ERROR");
-							msg.put("message", "Wrong password");
+							msg.put("event", "AUTHENTICATION_ERROR");
+							msg.put("message", "Password is incorrect");
 
 							// Enviar el mensaje
 							user.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -157,10 +157,11 @@ public class WebsocketHandler extends TextWebSocketHandler {
 								System.out.println("Contraseña incorrecta");
 							}
 						}
+					// Si el usuario no existe
 					} else {
 						// Asignar evento y mensaje a enviar en el ObjectNode 'msg'
-						msg.put("event", "ERROR");
-						msg.put("message", "Wrong user name");
+						msg.put("event", "AUTHENTICATION_ERROR");
+						msg.put("message", "User doesn't exist");
 
 						// Enviar el mensaje
 						user.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -190,8 +191,8 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					// Si el usuario ya existe
 					if (userAlreadyExists) {
 						// Asignar evento y mensaje a enviar en el ObjectNode 'msg'
-						msg.put("event", "ERROR");
-						msg.put("message", "User name already exists");
+						msg.put("event", "AUTHENTICATION_ERROR");
+						msg.put("message", "There is already an user with that name");
 
 						// Enviar el mensaje
 						user.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -215,7 +216,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						session.getAttributes().put(USER_ATTRIBUTE, thisUser);
 
 						// Asignar evento, nombre de usuario e id en el ObjectNode 'msg'
-						msg.put("event", "AUTENTICATION_SUCCESS");
+						msg.put("event", "AUTHENTICATION_SUCCESS");
 						msg.put("user_name", name);
 						msg.put("id", user.getUserId());
 

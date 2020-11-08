@@ -49,6 +49,7 @@ class Scene_Account extends Phaser.Scene {
                 that.scene.start("scene_select_login");
             });
         }// Fin mobile/desktop
+
         // Formulario
         var element = this.add.dom(RelativeScale((1920/2), "x"), RelativeScale((1080/2), "y")).createFromCache('nameform');
 
@@ -94,6 +95,10 @@ class Scene_Account extends Phaser.Scene {
             var buttonSubmit = document.getElementById("submit");
             buttonSubmit.value = "Sign Up";
         }
+
+        // Texto de feedback
+        game.global.feedbackLogin = this.add.text(RelativeScale(1920/2), RelativeScale(980), "")
+        .setColor("#DD0000").setAlign("center").setOrigin(0.5, 0.5).setFontSize(22);
 
         //element.setVisible(false);
 

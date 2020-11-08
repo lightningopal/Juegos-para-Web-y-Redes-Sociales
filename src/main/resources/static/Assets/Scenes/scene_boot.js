@@ -371,8 +371,11 @@ class Scene_Boot extends Phaser.Scene {
                 case "ERROR":
                     this.scene.get('scene_boot').ErrorMsg(data);
                     break;
-                case "AUTENTICATION_SUCCESS":
-                    this.scene.get('scene_boot').AutenticationSuccess(data);
+                case "AUTHENTICATION_ERROR":
+                    this.scene.get('scene_boot').AuthenticationError(data);
+                break;
+                case "AUTHENTICATION_SUCCESS":
+                    this.scene.get('scene_boot').AuthenticationSuccess(data);
                     break;
                 case "RANKING_RESULTS":
                     this.scene.get('scene_boot').GetRanking(data);
@@ -407,7 +410,15 @@ class Scene_Boot extends Phaser.Scene {
         }
     }
 
-    AutenticationSuccess(data) {
+    AuthenticationError(data) {
+        game.global.feedbackLogin.setText(data.message);
+
+        if (game.global.DEBUG_MODE) {
+            console.log("Error de autenticacion: " + data.message);
+        }
+    }
+
+    AuthenticationSuccess(data) {
         game.mPlayer.userName = data.user_name;
         game.mPlayer.id = data.id;
         this.scene.get('scene_account').scene.start("scene_main_menu");
