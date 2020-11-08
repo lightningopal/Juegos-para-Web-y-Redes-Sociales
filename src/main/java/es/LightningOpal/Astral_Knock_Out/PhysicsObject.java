@@ -4,10 +4,20 @@ package es.LightningOpal.Astral_Knock_Out;
 public class PhysicsObject {
 	/// Variables
 	private int collisionFactor; // sobra, está para que no de error
-	private double posX, posY, velX, velY, accelX, accelY, halfWidth, halfHeight, jumpForce, moveSpeed,
+	private double posX, posY, velX, velY, accelX, accelY, halfWidth, halfHeight, offsetX, offsetY, jumpForce, moveSpeed,
 		maxSpeed, groundDrag, airDrag;
 	private boolean isFlipped, onFloor, isStatic;
 	private final double EPSILON = 0.000005;
+
+	public PhysicsObject(boolean isStatic, double pX, double pY, double hW, double hH, double offX, double offY){
+		this.isStatic = isStatic;
+		this.posX = pX;
+		this.posY = pY;
+		this.halfWidth = hW;
+		this.halfHeight = hH;
+		this.offsetX = offX;
+		this.offsetY = offY;
+	}
 
 	/// Getters y Setters
 	public double getPosX() {
@@ -112,6 +122,22 @@ public class PhysicsObject {
 		this.halfHeight = halfHeight;
 	}
 
+	public double getOffsetX() {
+		return offsetX;
+	}
+
+	public void setOffsetX(double offsetX) {
+		this.offsetX = offsetX;
+	}
+
+	public double getOffsetY() {
+		return offsetY;
+	}
+
+	public void setOffsetY(double offsetY) {
+		this.offsetY = offsetY;
+	}
+
 	public double getJumpForce() {
 		return jumpForce;
 	}
@@ -192,11 +218,21 @@ public class PhysicsObject {
 		}
 	}
 
-	// Handle collision (HAY QUE CAMBIARLO)
+	// Handle collision
 	public boolean intersect(PhysicsObject other) {
+		/*
 		int maxRadiusToCollide = this.collisionFactor + other.getCollisionFactor();
 		double x = this.posX - other.getPosX();
 		double y = this.posY - other.getPosY();
 		return (maxRadiusToCollide > (Math.pow(x, 2) + Math.pow(y, 2)));
+		*/
+		// A.hW + b.hW >= /(a.X+a.offX) - (b.X+b.offX)/
+		boolean iX = (this.halfWidth + other.getHalfWidth()) >=
+			(Math.abs((this.posX+this.offsetX) - (other.getPosX()+other.getOffsetX())));
+		// A.hH + b.hH >= /(a.Y+a.offY) - (b.Y+b.offY)/
+		boolean iY = (this.halfHeight + other.getHalfHeight()) >= 
+			(Math.abs((this.posY+this.offsetY) - (other.getPosY()+other.getOffsetY())));
+
+		return iX && iY;
 	}
 }

@@ -42,8 +42,10 @@ public class Player extends PhysicsObject{
         this.setPosY(y);
         switch(type){
             case "bard":
-                this.setHalfHeight(0);
-                this.setHalfWidth(0);
+                this.setHalfHeight(55);
+                this.setHalfWidth(35);
+                this.setOffsetX(0);
+                this.setOffsetY(22);
                 this.setMoveSpeed(3);
                 this.setMaxSpeed(15);
                 this.setGroundDrag(3);
@@ -51,8 +53,10 @@ public class Player extends PhysicsObject{
                 this.setMaxHP(100);
                 break;
             case "berserker":
-                this.setHalfHeight(0);
-                this.setHalfWidth(0);
+                this.setHalfHeight(60);
+                this.setHalfWidth(25);
+                this.setOffsetX(0);
+                this.setOffsetY(12);
                 this.setMoveSpeed(2);
                 this.setMaxSpeed(15);
                 this.setGroundDrag(4);
@@ -60,8 +64,10 @@ public class Player extends PhysicsObject{
                 this.setMaxHP(100);
                 break;
             case "wizard":
-                this.setHalfHeight(0);
-                this.setHalfWidth(0);
+                this.setHalfHeight(62.5);
+                this.setHalfWidth(25);
+                this.setOffsetX(0);
+                this.setOffsetY(12.5);
                 this.setMoveSpeed(1);
                 this.setMaxSpeed(25);
                 this.setGroundDrag(6);
@@ -69,8 +75,10 @@ public class Player extends PhysicsObject{
                 this.setMaxHP(100);
                 break;
             case "rogue":
-                this.setHalfHeight(0);
-                this.setHalfWidth(0);
+                this.setHalfHeight(35);
+                this.setHalfWidth(31);
+                this.setOffsetX(0);
+                this.setOffsetY(25);
                 this.setMoveSpeed(3);
                 this.setMaxSpeed(30);
                 this.setGroundDrag(4);
