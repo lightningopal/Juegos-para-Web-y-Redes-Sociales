@@ -88,7 +88,8 @@ window.onload = function () {
         socket:         null,
         IP:             "192.168.1.35",
         logInOption:    0, // 0->Log In | 1->Sign Up
-        feedbackLogin:  null
+        feedbackLogin:  null,
+        ranking: []
     }
 
     this.game.options = {
@@ -96,18 +97,6 @@ window.onload = function () {
         SFXVol:         1.0,
         fullScreen:     false
     }
-
-    /*
-    this.game.server = {
-        serverIP:       "192.168.1.35",
-        playerID:       -1,
-        isOnline:       false,
-        ready:          false,
-        characterSel:   -1,
-        playerName:     "",
-        playerPassword: ""
-    };
-    */
 
     this.game.mPlayer = {
         id:             -1,
@@ -123,12 +112,6 @@ window.onload = function () {
         room:           -1,
         availableChar:  [0, 1, 2, 3], // Berserker, Mago, Bardo, Asesina, bloqueado
         availableSkins: [[0],[0],[0],[0]],
-        ranking: {
-            position:   0,
-            wins:       0,
-            loses:      0,
-            score:      0
-        },
         currency:       0
     };
 
@@ -149,9 +132,6 @@ window.onload = function () {
     else {
         game.global.DEVICE = "desktop";
     }
-
-    this.game.ranking = [];
-
     // Responsive Functions
     // Escala
     this.scaleX = (game.config.width / referenceWidth);

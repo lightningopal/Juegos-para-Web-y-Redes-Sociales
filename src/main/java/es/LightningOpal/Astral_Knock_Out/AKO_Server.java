@@ -102,7 +102,8 @@ public class AKO_Server implements WebSocketConfigurer {
 				User userToAdd = new User(Integer.parseInt(splitStringInfo[0]), splitStringInfo[1],
 				characters_available, skins_available,
 				Float.parseFloat(splitStringInfo[4]), Integer.parseInt(splitStringInfo[5]), 
-				Integer.parseInt(splitStringInfo[6]), Integer.parseInt(splitStringInfo[7]));
+				Integer.parseInt(splitStringInfo[6]), Integer.parseInt(splitStringInfo[7]),
+				Float.parseFloat(splitStringInfo[8]), Float.parseFloat(splitStringInfo[9]));
 
 				UsersController.allUsers.put(splitStringInfo[1], userToAdd);
 			}

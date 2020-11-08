@@ -15,9 +15,9 @@ class Scene_Options extends Phaser.Scene {
         this.add.image(0, 0, "options_interface").setOrigin(0, 0)
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
-        this.sfxBtn = this.add.image(RelativeScale(1633.0, "x"), RelativeScale(459.5, "y"), "volume_button")
+        this.sfxBtn = this.add.image(RelativeScale((game.options.musicVol * 671) + 962, "x"), RelativeScale(459.5, "y"), "volume_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.musicBtn = this.add.image(RelativeScale(1633.0, "x"), RelativeScale(338.5, "y"), "volume_button")
+        this.musicBtn = this.add.image(RelativeScale((game.options.SFXVol * 671) + 962, "x"), RelativeScale(338.5, "y"), "volume_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
@@ -165,12 +165,14 @@ class Scene_Options extends Phaser.Scene {
             this.cursors.right.on('down', function (event) {
                 if (that.optionSelected == 1) { // Música
                     game.options.musicVol = Phaser.Math.Clamp(game.options.musicVol + 0.1, 0, 1);
+                    game.global.socket.send(JSON.stringify({ event: "UPDATE_VOL", volType: "musicVol", value: game.options.musicVol }));
                     that.musicBtn.x = RelativeScale((game.options.musicVol * 671) + 962, "x");
                     if (game.global.DEBUG_MODE) {
                         console.log(game.options.musicVol);
                     }
                 } else if (that.optionSelected == 2) { // SFX
                     game.options.SFXVol = Phaser.Math.Clamp(game.options.SFXVol + 0.1, 0, 1);
+                    game.global.socket.send(JSON.stringify({ event: "UPDATE_VOL", volType: "sfxVol", value: game.options.SFXVol }));
                     that.sfxBtn.x = RelativeScale((game.options.SFXVol * 671) + 962, "x");
                     if (game.global.DEBUG_MODE) {
                         console.log(game.options.SFXVol);
@@ -180,12 +182,14 @@ class Scene_Options extends Phaser.Scene {
             this.cursors.left.on('down', function (event) {
                 if (that.optionSelected == 1) { // Música
                     game.options.musicVol = Phaser.Math.Clamp(game.options.musicVol - 0.1, 0, 1);
+                    game.global.socket.send(JSON.stringify({ event: "UPDATE_VOL", volType: "musicVol", value: game.options.musicVol }));
                     that.musicBtn.x = RelativeScale((game.options.musicVol * 671) + 962, "x");
                     if (game.global.DEBUG_MODE) {
                         console.log(game.options.musicVol);
                     }
                 } else if (that.optionSelected == 2) { // SFX
                     game.options.SFXVol = Phaser.Math.Clamp(game.options.SFXVol - 0.1, 0, 1);
+                    game.global.socket.send(JSON.stringify({ event: "UPDATE_VOL", volType: "sfxVol", value: game.options.SFXVol }));
                     that.sfxBtn.x = RelativeScale((game.options.SFXVol * 671) + 962, "x");
                     if (game.global.DEBUG_MODE) {
                         console.log(game.options.SFXVol);
@@ -193,6 +197,12 @@ class Scene_Options extends Phaser.Scene {
                 }
             });
         }// Fin if desktop
+
+        // Datos del usuario
+        var userNameText = this.add.text(RelativeScale(160, "x"), RelativeScale(900, "y"), game.mPlayer.userName)
+        .setOrigin(0, 0.5).setFontSize(28); // Alineado a la izquierda
+        var userCurrencyText = this.add.text(RelativeScale(836, "x"), RelativeScale(900, "y"), game.mPlayer.currency)
+        .setOrigin(1, 0.5).setFontSize(28); // Alineado a la derecha
     }// Fin create
 
     update() {

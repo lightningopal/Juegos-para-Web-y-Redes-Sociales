@@ -380,6 +380,9 @@ class Scene_Boot extends Phaser.Scene {
                 case "RANKING_RESULTS":
                     this.scene.get('scene_boot').GetRanking(data);
                     break;
+                case "OPTIONS_RESULTS":
+                    this.scene.get('scene_boot').GetOptions(data);
+                    break;
                 case "CREATED_SPACE_GYM":
                     this.scene.get('scene_boot').JoinSpaceGym(data);
                     break;
@@ -421,10 +424,27 @@ class Scene_Boot extends Phaser.Scene {
     AuthenticationSuccess(data) {
         game.mPlayer.userName = data.user_name;
         game.mPlayer.id = data.id;
-        this.scene.get('scene_account').scene.start("scene_main_menu");
+        game.global.socket.send(JSON.stringify({ event: "REQUEST_OPTIONS_DATA" }));
+
         if (game.global.DEBUG_MODE) {
             console.log(game.mPlayer);
             console.log("Bienvenido/a " + game.mPlayer.userName);
+        }
+    }
+
+    // Método GetOptions, que guarda la información de las opciones del usuario
+    GetOptions(data) {
+        // Se guardan las opciones del usuario
+        game.options.musicVol = data.musicVol;
+        game.options.SFXVol = data.sfxVol;
+        game.mPlayer.userName = data.name;
+        game.mPlayer.currency = data.currency;
+
+        // Cambia de escena a la escena del menú principal
+        this.scene.get('scene_account').scene.start("scene_main_menu");
+
+        if (game.global.DEBUG_MODE) {
+            console.log("Datos de opciones obtenidos");
         }
     }
 
@@ -438,7 +458,7 @@ class Scene_Boot extends Phaser.Scene {
 		    var loses = data.ranking[i].loses;
 		    var points = data.ranking[i].points;
 		    
-		    game.ranking[i] = new RankingUser(name, wins, loses, points);
+		    game.global.ranking[i] = new RankingUser(name, wins, loses, points);
         }
 
         // Cambia de escena a la escena del ranking

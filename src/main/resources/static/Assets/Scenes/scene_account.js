@@ -97,7 +97,7 @@ class Scene_Account extends Phaser.Scene {
         }
 
         // Texto de feedback
-        game.global.feedbackLogin = this.add.text(RelativeScale(1920/2), RelativeScale(980), "")
+        game.global.feedbackLogin = this.add.text(RelativeScale(1920/2, "x"), RelativeScale(980, "y"), "")
         .setColor("#DD0000").setAlign("center").setOrigin(0.5, 0.5).setFontSize(22);
 
         //element.setVisible(false);

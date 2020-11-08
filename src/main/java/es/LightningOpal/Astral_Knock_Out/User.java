@@ -23,6 +23,8 @@ public class User {
 	private int wins;
 	private int loses;
 	private int currency;
+	private float musicVol;
+	private float sfxVol;
 
 	/// Constructores
 	// Constructor por defecto de la clase
@@ -31,11 +33,14 @@ public class User {
 		this.player_selected = new Player();
 		this.elo = 100;
 		this.currency = 0;
+		this.musicVol = 1.0f;
+		this.sfxVol = 1.0f;
 	}
 
 	// Constructor de la clase para añadir a los datos desde los archivos
 	public User(int userId, String user_name, ArrayList<Integer> characters_available,
-	ArrayList<ArrayList<Integer>> skins_available, float elo, int wins, int loses, int currency) {
+	ArrayList<ArrayList<Integer>> skins_available, float elo, int wins, int loses,
+	int currency, float musicVol, float sfxVol) {
 		this.userId = userId;
 		this.user_name = user_name;
 		this.characters_available = characters_available;
@@ -44,6 +49,8 @@ public class User {
 		this.wins = wins;
 		this.loses = loses;
 		this.currency = currency;
+		this.musicVol = musicVol;
+		this.sfxVol = sfxVol;
 		this.player_selected = new Player();
 	}
 
@@ -166,6 +173,22 @@ public class User {
 	
 	public void setCurrency(int currency) {
 		this.currency = currency;
+	}
+
+	public float getMusicVol() {
+		return musicVol;
+	}
+
+	public void setMusicVol(float musicVol) {
+		this.musicVol = musicVol;
+	}
+
+	public float getSfxVol() {
+		return sfxVol;
+	}
+
+	public void setSfxVol(float sfxVol) {
+		this.sfxVol = sfxVol;
 	}
 	
 	// Método sobrescrito toString, que devuelve una cadena de texto con la información de la clase
