@@ -1,8 +1,12 @@
 package es.LightningOpal.Astral_Knock_Out;
 
+/// Imports
 import org.springframework.web.socket.WebSocketSession;
 
+// Clase Player, que contiene la información de un jugador
 public class Player extends PhysicsObject{
+    /// Variables
+    // Creo que hay que duplicar el nombre para poder mandárselo al otro jugador (Thund3r).
     private int playerId;
     private WebSocketSession session;
     private String playerType;
@@ -16,16 +20,19 @@ public class Player extends PhysicsObject{
     private boolean movingRight;
     private boolean falling;
 
+    // Constructor vacío de la clase
     public Player(){
         playerId = -1;
         numJumps = 2;
     }
 
+    // Constructor de la clase por id
     public Player(int id){
         playerId = id;
         numJumps = 2;
     }
 
+    // Constructor de la clase por atributos
     public Player(WebSocketSession session, int id, String type, int skill, int x, int y/*, int mSpeed, int jForce, int hp*/){
         this.session = session;
         playerId = id;
@@ -77,6 +84,7 @@ public class Player extends PhysicsObject{
         currentHP = maxHP;
     }
 
+    /// Getters y Setters
     public int getPlayerId(){ return playerId; }
     public void setPlayerId(int id){ playerId = id; }
 
@@ -107,7 +115,8 @@ public class Player extends PhysicsObject{
 
     public int damage (int dmg) { return currentHP -= dmg; }
 
-    // Generales
+    /// Otros métodos
+    // Método updatePlayerValues, que actualiza los valores del jugador
     public void updatePlayerValues(boolean movingLeft_, boolean movingRight_, boolean falling_)
     {
         movingLeft = movingLeft_;
@@ -115,6 +124,7 @@ public class Player extends PhysicsObject{
         falling = falling_;
     }
 
+    // Método calculatePhysics, que calcula las físicas del jugador
     public void calculatePhysics()
     {
         if (movingLeft)
@@ -132,7 +142,7 @@ public class Player extends PhysicsObject{
     }
 
 
-
+    // Método sobrescrito toString, que devuelve una cadena de texto con la información de la clase
     @Override
     public String toString(){
         return "[id="+playerId+", type="+playerType+", x="+getPosX()+", y="+getPosY()+"]";

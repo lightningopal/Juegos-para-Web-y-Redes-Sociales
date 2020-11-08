@@ -1,5 +1,6 @@
 package es.LightningOpal.Astral_Knock_Out;
 
+/// Imports
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -15,7 +16,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+// Clase SpaceGym_Game, que contiene la información de una partida de "space gym"
 public class SpaceGym_Game {
+    /// Variables
     private final static int FPS = 30;
     private final static long TICK_DELAY = 1000 / FPS;
     public final static boolean DEBUG_MODE = true;
@@ -30,14 +33,18 @@ public class SpaceGym_Game {
 
     ObjectMapper mapper = new ObjectMapper();
     private ScheduledExecutorService scheduler;
-
-    // INDIVIDUAL GAME ROOM
     private Player player;
+    private String userName;
+    
     // private Map<String, Platform> platforms = new ConcurrentHashMap<>();
     // private Map<Integer, Projectile> projectiles = new ConcurrentHashMap<>();
 
+    /// Métodos
+    // Constructor de la clase que recibe el jugador de la partida y lo guarda
     public SpaceGym_Game(Player player_) {
         player = player_;
+        User thisUser = (User) player.getSession().getAttributes().get("USER");
+        userName = thisUser.getUser_name();
     }
 
     /*
@@ -51,45 +58,58 @@ public class SpaceGym_Game {
      * players.remove(projectile.getId(), projectile); }
      */
 
+    // Método startGameLoop, que inicia el game loop de la partida
     public void startGameLoop(ScheduledExecutorService scheduler_) {
+        // Guarda el scheduler
         scheduler = scheduler_;
+        // ¿Crea un nuevo ThreadPool en el scheduler?
         scheduler = Executors.newScheduledThreadPool(1);
+        // Inicia el hilo que ejecuta el método tick
         scheduler.scheduleAtFixedRate(() -> tick(), TICK_DELAY, TICK_DELAY, TimeUnit.MILLISECONDS);
     }
 
+    // Método stopGameLoop, que para el game loop de la partida
     public void stopGameLoop() {
+        // Si el scheduler existe y no es null, lo para
         if (scheduler != null) {
             scheduler.shutdown();
-            System.out.println("SE HA CERRADO EL SCHEDULER");
+            System.out.println("SE HA CERRADO EL SCHEDULER PARA EL JUGADOR " + userName + ".");
         }
     }
 
+    // Método broadcast, que envía un mensaje al jugador
     public void broadcast(String message) {
         try {
+            // Intenta enviar al jugador el mensaje
             player.getSession().sendMessage(new TextMessage(message.toString()));
         } catch (Throwable ex) {
             //System.err.println("Exception sending message to player " + player.getSession().getId());
             //ex.printStackTrace(System.err);
             GamesManager.INSTANCE.stopSpaceGym(player);
-            System.out.println("Deberia cerrarse el game");
-            // habría que borrar el game de la lista de GamesManager
+            System.out.println("No se ha podido enviar mensaje al jugador " + userName + ".");
         }
     }
 
+    // Método tick, que se ejecuta cada TICK_DELAY milisegundos
     private void tick() {
+        // Se crea un ObjectNode 'json' para guardar la información del mensaje a enviar
         ObjectNode json = mapper.createObjectNode();
+        // Se crea un ObjectNode 'jsonPlayer' para guardar la información del jugador
         ObjectNode jsonPlayer = mapper.createObjectNode();
         // ArrayNode arrayNodePlatforms = mapper.createArrayNode();
         // ArrayNode arrayNodeProjectiles = mapper.createArrayNode();
 
-        long thisInstant = System.currentTimeMillis();
+        // long thisInstant = System.currentTimeMillis();
         // Set<Integer> bullets2Remove = new HashSet<>();
         // boolean removeBullets = false;
 
         try {
-            // Update player
+            // Intenta calcular las físicas del jugador y enviarle los datos
+            // Calcula las fisicas
             player.incVelocity(0, GRAVITY); // Gravedad
             player.calculatePhysics();
+
+            // Guarda los datos en el ObjectNode 'jsonPlayer'
             jsonPlayer.put("posX", player.getPosX());
             jsonPlayer.put("posY", player.getPosY());
             jsonPlayer.put("flipped", player.IsFlipped());
@@ -122,16 +142,20 @@ public class SpaceGym_Game {
              * if (removeBullets) this.projectiles.keySet().removeAll(bullets2Remove);
              */
 
+            // Añade el evento correspondiente 
             json.put("event", "UPDATE_SPACE_GYM");
+            // Añade el ObjectNode 'jsonPlayer' al ObjectNode 'json' para unificar la información
             json.putPOJO("player", jsonPlayer);
             // json.putPOJO("projectiles", arrayNodeProjectiles);
 
+            // Envía al jugador un mensaje con la información del ObjectNode 'json'
             this.broadcast(json.toString());
         } catch (Throwable ex) {
-
+            // Excepcion
         }
     }
 
+    // Método HandleCollision, de momento no hace nada y puede que no sirva
     public void handleCollision() {
 
     }

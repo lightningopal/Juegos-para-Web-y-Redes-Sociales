@@ -137,7 +137,10 @@ class Scene_Boot extends Phaser.Scene {
                     console.log('[DEBUG] WebSocket connection closed.');
                 }
                 try {
-                    loadingText.setText('Connection failed, try again later');
+                    if (this.scene.isActive("scene_boot"))
+                    {
+                        loadingText.setText('Connection failed, try again later');
+                    }
                 } catch (error) {
                     if (game.global.DEBUG_MODE) {
                         console.log(error);
@@ -371,6 +374,9 @@ class Scene_Boot extends Phaser.Scene {
                 case "AUTENTICATION_SUCCESS":
                     this.scene.get('scene_boot').AutenticationSuccess(data);
                     break;
+                case "RANKING_RESULTS":
+                    this.scene.get('scene_boot').GetRanking(data);
+                    break;
                 case "CREATED_SPACE_GYM":
                     this.scene.get('scene_boot').JoinSpaceGym(data);
                     break;
@@ -408,6 +414,27 @@ class Scene_Boot extends Phaser.Scene {
         if (game.global.DEBUG_MODE) {
             console.log(game.mPlayer);
             console.log("Bienvenido/a " + game.mPlayer.userName);
+        }
+    }
+
+    // Método GetRanking, que guarda la información del ranking y pasa a la escena de este
+    GetRanking(data) {
+        // Se guardan los datos del ranking
+        for (var i = 0; i < data.ranking.length; i++)
+        {
+            var name = data.ranking[i].name
+            var wins = data.ranking[i].wins;
+		    var loses = data.ranking[i].loses;
+		    var points = data.ranking[i].points;
+		    
+		    game.ranking[i] = new RankingUser(name, wins, loses, points);
+        }
+
+        // Cambia de escena a la escena del ranking
+        this.scene.get('scene_main_menu').scene.start("scene_ranking");
+
+        if (game.global.DEBUG_MODE) {
+            console.log(data);
         }
     }
 

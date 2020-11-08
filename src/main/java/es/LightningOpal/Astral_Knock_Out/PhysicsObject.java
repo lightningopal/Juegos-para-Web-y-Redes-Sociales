@@ -1,12 +1,15 @@
 package es.LightningOpal.Astral_Knock_Out;
 
+// Clase PhysicsObject, que maneja las físicas de un cuerpo
 public class PhysicsObject {
+	/// Variables
 	private int collisionFactor; // sobra, está para que no de error
 	private double posX, posY, velX, velY, accelX, accelY, halfWidth, halfHeight, jumpForce, moveSpeed,
 		maxSpeed, groundDrag, airDrag;
 	private boolean isFlipped, onFloor, isStatic;
 	private final double EPSILON = 0.000005;
 
+	/// Getters y Setters
 	public double getPosX() {
 		return this.posX;
 	}
@@ -153,6 +156,8 @@ public class PhysicsObject {
 		this.collisionFactor = radius;
 	}
 
+	/// Otros métodos
+	// Método calculateMovement, que calcula el movimiento del cuerpo
 	public void calculateMovement() {
 		// Componente X
 		this.velX += this.accelX;
@@ -172,6 +177,7 @@ public class PhysicsObject {
 		this.posY += this.velY;
 	}
 
+	// Método applyDrag, que aplica fricción al cuerpo
 	public void applyDrag() {
 		// Se aplica una aceleración contraria a la velocidad si la aceleración es 0
 		// hasta frenar al pesonaje

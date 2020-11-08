@@ -1,4 +1,0 @@
-17:41:40 - Server opened.
-17:42:18 - Conected user with session ea7f5183-303b-d5f6-a7b9-fa7fe0354d5b.
-17:46:07 - Disconnected user with session ea7f5183-303b-d5f6-a7b9-fa7fe0354d5b.
-17:46:33 - Conected user with session 9f2a2dd9-ac7a-cb90-cc4f-ca6db28c6da3.

@@ -149,6 +149,8 @@ window.onload = function () {
         game.global.DEVICE = "desktop";
     }
 
+    this.game.ranking = [];
+
     // Responsive Functions
     // Escala
     this.scaleX = (game.config.width / referenceWidth);

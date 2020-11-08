@@ -246,7 +246,7 @@ class Scene_Main_Menu extends Phaser.Scene {
                         }else {
                             // Ranking
                             that.input.keyboard.removeAllKeys(true);
-                            that.scene.start("scene_ranking");
+                            game.global.socket.send(JSON.stringify({ event: "REQUEST_RANKING" }));
                         }
                         break;
                     case 2:

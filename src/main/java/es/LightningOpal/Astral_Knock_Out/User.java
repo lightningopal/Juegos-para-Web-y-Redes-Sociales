@@ -1,10 +1,13 @@
 package es.LightningOpal.Astral_Knock_Out;
 
+/// Imports
 import java.util.ArrayList;
 
 import org.springframework.web.socket.WebSocketSession;
 
+// Clase User, que guarda la información de un usuario
 public class User {
+	/// Variables
 	private int userId;
 	private WebSocketSession session;
 	private String user_name;
@@ -21,21 +24,16 @@ public class User {
 	private int loses;
 	private int currency;
 
+	/// Constructores
+	// Constructor por defecto de la clase
 	public User() {
 		this.user_name = "";
 		this.player_selected = new Player();
 		this.elo = 100;
 		this.currency = 0;
 	}
-	
-	public User(WebSocketSession session) {
-		this.session = session;
-		this.user_name = "";
-		this.player_selected = new Player();
-		// Leer datos de usuario? (elo, currency)
-	}
 
-	// Para añadir a los datos desde los archivos
+	// Constructor de la clase para añadir a los datos desde los archivos
 	public User(int userId, String user_name, ArrayList<Integer> characters_available,
 	ArrayList<ArrayList<Integer>> skins_available, float elo, int wins, int loses, int currency) {
 		this.userId = userId;
@@ -48,19 +46,8 @@ public class User {
 		this.currency = currency;
 		this.player_selected = new Player();
 	}
-		
-	/*public User(int userId, WebSocketSession session, String user_name, Player player_selected, boolean user_searching,
-			boolean user_ready, float elo, int currency) {
-		this.userId = userId;
-		this.session = session;
-		this.user_name = user_name;
-		this.player_selected = player_selected;
-		this.user_searching = user_searching;
-		this.user_ready = user_ready;
-		this.elo = elo;
-		this.currency = currency;
-	}*/
 
+	/// Getter y Setters
 	public int getUserId() {
 		return userId;
 	}
@@ -181,6 +168,7 @@ public class User {
 		this.currency = currency;
 	}
 	
+	// Método sobrescrito toString, que devuelve una cadena de texto con la información de la clase
 	@Override
 	public String toString() {
 		return "User [user_id="+userId+", user_name=" + user_name + ", character_selected=" +
