@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 // Clase UsersController, que se encarga de los usuarios
 public class UsersController {
@@ -30,6 +32,9 @@ public class UsersController {
 	// Mapa para guardar la información de los usuarios conectados en la memoria del
 	// server
 	private static Map<String, Integer> connectedUsers = new ConcurrentHashMap<>();
+
+	/// CONCURRENCIA
+	private static Lock writterLock = new ReentrantLock();
 
 	/// Métodos
 	// Método ConnectUser, que conecta un usuario al servidor
@@ -68,16 +73,22 @@ public class UsersController {
 
 		// Intenta escribir la información del nuevo usuario en el archivo de datos 'usersData.txt'
 		try {
-			String characters_available = "[0,1,2,3]";
-			String skins_available = "[{0},{0},{0},{0}}]";
+			// Cerramos el cierre de escritura mientras escribimos
+			writterLock.lock();
 
 			userWritter = new BufferedWriter(new FileWriter(new File("src/main/resources/data/usersData.txt"), true));
 
+			String characters_available = "[0,1,2,3]";
+			String skins_available = "[{0},{0},{0},{0}}]";
+
 			userWritter.write(thisUser.getUserId() + ":" + thisUser.getUser_name() + ":" + characters_available + ":"
 					+ skins_available + ":" + thisUser.getElo() + ":" + thisUser.getWins() + ":" + thisUser.getLoses()
-					+ ":" + thisUser.getCurrency() + "\n");
+					+ ":" + thisUser.getCurrency() + ":" + thisUser.getMusicVol() + ":" + thisUser.getSfxVol() + "\n");
 
 			userWritter.close();
+			
+			// Liberamos el cierre de escritura
+			writterLock.unlock();
 		} catch (Exception e) {
 			// Si falla, muestra el error
 			e.printStackTrace();
@@ -213,5 +224,79 @@ public class UsersController {
 
 		// Devolvemos el ranking
 		return ranking;
+	}
+
+	// Método writeUsersData, que escribe TODOS LOS DATOS DE LOS USUARIOS en el archivo 'usersData.txt'
+	public static void writeUsersData()
+	{
+		// Intenta escribir la información de los usuarios en el archivo de datos 'usersData.txt'
+		try {
+			// Cerramos el cierre de escritura mientras escribimos
+			writterLock.lock();
+
+			userWritter = new BufferedWriter(new FileWriter(new File("src/main/resources/data/usersData.txt")));
+
+			// Definimos variables que usaremos luego
+			String characters_available; // Ejemplo: [0,1,2,3]
+			String skins_available; // Ejemplo: [{0-2-3},{},{2},{1-3}]
+
+			// Por cada usuario, escribimos sus datos en el archivo
+			for (User thisUser : allUsers.values()) {
+
+				// Personajes
+				characters_available = "[";
+
+				// Por cada personaje, añadirlo a la string
+				for (Integer characterID : thisUser.getCharacters_available()) {
+					characters_available += characterID + ",";
+				}
+
+				// Borrar la última ',' y añadir el cierre ']'
+				characters_available = characters_available.substring(0, characters_available.length() - 2);
+				characters_available += "]";
+
+				// Aspectos
+				skins_available = "[";
+
+				// Por cada personaje, añadir los cierres
+				for (Integer characterID : thisUser.getCharacters_available()) {
+					skins_available += "{";
+					// Por cada aspecto, añadirlo a la string
+					for (Integer skinID: thisUser.getSkins_available().get(characterID))
+					{
+						skins_available += skinID + "-";
+					}
+					// Borrar el último '-' y añadir el cierre '}' y el carácter ','
+					skins_available = skins_available.substring(0, skins_available.length() - 2);
+					skins_available += "},";
+				}
+
+				// Borrar el último ',' y añadir el cierre ']'
+				skins_available = skins_available.substring(0, skins_available.length() - 2);
+				skins_available += "]";	
+
+				userWritter.write(thisUser.getUserId() + ":" + thisUser.getUser_name() + ":" + characters_available + ":"
+					+ skins_available + ":" + thisUser.getElo() + ":" + thisUser.getWins() + ":" + thisUser.getLoses()
+					+ ":" + thisUser.getCurrency() + ":" + thisUser.getMusicVol() + ":" + thisUser.getSfxVol() + "\n");
+			}
+			userWritter.close();
+
+			// Liberamos el cierre de escritura
+			writterLock.unlock();
+		} catch (Exception e) {
+			// Si falla, muestra el error
+			e.printStackTrace();
+		}
+
+		// Intenta escribir en el archivo de log
+		try {
+			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+			String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+			AKO_Server.logWriter.write(time + " - Users data saved.\n");
+			AKO_Server.logWriter.close();
+		} catch (Exception e) {
+			// Si falla, muestra el error
+			e.printStackTrace();
+		}
 	}
 }

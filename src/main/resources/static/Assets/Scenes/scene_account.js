@@ -65,21 +65,57 @@ class Scene_Account extends Phaser.Scene {
                 //  Have they entered anything?
                 if (inputUsername.value !== '' && inputPassword.value !== '')
                 {
-                    // Turn off the click events
-                    this.removeListener('click');
+                    // Si el número de caracteres del nombre es correcto
+                    if (inputUsername.value.length >= 1 && inputUsername.value.length <= 14)
+                    {
+                        // Si el número de caracteres de la contraseña es correcto
+                        if (inputPassword.value.length >= 4 && inputPassword.value.length <= 14)
+                        {
+                            // Turn off the click events
+                            this.removeListener('click');
 
-                    // Turn on after 200ms
-                    setTimeout(function(){
-                        element.addListener('click');
-                    }, 200);
+                            // Turn on after 200ms
+                            setTimeout(function(){
+                                element.addListener('click');
+                            }, 200);
 
-                    // Cosas
-                    if (game.global.logInOption === 0){ // Mensaje de login
-                        game.global.socket.send(JSON.stringify({event: "LOG_IN", name: inputUsername.value,
-                        password: inputPassword.value}));
-                    }else if (game.global.logInOption === 1){ // Mensaje de signup
-                        game.global.socket.send(JSON.stringify({event: "SIGN_UP", name: inputUsername.value, 
-                        password: inputPassword.value}));
+                            // Cosas
+                            if (game.global.logInOption === 0){ // Mensaje de login
+                                game.global.socket.send(JSON.stringify({event: "LOG_IN", name: inputUsername.value,
+                                password: inputPassword.value}));
+                            }else if (game.global.logInOption === 1){ // Mensaje de signup
+                                game.global.socket.send(JSON.stringify({event: "SIGN_UP", name: inputUsername.value, 
+                                password: inputPassword.value}));
+                            }
+                        }
+                        // La contraseña tiene más o menos caracteres de los que debe
+                        else
+                        {
+                            // Log In
+                            if (that.game.global.logInOption == 0)
+                            {
+                                game.global.feedbackLogin.setText("Password is incorrect");
+                            }
+                            // Sign Up
+                            else
+                            {
+                                game.global.feedbackLogin.setText("Password must have between 4 and 14 characters");
+                            }
+                        }
+                    }
+                    // El nombre es demasiado largo
+                    else
+                    {
+                        // Log In
+                        if (that.game.global.logInOption == 0)
+                        {
+                            game.global.feedbackLogin.setText("User doesn't exist");
+                        }
+                        // Sign Up
+                        else
+                        {
+                            game.global.feedbackLogin.setText("Username must have less than 14 characters");
+                        }
                     }
                 }
                 else

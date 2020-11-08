@@ -15,9 +15,9 @@ class Scene_Options extends Phaser.Scene {
         this.add.image(0, 0, "options_interface").setOrigin(0, 0)
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
-        this.sfxBtn = this.add.image(RelativeScale((game.options.musicVol * 671) + 962, "x"), RelativeScale(459.5, "y"), "volume_button")
+        this.sfxBtn = this.add.image(RelativeScale((game.options.SFXVol * 671) + 962, "x"), RelativeScale(459.5, "y"), "volume_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.musicBtn = this.add.image(RelativeScale((game.options.SFXVol * 671) + 962, "x"), RelativeScale(338.5, "y"), "volume_button")
+        this.musicBtn = this.add.image(RelativeScale((game.options.musicVol * 671) + 962, "x"), RelativeScale(338.5, "y"), "volume_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));

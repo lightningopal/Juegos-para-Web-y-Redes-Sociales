@@ -109,6 +109,30 @@ public class AKO_Server implements WebSocketConfigurer {
 			}
 			br.close();
 
+			// Guarda un método que se ejecuta cuando se cierra el servidor (NO FUNCIONA EN IDE)
+			Runtime.getRuntime().addShutdownHook(new Thread(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					System.out.println("Cerrando servidor...");
+
+					//Escribe los datos de los usuarios en el archivo 'usersData.txt'
+					UsersController.writeUsersData();
+
+					// Intenta escribir en el archivo de log
+					try {
+						AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+						String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+						AKO_Server.logWriter.write(time + " - Server Closed.\n");
+						AKO_Server.logWriter.close();
+					} catch (Exception e) {
+						// Si falla, muestra el error
+						e.printStackTrace();
+					}
+				}
+			}, "Shutdown-thread"));
+
 		} catch (Exception e) {
 			// Se imprime en consola el error que ha ocurrido
 			// SI EXISTE UN ERROR Y SE EJECUTA ESTE TROZO DE CÓDIGO, HABRÍA QUE
