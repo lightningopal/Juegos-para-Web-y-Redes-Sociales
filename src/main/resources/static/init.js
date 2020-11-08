@@ -87,7 +87,8 @@ window.onload = function () {
         WS_CONNECTION:  false,
         socket:         null,
         IP:             "192.168.1.35",
-        logInOption:    0 // 0->Log In | 1->Sign Up
+        logInOption:    0, // 0->Log In | 1->Sign Up
+        feedbackLogin:  null
     }
 
     this.game.options = {
