@@ -60,7 +60,7 @@ public class Player extends PhysicsObject{
                 this.setMoveSpeed(2);
                 this.setMaxSpeed(15);
                 this.setGroundDrag(4);
-                this.setJumpForce(1);
+                this.setJumpForce(22);
                 this.setMaxHP(100);
                 break;
             case "wizard":
@@ -132,6 +132,16 @@ public class Player extends PhysicsObject{
         falling = falling_;
     }
 
+    public void jump(){
+        this.setVelY(-this.getJumpForce());
+    }
+
+    public void fall(){
+        if (this.getVelY() <= 0){
+            this.setVelY(0);
+        }
+    }
+
     // Método calculatePhysics, que calcula las físicas del jugador
     public void calculatePhysics()
     {
@@ -145,6 +155,14 @@ public class Player extends PhysicsObject{
             this.setAccelX(this.getMoveSpeed());
         }else{
             this.setAccelX(0);
+        }
+
+        if (this.getVelY() > -10 && !this.falling){
+            this.setAccelY(1);
+        }else if (this.isFalling()){
+            this.setAccelY(3);
+        }else{
+            this.setAccelY(0);
         }
         calculateMovement();
     }

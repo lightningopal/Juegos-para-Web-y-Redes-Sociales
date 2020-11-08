@@ -196,6 +196,14 @@ class Scene_Space_Gym extends Phaser.Scene {
             this.cursors1.right.on("up", function(event){
                 that.movingRight = false;
             });
+
+            this.cursors1.jump.on("down", function(event){
+                that.Jump();
+            });
+
+            this.cursors1.fall.on("down", function(event){
+                that.Fall();
+            });
     
             this.cursors1.basicAttack.on("down", function(event){
                 if (!that.attacking){
@@ -334,7 +342,12 @@ class Scene_Space_Gym extends Phaser.Scene {
     }
     // Petición de salto del personaje
     Jump(){
-        // game.global.socket.send(JSON.stringify({event: ""}));
+        this.falling = false;
+        game.global.socket.send(JSON.stringify({event: "JUMP"}));
+    }
+    Fall(){
+        this.falling = true;
+        game.global.socket.send(JSON.stringify({event: "FALL"}));
     }
     // Petición de ataque básico
     BasicAttack(){
