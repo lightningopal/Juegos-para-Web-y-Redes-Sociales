@@ -21,12 +21,12 @@ public class SpaceGym_Game {
     public final static boolean DEBUG_MODE = true;
     public final static boolean VERBOSE_MODE = true;
 
+    public final double GRAVITY = 1.0;
+
     public final static int playerPosX = 250;
     public final static int playerPosY = 850;
     public final static int dummyPosX = 1500;
     public final static int dummyPosY = 940;
-
-    // Room ID ?
 
     ObjectMapper mapper = new ObjectMapper();
     private ScheduledExecutorService scheduler;
@@ -88,6 +88,7 @@ public class SpaceGym_Game {
 
         try {
             // Update player
+            player.incVelocity(0, GRAVITY); // Gravedad
             player.calculatePhysics();
             jsonPlayer.put("posX", player.getPosX());
             jsonPlayer.put("posY", player.getPosY());

@@ -168,6 +168,8 @@ public class PhysicsObject {
 		this.posX += this.velX;
 
 		// Componente Y
+		this.velY += this.accelY;
+		this.posY += this.velY;
 	}
 
 	public void applyDrag() {
