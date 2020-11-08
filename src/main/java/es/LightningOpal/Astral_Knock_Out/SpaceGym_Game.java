@@ -27,8 +27,8 @@ public class SpaceGym_Game {
 
     public final double GRAVITY = 1.0;
 
-    public final static int playerPosX = 250;
-    public final static int playerPosY = 850;
+    public final static int playerPosX = 500;
+    public final static int playerPosY = 0;
     public final static int dummyPosX = 1500;
     public final static int dummyPosY = 940;
 
@@ -47,7 +47,7 @@ public class SpaceGym_Game {
         User thisUser = (User) player.getSession().getAttributes().get("USER");
         userName = thisUser.getUser_name();
         //Plataformas
-        platforms.add(new PhysicsObject(true, 960.0, 1038.0, 960.0, 33.0, 0.0, -10.0)); // floor
+        platforms.add(new PhysicsObject(true, 960.0, 1038.0, 960.0, 33.0, 0.0, 9.0)); // floor
         platforms.add(new PhysicsObject(true, 1527.50, 747.50, 187.50, 37.50, 0.0, -41.0)); // base_big_plat_2
         platforms.add(new PhysicsObject(true, 947.0, 511.0, 190.50, 30.0, 0.0, -39.0)); // base_t_plat
         platforms.add(new PhysicsObject(true, 503.0, 717.50, 164.0, 43.50, 0.0, -4.50)); // big_plat_1
@@ -119,7 +119,9 @@ public class SpaceGym_Game {
             // Calcula las fisicas
             player.incVelocity(0, GRAVITY); // Gravedad
             player.calculatePhysics();
-
+            for (PhysicsObject platform : platforms) {
+                player.collide(platform);
+            }
             // Guarda los datos en el ObjectNode 'jsonPlayer'
             jsonPlayer.put("posX", player.getPosX());
             jsonPlayer.put("posY", player.getPosY());

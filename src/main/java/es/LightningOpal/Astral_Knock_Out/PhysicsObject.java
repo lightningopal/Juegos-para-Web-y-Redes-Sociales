@@ -9,6 +9,9 @@ public class PhysicsObject {
 	private boolean isFlipped, onFloor, isStatic;
 	private final double EPSILON = 0.000005;
 
+	public PhysicsObject(){
+
+	}
 	public PhysicsObject(boolean isStatic, double pX, double pY, double hW, double hH, double offX, double offY){
 		this.isStatic = isStatic;
 		this.posX = pX;
@@ -234,5 +237,39 @@ public class PhysicsObject {
 			(Math.abs((this.posY+this.offsetY) - (other.getPosY()+other.getOffsetY())));
 
 		return iX && iY;
+	}
+
+	public void collide(PhysicsObject other){
+		double minDistanceX = this.halfWidth + other.getHalfWidth();
+		double minDistanceY = this.halfHeight + other.getHalfHeight();
+
+		double distanceX = Math.abs((this.posX+this.offsetX) - (other.getPosX()+other.getOffsetX()));
+		double distanceY = Math.abs((this.posY+this.offsetY) - (other.getPosY()+other.getOffsetY()));
+
+		// Si es >= 0, están colisionando, si no, no
+		double colWidth = minDistanceX - distanceX;
+		double colHeight = minDistanceY - distanceY;
+
+		if (colWidth >= 0 && colHeight >= 0){
+			if (colHeight >= colWidth){ // Se prioriza el ancho
+				// this.velX = 0;
+				if (this.posX >= other.getPosX()){ // Se encuentra a la derecha del objeto
+					// this.posX = (other.getPosX()+other.getOffsetX()) + minDistanceX;
+					this.posX += colWidth;
+				}else{ // Se encuentra a la izquierda del objeto
+					// this.posX = (other.getPosX()+other.getOffsetX()) - minDistanceX;
+					this.posX -= colWidth;
+				}
+			}else{ // Alto
+				this.velY = 0;
+				if (this.posY <= other.getPosY()){ // Se encuentra encima del objeto
+					// this.posY = (other.getPosY()+other.getOffsetY()) - minDistanceY;
+					this.posY -= colHeight;
+				}else{ // Se encuentra debajo del objeto
+					// this.posY = (other.getPosY()+other.getOffsetY()) + minDistanceY;
+					this.posY += colHeight;
+				}
+			}
+		}
 	}
 }
