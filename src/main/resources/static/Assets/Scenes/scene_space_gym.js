@@ -152,6 +152,8 @@ class Scene_Space_Gym extends Phaser.Scene {
         this.movingRight = false;
         this.falling = false;
         this.attacking = false;
+        this.canBasicAttack = true;
+        this.canSpecialAttack = true;
         switch(game.mPlayer.characterSel.type){
             case "berserker":
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "berserker")
@@ -213,15 +215,17 @@ class Scene_Space_Gym extends Phaser.Scene {
             });
     
             this.cursors1.basicAttack.on("down", function(event){
-                if (!that.attacking){
+                if (!that.attacking && that.canBasicAttack){
                     that.attacking = true;
                     game.mPlayer.image.anims.play(game.mPlayer.characterSel.type+"_attack", true);
+                    game.global.socket.send(JSON.stringify({event: "BASIC_ATTACK"}));
                 }
             });
             this.cursors1.specialAttack.on("down", function(event){
-                if (!that.attacking){
+                if (!that.attacking && that.canSpecialAttack){
                     that.attacking = true;
                     game.mPlayer.image.anims.play(game.mPlayer.characterSel.type+"_attack", true);
+                    game.global.socket.send(JSON.stringify({event: "SPECIAL_ATTACK"}));
                 }
             });
         }// Fin DEVICE == desktop
@@ -229,6 +233,8 @@ class Scene_Space_Gym extends Phaser.Scene {
         game.mPlayer.image.on("animationcomplete", function(anim){
             if (anim.key === game.mPlayer.characterSel.type+"_attack"){
                 that.attacking = false;
+                // Enviar mensaje de ataque
+                // game.global.socket.send(JSON.stringify({event: ""}));
             }
         }, this);
 

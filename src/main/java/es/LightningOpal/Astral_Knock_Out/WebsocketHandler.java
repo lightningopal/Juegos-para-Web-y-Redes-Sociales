@@ -375,6 +375,12 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					case "FALL":
 						user.getPlayer_selected().fall();
 					break;
+					case "BASIC_ATTACK":
+						user.getPlayer_selected().getBasicWeapon().attack();
+					break;
+					case "SPECIAL_ATTACL":
+						user.getPlayer_selected().getSpecialWeapon().attack();
+					break;
 					// En cualquier otro caso
 				default:
 					break;
