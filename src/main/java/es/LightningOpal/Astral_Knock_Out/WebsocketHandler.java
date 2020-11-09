@@ -391,8 +391,39 @@ public class WebsocketHandler extends TextWebSocketHandler {
 							// Se crea la partida
 							int room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
 
-							// Asignar evento en el ObjectNode 'msg'
+							// Creamos un ArrayNode 'players' para guardar la información de ambos jugadores
+							ArrayNode players = mapper.createArrayNode();
+
+							// Guardar la información del jugador A
+							ObjectNode playerA = mapper.createObjectNode();
+
+							playerA.put("playerId", thisPlayer.getPlayerId());
+							playerA.put("userName", thisPlayer.getUserName());
+							playerA.put("playerType", thisPlayer.getPlayerType());
+							playerA.put("skin", thisPlayer.getSkin());
+							playerA.put("skill", thisPlayer.getSkill());
+
+							players.addPOJO(playerA);
+
+							// Guardar la información del jugador B
+							ObjectNode playerB = mapper.createObjectNode();
+
+							playerB.put("playerId", thisPlayer.getPlayerId());
+							playerB.put("userName", thisPlayer.getUserName());
+							playerB.put("playerType", thisPlayer.getPlayerType());
+							playerB.put("skin", thisPlayer.getSkin());
+							playerB.put("skill", thisPlayer.getSkill());
+
+							players.addPOJO(playerB);
+
+							// Asignar evento, sala y jugadores en el ObjectNode 'msg'
 							msg.put("event", "GAME_FOUND");
+							msg.put("room", room);
+							msg.putPOJO("players", players);
+
+							// Enviar el mensaje a ambos usuarios
+							thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
+							rival.getSession().sendMessage(new TextMessage(msg.toString()));
 
 							if (DEBUG_MODE) {
 								System.out.println("Partida creada: " + thisPlayer.getUserName() + " - " + rival.getUserName());
@@ -407,16 +438,20 @@ public class WebsocketHandler extends TextWebSocketHandler {
 							// Asignar evento en el ObjectNode 'msg'
 							msg.put("event", "SEARCHING_GAME");
 
+							// Enviar el mensaje
+							user.getSession().sendMessage(new TextMessage(msg.toString()));
+
 							if (DEBUG_MODE) {
 								name = user.getUser_name();
 								System.out.println("Buscando partida: " + name);
 							}
 						}
 
-						// Enviar el mensaje
-						user.getSession().sendMessage(new TextMessage(msg.toString()));
 					break;
-					case "MATCH_FOUND":
+					case "MATCH_START":
+						// COMENTARIO PARA THUND3R: AHORA TOCA EL MENSAJE QUE SE ENVIA DESDE
+						// CLIENTE AL SERVIDOR PARA INFORMAR QUE YA LE HA CARGADO LA ESCENA
+						// DE LA PARTIDA Y EL SERVIDOR LE DICE A AMBOS QUE EMPIEZEN A LA VEZ
 					break;
 					case "REMATCH":
 					break;

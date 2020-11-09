@@ -68,24 +68,6 @@ public class Tournament_Game {
 		}
     }
 
-	/*public void addPlayer(Player player) {
-		players.put(player.getSession().getId(), player);
-
-		int count = numPlayers.getAndIncrement();
-		if (count == 0) {
-			this.startGameLoop();
-		}
-	}*/
-
-	public void removePlayer(Player player) {
-		players.remove(player.getUserName());
-
-		//int count = this.numPlayers.decrementAndGet();
-		/*if (count == 0) {
-			this.stopGameLoop();
-		}*/
-	}
-
 	/*public void addProjectile(int id, Projectile projectile) {
 		projectiles.put(id, projectile);
 	}
@@ -124,7 +106,7 @@ public class Tournament_Game {
 			} catch (Throwable ex) {
 				System.err.println("Execption sending message to player " + player.getSession().getId());
 				ex.printStackTrace(System.err);
-				this.removePlayer(player);
+				// HAY QUE DARLE LA WIN AL JUGADOR QUE QUEDA
 			}
 		}
 	}

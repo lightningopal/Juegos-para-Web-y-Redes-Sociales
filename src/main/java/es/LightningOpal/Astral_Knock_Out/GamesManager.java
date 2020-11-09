@@ -7,6 +7,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 // Clase GamesManager, que se encarga de las partidas en el servidor
 public class GamesManager {
@@ -29,6 +31,9 @@ public class GamesManager {
 
     // Mapa que guarda enteros atómicos que ayudan a iniciar partidas a la vez
     public Map<Integer, AtomicInteger> startGame_counters = new ConcurrentHashMap<>();
+
+    // Mapa que guarda cerrojos que ayudan a iniciar partidas a la vez
+    public Map<Integer, Lock> startGame_locks = new ConcurrentHashMap<>();
 
     // Cola que guarda los jugadores que están buscando partida
     public ConcurrentLinkedQueue<Player> searching_players = new ConcurrentLinkedQueue<>();
@@ -76,19 +81,29 @@ public class GamesManager {
         // Añade el AtomicInteger al mapa de contadores
         startGame_counters.put(room, newAtomicInteger);
 
+        // Se crea un cerrojo que gestione el paso entre los jugadores que están listos
+        Lock lockForThisRoom = new ReentrantLock();
+        // Añade el cerrojo al mapa de cerrojos
+        startGame_locks.put(room, lockForThisRoom);
+
         // Devuelve la sala
         return room;
     }
 
     public void playerReady(int room)
     {
-        int playerReady = startGame_counters.get(room).incrementAndGet();
+        // Bloqueamos el acceso
+        startGame_locks.get(room).lock();
+        int playersReady = startGame_counters.get(room).incrementAndGet();
 
         // Empezamos
-        if (playerReady == 2)
+        if (playersReady == 2)
         {
-
+            startTournamentGame(room);
         }
+
+        // Desbloqueamos el acceso
+        startGame_locks.get(room).unlock();
     }
 
     public void startTournamentGame(int room)
