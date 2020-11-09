@@ -137,8 +137,7 @@ class Scene_Boot extends Phaser.Scene {
                     console.log('[DEBUG] WebSocket connection closed.');
                 }
                 try {
-                    if (this.scene.isActive("scene_boot"))
-                    {
+                    if (this.scene.isActive("scene_boot")) {
                         loadingText.setText('Connection failed, try again later');
                     }
                 } catch (error) {
@@ -374,7 +373,7 @@ class Scene_Boot extends Phaser.Scene {
                     break;
                 case "AUTHENTICATION_ERROR":
                     this.scene.get('scene_boot').AuthenticationError(data);
-                break;
+                    break;
                 case "AUTHENTICATION_SUCCESS":
                     this.scene.get('scene_boot').AuthenticationSuccess(data);
                     break;
@@ -389,6 +388,9 @@ class Scene_Boot extends Phaser.Scene {
                     break;
                 case "UPDATE_SPACE_GYM":
                     this.scene.get('scene_boot').UpdateSpaceGym(data);
+                    break;
+                case "ACTION":
+                    this.scene.get('scene_boot').Action(data);
                     break;
                 default:
                     if (game.global.DEBUG_MODE) {
@@ -452,14 +454,13 @@ class Scene_Boot extends Phaser.Scene {
     // Método GetRanking, que guarda la información del ranking y pasa a la escena de este
     GetRanking(data) {
         // Se guardan los datos del ranking
-        for (var i = 0; i < data.ranking.length; i++)
-        {
+        for (var i = 0; i < data.ranking.length; i++) {
             var name = data.ranking[i].name
             var wins = data.ranking[i].wins;
-		    var loses = data.ranking[i].loses;
-		    var points = data.ranking[i].points;
-		    
-		    game.global.ranking[i] = new RankingUser(name, wins, loses, points);
+            var loses = data.ranking[i].loses;
+            var points = data.ranking[i].points;
+
+            game.global.ranking[i] = new RankingUser(name, wins, loses, points);
         }
 
         // Cambia de escena a la escena del ranking
@@ -478,19 +479,64 @@ class Scene_Boot extends Phaser.Scene {
         }
     }
 
-    UpdateSpaceGym(data){
+    UpdateSpaceGym(data) {
         // Player
         game.mPlayer.image.x = RelativeScale(data.player.posX, "x");
         game.mPlayer.image.y = RelativeScale(data.player.posY, "y");
         game.mPlayer.image.flipX = data.player.flipped;
-        if (data.player.onFloor){
+        if (data.player.onFloor) {
             this.scene.get('scene_space_gym').falling = false;
         }
         this.scene.get('scene_space_gym').canBasicAttack = data.player.canBasicAttack;
         this.scene.get('scene_space_gym').canSpecialAttack = data.player.canSpecialAttack;
 
         // Dummy
-        this.scene.get('scene_space_gym').dummy.x = RelativeScale(data.dummy.posX,"x");
-        this.scene.get('scene_space_gym').dummy.y = RelativeScale(data.dummy.posY,"y");
+        this.scene.get('scene_space_gym').dummy.x = RelativeScale(data.dummy.posX, "x");
+        this.scene.get('scene_space_gym').dummy.y = RelativeScale(data.dummy.posY, "y");
+    }
+
+    Action(data) {
+        switch (data.type) {
+            case "BASIC_ATTACK":
+                if (game.mPlayer.room === -1) { // Space_gym
+                    this.scene.get("scene_space_gym").attacking = true;
+                    game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_attack", true);
+                } else {
+                    if (game.mPlayer.difficultySel === 0) { // Primer mapa
+                        if (game.mPlayer.userName === data.player_name) { // Mi jugador lanza la habilidad
+                            game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_attack", true);
+                        } else { // El otro jugador lanza la habilidad
+
+                        }
+                    } else { // Segundo mapa
+                        if (game.mPlayer.userName === data.player_name) { // Mi jugador lanza la habilidad
+                            game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_attack", true);
+                        } else { // El otro jugador lanza la habilidad
+
+                        }
+                    }
+                }
+
+                break;
+            case "SPECIAL_ATTACK":
+                if (game.mPlayer.room === -1) { // Space_gym
+                    game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_attack", true);
+                } else {
+                    if (game.mPlayer.difficultySel === 0) { // Primer mapa
+                        if (game.mPlayer.userName === data.player_name) { // Mi jugador lanza la habilidad
+                            game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_attack", true);
+                        } else { // El otro jugador lanza la habilidad
+
+                        }
+                    } else { // Segundo mapa
+                        if (game.mPlayer.userName === data.player_name) { // Mi jugador lanza la habilidad
+                            game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_attack", true);
+                        } else { // El otro jugador lanza la habilidad
+
+                        }
+                    }
+                }
+                break;
+        }
     }
 }

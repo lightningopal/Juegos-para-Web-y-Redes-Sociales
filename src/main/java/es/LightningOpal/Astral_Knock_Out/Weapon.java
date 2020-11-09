@@ -12,11 +12,11 @@ public class Weapon {
 
     private Skill attack;
 
-    public Weapon(){
+    public Weapon() {
         this.canAttack = false;
     }
 
-    public Weapon(Skill attack, long attackRatio){
+    public Weapon(Skill attack, long attackRatio) {
         this.attack = attack;
         this.attackRatio = attackRatio;
         this.coolDownTimer = new Timer();
@@ -47,19 +47,23 @@ public class Weapon {
         this.attack = attack;
     }
 
-    public void attack(){
+    public boolean attack() {
+        boolean attacks = this.canAttack;
         // Coger proyectiles del pool y activarlos
-        this.canAttack = false;
-        this.coolDownTimer.schedule(new TimerTask(){
-            @Override
-            public void run() {
-                coolDown();
-            }
-        }, this.attackRatio);
-        this.attack.activate();
+        if (this.canAttack) {
+            this.canAttack = false;
+            this.coolDownTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    coolDown();
+                }
+            }, this.attackRatio);
+            this.attack.activate();
+        }
+        return attacks;
     }
 
-    public void coolDown(){
+    public void coolDown() {
         this.canAttack = true;
     }
 }

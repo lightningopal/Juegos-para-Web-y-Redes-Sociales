@@ -83,7 +83,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 			// Variables que se utilizan en distintos casos.
 			String name, password, playerType;
-			int secondarySkill;
+			int secondarySkill, room;
 			Player thisPlayer;
 
 			if (DEBUG_MODE) {
@@ -375,7 +375,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						Player rival = GamesManager.INSTANCE.searching_players.remove();
 
 						// Se crea la partida
-						int room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
+						room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
 
 						// Asignar evento en el ObjectNode 'msg'
 						msg.put("event", "GAME_FOUND");
@@ -418,11 +418,31 @@ public class WebsocketHandler extends TextWebSocketHandler {
 							break;
 
 						case "BASIC_ATTACK":
-							user.getPlayer_selected().getBasicWeapon().attack();
+							room = node.get("room").asInt();
+							if (user.getPlayer_selected().getBasicWeapon().attack()){ // Si se realiza el ataque
+								msg.put("event", "ACTION");
+								msg.put("type", "BASIC_ATTACK");
+								msg.put("player_name", user.getUser_name());
+								if (room == -1){
+									user.getSession().sendMessage(new TextMessage(msg.toString()));
+								}else{
+									GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
+								}
+							}
 							break;
 
 						case "SPECIAL_ATTACK":
-							user.getPlayer_selected().getSpecialWeapon().attack();
+						room = node.get("room").asInt();
+						if (user.getPlayer_selected().getBasicWeapon().attack()){ // Si se realiza el ataque
+							msg.put("event", "ACTION");
+							msg.put("type", "SPECIAL_ATTACK");
+							msg.put("player_name", user.getUser_name());
+							if (room == -1){
+								user.getSession().sendMessage(new TextMessage(msg.toString()));
+							}else{
+								GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
+							}
+						}
 							break;
 
 						default:
