@@ -373,6 +373,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						// Se obtienen los atributos elegidos
 						playerType = node.get("playerType").asText();
 						secondarySkill = node.get("skill").asInt();
+						int level = node.get("level").asInt();
 
 						// Se crea el jugador con los datos
 						thisPlayer = new Player(user.getUserId(), user.getSession(),
@@ -388,7 +389,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 							Player rival = GamesManager.INSTANCE.searching_players.remove();
 
 							// Se crea la partida
-							GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival);
+							int room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
 
 							// Asignar evento en el ObjectNode 'msg'
 							msg.put("event", "GAME_FOUND");
