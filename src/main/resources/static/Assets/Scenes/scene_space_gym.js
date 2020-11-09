@@ -55,6 +55,8 @@ class Scene_Space_Gym extends Phaser.Scene {
         this.falling;
         this.attacking;
 
+        this.projectiles = [];
+
     } // Fin preload
 
     create() {
@@ -160,32 +162,58 @@ class Scene_Space_Gym extends Phaser.Scene {
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("berserker_idle");
                 this.myHP = new UserInterface(this, game.mPlayer.image, 100, 100);
+                for (var i = 0; i < 3; i++){
+                    this.projectiles.push(this.add.image(0,0, "berserker_projectile").
+                    setScale(RelativeScale(1, "x"), RelativeScale(1, "y")));
+                    this.projectiles[0].setVisible(false);
+                }
                 break;
             case "wizard":
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "wizard")
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("wizard_idle");
                 this.myHP = new UserInterface(this, game.mPlayer.image, 100, 100);
+                for (var i = 0; i < 9; i++){
+                    this.projectiles.push(this.add.image(0,0, "wizard_projectile").
+                    setScale(RelativeScale(1, "x"), RelativeScale(1, "y")));
+                    this.projectiles[0].setVisible(false);
+                }
                 break;
             case "bard":
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("bard_idle");
                 this.myHP = new UserInterface(this, game.mPlayer.image, 100, 100);
+                for (var i = 0; i < 3; i++){
+                    this.projectiles.push(this.add.image(0,0, "bard_projectile").
+                    setScale(RelativeScale(1, "x"), RelativeScale(1, "y")));
+                    this.projectiles[0].setVisible(false);
+                }
                 break;
             case "rogue":
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "rogue")
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("rogue_idle");
                 this.myHP = new UserInterface(this, game.mPlayer.image, 100, 75);
+                for (var i = 0; i < 9; i++){
+                    this.projectiles.push(this.add.image(0,0, "rogue_projectile").
+                    setScale(RelativeScale(1, "x"), RelativeScale(1, "y")));
+                    this.projectiles[0].setVisible(false);
+                }
                 break;
             default:
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("bard_idle");
                 this.myHP = new UserInterface(this, game.mPlayer.image, 100, 50);
+                for (var i = 0; i < 3; i++){
+                    this.projectiles.push(this.add.image(0,0, "bard_projectile").
+                    setScale(RelativeScale(1, "x"), RelativeScale(1, "y")));
+                    this.projectiles[0].setVisible(false);
+                }
                 break;
         }
+        // console.log(this.projectiles[0]);
         game.mPlayer.image.body.setSize(0, 0);
         game.mPlayer.image.body.allowGravity = false;
 

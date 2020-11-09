@@ -4,20 +4,23 @@ import es.LightningOpal.Astral_Knock_Out.Skills.*;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Queue;
 
 public class Weapon {
     private long attackRatio;
     private boolean canAttack;
     private Timer coolDownTimer;
 
-    private Skill attack;
+    private Queue<Skill> attacks;
+    private int groupSize;
 
     public Weapon() {
         this.canAttack = false;
     }
 
-    public Weapon(Skill attack, long attackRatio) {
-        this.attack = attack;
+    public Weapon(Queue<Skill> attacks, int groupSize, long attackRatio) {
+        this.attacks = attacks;
+        this.groupSize = groupSize;
         this.attackRatio = attackRatio;
         this.coolDownTimer = new Timer();
         this.canAttack = true;
@@ -39,15 +42,15 @@ public class Weapon {
         this.canAttack = canAttack;
     }
 
-    public Skill getAttack() {
-        return attack;
+    public int getGroupSize() {
+        return groupSize;
     }
 
-    public void setAttack(Skill attack) {
-        this.attack = attack;
+    public void setGroupSize(int groupSize) {
+        this.groupSize = groupSize;
     }
 
-    public boolean attack() {
+    public boolean attack(boolean flipped) {
         boolean attacks = this.canAttack;
         // Coger proyectiles del pool y activarlos
         if (this.canAttack) {
@@ -58,7 +61,12 @@ public class Weapon {
                     coolDown();
                 }
             }, this.attackRatio);
-            this.attack.activate();
+            for (int i = 0; i < this.groupSize; i++){
+                Skill attack = this.attacks.poll();
+                attack.SetFlipped(flipped);
+                attack.activate();
+                this.attacks.add(attack);
+            }
         }
         return attacks;
     }

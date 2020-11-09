@@ -8,7 +8,7 @@ public class BerserkerSkill extends Skill{
     private double damage;
 
     public BerserkerSkill(PhysicsObject target, double duration, double speed, double damage){
-        super(target, duration);
+        super(target, duration, 45, 45);
         this.speed = speed;
         this.damage = damage;
     }
@@ -31,5 +31,6 @@ public class BerserkerSkill extends Skill{
     public void activate(){
         // Activar habilidad
         System.out.println("Habilidad de Berserker");
+        this.isActive = true;
     }
 }

@@ -202,6 +202,11 @@ class Scene_Boot extends Phaser.Scene {
         this.load.image("continue_text_desktop", "./Assets/Images/UI/continue_text_desktop.png");
         this.load.image("continue_text_mobile", "./Assets/Images/UI/continue_text_mobile.png");
 
+        this.load.image("berserker_projectile", "./Assets/Images/Characters/Projectiles/berserker_projectile.png");
+        this.load.image("wizard_projectile", "./Assets/Images/Characters/Projectiles/wizard_projectile.png");
+        this.load.image("bard_projectile", "./Assets/Images/Characters/Projectiles/bard_projectile.png");
+        this.load.image("rogue_projectile", "./Assets/Images/Characters/Projectiles/rogue_projectile.png");
+
 
         ///Nivel 1///
         // Fondo
@@ -493,6 +498,18 @@ class Scene_Boot extends Phaser.Scene {
         // Dummy
         this.scene.get('scene_space_gym').dummy.x = RelativeScale(data.dummy.posX, "x");
         this.scene.get('scene_space_gym').dummy.y = RelativeScale(data.dummy.posY, "y");
+
+        // Proyectiles
+        // console.log(data.projectiles); // array
+        // console.log(data.projectiles.length);
+        for (var i = 0; i<data.projectiles.length; i++){
+            console.log(data.projectiles[i].isActive);
+            this.scene.get('scene_space_gym').projectiles[i].setVisible(data.projectiles[i].isActive);
+            this.scene.get('scene_space_gym').projectiles[i].x = RelativeScale(data.projectiles[i].posX,"x");
+            this.scene.get('scene_space_gym').projectiles[i].y = RelativeScale(data.projectiles[i].posY,"y");
+            this.scene.get('scene_space_gym').projectiles[i].setAngle(data.projectiles[i].facingAngle);
+            this.scene.get('scene_space_gym').projectiles[i].flipX = data.projectiles[i].flipX;
+        }
     }
 
     Action(data) {
