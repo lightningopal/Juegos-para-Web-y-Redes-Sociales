@@ -59,7 +59,7 @@ public class Player extends PhysicsObject{
                 this.setGroundDrag(3);
                 this.setJumpForce(1);
                 this.setMaxHP(100);
-                this.basicWeapon = new Weapon(new BardSkill(new Player(),500,10,10), 1000);
+                this.basicWeapon = new Weapon();
                 break;
 
             case "berserker":
@@ -72,7 +72,7 @@ public class Player extends PhysicsObject{
                 this.setGroundDrag(4);
                 this.setJumpForce(22);
                 this.setMaxHP(100);
-                this.basicWeapon = new Weapon(new BerserkerSkill(new Player(),500,10,10), 1000);
+                this.basicWeapon = new Weapon();
                 break;
                 
             case "wizard":
@@ -85,7 +85,7 @@ public class Player extends PhysicsObject{
                 this.setGroundDrag(6);
                 this.setJumpForce(1);
                 this.setMaxHP(100);
-                this.basicWeapon = new Weapon(new WizardSkill(new Player(),500,10,10), 1000);
+                this.basicWeapon = new Weapon();
                 break;
                 
             case "rogue":
@@ -98,7 +98,7 @@ public class Player extends PhysicsObject{
                 this.setGroundDrag(4);
                 this.setJumpForce(1);
                 this.setMaxHP(100);
-                this.basicWeapon = new Weapon(new RogueSkill(new Player(),500,10,10), 1000);
+                this.basicWeapon = new Weapon();
                 break;
 
             default:

@@ -8,7 +8,7 @@ public class BardSkill extends Skill{
     private double damage;
 
     public BardSkill(PhysicsObject target, double duration, double speed, double damage){
-        super(target, duration);
+        super(target, duration, 10, 15);
         this.speed = speed;
         this.damage = damage;
     }

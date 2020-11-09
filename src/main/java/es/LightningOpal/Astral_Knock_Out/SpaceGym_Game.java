@@ -1,10 +1,14 @@
 package es.LightningOpal.Astral_Knock_Out;
 
+import es.LightningOpal.Astral_Knock_Out.Skills.*;
+
 /// Imports
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
@@ -37,9 +41,9 @@ public class SpaceGym_Game {
     private Player player;
     private PhysicsObject dummy;
     private String userName;
-    
+
     private ArrayList<PhysicsObject> platforms = new ArrayList<PhysicsObject>(9);
-    // private Map<Integer, Projectile> projectiles = new ConcurrentHashMap<>();
+    private Queue<Skill> projectiles = new ArrayDeque();
 
     /// Métodos
     // Constructor de la clase que recibe el jugador de la partida y lo guarda
@@ -47,8 +51,40 @@ public class SpaceGym_Game {
         player = player_;
         User thisUser = (User) player.getSession().getAttributes().get("USER");
         userName = thisUser.getUser_name();
+
         // Dummy
         this.dummy = new PhysicsObject(false, dummyPosX, dummyPosY, 23.0, 42.0, -7.0, -1.0);
+
+        // Player Weapon
+        switch (player.getPlayerType()) {
+            case "berserker":
+                for (int i = 0; i < 3; i++) {
+                    projectiles.add(new BerserkerSkill(dummy, 1000, 10, 20)); // Target, duration, speed, damage
+                }
+                player.setBasicWeapon(new Weapon(projectiles, 1, 1000));
+                break;
+            case "wizard":
+                for (int i = 0; i < 9; i++) {
+                    projectiles.add(new WizardSkill(dummy, 1000, 10, 20, i % 3)); // Target, duration, speed, damage, id
+                }
+                player.setBasicWeapon(new Weapon(projectiles, 3, 400));
+                break;
+            case "bard":
+                for (int i = 0; i < 3; i++) {
+                    projectiles.add(new BardSkill(dummy, 1000, 10, 20)); // Target, duration, speed, damage
+                }
+                player.setBasicWeapon(new Weapon(projectiles, 1, 500));
+                break;
+            case "rogue":
+                for (int i = 0; i < 3; i++) {
+                    projectiles.add(new RogueSkill(dummy, 1000, 10, 20, i % 3)); // Target, duration, speed, damage, id
+                }
+                player.setBasicWeapon(new Weapon(projectiles, 1, 200));
+                break;
+            default:
+                break;
+        }
+
         // Plataformas
         platforms.add(new PhysicsObject(true, 960.0, 1038.0, 960.0, 33.0, 0.0, 9.0)); // floor
         platforms.add(new PhysicsObject(true, 1527.50, 747.50, 187.50, 37.50, 0.0, -41.0)); // base_big_plat_2
@@ -60,17 +96,6 @@ public class SpaceGym_Game {
         platforms.add(new PhysicsObject(true, 1230.50, 115.0, 104.50, 32.50, 0.0, -9.0)); // plat_3
         platforms.add(new PhysicsObject(true, 945.50, 371.50, 34.0, 84.50, 0.0, -4.50)); // t_plat
     }
-
-    /*
-     * public void addProjectile(int id, Projectile projectile) {
-     * projectiles.put(id, projectile); }
-     * 
-     * public Collection<Projectile> getProjectiles() { return projectiles.values();
-     * }
-     * 
-     * public void removeProjectile(Projectile projectile) {
-     * players.remove(projectile.getId(), projectile); }
-     */
 
     // Método startGameLoop, que inicia el game loop de la partida
     public void startGameLoop(ScheduledExecutorService scheduler_) {
@@ -97,8 +122,9 @@ public class SpaceGym_Game {
             // Intenta enviar al jugador el mensaje
             player.getSession().sendMessage(new TextMessage(message.toString()));
         } catch (Throwable ex) {
-            //System.err.println("Exception sending message to player " + player.getSession().getId());
-            //ex.printStackTrace(System.err);
+            // System.err.println("Exception sending message to player " +
+            // player.getSession().getId());
+            // ex.printStackTrace(System.err);
             GamesManager.INSTANCE.stopSpaceGym(player);
             System.out.println("No se ha podido enviar mensaje al jugador " + userName + ".");
         }
@@ -111,8 +137,9 @@ public class SpaceGym_Game {
         // Se crea un ObjectNode 'jsonPlayer' para guardar la información del jugador
         ObjectNode jsonPlayer = mapper.createObjectNode();
         ObjectNode jsonDummy = mapper.createObjectNode();
+        ObjectNode jsonProjectile = mapper.createObjectNode();
         // ArrayNode arrayNodePlatforms = mapper.createArrayNode();
-        // ArrayNode arrayNodeProjectiles = mapper.createArrayNode();
+        ArrayNode arrayNodeProjectiles = mapper.createArrayNode();
 
         // long thisInstant = System.currentTimeMillis();
         // Set<Integer> bullets2Remove = new HashSet<>();
@@ -140,7 +167,7 @@ public class SpaceGym_Game {
             for (PhysicsObject platform : platforms) {
                 dummy.collide(platform);
             }
-            
+
             jsonDummy.put("posX", dummy.getPosX());
             jsonDummy.put("posY", dummy.getPosY());
 
@@ -168,16 +195,37 @@ public class SpaceGym_Game {
              * arrayNodeProjectiles.addPOJO(jsonProjectile); }
              */
 
+            for (Skill skill : projectiles) {
+                jsonProjectile = mapper.createObjectNode();
+                if (skill.isActive()) {
+                    // Calcular posición
+
+                    if (skill.intersect(skill.getTarget())) {
+                        skill.setActive(false);
+                        skill.impact();
+                    }
+                }
+                // System.out.println(skill.isActive());
+                // Guardar proyectiles en array y comunicar al cliente la posición
+                jsonProjectile.put("isActive", skill.isActive());
+                jsonProjectile.put("posX", skill.getPosX());
+                jsonProjectile.put("posY", skill.getPosY());
+                jsonProjectile.put("facingAngle", skill.getFacingAngle());
+                jsonProjectile.put("flipX", skill.IsFlipped());
+                arrayNodeProjectiles.addPOJO(jsonProjectile);
+            }
+
             /*
              * if (removeBullets) this.projectiles.keySet().removeAll(bullets2Remove);
              */
 
-            // Añade el evento correspondiente 
+            // Añade el evento correspondiente
             json.put("event", "UPDATE_SPACE_GYM");
-            // Añade el ObjectNode 'jsonPlayer' al ObjectNode 'json' para unificar la información
+            // Añade el ObjectNode 'jsonPlayer' al ObjectNode 'json' para unificar la
+            // información
             json.putPOJO("player", jsonPlayer);
             json.putPOJO("dummy", jsonDummy);
-            // json.putPOJO("projectiles", arrayNodeProjectiles);
+            json.putPOJO("projectiles", arrayNodeProjectiles);
 
             // Envía al jugador un mensaje con la información del ObjectNode 'json'
             this.broadcast(json.toString());

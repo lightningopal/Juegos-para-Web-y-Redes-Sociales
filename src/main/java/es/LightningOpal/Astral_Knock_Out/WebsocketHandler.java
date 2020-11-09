@@ -476,14 +476,31 @@ public class WebsocketHandler extends TextWebSocketHandler {
 							break;
 
 						case "BASIC_ATTACK":
-							user.getPlayer_selected().getBasicWeapon().attack();
-							/*int room = node.get("room").asInt();
-							GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
-							user.getSession().sendMessage(new TextMessage(msg.toString()));*/
+							room = node.get("room").asInt();
+							if (user.getPlayer_selected().getBasicWeapon().attack(user.getPlayer_selected().IsFlipped())){ // Si se realiza el ataque
+								msg.put("event", "ACTION");
+								msg.put("type", "BASIC_ATTACK");
+								msg.put("player_name", user.getUser_name());
+								if (room == -1){
+									user.getSession().sendMessage(new TextMessage(msg.toString()));
+								}else{
+									GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
+								}
+							}
 							break;
 
 						case "SPECIAL_ATTACK":
-							user.getPlayer_selected().getSpecialWeapon().attack();
+						room = node.get("room").asInt();
+						if (user.getPlayer_selected().getBasicWeapon().attack(user.getPlayer_selected().IsFlipped())){ // Si se realiza el ataque
+							msg.put("event", "ACTION");
+							msg.put("type", "SPECIAL_ATTACK");
+							msg.put("player_name", user.getUser_name());
+							if (room == -1){
+								user.getSession().sendMessage(new TextMessage(msg.toString()));
+							}else{
+								GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
+							}
+						}
 							break;
 
 						default:

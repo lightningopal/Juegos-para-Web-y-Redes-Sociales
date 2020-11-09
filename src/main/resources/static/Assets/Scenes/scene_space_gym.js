@@ -10,24 +10,24 @@ class Scene_Space_Gym extends Phaser.Scene {
 
     preload() {
         var that = this;
-        
-        this.add.image(0, 0, "level_1_bg").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(-5);
-        this.add.image(0, 0, "level_1_bg_details").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(-3);
-        this.bgMove = this.add.image(0, 0, "level_1_bg_move").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(-2);
+
+        this.add.image(0, 0, "level_1_bg").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(-5);
+        this.add.image(0, 0, "level_1_bg_details").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(-3);
+        this.bgMove = this.add.image(0, 0, "level_1_bg_move").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(-2);
         this.tweens.add({
             targets: that.bgMove,
-            y: (that.bgMove.y+3),
+            y: (that.bgMove.y + 3),
             ease: 'Sine.easeInOut',
             duration: 1000,
             yoyo: true,
             repeat: -1
         });
-        this.add.image(0, 0, "level_1_plats_floor").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(-1);
-        this.add.image(0, 0, "level_1_fg_details").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(3);
-        this.fgMove = this.add.image(0, 0, "level_1_fg_move").setOrigin(0,0).setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(4);
+        this.add.image(0, 0, "level_1_plats_floor").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(-1);
+        this.add.image(0, 0, "level_1_fg_details").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(3);
+        this.fgMove = this.add.image(0, 0, "level_1_fg_move").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(4);
         this.tweens.add({
             targets: that.fgMove,
-            y: (that.fgMove.y-4),
+            y: (that.fgMove.y - 4),
             ease: 'Sine.easeInOut',
             duration: 1000,
             yoyo: true,
@@ -54,7 +54,9 @@ class Scene_Space_Gym extends Phaser.Scene {
         this.movingRight;
         this.falling;
         this.attacking;
-        
+
+        this.projectiles = [];
+
     } // Fin preload
 
     create() {
@@ -64,8 +66,8 @@ class Scene_Space_Gym extends Phaser.Scene {
         
         // Create mobileKeys
         this.mobileKeys = {
-            joyStick : null,
-            jumpButton : null
+            joyStick: null,
+            jumpButton: null
         };
 
         // Si el dispositivo es movil, añadir un joystick y un boton
@@ -85,13 +87,13 @@ class Scene_Space_Gym extends Phaser.Scene {
             this.dumpJoyStickState();
 
             this.mobileKeys.jumpButton = this.add.circle(RelativeScale(1160, "x"), RelativeScale(630, "y"), 20, 0xdddddd).setAlpha(0.7).setScale(RelativeScale()).setDepth(1000).setInteractive();
-            
+
             this.input.addPointer(2);
         }
 
         // Dummy de prácticas
         this.dummy = this.add.image(RelativeScale(1500, "x"), RelativeScale(940, "y"), "dummy")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.dummyBar = new UserInterface(this, this.dummy, 100, 80);
         this.dummy.userInterface = this.dummyBar;
         // Pool de habilidades
@@ -107,20 +109,20 @@ class Scene_Space_Gym extends Phaser.Scene {
         this.berserkerAttack2 = new Berserker(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
         /**/
-       /*Mago*
-        this.wizardAttack1 = new WizardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-        this.wizardAttack2 = new WizardSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-        this.wizardAttack3 = new WizardSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-        this.wizardAttack4 = new WizardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-        this.wizardAttack5 = new WizardSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-        this.wizardAttack6 = new WizardSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-        /**/
+        /*Mago*
+         this.wizardAttack1 = new WizardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 1500, 350)
+         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
+         this.wizardAttack2 = new WizardSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 1500, 350)
+         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
+         this.wizardAttack3 = new WizardSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 1500, 350)
+         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
+         this.wizardAttack4 = new WizardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 1500, 350)
+         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
+         this.wizardAttack5 = new WizardSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 1500, 350)
+         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
+         this.wizardAttack6 = new WizardSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 1500, 350)
+         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
+         /**/
         /*Pícaro*
         this.rogueAttack1 = new RogueSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 350, 0)
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
@@ -156,86 +158,104 @@ class Scene_Space_Gym extends Phaser.Scene {
         this.attacking = false;
         this.canBasicAttack = true;
         this.canSpecialAttack = true;
-        switch(game.mPlayer.characterSel.type){
+        switch (game.mPlayer.characterSel.type) {
             case "berserker":
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "berserker")
-                .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("berserker_idle");
                 this.myHP = new UserInterface(this, game.mPlayer.image, 100, 100);
+                for (var i = 0; i < 3; i++){
+                    this.projectiles.push(this.add.image(0,0, "berserker_projectile").
+                    setScale(RelativeScale(1, "x"), RelativeScale(1, "y")));
+                    this.projectiles[0].setVisible(false);
+                }
                 break;
             case "wizard":
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "wizard")
-                .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("wizard_idle");
                 this.myHP = new UserInterface(this, game.mPlayer.image, 100, 100);
+                for (var i = 0; i < 9; i++){
+                    this.projectiles.push(this.add.image(0,0, "wizard_projectile").
+                    setScale(RelativeScale(1, "x"), RelativeScale(1, "y")));
+                    this.projectiles[0].setVisible(false);
+                }
                 break;
             case "bard":
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
-                .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("bard_idle");
                 this.myHP = new UserInterface(this, game.mPlayer.image, 100, 100);
+                for (var i = 0; i < 3; i++){
+                    this.projectiles.push(this.add.image(0,0, "bard_projectile").
+                    setScale(RelativeScale(1, "x"), RelativeScale(1, "y")));
+                    this.projectiles[0].setVisible(false);
+                }
                 break;
             case "rogue":
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "rogue")
-                .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("rogue_idle");
                 this.myHP = new UserInterface(this, game.mPlayer.image, 100, 75);
+                for (var i = 0; i < 9; i++){
+                    this.projectiles.push(this.add.image(0,0, "rogue_projectile").
+                    setScale(RelativeScale(1, "x"), RelativeScale(1, "y")));
+                    this.projectiles[0].setVisible(false);
+                }
                 break;
             default:
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
-                .setScale(RelativeScale(1,"x"),RelativeScale(1,"y"));
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("bard_idle");
                 this.myHP = new UserInterface(this, game.mPlayer.image, 100, 50);
+                for (var i = 0; i < 3; i++){
+                    this.projectiles.push(this.add.image(0,0, "bard_projectile").
+                    setScale(RelativeScale(1, "x"), RelativeScale(1, "y")));
+                    this.projectiles[0].setVisible(false);
+                }
                 break;
         }
-        game.mPlayer.image.body.setSize(0,0);
+        // console.log(this.projectiles[0]);
+        game.mPlayer.image.body.setSize(0, 0);
         game.mPlayer.image.body.allowGravity = false;
 
-        if (game.global.DEVICE === "desktop"){
-            this.cursors1.left.on("down", function(event){
+        if (game.global.DEVICE === "desktop") {
+            this.cursors1.left.on("down", function (event) {
                 that.movingRight = false;
                 that.movingLeft = true;
             });
-            this.cursors1.left.on("up", function(event){
+            this.cursors1.left.on("up", function (event) {
                 that.movingLeft = false;
             });
-    
-            this.cursors1.right.on("down", function(event){
+
+            this.cursors1.right.on("down", function (event) {
                 that.movingRight = true;
                 that.movingLeft = false;
             });
-            this.cursors1.right.on("up", function(event){
+            this.cursors1.right.on("up", function (event) {
                 that.movingRight = false;
             });
 
-            this.cursors1.jump.on("down", function(event){
+            this.cursors1.jump.on("down", function (event) {
                 that.Jump();
             });
 
-            this.cursors1.fall.on("down", function(event){
+            this.cursors1.fall.on("down", function (event) {
                 that.Fall();
             });
-    
-            this.cursors1.basicAttack.on("down", function(event){
-                if (!that.attacking){
-                    that.attacking = true;
-                    // game.mPlayer.image.anims.play(game.mPlayer.characterSel.type+"_attack", true);
-                    game.global.socket.send(JSON.stringify({event: "ACTION", type: "BASIC_ATTACK"}));
-                }
+
+            this.cursors1.basicAttack.on("down", function (event) {
+                that.BasicAttack();
             });
-            /*
-            this.cursors1.specialAttack.on("down", function(event){
-                if (!that.attacking){
-                    that.attacking = true;
-                    game.mPlayer.image.anims.play(game.mPlayer.characterSel.type+"_attack", true);
-                    game.global.socket.send(JSON.stringify({event: "ACTION", type: "SPECIAL_ATTACK"}));
-                }
+
+            this.cursors1.specialAttack.on("down", function (event) {
+                that.SpecialAttack();
             });
-            */
         }// Fin DEVICE == desktop
 
-        game.mPlayer.image.on("animationcomplete", function(anim){
-            if (anim.key === game.mPlayer.characterSel.type+"_attack"){
+        game.mPlayer.image.on("animationcomplete", function (anim) {
+            if (anim.key === game.mPlayer.characterSel.type + "_attack") {
+                console.log("Fin de animación");
                 that.attacking = false;
                 // Enviar mensaje de ataque
                 // game.global.socket.send(JSON.stringify({event: ""}));
@@ -243,43 +263,43 @@ class Scene_Space_Gym extends Phaser.Scene {
         }, this);
 
         //Plataformas
-        this.transimage = this.physics.add.image(RelativeScale(522.50, "x"), RelativeScale(889.0, "y"), "level_1_trans").setScale(RelativeScale(1,"x"),RelativeScale(1,"y")).setDepth(2);
-        
+        this.transimage = this.physics.add.image(RelativeScale(522.50, "x"), RelativeScale(889.0, "y"), "level_1_trans").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2);
+
         this.platforms = this.physics.add.staticGroup();
-        this.platforms.create(RelativeScale(960.0,"x"), RelativeScale(1038.0,"y"), "floor")
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody().setDepth(-1)
-        .body.setSize(RelativeScale(1920,"x"),RelativeScale(84,"y")).setOffset(0,RelativeScale(20,"y"));
+        this.platforms.create(RelativeScale(960.0, "x"), RelativeScale(1038.0, "y"), "floor")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).refreshBody().setDepth(-1)
+            .body.setSize(RelativeScale(1920, "x"), RelativeScale(84, "y")).setOffset(0, RelativeScale(20, "y"));
 
-        this.platforms.create(RelativeScale(1527.5,"x"), RelativeScale(747.50,"y"), "base_big_plat_2")
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        .body.setSize(RelativeScale(385,"x"),RelativeScale(75,"y")).setOffset(0,RelativeScale(-10,"y"));
+        this.platforms.create(RelativeScale(1527.5, "x"), RelativeScale(747.50, "y"), "base_big_plat_2")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).refreshBody()
+            .body.setSize(RelativeScale(385, "x"), RelativeScale(75, "y")).setOffset(0, RelativeScale(-10, "y"));
 
-        this.platforms.create(RelativeScale(947.0,"x"), RelativeScale(511.0,"y"), "base_t_plat")
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
+        this.platforms.create(RelativeScale(947.0, "x"), RelativeScale(511.0, "y"), "base_t_plat")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).refreshBody()
         // .body.setSize(RelativeScale(279,"x"),RelativeScale(34,"y")).setOffset(0,RelativeScale(12,"y"));
 
-        this.platforms.create(RelativeScale(503.0,"x"), RelativeScale(717.50,"y"), "big_plat_1") // 502.5 x 707
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
-        .body.setSize(RelativeScale(328,"x"),RelativeScale(90,"y")).setOffset(0,RelativeScale(-10,"y"));
+        this.platforms.create(RelativeScale(503.0, "x"), RelativeScale(717.50, "y"), "big_plat_1") // 502.5 x 707
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).refreshBody()
+            .body.setSize(RelativeScale(328, "x"), RelativeScale(90, "y")).setOffset(0, RelativeScale(-10, "y"));
 
-        this.platforms.create(RelativeScale(1763.0,"x"), RelativeScale(371.5,"y"), "big_plat_2") // 1764 x 362
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
+        this.platforms.create(RelativeScale(1763.0, "x"), RelativeScale(371.5, "y"), "big_plat_2") // 1764 x 362
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).refreshBody()
         // .body.setSize(RelativeScale(341,"x"),RelativeScale(165,"y")).setOffset(0,RelativeScale(12,"y"));
 
-        this.platforms.create(RelativeScale(90.50,"x"), RelativeScale(441.0,"y"), "plat_1")
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
+        this.platforms.create(RelativeScale(90.50, "x"), RelativeScale(441.0, "y"), "plat_1")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).refreshBody()
         // .body.setSize(RelativeScale(181,"x"),RelativeScale(40,"y")).setOffset(0,RelativeScale(10,"y"));
 
-        this.platforms.create(RelativeScale(517.50,"x"), RelativeScale(213.50,"y"), "plat_2")
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
+        this.platforms.create(RelativeScale(517.50, "x"), RelativeScale(213.50, "y"), "plat_2")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).refreshBody()
         // .body.setSize(RelativeScale(218,"x"),RelativeScale(40,"y")).setOffset(0,RelativeScale(10,"y"));
 
-        this.platforms.create(RelativeScale(1230.50,"x"), RelativeScale(115.0,"y"), "plat_3")
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
+        this.platforms.create(RelativeScale(1230.50, "x"), RelativeScale(115.0, "y"), "plat_3")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).refreshBody()
         // .body.setSize(RelativeScale(207,"x"),RelativeScale(40,"y")).setOffset(0,RelativeScale(10,"y"));
 
-        this.platforms.create(RelativeScale(945.50,"x"), RelativeScale(371.50,"y"), "t_plat")
-        .setScale(RelativeScale(1,"x"), RelativeScale(1,"y")).refreshBody()
+        this.platforms.create(RelativeScale(945.50, "x"), RelativeScale(371.50, "y"), "t_plat")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).refreshBody()
         // .body.setSize(RelativeScale(56,"x"),RelativeScale(140,"y")).setOffset(0,RelativeScale(10,"y"));
 
         this.hidePlatforms = [this.transimage];
@@ -298,23 +318,23 @@ class Scene_Space_Gym extends Phaser.Scene {
     } // Fin create
 
     update() {
-        if (this.movingLeft || this.movingRight){
-            if (!this.attacking){
-                game.mPlayer.image.anims.play(game.mPlayer.characterSel.type+"_walk", true);
+        if (this.movingLeft || this.movingRight) {
+            if (!this.attacking) {
+                game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_walk", true);
             }
-        }else{
-            if (!this.attacking){
-                game.mPlayer.image.anims.play(game.mPlayer.characterSel.type+"_idle",true);
+        } else {
+            if (!this.attacking) {
+                game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_idle", true);
             }
         }
         this.UpdateGameState();
-        
+
         // Mostrar u ocultar las plataformas al pasar por encima
         this.hidePlatforms.forEach(platform => {
             if (platform.body.embedded) platform.body.touching.none = false;
-            if (!platform.body.touching.none && platform.body.wasTouching.none){
+            if (!platform.body.touching.none && platform.body.wasTouching.none) {
                 this.HidePlatform(platform);
-            }else if (platform.body.touching.none && !platform.body.wasTouching.none){
+            } else if (platform.body.touching.none && !platform.body.wasTouching.none) {
                 this.ShowPlatform(platform);
             }
         });
@@ -353,26 +373,29 @@ class Scene_Space_Gym extends Phaser.Scene {
     /** */
 
     // Comunicación de estado con el servidor
-    UpdateGameState(){
-        game.global.socket.send(JSON.stringify({event: "UPDATE_SPACE_GYM",
-            movingLeft: this.movingLeft, movingRight: this.movingRight, falling: this.falling}));
+    UpdateGameState() {
+        game.global.socket.send(JSON.stringify({
+            event: "UPDATE_SPACE_GYM",
+            movingLeft: this.movingLeft, movingRight: this.movingRight, falling: this.falling
+        }));
     }
     // Petición de salto del personaje
-    Jump(){
+    Jump() {
         this.falling = false;
-        game.global.socket.send(JSON.stringify({event: "ACTION", type: "JUMP"}));
+        game.global.socket.send(JSON.stringify({ event: "ACTION", type: "JUMP" }));
     }
-    Fall(){
+    Fall() {
         this.falling = true;
-        game.global.socket.send(JSON.stringify({event: "ACTION", type: "FALL"}));
+        game.global.socket.send(JSON.stringify({ event: "ACTION", type: "FALL" }));
     }
-    // Petición de ataque básico
-    BasicAttack(){
 
+    // Petición de ataque básico
+    BasicAttack() {
+        game.global.socket.send(JSON.stringify({ event: "ACTION", type: "BASIC_ATTACK", room: game.mPlayer.room }));
     }
     // Petición de ataque especial
-    SpecialAttack(){
-
+    SpecialAttack() {
+        game.global.socket.send(JSON.stringify({ event: "ACTION", type: "SPECIAL_ATTACK", room: game.mPlayer.room }));
     }
 
     // Joystick movil
@@ -390,7 +413,7 @@ class Scene_Space_Gym extends Phaser.Scene {
         this.text.setText(s);
     }
 
-    HidePlatform(platform){
+    HidePlatform(platform) {
         var tween = this.tweens.add({
             targets: platform,
             alpha: 0.3,
@@ -399,7 +422,7 @@ class Scene_Space_Gym extends Phaser.Scene {
         });
     }
 
-    ShowPlatform(platform){
+    ShowPlatform(platform) {
         var tween = this.tweens.add({
             targets: platform,
             alpha: 1.0,
@@ -413,4 +436,4 @@ class Scene_Space_Gym extends Phaser.Scene {
 function showCoords(event) {
     x = Math.round(event.clientX * (game.config.width / 1920));
     y = Math.round(event.clientY * (game.config.height / 1080));
-  }
+}

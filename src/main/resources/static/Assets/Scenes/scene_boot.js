@@ -218,7 +218,10 @@ class Scene_Boot extends Phaser.Scene {
             this.load.image("disconnected_text", "./Assets/Images/UI/connection_failed_text.png");
             this.load.spritesheet("retry_button", "./Assets/Images/UI/retry_button.png", { frameWidth: 604, frameHeight: 147 });
             
-
+			this.load.image("berserker_projectile", "./Assets/Images/Characters/Projectiles/berserker_projectile.png");
+			this.load.image("wizard_projectile", "./Assets/Images/Characters/Projectiles/wizard_projectile.png");
+			this.load.image("bard_projectile", "./Assets/Images/Characters/Projectiles/bard_projectile.png");
+			this.load.image("rogue_projectile", "./Assets/Images/Characters/Projectiles/rogue_projectile.png");
 
             ///Nivel 1///
             // Fondo
@@ -228,6 +231,7 @@ class Scene_Boot extends Phaser.Scene {
             this.load.image("level_1_fg_details", "./Assets/Images/BackGrounds/level_1_fg_details.png");
             this.load.image("level_1_fg_move", "./Assets/Images/BackGrounds/level_1_fg_move.png");
             this.load.image("level_1_plats_floor", "./Assets/Images/BackGrounds/level_1_plats_floor.png");
+			
             // Plataformas
             this.load.image("floor", "./Assets/Images/Platforms/floor.png");
             this.load.image("base_big_plat_2", "./Assets/Images/Platforms/base_big_plat_2.png");
@@ -368,8 +372,7 @@ class Scene_Boot extends Phaser.Scene {
                     console.log('[DEBUG] WebSocket connection closed.');
                 }
                 try {
-                    if (this.scene.isActive("scene_boot"))
-                    {
+                    if (this.scene.isActive("scene_boot")) {
                         loadingText.setText('Connection failed, try again later');
                     }
                     else
@@ -512,7 +515,7 @@ class Scene_Boot extends Phaser.Scene {
                     break;
                 case "AUTHENTICATION_ERROR":
                     this.scene.get('scene_boot').AuthenticationError(data);
-                break;
+                    break;
                 case "AUTHENTICATION_SUCCESS":
                     this.scene.get('scene_boot').AuthenticationSuccess(data);
                     break;
@@ -527,6 +530,9 @@ class Scene_Boot extends Phaser.Scene {
                     break;
                 case "UPDATE_SPACE_GYM":
                     this.scene.get('scene_boot').UpdateSpaceGym(data);
+                    break;
+                case "ACTION":
+                    this.scene.get('scene_boot').Action(data);
                     break;
                 default:
                     if (game.global.DEBUG_MODE) {
@@ -590,14 +596,13 @@ class Scene_Boot extends Phaser.Scene {
     // Método GetRanking, que guarda la información del ranking y pasa a la escena de este
     GetRanking(data) {
         // Se guardan los datos del ranking
-        for (var i = 0; i < data.ranking.length; i++)
-        {
+        for (var i = 0; i < data.ranking.length; i++) {
             var name = data.ranking[i].name
             var wins = data.ranking[i].wins;
-		    var loses = data.ranking[i].loses;
-		    var points = data.ranking[i].points;
-		    
-		    game.global.ranking[i] = new RankingUser(name, wins, loses, points);
+            var loses = data.ranking[i].loses;
+            var points = data.ranking[i].points;
+
+            game.global.ranking[i] = new RankingUser(name, wins, loses, points);
         }
 
         // Cambia de escena a la escena del ranking
@@ -616,19 +621,76 @@ class Scene_Boot extends Phaser.Scene {
         }
     }
 
-    UpdateSpaceGym(data){
+    UpdateSpaceGym(data) {
         // Player
         game.mPlayer.image.x = RelativeScale(data.player.posX, "x");
         game.mPlayer.image.y = RelativeScale(data.player.posY, "y");
         game.mPlayer.image.flipX = data.player.flipped;
-        if (data.player.onFloor){
+        if (data.player.onFloor) {
             this.scene.get('scene_space_gym').falling = false;
         }
         this.scene.get('scene_space_gym').canBasicAttack = data.player.canBasicAttack;
         this.scene.get('scene_space_gym').canSpecialAttack = data.player.canSpecialAttack;
 
         // Dummy
-        this.scene.get('scene_space_gym').dummy.x = RelativeScale(data.dummy.posX,"x");
-        this.scene.get('scene_space_gym').dummy.y = RelativeScale(data.dummy.posY,"y");
+        this.scene.get('scene_space_gym').dummy.x = RelativeScale(data.dummy.posX, "x");
+        this.scene.get('scene_space_gym').dummy.y = RelativeScale(data.dummy.posY, "y");
+
+        // Proyectiles
+        // console.log(data.projectiles); // array
+        // console.log(data.projectiles.length);
+        for (var i = 0; i<data.projectiles.length; i++){
+            console.log(data.projectiles[i].isActive);
+            this.scene.get('scene_space_gym').projectiles[i].setVisible(data.projectiles[i].isActive);
+            this.scene.get('scene_space_gym').projectiles[i].x = RelativeScale(data.projectiles[i].posX,"x");
+            this.scene.get('scene_space_gym').projectiles[i].y = RelativeScale(data.projectiles[i].posY,"y");
+            this.scene.get('scene_space_gym').projectiles[i].setAngle(data.projectiles[i].facingAngle);
+            this.scene.get('scene_space_gym').projectiles[i].flipX = data.projectiles[i].flipX;
+        }
+    }
+
+    Action(data) {
+        switch (data.type) {
+            case "BASIC_ATTACK":
+                if (game.mPlayer.room === -1) { // Space_gym
+                    this.scene.get("scene_space_gym").attacking = true;
+                    game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_attack", true);
+                } else {
+                    if (game.mPlayer.difficultySel === 0) { // Primer mapa
+                        if (game.mPlayer.userName === data.player_name) { // Mi jugador lanza la habilidad
+                            game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_attack", true);
+                        } else { // El otro jugador lanza la habilidad
+
+                        }
+                    } else { // Segundo mapa
+                        if (game.mPlayer.userName === data.player_name) { // Mi jugador lanza la habilidad
+                            game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_attack", true);
+                        } else { // El otro jugador lanza la habilidad
+
+                        }
+                    }
+                }
+
+                break;
+            case "SPECIAL_ATTACK":
+                if (game.mPlayer.room === -1) { // Space_gym
+                    game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_attack", true);
+                } else {
+                    if (game.mPlayer.difficultySel === 0) { // Primer mapa
+                        if (game.mPlayer.userName === data.player_name) { // Mi jugador lanza la habilidad
+                            game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_attack", true);
+                        } else { // El otro jugador lanza la habilidad
+
+                        }
+                    } else { // Segundo mapa
+                        if (game.mPlayer.userName === data.player_name) { // Mi jugador lanza la habilidad
+                            game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_attack", true);
+                        } else { // El otro jugador lanza la habilidad
+
+                        }
+                    }
+                }
+                break;
+        }
     }
 }
