@@ -416,10 +416,14 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						user.getSession().sendMessage(new TextMessage(msg.toString()));
 					break;
 					case "MATCH_FOUND":
-
 					break;
 					case "REMATCH":
-
+					break;
+					case "BASIC_ATTACK":
+						user.getPlayer_selected().getBasicWeapon().attack();
+					break;
+					case "SPECIAL_ATTACL":
+						user.getPlayer_selected().getSpecialWeapon().attack();
 					break;
 					// En cualquier otro caso
 				default:

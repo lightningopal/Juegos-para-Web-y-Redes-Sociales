@@ -15,6 +15,9 @@ public class Player extends PhysicsObject{
     private int maxHP;
     private int currentHP;
 
+    private Weapon basicWeapon;
+    private Weapon specialWeapon;
+
     // Físicas
     private boolean movingLeft;
     private boolean movingRight;
@@ -117,6 +120,12 @@ public class Player extends PhysicsObject{
 
     public int getCurrentHP() { return currentHP; }
     public void setCurrentHP(int currentHP) { this.currentHP = currentHP; }
+
+    public Weapon getBasicWeapon() { return basicWeapon; }
+    public void setBasicWeapon(Weapon basicWeapon) { this.basicWeapon = basicWeapon; }
+
+    public Weapon getSpecialWeapon() { return specialWeapon; }
+    public void setSpecialWeapon(Weapon specialWeapon) { this.specialWeapon = specialWeapon; }
 
     // Físicas
     public boolean isMovingLeft(){ return movingLeft; }
