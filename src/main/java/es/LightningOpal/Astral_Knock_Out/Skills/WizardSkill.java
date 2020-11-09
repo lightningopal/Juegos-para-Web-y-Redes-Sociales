@@ -1,11 +1,13 @@
-package es.LightningOpal.Astral_Knock_Out;
+package es.LightningOpal.Astral_Knock_Out.Skills;
+
+import es.LightningOpal.Astral_Knock_Out.*;
 
 public class WizardSkill extends Skill{
 
     private double speed;
     private double damage;
 
-    public WizardSkill(Player target, double duration, double speed, double damage){
+    public WizardSkill(PhysicsObject target, double duration, double speed, double damage){
         super(target, duration);
         this.speed = speed;
         this.damage = damage;

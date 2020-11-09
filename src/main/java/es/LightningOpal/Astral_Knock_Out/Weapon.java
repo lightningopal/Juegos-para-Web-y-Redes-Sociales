@@ -1,5 +1,7 @@
 package es.LightningOpal.Astral_Knock_Out;
 
+import es.LightningOpal.Astral_Knock_Out.Skills.*;
+
 import java.util.Timer;
 import java.util.TimerTask;
 

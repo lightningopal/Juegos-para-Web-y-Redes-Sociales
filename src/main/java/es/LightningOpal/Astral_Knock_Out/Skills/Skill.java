@@ -1,20 +1,22 @@
-package es.LightningOpal.Astral_Knock_Out;
+package es.LightningOpal.Astral_Knock_Out.Skills;
+
+import es.LightningOpal.Astral_Knock_Out.*;
 
 public class Skill {
-    protected Player target;
+    protected PhysicsObject target;
     protected double duration;
     protected boolean isActive;
 
-    public Skill(Player target, double duration){
+    public Skill(PhysicsObject target, double duration){
         this.target = target;
         this.duration = duration;
         this.isActive = false;
     }
 
-    public Player getTarget() {
+    public PhysicsObject getTarget() {
         return target;
     }
-    public void setTarget(Player target) {
+    public void setTarget(PhysicsObject target) {
         this.target = target;
     }
 

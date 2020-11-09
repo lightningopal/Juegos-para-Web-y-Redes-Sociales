@@ -27,7 +27,8 @@ public class WebsocketHandler extends TextWebSocketHandler {
 	private ObjectMapper mapper = new ObjectMapper();
 
 	/// Métodos
-	// Método afterConnectionEstablished, que se ejecuta cuando se establece una conexión al servidor
+	// Método afterConnectionEstablished, que se ejecuta cuando se establece una
+	/// conexión al servidor
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		// Se crea un usuario para esa sesión
@@ -55,15 +56,12 @@ public class WebsocketHandler extends TextWebSocketHandler {
 		}
 
 		// Se intenta escribir la información en el log
-		try
-		{
+		try {
 			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
 			String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
 			AKO_Server.logWriter.write(time + " - Conected user with session " + user.getSession().getId() + ".\n");
 			AKO_Server.logWriter.close();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			// Si falla, se muestra el error
 			e.printStackTrace();
 		}
@@ -76,7 +74,8 @@ public class WebsocketHandler extends TextWebSocketHandler {
 			// Lee la información del mensaje en un JsonNode 'node'
 			JsonNode node = mapper.readTree(message.getPayload());
 
-			// Crea un ObjectNode 'msg' para almacenar el mensaje que será enviado posteriormente
+			// Crea un ObjectNode 'msg' para almacenar el mensaje que será enviado
+			// posteriormente
 			ObjectNode msg = mapper.createObjectNode();
 
 			// Obtiene el usuario que ha enviado el mensaje
@@ -88,7 +87,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 			Player thisPlayer;
 
 			if (DEBUG_MODE) {
-				//System.out.println(node.get("event").asText());
+				// System.out.println(node.get("event").asText());
 			}
 
 			// Dependiendo del tipo de evento en el mensaje, ejecuta distintas funciones
@@ -118,13 +117,13 @@ public class WebsocketHandler extends TextWebSocketHandler {
 								msg.put("event", "AUTHENTICATION_ERROR");
 								msg.put("message", "User is already connected");
 
-								//Enviar el mensaje
+								// Enviar el mensaje
 								user.getSession().sendMessage(new TextMessage(msg.toString()));
 
 								if (DEBUG_MODE) {
 									System.out.println("Usuario ya conectado");
 								}
-							// Si el usuario no está conectado, pasa el login
+								// Si el usuario no está conectado, pasa el login
 							} else {
 								// Se conecta el usuario al servidor
 								User thisUser = UsersController.ConnectUser(name);
@@ -148,7 +147,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 									System.out.println("Usuario conectado: " + name);
 								}
 							}
-						// Si los datos no coinciden, la contraseña es incorrecta
+							// Si los datos no coinciden, la contraseña es incorrecta
 						} else {
 							// Asignar evento y mensaje a enviar en el ObjectNode 'msg'
 							msg.put("event", "AUTHENTICATION_ERROR");
@@ -161,7 +160,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 								System.out.println("Contraseña incorrecta");
 							}
 						}
-					// Si el usuario no existe
+						// Si el usuario no existe
 					} else {
 						// Asignar evento y mensaje a enviar en el ObjectNode 'msg'
 						msg.put("event", "AUTHENTICATION_ERROR");
@@ -184,9 +183,8 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					// Comprobar si ya existe un usuario con ese nombre en el servidor
 					boolean userAlreadyExists = false;
 
-					for(String username : UsersController.loginInfo.keySet()){
-						if (name.equalsIgnoreCase(username))
-						{
+					for (String username : UsersController.loginInfo.keySet()) {
+						if (name.equalsIgnoreCase(username)) {
 							userAlreadyExists = true;
 							break;
 						}
@@ -204,7 +202,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						if (DEBUG_MODE) {
 							System.out.println("Ya existe un usuario con ese nombre");
 						}
-					// Si el usuario no existe, se crea
+						// Si el usuario no existe, se crea
 					} else {
 						// Se registra al nuevo usuario
 						User thisUser = UsersController.RegisterNewUser(name, password);
@@ -241,8 +239,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					ArrayNode rankingNode = mapper.createArrayNode();
 
 					// Asignamos los datos en el ArrayNode 'rankingNode'
-					for (int i = 0; i < ranking.length; i++)
-					{
+					for (int i = 0; i < ranking.length; i++) {
 						// Creamos un ObjectNode 'rankingPlayer' para cada jugador
 						ObjectNode rankingPlayer = mapper.createObjectNode();
 
@@ -289,21 +286,17 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 					// Obtenemos los datos del mensaje
 					String volType = node.get("volType").asText();
-					float value = (float)node.get("value").asDouble();
+					float value = (float) node.get("value").asDouble();
 
 					// Actualizamos el valor
-					if (volType.equals("musicVol"))
-					{
+					if (volType.equals("musicVol")) {
 						user.setMusicVol(value);
-					}
-					else if (volType.equals("sfxVol"))
-					{
+					} else if (volType.equals("sfxVol")) {
 						user.setSfxVol(value);
-					}
-					else
-					{
+					} else {
 						if (DEBUG_MODE) {
-							System.out.println("Tipo de volumen no reconocido: " + volType + " - " + user.getUser_name());
+							System.out
+									.println("Tipo de volumen no reconocido: " + volType + " - " + user.getUser_name());
 						}
 					}
 
@@ -325,16 +318,16 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					 * game.addProjectile(projectile.getId(), projectile); }
 					 */
 					break;
-					// Cuando se solicita la creación de una partida de "space gym"
-					case "CREATE_SPACE_GYM":
+				// Cuando se solicita la creación de una partida de "space gym"
+				case "CREATE_SPACE_GYM":
 					// Se obtienen los atributos elegidos
 					playerType = node.get("playerType").asText();
 					secondarySkill = node.get("skill").asInt();
 
 					// Se asignan los atributos
 					user.setPlayer_selected(new Player(user.getUserId(), user.getSession(), user.getUser_name(),
-					playerType, secondarySkill, SpaceGym_Game.playerPosX, SpaceGym_Game.playerPosY));
-					
+							playerType, secondarySkill, SpaceGym_Game.playerPosX, SpaceGym_Game.playerPosY));
+
 					// Se crea la partida de space gym
 					GamesManager.INSTANCE.startSpaceGym(user.getPlayer_selected());
 
@@ -349,47 +342,40 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						System.out.println("Space Gym: " + name);
 					}
 					break;
-					// Cuando se reciben los datos del usuario para actualizar el space gym
-					case "UPDATE_SPACE_GYM":
-						// Se obtiene el jugador del usuario
-						thisPlayer = user.getPlayer_selected();
+				// Cuando se reciben los datos del usuario para actualizar el space gym
+				case "UPDATE_SPACE_GYM":
+					// Se obtiene el jugador del usuario
+					thisPlayer = user.getPlayer_selected();
 
-						// Se obtiene la información de movimiento del nodo
-						boolean movingLeft = node.get("movingLeft").asBoolean();
-						boolean movingRight = node.get("movingRight").asBoolean();
-						boolean falling = node.get("falling").asBoolean();
+					// Se obtiene la información de movimiento del nodo
+					boolean movingLeft = node.get("movingLeft").asBoolean();
+					boolean movingRight = node.get("movingRight").asBoolean();
+					boolean falling = node.get("falling").asBoolean();
 
-						// Se actualizan los valores de información de movimiento del jugador
-						thisPlayer.updatePlayerValues(movingLeft, movingRight, falling);
+					// Se actualizan los valores de información de movimiento del jugador
+					thisPlayer.updatePlayerValues(movingLeft, movingRight, falling);
 					break;
-					case "JUMP":
-						user.getPlayer_selected().jump();
-					break;
-					case "FALL":
-						user.getPlayer_selected().fall();
-					break;
-					// Cuando un jugador busca partida
-					case "SEARCHING_GAME":
-						// Se obtienen los atributos elegidos
-						playerType = node.get("playerType").asText();
-						secondarySkill = node.get("skill").asInt();
-						int level = node.get("level").asInt();
+				// Cuando un jugador busca partida
+				case "SEARCHING_GAME":
+					// Se obtienen los atributos elegidos
+					playerType = node.get("playerType").asText();
+					secondarySkill = node.get("skill").asInt();
+					int level = node.get("level").asInt();
 
-						// Se crea el jugador con los datos
-						thisPlayer = new Player(user.getUserId(), user.getSession(),
-						user.getUser_name(), playerType, secondarySkill, 0, 0);
+					// Se crea el jugador con los datos
+					thisPlayer = new Player(user.getUserId(), user.getSession(), user.getUser_name(), playerType,
+							secondarySkill, 0, 0);
 
-						// Se asignan los atributos
-						user.setPlayer_selected(thisPlayer);
+					// Se asignan los atributos
+					user.setPlayer_selected(thisPlayer);
 
-						// Si hay jugadores en cola, se empareja contra el primero
-						if (GamesManager.INSTANCE.searching_players.size() > 0)
-						{
-							// Obtenemos la información del rival
-							Player rival = GamesManager.INSTANCE.searching_players.remove();
+					// Si hay jugadores en cola, se empareja contra el primero
+					if (GamesManager.INSTANCE.searching_players.size() > 0) {
+						// Obtenemos la información del rival
+						Player rival = GamesManager.INSTANCE.searching_players.remove();
 
-							// Se crea la partida
-							int room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
+						// Se crea la partida
+						int room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
 
 							// Creamos un ArrayNode 'players' para guardar la información de ambos jugadores
 							ArrayNode players = mapper.createArrayNode();
@@ -425,18 +411,17 @@ public class WebsocketHandler extends TextWebSocketHandler {
 							thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
 							rival.getSession().sendMessage(new TextMessage(msg.toString()));
 
-							if (DEBUG_MODE) {
-								System.out.println("Partida creada: " + thisPlayer.getUserName() + " - " + rival.getUserName());
-							}
+						if (DEBUG_MODE) {
+							System.out.println("Partida creada: " + thisPlayer.getUserName() + " - " + rival.getUserName());
 						}
-						// Si no, añadimos al jugador a la cola
-						else
-						{
-							// Añade al jugador a la cola
-							GamesManager.INSTANCE.searching_players.add(thisPlayer);
+					}
+					// Si no, añadimos al jugador a la cola
+					else {
+						// Añade al jugador a la cola
+						GamesManager.INSTANCE.searching_players.add(thisPlayer);
 
-							// Asignar evento en el ObjectNode 'msg'
-							msg.put("event", "SEARCHING_GAME");
+						// Asignar evento en el ObjectNode 'msg'
+						msg.put("event", "SEARCHING_GAME");
 
 							// Enviar el mensaje
 							user.getSession().sendMessage(new TextMessage(msg.toString()));
@@ -445,23 +430,42 @@ public class WebsocketHandler extends TextWebSocketHandler {
 								name = user.getUser_name();
 								System.out.println("Buscando partida: " + name);
 							}
-						}
+					}
+				break;
+				case "MATCH_START":
+					// COMENTARIO PARA THUND3R: AHORA TOCA EL MENSAJE QUE SE ENVIA DESDE
+					// CLIENTE AL SERVIDOR PARA INFORMAR QUE YA LE HA CARGADO LA ESCENA
+					// DE LA PARTIDA Y EL SERVIDOR LE DICE A AMBOS QUE EMPIEZEN A LA VEZ
+				break;
+				case "MATCH_FOUND":
+					break;
+				case "REMATCH":
+					break;
+				
+				case "ACTION":
+					switch (node.get("type").asText()) {
+						case "JUMP":
+							user.getPlayer_selected().jump();
+							break;
 
+						case "FALL":
+							user.getPlayer_selected().fall();
+							break;
+
+						case "BASIC_ATTACK":
+							user.getPlayer_selected().getBasicWeapon().attack();
+							break;
+
+						case "SPECIAL_ATTACK":
+							user.getPlayer_selected().getSpecialWeapon().attack();
+							break;
+
+						default:
+						break;
+					}
 					break;
-					case "MATCH_START":
-						// COMENTARIO PARA THUND3R: AHORA TOCA EL MENSAJE QUE SE ENVIA DESDE
-						// CLIENTE AL SERVIDOR PARA INFORMAR QUE YA LE HA CARGADO LA ESCENA
-						// DE LA PARTIDA Y EL SERVIDOR LE DICE A AMBOS QUE EMPIEZEN A LA VEZ
-					break;
-					case "REMATCH":
-					break;
-					case "BASIC_ATTACK":
-						user.getPlayer_selected().getBasicWeapon().attack();
-					break;
-					case "SPECIAL_ATTACL":
-						user.getPlayer_selected().getSpecialWeapon().attack();
-					break;
-					// En cualquier otro caso
+
+				// En cualquier otro caso
 				default:
 					break;
 			}
@@ -479,30 +483,25 @@ public class WebsocketHandler extends TextWebSocketHandler {
 		User user = (User) session.getAttributes().get(USER_ATTRIBUTE);
 
 		// Intenta escribir la información en el archivo de log
-		try
-		{
+		try {
 			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
 			String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-			if (user.getUser_name() != "")
-			{
+			if (user.getUser_name() != "") {
 				AKO_Server.logWriter.write(time + " - Player disconnected: " + user.getUser_name() + ".\n");
-			}
-			else
-			{
-				AKO_Server.logWriter.write(time + " - Disconnected user with session " + user.getSession().getId() + ".\n");
+			} else {
+				AKO_Server.logWriter
+						.write(time + " - Disconnected user with session " + user.getSession().getId() + ".\n");
 			}
 			AKO_Server.logWriter.close();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			// Si falla, se muestra el error
 			e.printStackTrace();
 		}
-		
+
 		// Desconecta al usuario
 		UsersController.DisconnectUser(user.getUser_name());
 
-		if (DEBUG_MODE){
+		if (DEBUG_MODE) {
 			System.out.println("Usuario desconectado: " + user.getUser_name());
 		}
 	}
