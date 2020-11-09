@@ -479,6 +479,7 @@ class Scene_Boot extends Phaser.Scene {
     }
 
     UpdateSpaceGym(data){
+        // Player
         game.mPlayer.image.x = RelativeScale(data.player.posX, "x");
         game.mPlayer.image.y = RelativeScale(data.player.posY, "y");
         game.mPlayer.image.flipX = data.player.flipped;
@@ -487,5 +488,9 @@ class Scene_Boot extends Phaser.Scene {
         }
         this.scene.get('scene_space_gym').canBasicAttack = data.player.canBasicAttack;
         this.scene.get('scene_space_gym').canSpecialAttack = data.player.canSpecialAttack;
+
+        // Dummy
+        this.scene.get('scene_space_gym').dummy.x = RelativeScale(data.dummy.posX,"x");
+        this.scene.get('scene_space_gym').dummy.y = RelativeScale(data.dummy.posY,"y");
     }
 }

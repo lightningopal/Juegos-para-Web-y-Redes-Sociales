@@ -1,11 +1,13 @@
-package es.LightningOpal.Astral_Knock_Out;
+package es.LightningOpal.Astral_Knock_Out.Skills;
 
-public class BardSkill extends Skill{
+import es.LightningOpal.Astral_Knock_Out.*;
+
+public class RogueSkill extends Skill{
 
     private double speed;
     private double damage;
 
-    public BardSkill(Player target, double duration, double speed, double damage){
+    public RogueSkill(PhysicsObject target, double duration, double speed, double damage){
         super(target, duration);
         this.speed = speed;
         this.damage = damage;
@@ -28,6 +30,6 @@ public class BardSkill extends Skill{
     @Override
     public void activate(){
         // Activar habilidad
-        System.out.println("Habilidad de Bardo");
+        System.out.println("Habilidad de Pícara");
     }
 }

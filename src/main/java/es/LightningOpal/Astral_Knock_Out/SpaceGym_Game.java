@@ -35,6 +35,7 @@ public class SpaceGym_Game {
     ObjectMapper mapper = new ObjectMapper();
     private ScheduledExecutorService scheduler;
     private Player player;
+    private PhysicsObject dummy;
     private String userName;
     
     private ArrayList<PhysicsObject> platforms = new ArrayList<PhysicsObject>(9);
@@ -46,7 +47,9 @@ public class SpaceGym_Game {
         player = player_;
         User thisUser = (User) player.getSession().getAttributes().get("USER");
         userName = thisUser.getUser_name();
-        //Plataformas
+        // Dummy
+        this.dummy = new PhysicsObject(false, dummyPosX, dummyPosY, 23.0, 42.0, -7.0, -1.0);
+        // Plataformas
         platforms.add(new PhysicsObject(true, 960.0, 1038.0, 960.0, 33.0, 0.0, 9.0)); // floor
         platforms.add(new PhysicsObject(true, 1527.50, 747.50, 187.50, 37.50, 0.0, -41.0)); // base_big_plat_2
         platforms.add(new PhysicsObject(true, 947.0, 511.0, 140.50, 30.0, 0.0, -39.0)); // base_t_plat
@@ -107,6 +110,7 @@ public class SpaceGym_Game {
         ObjectNode json = mapper.createObjectNode();
         // Se crea un ObjectNode 'jsonPlayer' para guardar la información del jugador
         ObjectNode jsonPlayer = mapper.createObjectNode();
+        ObjectNode jsonDummy = mapper.createObjectNode();
         // ArrayNode arrayNodePlatforms = mapper.createArrayNode();
         // ArrayNode arrayNodeProjectiles = mapper.createArrayNode();
 
@@ -130,6 +134,15 @@ public class SpaceGym_Game {
             jsonPlayer.put("onFloor", player.IsOnFloor());
             jsonPlayer.put("canBasicAttack", player.getBasicWeapon().CanAttack());
             jsonPlayer.put("canSpecialAttack", player.getSpecialWeapon().CanAttack());
+
+            dummy.incVelocity(0, GRAVITY); // Gravedad
+            dummy.calculateMovement();
+            for (PhysicsObject platform : platforms) {
+                dummy.collide(platform);
+            }
+            
+            jsonDummy.put("posX", dummy.getPosX());
+            jsonDummy.put("posY", dummy.getPosY());
 
             // Update bullets and handle collision
             /*
@@ -163,6 +176,7 @@ public class SpaceGym_Game {
             json.put("event", "UPDATE_SPACE_GYM");
             // Añade el ObjectNode 'jsonPlayer' al ObjectNode 'json' para unificar la información
             json.putPOJO("player", jsonPlayer);
+            json.putPOJO("dummy", jsonDummy);
             // json.putPOJO("projectiles", arrayNodeProjectiles);
 
             // Envía al jugador un mensaje con la información del ObjectNode 'json'
