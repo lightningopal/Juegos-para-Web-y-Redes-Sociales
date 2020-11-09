@@ -215,19 +215,21 @@ class Scene_Space_Gym extends Phaser.Scene {
             });
     
             this.cursors1.basicAttack.on("down", function(event){
-                if (!that.attacking && that.canBasicAttack){
+                if (!that.attacking){
                     that.attacking = true;
-                    game.mPlayer.image.anims.play(game.mPlayer.characterSel.type+"_attack", true);
-                    game.global.socket.send(JSON.stringify({event: "BASIC_ATTACK"}));
+                    // game.mPlayer.image.anims.play(game.mPlayer.characterSel.type+"_attack", true);
+                    game.global.socket.send(JSON.stringify({event: "ACTION", type: "BASIC_ATTACK"}));
                 }
             });
+            /*
             this.cursors1.specialAttack.on("down", function(event){
-                if (!that.attacking && that.canSpecialAttack){
+                if (!that.attacking){
                     that.attacking = true;
                     game.mPlayer.image.anims.play(game.mPlayer.characterSel.type+"_attack", true);
-                    game.global.socket.send(JSON.stringify({event: "SPECIAL_ATTACK"}));
+                    game.global.socket.send(JSON.stringify({event: "ACTION", type: "SPECIAL_ATTACK"}));
                 }
             });
+            */
         }// Fin DEVICE == desktop
 
         game.mPlayer.image.on("animationcomplete", function(anim){
@@ -356,11 +358,11 @@ class Scene_Space_Gym extends Phaser.Scene {
     // Petición de salto del personaje
     Jump(){
         this.falling = false;
-        game.global.socket.send(JSON.stringify({event: "JUMP"}));
+        game.global.socket.send(JSON.stringify({event: "ACTION", type: "JUMP"}));
     }
     Fall(){
         this.falling = true;
-        game.global.socket.send(JSON.stringify({event: "FALL"}));
+        game.global.socket.send(JSON.stringify({event: "ACTION", type: "FALL"}));
     }
     // Petición de ataque básico
     BasicAttack(){
