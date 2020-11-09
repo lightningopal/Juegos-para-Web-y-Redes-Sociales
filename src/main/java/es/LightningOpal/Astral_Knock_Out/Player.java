@@ -36,7 +36,7 @@ public class Player extends PhysicsObject{
     }
 
     // Constructor de la clase por atributos
-    public Player(int id, WebSocketSession session, String type, String userName, int skill, int x, int y/*, int mSpeed, int jForce, int hp*/){
+    public Player(int id, WebSocketSession session, String userName, String type, int skill, int x, int y/*, int mSpeed, int jForce, int hp*/){
         playerId = id;
         this.session = session;
         this.userName = userName;
@@ -55,7 +55,9 @@ public class Player extends PhysicsObject{
                 this.setGroundDrag(3);
                 this.setJumpForce(1);
                 this.setMaxHP(100);
+                this.basicWeapon = new Weapon(new BardSkill(new Player(),500,10,10), 1000);
                 break;
+
             case "berserker":
                 this.setHalfHeight(60);
                 this.setHalfWidth(25);
@@ -66,7 +68,9 @@ public class Player extends PhysicsObject{
                 this.setGroundDrag(4);
                 this.setJumpForce(22);
                 this.setMaxHP(100);
+                this.basicWeapon = new Weapon(new BerserkerSkill(new Player(),500,10,10), 1000);
                 break;
+                
             case "wizard":
                 this.setHalfHeight(62.5);
                 this.setHalfWidth(25);
@@ -77,7 +81,9 @@ public class Player extends PhysicsObject{
                 this.setGroundDrag(6);
                 this.setJumpForce(1);
                 this.setMaxHP(100);
+                this.basicWeapon = new Weapon(new WizardSkill(new Player(),500,10,10), 1000);
                 break;
+                
             case "rogue":
                 this.setHalfHeight(35);
                 this.setHalfWidth(31);
@@ -88,9 +94,32 @@ public class Player extends PhysicsObject{
                 this.setGroundDrag(4);
                 this.setJumpForce(1);
                 this.setMaxHP(100);
+                this.basicWeapon = new Weapon(new RogueSkill(new Player(),500,10,10), 1000);
                 break;
+
             default:
                 break;
+        }
+        switch(this.skill){
+            case 1:
+                this.specialWeapon = new Weapon();
+            break;
+
+            case 2:
+                this.specialWeapon = new Weapon();
+            break;
+
+            case 3:
+                this.specialWeapon = new Weapon();
+            break;
+
+            case 4:
+                this.specialWeapon = new Weapon();
+            break;
+            
+            default:
+            this.specialWeapon = new Weapon();
+            break;
         }
         numJumps = 1;
         currentHP = maxHP;

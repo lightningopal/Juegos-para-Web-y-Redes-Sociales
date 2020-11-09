@@ -8,9 +8,13 @@ public class Weapon {
     private boolean canAttack;
     private Timer coolDownTimer;
 
-    private int attack;
+    private Skill attack;
 
-    public Weapon(int attack, long attackRatio){
+    public Weapon(){
+        this.canAttack = false;
+    }
+
+    public Weapon(Skill attack, long attackRatio){
         this.attack = attack;
         this.attackRatio = attackRatio;
         this.coolDownTimer = new Timer();
@@ -33,11 +37,11 @@ public class Weapon {
         this.canAttack = canAttack;
     }
 
-    public int getAttack() {
+    public Skill getAttack() {
         return attack;
     }
 
-    public void setAttack(int attack) {
+    public void setAttack(Skill attack) {
         this.attack = attack;
     }
 
@@ -50,6 +54,7 @@ public class Weapon {
                 coolDown();
             }
         }, this.attackRatio);
+        this.attack.activate();
     }
 
     public void coolDown(){
