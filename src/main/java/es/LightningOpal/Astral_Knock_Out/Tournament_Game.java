@@ -17,12 +17,17 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;*/
 
 public class Tournament_Game {
-    /*private final static int FPS = 30;
+    private final static int FPS = 30;
 	private final static long TICK_DELAY = 1000 / FPS;
 	public final static boolean DEBUG_MODE = true;
 	public final static boolean VERBOSE_MODE = true;
 
-	ObjectMapper mapper = new ObjectMapper();
+	public final static int playerAPosX = 500;
+    public final static int playerAPosY = 0;
+    public final static int playerBPosX = 1500;
+    public final static int playerBPosY = 940;
+
+	/*ObjectMapper mapper = new ObjectMapper();
 	private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
 	// GLOBAL GAME ROOM

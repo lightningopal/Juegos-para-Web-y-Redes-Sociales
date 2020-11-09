@@ -6,9 +6,9 @@ import org.springframework.web.socket.WebSocketSession;
 // Clase Player, que contiene la información de un jugador
 public class Player extends PhysicsObject{
     /// Variables
-    // Creo que hay que duplicar el nombre para poder mandárselo al otro jugador (Thund3r).
     private int playerId;
     private WebSocketSession session;
+    private String userName;
     private String playerType;
     private int skill;
     private int numJumps;
@@ -33,9 +33,10 @@ public class Player extends PhysicsObject{
     }
 
     // Constructor de la clase por atributos
-    public Player(WebSocketSession session, int id, String type, int skill, int x, int y/*, int mSpeed, int jForce, int hp*/){
-        this.session = session;
+    public Player(int id, WebSocketSession session, String type, String userName, int skill, int x, int y/*, int mSpeed, int jForce, int hp*/){
         playerId = id;
+        this.session = session;
+        this.userName = userName;
         playerType = type;
         this.skill = skill;
         this.setPosX(x);
@@ -97,7 +98,10 @@ public class Player extends PhysicsObject{
     public void setPlayerId(int id){ playerId = id; }
 
     public WebSocketSession getSession() {return session;}
-	public void setSession(WebSocketSession session) {this.session = session;}
+    public void setSession(WebSocketSession session) {this.session = session;}
+    
+    public String getUserName() { return userName; }
+    public void setUserName(String userName) { this.userName = userName; }
 
     public String getPlayerType(){ return playerType; }
     public void setPlayerType(String type){ playerType = type; }
@@ -110,6 +114,9 @@ public class Player extends PhysicsObject{
 
     public int getMaxHP(){ return maxHP; }
     public void setMaxHP(int mHP){ maxHP = mHP; }
+
+    public int getCurrentHP() { return currentHP; }
+    public void setCurrentHP(int currentHP) { this.currentHP = currentHP; }
 
     // Físicas
     public boolean isMovingLeft(){ return movingLeft; }
@@ -174,7 +181,6 @@ public class Player extends PhysicsObject{
         }
         calculateMovement();
     }
-
 
     // Método sobrescrito toString, que devuelve una cadena de texto con la información de la clase
     @Override

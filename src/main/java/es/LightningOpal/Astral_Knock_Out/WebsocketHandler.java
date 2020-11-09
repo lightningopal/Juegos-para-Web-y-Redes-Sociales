@@ -12,6 +12,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import ch.qos.logback.core.joran.conditional.ElseAction;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -80,8 +82,10 @@ public class WebsocketHandler extends TextWebSocketHandler {
 			// Obtiene el usuario que ha enviado el mensaje
 			User user = (User) session.getAttributes().get(USER_ATTRIBUTE);
 
-			// Variables nombre y contraseña
-			String name, password;
+			// Variables que se utilizan en distintos casos.
+			String name, password, playerType;
+			int secondarySkill;
+			Player thisPlayer;
 
 			if (DEBUG_MODE) {
 				//System.out.println(node.get("event").asText());
@@ -307,16 +311,6 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						System.out.println("Actualizado volumen: " + volType + " - " + user.getUser_name());
 					}
 					break;
-				case "SEARCHING_GAME":
-					break;
-				case "MATCH_FOUND":
-					break;
-				case "REMATCH":
-					break;
-				/*
-				 * case "JOIN ROOM": msg.put("event", "NEW ROOM"); msg.put("room", "GLOBAL");
-				 * user.getSession().sendMessage(new TextMessage(msg.toString())); break;
-				 */
 				case "UPDATE_GAME_STATE":
 					// Recibir datos de control (movingLeft,movingRight...)
 					// Recibir Id de la sala
@@ -334,12 +328,12 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					// Cuando se solicita la creación de una partida de "space gym"
 					case "CREATE_SPACE_GYM":
 					// Se obtienen los atributos elegidos
-					String playerType = node.get("playerType").asText();
-					int secondarySkill = node.get("skill").asInt();
+					playerType = node.get("playerType").asText();
+					secondarySkill = node.get("skill").asInt();
 
 					// Se asignan los atributos
-					user.setPlayer_selected(new Player(user.getSession(), -1, playerType, secondarySkill,
-					 SpaceGym_Game.playerPosX, SpaceGym_Game.playerPosY));
+					user.setPlayer_selected(new Player(user.getUserId(), user.getSession(), user.getUser_name(),
+					playerType, secondarySkill, SpaceGym_Game.playerPosX, SpaceGym_Game.playerPosY));
 					
 					// Se crea la partida de space gym
 					GamesManager.INSTANCE.startSpaceGym(user.getPlayer_selected());
@@ -358,7 +352,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					// Cuando se reciben los datos del usuario para actualizar el space gym
 					case "UPDATE_SPACE_GYM":
 						// Se obtiene el jugador del usuario
-						Player thisPlayer = user.getPlayer_selected();
+						thisPlayer = user.getPlayer_selected();
 
 						// Se obtiene la información de movimiento del nodo
 						boolean movingLeft = node.get("movingLeft").asBoolean();
@@ -367,13 +361,65 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 						// Se actualizan los valores de información de movimiento del jugador
 						thisPlayer.updatePlayerValues(movingLeft, movingRight, falling);
-						
 					break;
 					case "JUMP":
 						user.getPlayer_selected().jump();
 					break;
 					case "FALL":
 						user.getPlayer_selected().fall();
+					break;
+					// Cuando un jugador busca partida
+					case "SEARCHING_GAME":
+						// Se obtienen los atributos elegidos
+						playerType = node.get("playerType").asText();
+						secondarySkill = node.get("skill").asInt();
+
+						// Se crea el jugador con los datos
+						thisPlayer = new Player(user.getUserId(), user.getSession(),
+						user.getUser_name(), playerType, secondarySkill, 0, 0);
+
+						// Se asignan los atributos
+						user.setPlayer_selected(thisPlayer);
+
+						// Si hay jugadores en cola, se empareja contra el primero
+						if (GamesManager.INSTANCE.searching_players.size() > 0)
+						{
+							// Obtenemos la información del rival
+							Player rival = GamesManager.INSTANCE.searching_players.remove();
+
+							// Se crea la partida
+							GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival);
+
+							// Asignar evento en el ObjectNode 'msg'
+							msg.put("event", "GAME_FOUND");
+
+							if (DEBUG_MODE) {
+								System.out.println("Partida creada: " + thisPlayer.getUserName() + " - " + rival.getUserName());
+							}
+						}
+						// Si no, añadimos al jugador a la cola
+						else
+						{
+							// Añade al jugador a la cola
+							GamesManager.INSTANCE.searching_players.add(thisPlayer);
+
+							// Asignar evento en el ObjectNode 'msg'
+							msg.put("event", "SEARCHING_GAME");
+
+							if (DEBUG_MODE) {
+								name = user.getUser_name();
+								System.out.println("Buscando partida: " + name);
+							}
+						}
+
+						// Enviar el mensaje
+						user.getSession().sendMessage(new TextMessage(msg.toString()));
+					break;
+					case "MATCH_FOUND":
+
+					break;
+					case "REMATCH":
+
 					break;
 					// En cualquier otro caso
 				default:

@@ -3,7 +3,7 @@ package es.LightningOpal.Astral_Knock_Out;
 /// Imports
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -19,6 +19,12 @@ public class GamesManager {
 
     // Mapa que guarda las partidas "space gym" que se están ejecutando
     public Map<Player, SpaceGym_Game> spaceGym_games = new ConcurrentHashMap<>();
+
+    // Mapa que guarda las partidas "tournament" que se están ejecutando
+    public Map<Integer, Tournament_Game> tournament_games = new ConcurrentHashMap<>();
+
+    // Cola que guarda los jugadores que están buscando partida
+    public ConcurrentLinkedQueue<Player> searching_players = new ConcurrentLinkedQueue<>();
 
     // Constructor vacio de la clase
     private GamesManager()
@@ -47,5 +53,22 @@ public class GamesManager {
         gameToStop.stopGameLoop();
         // Elimina la partida del mapa de partidas
         spaceGym_games.remove(thisPlayer);
+    }
+
+    public int createTournamentGame(Player playerA, Player playerB)
+    {
+        /*// Crea la partida
+        Tournament_Game newGame = new Tournament_Game(thisPlayer);
+        // Inicia el game loop de esa partida
+        newGame.startGameLoop(scheduler_spaceGym);
+        // Añade la partida al mapa de partidas
+        spaceGym_games.put(thisPlayer, newGame);*/
+
+        return -1;
+    }
+
+    public int startTournamentGame(Player playerA, Player playerB)
+    {
+        return -1;
     }
 }
