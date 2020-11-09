@@ -66,7 +66,11 @@ public class Tournament_Game {
 			platforms.add(new PhysicsObject(true, 1230.50, 115.0, 104.50, 32.50, 0.0, -9.0)); // plat_3
 			platforms.add(new PhysicsObject(true, 945.50, 371.50, 34.0, 84.50, 0.0, -4.50)); // t_plat
 		}
-    }
+	}
+	
+	public Collection<Player> getPlayers() {
+		return players.values();
+	}
 
 	/*public void addProjectile(int id, Projectile projectile) {
 		projectiles.put(id, projectile);
@@ -97,7 +101,26 @@ public class Tournament_Game {
             scheduler.shutdown();
             System.out.println("SE HA CERRADO EL SCHEDULER DE LA PARTIDA DE LOS JUGADORES " + players + ".");
         }
-    }
+	}
+	
+	// Método setPlayersPosition, que establece la posición de los jugadores en el mapa
+	public void setPlayersPosition()
+	{
+		int counter = 0;
+		for (Player player : players.values()) {
+			if (counter == 0)
+			{
+				player.setPosX(playerAPosX);
+				player.setPosY(playerAPosY);
+			}
+			else if (counter == 1)
+			{
+				player.setPosX(playerBPosX);
+				player.setPosY(playerBPosY);
+			}
+			counter++;
+		}
+	}
 
 	public void broadcast(String message) {
 		for (Player player : players.values()) {

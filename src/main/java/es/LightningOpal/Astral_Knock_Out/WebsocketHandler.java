@@ -83,7 +83,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 			// Variables que se utilizan en distintos casos.
 			String name, password, playerType;
-			int secondarySkill;
+			int secondarySkill, room;
 			Player thisPlayer;
 
 			if (DEBUG_MODE) {
@@ -375,7 +375,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						Player rival = GamesManager.INSTANCE.searching_players.remove();
 
 						// Se crea la partida
-						int room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
+						room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
 
 							// Creamos un ArrayNode 'players' para guardar la información de ambos jugadores
 							ArrayNode players = mapper.createArrayNode();
@@ -423,25 +423,48 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						// Asignar evento en el ObjectNode 'msg'
 						msg.put("event", "SEARCHING_GAME");
 
-							// Enviar el mensaje
-							user.getSession().sendMessage(new TextMessage(msg.toString()));
+						// Enviar el mensaje
+						user.getSession().sendMessage(new TextMessage(msg.toString()));
 
-							if (DEBUG_MODE) {
-								name = user.getUser_name();
-								System.out.println("Buscando partida: " + name);
-							}
+						if (DEBUG_MODE) {
+							name = user.getUser_name();
+							System.out.println("Buscando partida: " + name);
+						}
 					}
 				break;
-				case "MATCH_START":
-					// COMENTARIO PARA THUND3R: AHORA TOCA EL MENSAJE QUE SE ENVIA DESDE
-					// CLIENTE AL SERVIDOR PARA INFORMAR QUE YA LE HA CARGADO LA ESCENA
-					// DE LA PARTIDA Y EL SERVIDOR LE DICE A AMBOS QUE EMPIEZEN A LA VEZ
+				// Cuando un jugador tiene todo listo para jugar
+				case "GAME_START":
+					// Obtenemos la sala del nodo
+					room = node.get("room").asInt();
+
+					// Avisamos de que el jugador ya está listo
+					boolean gameStarted = GamesManager.INSTANCE.ready(room);
+
+					// Si la partida ha empezado
+					if (gameStarted)
+					{
+						// Asignar evento en el ObjectNode 'msg'
+						msg.put("event", "GAME_STARTED");
+
+						// Se le envía el mensaje a ambos jugadores
+						GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
+					}
+
+					if (DEBUG_MODE) {
+						String debugString = "Comienza la partida: ";
+
+						for (Player player : GamesManager.INSTANCE.tournament_games.get(room).getPlayers()) {
+							debugString += player.getUserName() + " - ";
+						}
+
+						debugString = debugString.substring(0, debugString.length() - 2);
+						debugString += ".";
+
+						System.out.println(debugString);
+					}
 				break;
-				case "MATCH_FOUND":
-					break;
 				case "REMATCH":
 					break;
-				
 				case "ACTION":
 					switch (node.get("type").asText()) {
 						case "JUMP":
@@ -454,6 +477,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 						case "BASIC_ATTACK":
 							user.getPlayer_selected().getBasicWeapon().attack();
+							/*int room = node.get("room").asInt();
+							GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
+							user.getSession().sendMessage(new TextMessage(msg.toString()));*/
 							break;
 
 						case "SPECIAL_ATTACK":

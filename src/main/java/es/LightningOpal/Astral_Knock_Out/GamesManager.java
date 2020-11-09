@@ -90,8 +90,11 @@ public class GamesManager {
         return room;
     }
 
-    public void playerReady(int room)
+    public boolean ready(int room)
     {
+        // Definimos un booleano que controla si puede empezar
+        boolean canStartGame = false;
+
         // Bloqueamos el acceso
         startGame_locks.get(room).lock();
         int playersReady = startGame_counters.get(room).incrementAndGet();
@@ -100,14 +103,21 @@ public class GamesManager {
         if (playersReady == 2)
         {
             startTournamentGame(room);
+            canStartGame = true;
         }
 
         // Desbloqueamos el acceso
         startGame_locks.get(room).unlock();
+
+        // Devolvemos si puede empezar
+        return canStartGame;
     }
 
     public void startTournamentGame(int room)
     {
+        // Establece la posición de los jugadores
+        tournament_games.get(room).setPlayersPosition();
+        
         // Inicia el game loop de esa partida
         tournament_games.get(room).startGameLoop(scheduler_tournament);
     }
