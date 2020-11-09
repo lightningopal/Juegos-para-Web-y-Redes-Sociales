@@ -37,7 +37,8 @@ window.onload = function () {
             Scene_Select_Character,
             Scene_Account,
             Scene_Select_Login,
-            Scene_Score
+            Scene_Score,
+            Scene_Disconnected
         ]
     };
 
@@ -67,7 +68,8 @@ window.onload = function () {
             Scene_Select_Character,
             Scene_Account,
             Scene_Select_Login,
-            Scene_Score
+            Scene_Score,
+            Scene_Disconnected
         ]
     };
 
@@ -89,7 +91,9 @@ window.onload = function () {
         IP:             "192.168.1.35",
         logInOption:    0, // 0->Log In | 1->Sign Up
         feedbackLogin:  null,
-        ranking: []
+        ranking: [],
+        actualScene: "scene_boot",
+        hasLoadData: false
     }
 
     this.game.options = {

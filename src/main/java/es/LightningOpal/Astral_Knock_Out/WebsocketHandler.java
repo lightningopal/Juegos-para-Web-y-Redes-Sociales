@@ -508,6 +508,27 @@ public class WebsocketHandler extends TextWebSocketHandler {
 		// Obtiene el usuario de los atributos de sesión
 		User user = (User) session.getAttributes().get(USER_ATTRIBUTE);
 
+		// Check if user was ingame
+		Player disconnectedPlayer = user.getPlayer_selected();
+		int room = disconnectedPlayer.getRoom();
+
+		if (GamesManager.INSTANCE.tournament_games.get(disconnectedPlayer.getRoom()).getPlayers().contains(disconnectedPlayer))
+		{
+			// Define the winner player
+			Player winner = new Player();
+
+			// Get winner and loser
+			for (Player player : GamesManager.INSTANCE.tournament_games.get(disconnectedPlayer.getRoom()).getPlayers()) {
+				if (player.getUserName() != disconnectedPlayer.getUserName())
+				{
+					winner = player;
+				}
+			}
+
+			// Stop the game
+			GamesManager.INSTANCE.finishTournamentGame(room, winner, disconnectedPlayer, true);
+		}
+
 		// Intenta escribir la información en el archivo de log
 		try {
 			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));

@@ -22,7 +22,9 @@ class Scene_Account extends Phaser.Scene {
     } // Fin preload
 
     create() {
+        // Set the scene
         var that = this;
+        game.global.actualScene = "scene_account";
 
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE){
 

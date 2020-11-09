@@ -12,6 +12,7 @@ public class Player extends PhysicsObject{
     private WebSocketSession session;
     private String userName;
     private String playerType;
+    private int room;
     private int skin;
     private int skill;
     private int numJumps;
@@ -140,6 +141,9 @@ public class Player extends PhysicsObject{
 
     public String getPlayerType(){ return playerType; }
     public void setPlayerType(String type){ playerType = type; }
+
+    public int getRoom() { return room; }
+    public void setRoom(int room) { this.room = room; }
 
     public int getSkin() { return skin; }
     public void setSkin(int skin) { this.skin = skin; }

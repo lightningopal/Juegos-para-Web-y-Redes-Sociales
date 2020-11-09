@@ -14,7 +14,9 @@ class Scene_Credits extends Phaser.Scene {
     } // Fin preload
 
     create() {
+        // Set the scene
         var that = this;
+        game.global.actualScene = "scene_credits";
 
         // Opciones de selección
         this.cursors = this.input.keyboard.addKeys({
