@@ -44,8 +44,8 @@ public class SpaceGym_Game {
     // Constructor de la clase que recibe el jugador de la partida y lo guarda
     public SpaceGym_Game(Player player_) {
         player = player_;
-        User thisUser = (User) player.getSession().getAttributes().get("USER");
-        userName = thisUser.getUser_name();
+        userName = player.getUserName();
+
         //Plataformas
         platforms.add(new PhysicsObject(true, 960.0, 1038.0, 960.0, 33.0, 0.0, 9.0)); // floor
         platforms.add(new PhysicsObject(true, 1527.50, 747.50, 187.50, 37.50, 0.0, -41.0)); // base_big_plat_2
