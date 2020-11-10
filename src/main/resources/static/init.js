@@ -123,6 +123,16 @@ window.onload = function () {
         currency:       0
     };
 
+    this.game.mEnemy = {
+        id:             -1,
+        userName:       undefined, // String
+        characterSel:   {id: -1, type: undefined}, // Berserker, Mago, Bardo, Asesina
+        skinSel:        -1,
+        skillSel:       -1,
+        AorB:           undefined, // String
+        image:          undefined
+    };
+
     this.game.skins = [1,1,1,1]; // Número de skins que tiene cada personaje
 
     this.game.cursors1Keys = {

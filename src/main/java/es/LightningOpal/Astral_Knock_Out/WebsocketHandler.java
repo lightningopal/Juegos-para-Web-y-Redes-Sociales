@@ -377,39 +377,39 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						// Se crea la partida
 						room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
 
-							// Creamos un ArrayNode 'players' para guardar la información de ambos jugadores
-							ArrayNode players = mapper.createArrayNode();
+						// Creamos un ArrayNode 'players' para guardar la información de ambos jugadores
+						ArrayNode players = mapper.createArrayNode();
 
-							// Guardar la información del jugador A
-							ObjectNode playerA = mapper.createObjectNode();
+						// Guardar la información del jugador A
+						ObjectNode playerA = mapper.createObjectNode();
 
-							playerA.put("playerId", thisPlayer.getPlayerId());
-							playerA.put("userName", thisPlayer.getUserName());
-							playerA.put("playerType", thisPlayer.getPlayerType());
-							playerA.put("skin", thisPlayer.getSkin());
-							playerA.put("skill", thisPlayer.getSkill());
+						playerA.put("playerId", thisPlayer.getPlayerId());
+						playerA.put("userName", thisPlayer.getUserName());
+						playerA.put("playerType", thisPlayer.getPlayerType());
+						playerA.put("skin", thisPlayer.getSkin());
+						playerA.put("skill", thisPlayer.getSkill());
 
-							players.addPOJO(playerA);
+						players.addPOJO(playerA);
 
-							// Guardar la información del jugador B
-							ObjectNode playerB = mapper.createObjectNode();
+						// Guardar la información del jugador B
+						ObjectNode playerB = mapper.createObjectNode();
 
-							playerB.put("playerId", thisPlayer.getPlayerId());
-							playerB.put("userName", thisPlayer.getUserName());
-							playerB.put("playerType", thisPlayer.getPlayerType());
-							playerB.put("skin", thisPlayer.getSkin());
-							playerB.put("skill", thisPlayer.getSkill());
+						playerB.put("playerId", rival.getPlayerId());
+						playerB.put("userName", rival.getUserName());
+						playerB.put("playerType", rival.getPlayerType());
+						playerB.put("skin", rival.getSkin());
+						playerB.put("skill", rival.getSkill());
 
-							players.addPOJO(playerB);
+						players.addPOJO(playerB);
 
-							// Asignar evento, sala y jugadores en el ObjectNode 'msg'
-							msg.put("event", "GAME_FOUND");
-							msg.put("room", room);
-							msg.putPOJO("players", players);
+						// Asignar evento, sala y jugadores en el ObjectNode 'msg'
+						msg.put("event", "GAME_FOUND");
+						msg.put("room", room);
+						msg.putPOJO("players", players);
 
-							// Enviar el mensaje a ambos usuarios
-							thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
-							rival.getSession().sendMessage(new TextMessage(msg.toString()));
+						// Enviar el mensaje a ambos usuarios
+						thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
+						rival.getSession().sendMessage(new TextMessage(msg.toString()));
 
 						if (DEBUG_MODE) {
 							System.out.println("Partida creada: " + thisPlayer.getUserName() + " - " + rival.getUserName());
@@ -419,12 +419,6 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					else {
 						// Añade al jugador a la cola
 						GamesManager.INSTANCE.searching_players.add(thisPlayer);
-
-						/*// Asignar evento en el ObjectNode 'msg'
-						msg.put("event", "SEARCHING_GAME");
-
-						// Enviar el mensaje
-						user.getSession().sendMessage(new TextMessage(msg.toString()));*/
 
 						if (DEBUG_MODE) {
 							name = user.getUser_name();
@@ -448,19 +442,19 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 						// Se le envía el mensaje a ambos jugadores
 						GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
-					}
 
-					if (DEBUG_MODE) {
-						String debugString = "Comienza la partida: ";
-
-						for (Player player : GamesManager.INSTANCE.tournament_games.get(room).getPlayers()) {
-							debugString += player.getUserName() + " - ";
+						if (DEBUG_MODE) {
+							String debugString = "Comienza la partida: ";
+	
+							for (Player player : GamesManager.INSTANCE.tournament_games.get(room).getPlayers()) {
+								debugString += player.getUserName() + " - ";
+							}
+	
+							debugString = debugString.substring(0, debugString.length() - 3);
+							debugString += ".";
+	
+							System.out.println(debugString);
 						}
-
-						debugString = debugString.substring(0, debugString.length() - 2);
-						debugString += ".";
-
-						System.out.println(debugString);
 					}
 				break;
 				case "REMATCH":

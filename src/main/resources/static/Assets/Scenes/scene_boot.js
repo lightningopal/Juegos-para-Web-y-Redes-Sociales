@@ -717,6 +717,29 @@ class Scene_Boot extends Phaser.Scene {
 
     GameFound(data) {
         // Aquí hay que superponer el versus, antes de empezar la escena hay que guardar los datos
+        // Si es el jugador A, el enemigo e el B
+        console.log(data);
+        if (data.players[0].userName == game.mPlayer.userName)
+        {
+            game.mEnemy.AorB = "B";
+            game.mEnemy.id = data.players[1].playerId;
+            game.mEnemy.userName = data.players[1].userName;
+            game.mEnemy.characterSel.type = data.players[1].playerType;
+            game.mEnemy.skinSel = data.players[1].skin;
+            game.mEnemy.skillSel = data.players[1].skill;
+        }
+        // Si no, es al revés
+        else
+        {
+            game.mEnemy.AorB = "A";
+            game.mEnemy.id = data.players[0].playerId;
+            game.mEnemy.userName = data.players[0].userName;
+            game.mEnemy.characterSel.type = data.players[0].playerType;
+            game.mEnemy.skinSel = data.players[0].skin;
+            game.mEnemy.skillSel = data.players[0].skill;
+        }
+
+        game.mPlayer.room = data.room;
 
         // Se cambia la escena
         if (game.mPlayer.difficultySel == 0)
@@ -730,10 +753,10 @@ class Scene_Boot extends Phaser.Scene {
     }
 
     StartTournamentGame(data) {
-        /*this.scene.get('scene_select_character').input.keyboard.removeAllKeys(true);
-        this.scene.get('scene_select_character').scene.start("scene_space_gym");
+        this.scene.get(game.global.actualScene).StartGame();
+
         if (game.global.DEBUG_MODE) {
-            console.log("creado el space gym");
-        }*/
+            console.log("Comienza la partida");
+        }
     }
 }
