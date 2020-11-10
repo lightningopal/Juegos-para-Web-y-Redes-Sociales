@@ -1,6 +1,7 @@
 class UserInterface{
     constructor(scene, character, maxHP, offset){
         this.bar = new Phaser.GameObjects.Graphics(scene);
+        this.bar.setDepth(5);
         this.scene = scene;
         this.character = character;
         this.maxHP = maxHP;
@@ -26,13 +27,12 @@ class UserInterface{
 
         //  BG
         this.bar.fillStyle(0xaaffaa);
-        this.bar.fillRect(this.x, this.y, RelativeScale(110, "x"), RelativeScale(16,"y")).setDepth(5);
+        this.bar.fillRect(this.x, this.y, RelativeScale(110, "x"), RelativeScale(16,"y"));
 
         //  Health
 
         this.bar.fillStyle(0xffffff);
-        this.bar.fillRect(this.x + RelativeScale(5,"x"), this.y + RelativeScale(4,"y"), RelativeScale(100,"x"), RelativeScale(8,"y"))
-        .setDepth(5);
+        this.bar.fillRect(this.x + RelativeScale(5,"x"), this.y + RelativeScale(4,"y"), RelativeScale(100,"x"), RelativeScale(8,"y"));
 
         if (this.currentHP < 30)
         {
@@ -44,8 +44,7 @@ class UserInterface{
         }
         var d = Math.floor(this.currentHP / this.maxHP * 100);
 
-        this.bar.fillRect(this.x + RelativeScale(5,"x"), this.y + RelativeScale(4,"y"), RelativeScale(d, "x"), RelativeScale(8,"y"))
-        .setDepth(5);
+        this.bar.fillRect(this.x + RelativeScale(5,"x"), this.y + RelativeScale(4,"y"), RelativeScale(d, "x"), RelativeScale(8,"y"));
     }
 
     Damage(value){

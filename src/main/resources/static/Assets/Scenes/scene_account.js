@@ -16,9 +16,6 @@ class Scene_Account extends Phaser.Scene {
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.backBtn.setFrame(1);
 
-        // Teclas
-        this.cursors;
-
     } // Fin preload
 
     create() {

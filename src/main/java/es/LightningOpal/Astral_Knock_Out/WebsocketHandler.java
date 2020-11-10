@@ -49,7 +49,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 		msg.put("id", user.getUserId());
 
 		// Se envía el mensaje al usuario
-		synchronized(user.getSession()){
+		synchronized (user.getSession()) {
 			user.getSession().sendMessage(new TextMessage(msg.toString()));
 		}
 
@@ -101,7 +101,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					msg.put("id", user.getUserId());
 
 					// Enviar el mensaje
-					synchronized(user.getSession()){
+					synchronized (user.getSession()) {
 						user.getSession().sendMessage(new TextMessage(msg.toString()));
 					}
 					break;
@@ -122,7 +122,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 								msg.put("message", "User is already connected");
 
 								// Enviar el mensaje
-								synchronized(user.getSession()){
+								synchronized (user.getSession()) {
 									user.getSession().sendMessage(new TextMessage(msg.toString()));
 								}
 
@@ -147,7 +147,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 								msg.put("id", thisUser.getUserId());
 
 								// Enviar el mensaje
-								synchronized(user.getSession()){
+								synchronized (user.getSession()) {
 									user.getSession().sendMessage(new TextMessage(msg.toString()));
 								}
 
@@ -162,7 +162,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 							msg.put("message", "Password is incorrect");
 
 							// Enviar el mensaje
-							synchronized(user.getSession()){
+							synchronized (user.getSession()) {
 								user.getSession().sendMessage(new TextMessage(msg.toString()));
 							}
 
@@ -177,7 +177,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						msg.put("message", "User doesn't exist");
 
 						// Enviar el mensaje
-						synchronized(user.getSession()){
+						synchronized (user.getSession()) {
 							user.getSession().sendMessage(new TextMessage(msg.toString()));
 						}
 
@@ -209,7 +209,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						msg.put("message", "There is already an user with that name");
 
 						// Enviar el mensaje
-						synchronized(user.getSession()){
+						synchronized (user.getSession()) {
 							user.getSession().sendMessage(new TextMessage(msg.toString()));
 						}
 
@@ -237,7 +237,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						msg.put("id", user.getUserId());
 
 						// Enviar el mensaje
-						synchronized(user.getSession()){
+						synchronized (user.getSession()) {
 							user.getSession().sendMessage(new TextMessage(msg.toString()));
 						}
 
@@ -274,10 +274,10 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					msg.putPOJO("ranking", rankingNode);
 
 					// Enviar el mensaje
-					synchronized(user.getSession()){
+					synchronized (user.getSession()) {
 						user.getSession().sendMessage(new TextMessage(msg.toString()));
 					}
-					
+
 					if (DEBUG_MODE) {
 						System.out.println("Ranking solicitado: " + user.getUser_name());
 					}
@@ -292,7 +292,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					msg.put("currency", user.getCurrency());
 
 					// Enviar el mensaje
-					synchronized(user.getSession()){
+					synchronized (user.getSession()) {
 						user.getSession().sendMessage(new TextMessage(msg.toString()));
 					}
 
@@ -355,7 +355,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					msg.put("event", "CREATED_SPACE_GYM");
 
 					// Enviar el mensaje
-					synchronized(user.getSession()){
+					synchronized (user.getSession()) {
 						user.getSession().sendMessage(new TextMessage(msg.toString()));
 					}
 
@@ -399,46 +399,47 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						// Se crea la partida
 						room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
 
-							// Creamos un ArrayNode 'players' para guardar la información de ambos jugadores
-							ArrayNode players = mapper.createArrayNode();
+						// Creamos un ArrayNode 'players' para guardar la información de ambos jugadores
+						ArrayNode players = mapper.createArrayNode();
 
-							// Guardar la información del jugador A
-							ObjectNode playerA = mapper.createObjectNode();
+						// Guardar la información del jugador A
+						ObjectNode playerA = mapper.createObjectNode();
 
-							playerA.put("playerId", thisPlayer.getPlayerId());
-							playerA.put("userName", thisPlayer.getUserName());
-							playerA.put("playerType", thisPlayer.getPlayerType());
-							playerA.put("skin", thisPlayer.getSkin());
-							playerA.put("skill", thisPlayer.getSkill());
+						playerA.put("playerId", thisPlayer.getPlayerId());
+						playerA.put("userName", thisPlayer.getUserName());
+						playerA.put("playerType", thisPlayer.getPlayerType());
+						playerA.put("skin", thisPlayer.getSkin());
+						playerA.put("skill", thisPlayer.getSkill());
 
-							players.addPOJO(playerA);
+						players.addPOJO(playerA);
 
-							// Guardar la información del jugador B
-							ObjectNode playerB = mapper.createObjectNode();
+						// Guardar la información del jugador B
+						ObjectNode playerB = mapper.createObjectNode();
 
-							playerB.put("playerId", thisPlayer.getPlayerId());
-							playerB.put("userName", thisPlayer.getUserName());
-							playerB.put("playerType", thisPlayer.getPlayerType());
-							playerB.put("skin", thisPlayer.getSkin());
-							playerB.put("skill", thisPlayer.getSkill());
+						playerB.put("playerId", thisPlayer.getPlayerId());
+						playerB.put("userName", thisPlayer.getUserName());
+						playerB.put("playerType", thisPlayer.getPlayerType());
+						playerB.put("skin", thisPlayer.getSkin());
+						playerB.put("skill", thisPlayer.getSkill());
 
-							players.addPOJO(playerB);
+						players.addPOJO(playerB);
 
-							// Asignar evento, sala y jugadores en el ObjectNode 'msg'
-							msg.put("event", "GAME_FOUND");
-							msg.put("room", room);
-							msg.putPOJO("players", players);
+						// Asignar evento, sala y jugadores en el ObjectNode 'msg'
+						msg.put("event", "GAME_FOUND");
+						msg.put("room", room);
+						msg.putPOJO("players", players);
 
-							// Enviar el mensaje a ambos usuarios
-							synchronized(thisPlayer.getSession()){
-								thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
-							}
-							synchronized(rival.getSession()){
-								rival.getSession().sendMessage(new TextMessage(msg.toString()));
-							}
+						// Enviar el mensaje a ambos usuarios
+						synchronized (thisPlayer.getSession()) {
+							thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
+						synchronized (rival.getSession()) {
+							rival.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
 
 						if (DEBUG_MODE) {
-							System.out.println("Partida creada: " + thisPlayer.getUserName() + " - " + rival.getUserName());
+							System.out.println(
+									"Partida creada: " + thisPlayer.getUserName() + " - " + rival.getUserName());
 						}
 					}
 					// Si no, añadimos al jugador a la cola
@@ -446,20 +447,19 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						// Añade al jugador a la cola
 						GamesManager.INSTANCE.searching_players.add(thisPlayer);
 
-						/*// Asignar evento en el ObjectNode 'msg'
-						msg.put("event", "SEARCHING_GAME");
-
-						// Enviar el mensaje
-						synchronized(user.getSession()){
-							user.getSession().sendMessage(new TextMessage(msg.toString()));
-						}*/
+						/*
+						 * // Asignar evento en el ObjectNode 'msg' msg.put("event", "SEARCHING_GAME");
+						 * 
+						 * // Enviar el mensaje synchronized(user.getSession()){
+						 * user.getSession().sendMessage(new TextMessage(msg.toString())); }
+						 */
 
 						if (DEBUG_MODE) {
 							name = user.getUser_name();
 							System.out.println("Buscando partida: " + name);
 						}
 					}
-				break;
+					break;
 				// Cuando un jugador tiene todo listo para jugar
 				case "GAME_START":
 					// Obtenemos la sala del nodo
@@ -469,8 +469,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					boolean gameStarted = GamesManager.INSTANCE.ready(room);
 
 					// Si la partida ha empezado
-					if (gameStarted)
-					{
+					if (gameStarted) {
 						// Asignar evento en el ObjectNode 'msg'
 						msg.put("event", "GAME_STARTED");
 
@@ -490,8 +489,33 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 						System.out.println(debugString);
 					}
-				break;
+					break;
 				case "REMATCH":
+					break;
+				case "LEAVE_GAME":
+					room = node.get("room").asInt();
+					if (room == -1) { // Space Gym
+						GamesManager.INSTANCE.stopSpaceGym(user.getPlayer_selected());
+					} else { // Tournament
+						Player disconnectedPlayer = user.getPlayer_selected();
+						if (GamesManager.INSTANCE.tournament_games.containsKey(disconnectedPlayer.getRoom())) {
+							if (GamesManager.INSTANCE.tournament_games.get(disconnectedPlayer.getRoom()).getPlayers()
+									.contains(disconnectedPlayer)) {
+								// Define the winner player
+								Player winner = new Player();
+
+								// Get winner and loser
+								for (Player player : GamesManager.INSTANCE.tournament_games
+										.get(disconnectedPlayer.getRoom()).getPlayers()) {
+									if (player.getUserName() != disconnectedPlayer.getUserName()) {
+										winner = player;
+									}
+								}
+								// Stop the game
+								GamesManager.INSTANCE.finishTournamentGame(room, winner, disconnectedPlayer, true);
+							}
+						}
+					}
 					break;
 				case "ACTION":
 					switch (node.get("type").asText()) {
@@ -505,38 +529,40 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 						case "BASIC_ATTACK":
 							room = node.get("room").asInt();
-							if (user.getPlayer_selected().getBasicWeapon().attack(user.getPlayer_selected().IsFlipped())){ // Si se realiza el ataque
+							if (user.getPlayer_selected().getBasicWeapon()
+									.attack(user.getPlayer_selected().IsFlipped())) { // Si se realiza el ataque
 								msg.put("event", "ACTION");
 								msg.put("type", "BASIC_ATTACK");
 								msg.put("player_name", user.getUser_name());
-								if (room == -1){
-									synchronized(user.getSession()){
+								if (room == -1) {
+									synchronized (user.getSession()) {
 										user.getSession().sendMessage(new TextMessage(msg.toString()));
 									}
-								}else{
+								} else {
 									GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
 								}
 							}
 							break;
 
 						case "SPECIAL_ATTACK":
-						room = node.get("room").asInt();
-						if (user.getPlayer_selected().getSpecialWeapon().attack(user.getPlayer_selected().IsFlipped())){ // Si se realiza el ataque
-							msg.put("event", "ACTION");
-							msg.put("type", "SPECIAL_ATTACK");
-							msg.put("player_name", user.getUser_name());
-							if (room == -1){
-								synchronized(user.getSession()){
-									user.getSession().sendMessage(new TextMessage(msg.toString()));
+							room = node.get("room").asInt();
+							if (user.getPlayer_selected().getSpecialWeapon()
+									.attack(user.getPlayer_selected().IsFlipped())) { // Si se realiza el ataque
+								msg.put("event", "ACTION");
+								msg.put("type", "SPECIAL_ATTACK");
+								msg.put("player_name", user.getUser_name());
+								if (room == -1) {
+									synchronized (user.getSession()) {
+										user.getSession().sendMessage(new TextMessage(msg.toString()));
+									}
+								} else {
+									GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
 								}
-							}else{
-								GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
 							}
-						}
 							break;
 
 						default:
-						break;
+							break;
 					}
 					break;
 
@@ -561,17 +587,16 @@ public class WebsocketHandler extends TextWebSocketHandler {
 		Player disconnectedPlayer = user.getPlayer_selected();
 		int room = disconnectedPlayer.getRoom();
 
-		if (GamesManager.INSTANCE.tournament_games.containsKey(disconnectedPlayer.getRoom()))
-		{
-			if (GamesManager.INSTANCE.tournament_games.get(disconnectedPlayer.getRoom()).getPlayers().contains(disconnectedPlayer))
-			{
+		if (GamesManager.INSTANCE.tournament_games.containsKey(disconnectedPlayer.getRoom())) {
+			if (GamesManager.INSTANCE.tournament_games.get(disconnectedPlayer.getRoom()).getPlayers()
+					.contains(disconnectedPlayer)) {
 				// Define the winner player
 				Player winner = new Player();
 
 				// Get winner and loser
-				for (Player player : GamesManager.INSTANCE.tournament_games.get(disconnectedPlayer.getRoom()).getPlayers()) {
-					if (player.getUserName() != disconnectedPlayer.getUserName())
-					{
+				for (Player player : GamesManager.INSTANCE.tournament_games.get(disconnectedPlayer.getRoom())
+						.getPlayers()) {
+					if (player.getUserName() != disconnectedPlayer.getUserName()) {
 						winner = player;
 					}
 				}
