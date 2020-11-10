@@ -12,8 +12,15 @@ class Scene_Select_Character extends Phaser.Scene {
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.stars = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_stars")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.add.image(0, 0, "select_character_interface").setOrigin(0, 0)
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+        if (game.mPlayer.isVersus){
+            this.add.image(0, 0, "select_character_t_interface").setOrigin(0, 0)
+                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+        }else{
+            this.add.image(0, 0, "select_character_sg_interface").setOrigin(0, 0)
+                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+        }
+        this.add.image(RelativeScale(498.0,"x"), RelativeScale(665.0,"y"), "select_character_lines_interface")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.texts = this.add.image(RelativeScale(1425.02, "x"), RelativeScale(410.0, "x"), "description_text")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
         this.skinsSkills = this.add.image(RelativeScale(1476.17, "x"), RelativeScale(777.88, "x"), "skins_skills")

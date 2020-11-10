@@ -37,10 +37,12 @@ class Scene_Boot extends Phaser.Scene {
             let loadingBar = this.add.graphics({
                 lineStyle: {
                     width: 5,
-                    color: 0x996600
+                    // color: 0x996600
+                    color: 0xe952c4
                 },
                 fillStyle: {
-                    color: 0xffff00
+                    color: 0x6c1386
+                    // color: 0xffff00
                 }
             });
 
@@ -61,7 +63,7 @@ class Scene_Boot extends Phaser.Scene {
                 text: '0%',
                 style: {
                     font: '20px font_Ftb',
-                    fill: '#000000'
+                    fill: '#e952c4'
                 }
             });
             percentText.setOrigin(0.5, 0.5);
@@ -79,7 +81,7 @@ class Scene_Boot extends Phaser.Scene {
 
             this.load.on('progress', (percent) => {
                 loadingBar.clear();
-                percentText.setText(parseInt(percent * 100) + '%');
+                percentText.setText(parseInt(percent * 100));
 
                 loadingBar.fillRect(this.game.renderer.width / 2 - this.game.renderer.width / 8,
                     this.game.renderer.height / 2,
@@ -200,7 +202,9 @@ class Scene_Boot extends Phaser.Scene {
             this.load.image("credits_bg", "./Assets/Images/Tests/test_bg/Credits-BG.jpg");
 
             ///Escena de Selección de Personaje, Habilidad y Escenario///
-            this.load.image("select_character_interface", "./Assets/Images/UI/select_character_interface.png");
+            this.load.image("select_character_t_interface", "./Assets/Images/UI/select_character_t_interface.png");
+            this.load.image("select_character_sg_interface", "./Assets/Images/UI/select_character_sg_interface.png");
+            this.load.image("select_character_lines_interface", "./Assets/Images/UI/select_character_lines_interface.png");
             this.load.spritesheet("berserker_button", "./Assets/Images/UI/berserker_button.png", { frameWidth: 731, frameHeight: 540 });
             this.load.spritesheet("wizard_button", "./Assets/Images/UI/wizard_button.png", { frameWidth: 731, frameHeight: 540 });
             this.load.spritesheet("bard_button", "./Assets/Images/UI/bard_button.png", { frameWidth: 731, frameHeight: 540 });

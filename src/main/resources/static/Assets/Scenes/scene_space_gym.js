@@ -293,6 +293,8 @@ class Scene_Space_Gym extends Phaser.Scene {
             this.cursors1.escape.on("down", function(event){
                 that.paused = !that.paused;
                 that.returnToMenu = false;
+                that.movingLeft = false;
+                that.movingRight = false;
             });
 
             this.cursors1.enter.on("down", function(event){
