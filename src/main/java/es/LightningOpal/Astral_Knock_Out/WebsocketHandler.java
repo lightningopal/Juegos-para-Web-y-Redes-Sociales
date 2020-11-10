@@ -491,7 +491,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 						case "SPECIAL_ATTACK":
 						room = node.get("room").asInt();
-						if (user.getPlayer_selected().getBasicWeapon().attack(user.getPlayer_selected().IsFlipped())){ // Si se realiza el ataque
+						if (user.getPlayer_selected().getSpecialWeapon().attack(user.getPlayer_selected().IsFlipped())){ // Si se realiza el ataque
 							msg.put("event", "ACTION");
 							msg.put("type", "SPECIAL_ATTACK");
 							msg.put("player_name", user.getUser_name());

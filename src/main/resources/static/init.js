@@ -21,7 +21,7 @@ window.onload = function () {
             default: 'arcade',
             arcade: {
                 gravity: { y: ((window.screen.height / 1.3) / referenceHeight) * 2200 },
-                debug: true
+                debug: false
             }
         },
         dom: {
@@ -52,7 +52,7 @@ window.onload = function () {
             default: 'arcade',
             arcade: {
                 gravity: { y: ((window.screen.height) / referenceHeight) * 2200 },
-                debug: true
+                debug: false
             }
         },
         dom: {
