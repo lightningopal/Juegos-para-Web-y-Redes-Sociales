@@ -214,10 +214,26 @@ class Scene_Boot extends Phaser.Scene {
             this.load.image("continue_text_desktop", "./Assets/Images/UI/continue_text_desktop.png");
             this.load.image("continue_text_mobile", "./Assets/Images/UI/continue_text_mobile.png");
 
+            ///Escena de búsqueda de partida
+            this.load.image("searching_back_triangle", "./Assets/Images/UI/searching_back_triangle_connection_interface.png");
+            this.load.image("searching_front_triangle", "./Assets/Images/UI/searching_front_triangle_connection_interface.png");
+            this.load.spritesheet("searching_tips_text", "./Assets/Images/UI/tips_text.png", { frameWidth: 429, frameHeight: 242 });
+
+            ///Splash-Arts personajes
+            this.load.image("splashart_bard", "./Assets/Images/UI/splash_arts/bard_splashart.png");
+            this.load.image("splashart_wizard", "./Assets/Images/UI/splash_arts/wizard_splashart.png");
+            this.load.image("splashart_rogue", "./Assets/Images/UI/splash_arts/rogue_splashart.png");
+            this.load.image("splashart_berserker", "./Assets/Images/UI/splash_arts/berserker_splashart.png");
+
             ///Escena de desconexion///
             this.load.image("disconnected_text", "./Assets/Images/UI/connection_failed_text.png");
             this.load.spritesheet("retry_button", "./Assets/Images/UI/retry_button.png", { frameWidth: 604, frameHeight: 147 });
             
+            ///Versus
+            this.load.image("versus_bg", "./Assets/Images/UI/versus_circles_interface.png");
+            this.load.image("versus_vs", "./Assets/Images/UI/versus_vs_interface.png");
+
+            ///Proyectiles
 			this.load.image("berserker_projectile", "./Assets/Images/Characters/Projectiles/berserker_projectile.png");
 			this.load.image("wizard_projectile", "./Assets/Images/Characters/Projectiles/wizard_projectile.png");
 			this.load.image("bard_projectile", "./Assets/Images/Characters/Projectiles/bard_projectile.png");
@@ -534,6 +550,12 @@ class Scene_Boot extends Phaser.Scene {
                 case "ACTION":
                     this.scene.get('scene_boot').Action(data);
                     break;
+                case "GAME_FOUND":
+                    this.scene.get('scene_boot').GameFound(data);
+                    break;
+                case "GAME_STARTED":
+                    this.scene.get('scene_boot').StartTournamentGame(data);
+                    break;
                 default:
                     if (game.global.DEBUG_MODE) {
                         console.log("Tipo de mensaje no controlado");
@@ -689,7 +711,29 @@ class Scene_Boot extends Phaser.Scene {
                         }
                     }
                 }
-                break;
+            break;
         }
+    }
+
+    GameFound(data) {
+        // Aquí hay que superponer el versus, antes de empezar la escena hay que guardar los datos
+
+        // Se cambia la escena
+        if (game.mPlayer.difficultySel == 0)
+        {
+            this.scene.get('scene_searching').scene.start("scene_level0");
+        }
+        
+        if (game.global.DEBUG_MODE) {
+            console.log("Partida encontrada");
+        }
+    }
+
+    StartTournamentGame(data) {
+        /*this.scene.get('scene_select_character').input.keyboard.removeAllKeys(true);
+        this.scene.get('scene_select_character').scene.start("scene_space_gym");
+        if (game.global.DEBUG_MODE) {
+            console.log("creado el space gym");
+        }*/
     }
 }

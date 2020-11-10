@@ -83,7 +83,7 @@ class Scene_Main_Menu extends Phaser.Scene {
             this.tournamentBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
                 if (that.optionSelectedRow == 0 && that.optionSelectedCol == 1){
                     that.tournamentBtn.setFrame(0);
-                    //that.scene.start("scene_tournament");
+                    that.scene.start("scene_select_character");
                 }
                 if (game.global.DEBUG_MODE){ 
                     console.log("tournament soltado");
@@ -241,8 +241,8 @@ class Scene_Main_Menu extends Phaser.Scene {
                         if (that.optionSelectedRow == 0){
                             // Tournament
                             game.mPlayer.isVersus = true;
-                            //that.input.keyboard.removeAllKeys(true);
-                            //that.scene.start("scene_select_character");
+                            that.input.keyboard.removeAllKeys(true);
+                            that.scene.start("scene_select_character");
                         }else if (that.optionSelectedRow == 1){
                             // Space Gym
                             game.mPlayer.isVersus = false;
