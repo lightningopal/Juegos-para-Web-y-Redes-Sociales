@@ -2,13 +2,16 @@ package es.LightningOpal.Astral_Knock_Out.Skills;
 
 import es.LightningOpal.Astral_Knock_Out.*;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class WizardSkill extends Skill{
 
     private double damage;
     private int id;
 
-    public WizardSkill(PhysicsObject caster, PhysicsObject target, long duration, double speed, double damage, int id){
-        super(caster, target, duration, 25, 6.50);
+    public WizardSkill(PhysicsObject caster, PhysicsObject target, long duration, boolean collidePlaforms, double speed, double damage, int id){
+        super(caster, target, duration, 25, 6.50, collidePlaforms);
         this.setMoveSpeed(speed);
         this.damage = damage;
         this.id = id;
@@ -32,12 +35,56 @@ public class WizardSkill extends Skill{
     public void activate(){
         super.activate();
         // Activar habilidad
+        this.setPosX(caster.getPosX());
+        this.setPosY(caster.getPosY());
+        if (this.IsFlipped()){
+            this.setVelX(-this.getMoveSpeed());
+        }else{
+            this.setVelX(this.getMoveSpeed());
+        }
+
+        switch(this.id){
+            case 1: // Ángulo hacia arriba
+            if (this.IsFlipped()){
+                this.setVelY(this.getMoveSpeed() * 0.3);
+            }else{
+                this.setVelY(this.getMoveSpeed() * -0.3);
+            }
+            this.facingAngle = -25;
+            break;
+            case 2: // Ángulo hacia abajo
+            if (this.IsFlipped()){
+                this.setVelY(this.getMoveSpeed() * -0.3);
+            }else{
+                this.setVelY(this.getMoveSpeed() * 0.3);
+            }
+            this.facingAngle = 25;
+            break;
+            default:
+            break;
+        }
+
+        this.isActive = true;
+        stopTimer.cancel();
+        stopTimer.purge();
+        stopTimer = new Timer();
+        stopTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                disable();
+            }
+        }, duration);
         System.out.println("Habilidad de Mago");
     }
 
     @Override
-    public void calculatePhysics(){
-
+    public void disable() {
+        super.disable();
+        this.isActive = false;
     }
-    
+
+    @Override
+    public void calculatePhysics(){
+        this.applyVelocity2Position();
+    }
 }

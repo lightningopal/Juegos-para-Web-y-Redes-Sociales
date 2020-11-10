@@ -8,15 +8,17 @@ public class Skill extends PhysicsObject{
     protected PhysicsObject target;
     protected long duration;
     protected boolean isActive;
+    protected boolean collidePlatforms;
     protected double facingAngle;
 
     protected Timer stopTimer;
 
-    public Skill(PhysicsObject caster, PhysicsObject target, long duration, double hW, double hH){
+    public Skill(PhysicsObject caster, PhysicsObject target, long duration, double hW, double hH, boolean collidePlatforms){
         this.caster = caster;
         this.target = target;
         this.duration = duration;
         this.isActive = false;
+        this.collidePlatforms = collidePlatforms;
 
         this.setHalfWidth(hW);
         this.setHalfHeight(hH);
@@ -50,6 +52,13 @@ public class Skill extends PhysicsObject{
     }
     public void setActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public boolean collidesWithPlatforms() {
+        return collidePlatforms;
+    }
+    public void setCollidesWithPlaftofm(boolean collidePlatforms) {
+        this.collidePlatforms = collidePlatforms;
     }
 
     public double getFacingAngle() {

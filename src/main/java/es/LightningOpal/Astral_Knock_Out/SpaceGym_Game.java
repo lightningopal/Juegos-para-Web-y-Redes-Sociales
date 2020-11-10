@@ -59,27 +59,27 @@ public class SpaceGym_Game {
         switch (player.getPlayerType()) {
             case "berserker":
                 for (int i = 0; i < 3; i++) {
-                    projectiles.add(new BerserkerSkill(player, dummy, 1000, 10, 20)); // Target, duration, speed, damage
+                    projectiles.add(new BerserkerSkill(player, dummy, 1000, false, 30, 20)); // Target, duration, collidePlatforms, speed, damage
                 }
                 player.setBasicWeapon(new Weapon(projectiles, 1, 1000));
                 break;
             case "wizard":
                 for (int i = 0; i < 9; i++) {
-                    projectiles.add(new WizardSkill(player, dummy, 1000, 10, 20, i % 3)); // Target, duration, speed, damage, id
+                    projectiles.add(new WizardSkill(player, dummy, 500, true, 30, 20, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
                 player.setBasicWeapon(new Weapon(projectiles, 3, 400));
                 break;
             case "bard":
                 for (int i = 0; i < 3; i++) {
-                    projectiles.add(new BardSkill(player, dummy, 2500, 20, 20)); // Target, duration, speed, damage
+                    projectiles.add(new BardSkill(player, dummy, 2500, false, 20, 20)); // Target, duration, collidePlatforms, speed, damage
                 }
                 player.setBasicWeapon(new Weapon(projectiles, 1, 500));
                 break;
             case "rogue":
-                for (int i = 0; i < 3; i++) {
-                    projectiles.add(new RogueSkill(player, dummy, 1000, 10, 20, i % 3)); // Target, duration, speed, damage, id
+                for (int i = 0; i < 9; i++) {
+                    projectiles.add(new RogueSkill(player, dummy, 550, true, 30, 20, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
-                player.setBasicWeapon(new Weapon(projectiles, 1, 200));
+                player.setBasicWeapon(new Weapon(projectiles, 3, 200));
                 break;
             default:
                 break;
@@ -210,6 +210,13 @@ public class SpaceGym_Game {
                     if (skill.intersect(skill.getTarget())) {
                         skill.setActive(false);
                         skill.impact();
+                    }
+                    if (skill.collidesWithPlatforms()){
+                        for (PhysicsObject platform : platforms){
+                            if (skill.intersect(platform)){
+                                skill.disable();
+                            }
+                        }
                     }
                 }
                 // System.out.println(skill.isActive());

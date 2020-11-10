@@ -11,8 +11,8 @@ public class BardSkill extends Skill {
     private long elapsedTime;
     private long startTime;
 
-    public BardSkill(PhysicsObject caster, PhysicsObject target, long duration, double speed, double damage) {
-        super(caster, target, duration, 10, 15);
+    public BardSkill(PhysicsObject caster, PhysicsObject target, long duration, boolean collidePlaforms, double speed, double damage) {
+        super(caster, target, duration, 10, 15, collidePlaforms);
         this.setMoveSpeed(speed);
         this.damage = damage;
     }
@@ -20,7 +20,6 @@ public class BardSkill extends Skill {
     public double getDamage() {
         return damage;
     }
-
     public void setDamage(double damage) {
         this.damage = damage;
     }
@@ -58,6 +57,7 @@ public class BardSkill extends Skill {
         super.impact();
         this.elapsedTime = 0;
         this.startTime = 0;
+        // Causa daño al enemigo
     }
 
     @Override
