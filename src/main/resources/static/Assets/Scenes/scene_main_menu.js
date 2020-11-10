@@ -30,7 +30,7 @@ class Scene_Main_Menu extends Phaser.Scene {
         this.optionsBtn = this.add.image(RelativeScale(138.50,"x"), RelativeScale(889.0,"y"), "options_button")
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         // Teclas
-        this.cursors;
+        //this.cursors;
         // Opciones de selección
         this.optionSelectedRow;
         this.optionSelectedCol;
@@ -178,24 +178,25 @@ class Scene_Main_Menu extends Phaser.Scene {
                 }
             });
         }else{// Ordenador
-            this.cursors = this.input.keyboard.addKeys({
-                'up': game.cursors1Keys.jump,
-                'down': game.cursors1Keys.fall,
-                'left': game.cursors1Keys.left,
-                'right': game.cursors1Keys.right,
+            // ESTO ES LO QUE JODE EL LOGIN
+            /*this.cursors = this.input.keyboard.addKeys({
+                'up': game.cursors1Keys.jump, //W
+                'down': game.cursors1Keys.fall, //S
+                'left': game.cursors1Keys.left, //A
+                'right': game.cursors1Keys.right, //D
                 'enter': Phaser.Input.Keyboard.KeyCodes.ENTER,
                 'escape': Phaser.Input.Keyboard.KeyCodes.ESC,
-            });
+            });*/
             // Opciones de selección
     
-            this.cursors.right.on('down', function(event){
+            this.input.keyboard.on('keydown-'+'D', function (event) {
                 that.optionSelectedCol = (that.optionSelectedCol + 1) % 3;
                 if (game.global.DEBUG_MODE){ 
                     console.log("COL: "+that.optionSelectedCol);
                 }
                 that.CheckOption();
             });
-            this.cursors.left.on('down', function(event){
+            this.input.keyboard.on('keydown-'+'A', function (event) {
                 if (that.optionSelectedCol >= 1){
                     that.optionSelectedCol = (that.optionSelectedCol - 1) % 3;
                 }else{
@@ -207,7 +208,7 @@ class Scene_Main_Menu extends Phaser.Scene {
                 that.CheckOption();
             });
     
-            this.cursors.up.on('down', function(event){
+            this.input.keyboard.on('keydown-'+'W', function (event) {
                 if (that.optionSelectedCol == 1){
                     if (that.optionSelectedRow >= 1){
                         that.optionSelectedRow = (that.optionSelectedRow - 1);
@@ -220,7 +221,7 @@ class Scene_Main_Menu extends Phaser.Scene {
                     that.CheckOption();
                 }
             });
-            this.cursors.down.on('down', function(event){
+            this.input.keyboard.on('keydown-'+'S', function (event) {
                 if (that.optionSelectedCol == 1){
                     that.optionSelectedRow = (that.optionSelectedRow + 1) % 3;
                     if (game.global.DEBUG_MODE){ 
@@ -230,7 +231,7 @@ class Scene_Main_Menu extends Phaser.Scene {
                 }
             });
             
-            this.cursors.enter.on('down', function(event){
+            this.input.keyboard.on('keydown-'+'ENTER', function (event) {
                 switch(that.optionSelectedCol){
                     case 0:
                         // Options
