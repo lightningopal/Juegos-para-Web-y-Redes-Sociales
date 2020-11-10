@@ -4,20 +4,12 @@ import es.LightningOpal.Astral_Knock_Out.*;
 
 public class BerserkerSkill extends Skill{
 
-    private double speed;
     private double damage;
 
-    public BerserkerSkill(PhysicsObject target, double duration, double speed, double damage){
-        super(target, duration, 45, 45);
-        this.speed = speed;
+    public BerserkerSkill(PhysicsObject caster, PhysicsObject target, long duration, double speed, double damage){
+        super(caster, target, duration, 45, 45);
+        this.setMoveSpeed(speed);
         this.damage = damage;
-    }
-
-    public double getSpeed() {
-        return speed;
-    }
-    public void setSpeed(double speed) {
-        this.speed = speed;
     }
 
     public double getDamage() {
@@ -29,8 +21,13 @@ public class BerserkerSkill extends Skill{
 
     @Override
     public void activate(){
+        super.activate();
         // Activar habilidad
         System.out.println("Habilidad de Berserker");
-        this.isActive = true;
+    }
+
+    @Override
+    public void calculatePhysics(){
+
     }
 }

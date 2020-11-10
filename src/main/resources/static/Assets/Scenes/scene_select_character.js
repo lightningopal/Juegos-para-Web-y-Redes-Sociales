@@ -14,7 +14,7 @@ class Scene_Select_Character extends Phaser.Scene {
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.add.image(0, 0, "select_character_interface").setOrigin(0, 0)
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
-        this.texts = this.add.image(RelativeScale(1459.02, "x"), RelativeScale(410.0, "x"), "description_text")
+        this.texts = this.add.image(RelativeScale(1425.02, "x"), RelativeScale(410.0, "x"), "description_text")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
         this.skinsSkills = this.add.image(RelativeScale(1476.17, "x"), RelativeScale(777.88, "x"), "skins_skills")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
