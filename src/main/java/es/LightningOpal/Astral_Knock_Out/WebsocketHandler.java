@@ -49,7 +49,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 		msg.put("id", user.getUserId());
 
 		// Se envía el mensaje al usuario
-		user.getSession().sendMessage(new TextMessage(msg.toString()));
+		synchronized(user.getSession()){
+			user.getSession().sendMessage(new TextMessage(msg.toString()));
+		}
 
 		if (DEBUG_MODE) {
 			System.out.println("Connected user with session " + user.getSession().getId() + ".");
@@ -99,7 +101,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					msg.put("id", user.getUserId());
 
 					// Enviar el mensaje
-					user.getSession().sendMessage(new TextMessage(msg.toString()));
+					synchronized(user.getSession()){
+						user.getSession().sendMessage(new TextMessage(msg.toString()));
+					}
 					break;
 				// Cuando un usuario se logea en el servidor
 				case "LOG_IN":
@@ -118,7 +122,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 								msg.put("message", "User is already connected");
 
 								// Enviar el mensaje
-								user.getSession().sendMessage(new TextMessage(msg.toString()));
+								synchronized(user.getSession()){
+									user.getSession().sendMessage(new TextMessage(msg.toString()));
+								}
 
 								if (DEBUG_MODE) {
 									System.out.println("Usuario ya conectado");
@@ -141,7 +147,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 								msg.put("id", thisUser.getUserId());
 
 								// Enviar el mensaje
-								user.getSession().sendMessage(new TextMessage(msg.toString()));
+								synchronized(user.getSession()){
+									user.getSession().sendMessage(new TextMessage(msg.toString()));
+								}
 
 								if (DEBUG_MODE) {
 									System.out.println("Usuario conectado: " + name);
@@ -154,7 +162,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 							msg.put("message", "Password is incorrect");
 
 							// Enviar el mensaje
-							user.getSession().sendMessage(new TextMessage(msg.toString()));
+							synchronized(user.getSession()){
+								user.getSession().sendMessage(new TextMessage(msg.toString()));
+							}
 
 							if (DEBUG_MODE) {
 								System.out.println("Contraseña incorrecta");
@@ -167,7 +177,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						msg.put("message", "User doesn't exist");
 
 						// Enviar el mensaje
-						user.getSession().sendMessage(new TextMessage(msg.toString()));
+						synchronized(user.getSession()){
+							user.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
 
 						if (DEBUG_MODE) {
 							System.out.println("El usuario no existe");
@@ -197,7 +209,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						msg.put("message", "There is already an user with that name");
 
 						// Enviar el mensaje
-						user.getSession().sendMessage(new TextMessage(msg.toString()));
+						synchronized(user.getSession()){
+							user.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
 
 						if (DEBUG_MODE) {
 							System.out.println("Ya existe un usuario con ese nombre");
@@ -223,7 +237,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						msg.put("id", user.getUserId());
 
 						// Enviar el mensaje
-						user.getSession().sendMessage(new TextMessage(msg.toString()));
+						synchronized(user.getSession()){
+							user.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
 
 						if (DEBUG_MODE) {
 							System.out.println("Nuevo usuario: " + name);
@@ -258,8 +274,10 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					msg.putPOJO("ranking", rankingNode);
 
 					// Enviar el mensaje
-					user.getSession().sendMessage(new TextMessage(msg.toString()));
-
+					synchronized(user.getSession()){
+						user.getSession().sendMessage(new TextMessage(msg.toString()));
+					}
+					
 					if (DEBUG_MODE) {
 						System.out.println("Ranking solicitado: " + user.getUser_name());
 					}
@@ -274,7 +292,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					msg.put("currency", user.getCurrency());
 
 					// Enviar el mensaje
-					user.getSession().sendMessage(new TextMessage(msg.toString()));
+					synchronized(user.getSession()){
+						user.getSession().sendMessage(new TextMessage(msg.toString()));
+					}
 
 					if (DEBUG_MODE) {
 						System.out.println("Datos de opciones solicitados: " + user.getUser_name());
@@ -335,7 +355,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					msg.put("event", "CREATED_SPACE_GYM");
 
 					// Enviar el mensaje
-					user.getSession().sendMessage(new TextMessage(msg.toString()));
+					synchronized(user.getSession()){
+						user.getSession().sendMessage(new TextMessage(msg.toString()));
+					}
 
 					if (DEBUG_MODE) {
 						name = user.getUser_name();
@@ -408,8 +430,12 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						msg.putPOJO("players", players);
 
 						// Enviar el mensaje a ambos usuarios
-						thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
-						rival.getSession().sendMessage(new TextMessage(msg.toString()));
+						synchronized(thisPlayer.getSession()){
+							thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
+						synchronized(rival.getSession()){
+							rival.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
 
 						if (DEBUG_MODE) {
 							System.out.println("Partida creada: " + thisPlayer.getUserName() + " - " + rival.getUserName());
@@ -476,7 +502,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 								msg.put("type", "BASIC_ATTACK");
 								msg.put("player_name", user.getUser_name());
 								if (room == -1){
-									user.getSession().sendMessage(new TextMessage(msg.toString()));
+									synchronized(user.getSession()){
+										user.getSession().sendMessage(new TextMessage(msg.toString()));
+									}
 								}else{
 									GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
 								}
@@ -490,7 +518,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 							msg.put("type", "SPECIAL_ATTACK");
 							msg.put("player_name", user.getUser_name());
 							if (room == -1){
-								user.getSession().sendMessage(new TextMessage(msg.toString()));
+								synchronized(user.getSession()){
+									user.getSession().sendMessage(new TextMessage(msg.toString()));
+								}
 							}else{
 								GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
 							}

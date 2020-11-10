@@ -253,8 +253,8 @@ public class PhysicsObject {
 		return iX && iY;
 	}
 
-	public void collide(PhysicsObject other){
-
+	public boolean collide(PhysicsObject other){
+		boolean collides = false;
 		double minDistanceX = this.halfWidth + other.getHalfWidth();
 		double minDistanceY = this.halfHeight + other.getHalfHeight();
 
@@ -266,6 +266,7 @@ public class PhysicsObject {
 		double colHeight = minDistanceY - distanceY;
 
 		if (colWidth >= 0 && colHeight >= 0){
+			collides = true;
 			if (colHeight >= colWidth){ // Se prioriza el ancho
 				if (this.posX >= other.getPosX()){ // Se encuentra a la derecha del objeto
 					if (this.velX <= 0){
@@ -293,5 +294,6 @@ public class PhysicsObject {
 				}
 			}
 		}
+		return collides;
 	}// Fin collide
 }

@@ -63,7 +63,6 @@ public class Weapon {
             }, this.attackRatio);
             for (int i = 0; i < this.groupSize; i++){
                 Skill attack = this.attacks.poll();
-                attack.SetFlipped(flipped);
                 attack.activate();
                 this.attacks.add(attack);
             }

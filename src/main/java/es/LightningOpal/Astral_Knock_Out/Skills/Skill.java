@@ -1,20 +1,36 @@
 package es.LightningOpal.Astral_Knock_Out.Skills;
 
 import es.LightningOpal.Astral_Knock_Out.*;
+import java.util.Timer;
 
 public class Skill extends PhysicsObject{
+    protected PhysicsObject caster;
     protected PhysicsObject target;
-    protected double duration;
+    protected long duration;
     protected boolean isActive;
+    protected boolean collidePlatforms;
     protected double facingAngle;
 
-    public Skill(PhysicsObject target, double duration, double hW, double hH){
+    protected Timer stopTimer;
+
+    public Skill(PhysicsObject caster, PhysicsObject target, long duration, double hW, double hH, boolean collidePlatforms){
+        this.caster = caster;
         this.target = target;
         this.duration = duration;
         this.isActive = false;
+        this.collidePlatforms = collidePlatforms;
 
         this.setHalfWidth(hW);
         this.setHalfHeight(hH);
+
+        stopTimer = new Timer();
+    }
+
+    public PhysicsObject getCaster() {
+        return caster;
+    }
+    public void setCaster(PhysicsObject caster) {
+        this.caster = caster;
     }
 
     public PhysicsObject getTarget() {
@@ -24,10 +40,10 @@ public class Skill extends PhysicsObject{
         this.target = target;
     }
 
-    public double getDuration() {
+    public long getDuration() {
         return duration;
     }
-    public void setDuration(double duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 
@@ -38,6 +54,13 @@ public class Skill extends PhysicsObject{
         this.isActive = isActive;
     }
 
+    public boolean collidesWithPlatforms() {
+        return collidePlatforms;
+    }
+    public void setCollidesWithPlaftofm(boolean collidePlatforms) {
+        this.collidePlatforms = collidePlatforms;
+    }
+
     public double getFacingAngle() {
         return facingAngle;
     }
@@ -46,7 +69,16 @@ public class Skill extends PhysicsObject{
     }
     
     public void activate(){
-        // Implementado en los hijos
+        this.SetFlipped(caster.IsFlipped());
+        // Implementado el control en los hijos
+    }
+
+    public void disable(){
+        // Implementado el control en los hijos
+    }
+
+    public void calculatePhysics(){
+        // Implementado el control en los hijos
     }
 
     public void impact(){

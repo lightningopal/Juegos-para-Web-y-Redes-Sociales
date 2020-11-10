@@ -125,7 +125,9 @@ public class Tournament_Game {
 	public void broadcast(String message) {
 		for (Player player : players.values()) {
 			try {
-				player.getSession().sendMessage(new TextMessage(message.toString()));
+				synchronized(player.getSession()){
+					player.getSession().sendMessage(new TextMessage(message.toString()));
+				}
 			} catch (Throwable ex) {
 				System.err.println("Execption sending message to player " + player.getSession().getId());
 				ex.printStackTrace(System.err);

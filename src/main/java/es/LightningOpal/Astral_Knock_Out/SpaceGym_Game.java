@@ -59,27 +59,27 @@ public class SpaceGym_Game {
         switch (player.getPlayerType()) {
             case "berserker":
                 for (int i = 0; i < 3; i++) {
-                    projectiles.add(new BerserkerSkill(dummy, 1000, 10, 20)); // Target, duration, speed, damage
+                    projectiles.add(new BerserkerSkill(player, dummy, 1000, false, 30, 20)); // Target, duration, collidePlatforms, speed, damage
                 }
                 player.setBasicWeapon(new Weapon(projectiles, 1, 1000));
                 break;
             case "wizard":
                 for (int i = 0; i < 9; i++) {
-                    projectiles.add(new WizardSkill(dummy, 1000, 10, 20, i % 3)); // Target, duration, speed, damage, id
+                    projectiles.add(new WizardSkill(player, dummy, 500, true, 30, 20, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
                 player.setBasicWeapon(new Weapon(projectiles, 3, 400));
                 break;
             case "bard":
                 for (int i = 0; i < 3; i++) {
-                    projectiles.add(new BardSkill(dummy, 1000, 10, 20)); // Target, duration, speed, damage
+                    projectiles.add(new BardSkill(player, dummy, 2500, false, 20, 20)); // Target, duration, collidePlatforms, speed, damage
                 }
                 player.setBasicWeapon(new Weapon(projectiles, 1, 500));
                 break;
             case "rogue":
-                for (int i = 0; i < 3; i++) {
-                    projectiles.add(new RogueSkill(dummy, 1000, 10, 20, i % 3)); // Target, duration, speed, damage, id
+                for (int i = 0; i < 9; i++) {
+                    projectiles.add(new RogueSkill(player, dummy, 550, true, 30, 20, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
-                player.setBasicWeapon(new Weapon(projectiles, 1, 200));
+                player.setBasicWeapon(new Weapon(projectiles, 3, 200));
                 break;
             default:
                 break;
@@ -120,7 +120,9 @@ public class SpaceGym_Game {
     public void broadcast(String message) {
         try {
             // Intenta enviar al jugador el mensaje
-            player.getSession().sendMessage(new TextMessage(message.toString()));
+            synchronized(player.getSession()){
+                player.getSession().sendMessage(new TextMessage(message.toString()));
+            }
         } catch (Throwable ex) {
             // System.err.println("Exception sending message to player " +
             // player.getSession().getId());
@@ -154,6 +156,12 @@ public class SpaceGym_Game {
             for (PhysicsObject platform : platforms) {
                 player.collide(platform);
             }
+            // Controlar límites de la pantalla
+            if (player.getPosX() - player.getHalfWidth() < 0){
+                player.setPosX(player.getHalfWidth());
+            }else if (player.getPosX() + player.getHalfWidth() > 1920){
+                player.setPosX(1920 - player.getHalfWidth());
+            }
             // Guarda los datos en el ObjectNode 'jsonPlayer'
             jsonPlayer.put("posX", player.getPosX());
             jsonPlayer.put("posY", player.getPosY());
@@ -164,8 +172,13 @@ public class SpaceGym_Game {
 
             dummy.incVelocity(0, GRAVITY); // Gravedad
             dummy.calculateMovement();
+            dummy.SetOnFloor(false);
             for (PhysicsObject platform : platforms) {
                 dummy.collide(platform);
+            }
+            if (dummy.IsOnFloor()){
+                dummy.setVelY(-50);
+                dummy.applyVelocity2Position();
             }
 
             jsonDummy.put("posX", dummy.getPosX());
@@ -199,10 +212,17 @@ public class SpaceGym_Game {
                 jsonProjectile = mapper.createObjectNode();
                 if (skill.isActive()) {
                     // Calcular posición
-
+                    skill.calculatePhysics();
                     if (skill.intersect(skill.getTarget())) {
                         skill.setActive(false);
                         skill.impact();
+                    }
+                    if (skill.collidesWithPlatforms()){
+                        for (PhysicsObject platform : platforms){
+                            if (skill.intersect(platform)){
+                                skill.disable();
+                            }
+                        }
                     }
                 }
                 // System.out.println(skill.isActive());
@@ -231,6 +251,7 @@ public class SpaceGym_Game {
             this.broadcast(json.toString());
         } catch (Throwable ex) {
             // Excepcion
+            System.out.println(ex);
         }
     }
 

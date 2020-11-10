@@ -206,7 +206,7 @@ class Scene_Boot extends Phaser.Scene {
             this.load.spritesheet("bard_button", "./Assets/Images/UI/bard_button.png", { frameWidth: 731, frameHeight: 540 });
             this.load.spritesheet("rogue_button", "./Assets/Images/UI/rogue_button.png", { frameWidth: 731, frameHeight: 540 });
             this.load.spritesheet("blocked_button", "./Assets/Images/UI/blocked_button.png", { frameWidth: 731, frameHeight: 429 });
-            this.load.spritesheet("description_text", "./Assets/Images/UI/description_text.png", { frameWidth: 731, frameHeight: 599 });
+            this.load.spritesheet("description_text", "./Assets/Images/UI/description_text.png", { frameWidth: 731, frameHeight: 597 });
             this.load.spritesheet("skins_skills", "./Assets/Images/UI/skins_skills.png", { frameWidth: 731, frameHeight: 380 });
             this.load.spritesheet("right_arrow_button", "./Assets/Images/UI/right_arrow_button.png", { frameWidth: 224.50, frameHeight: 187 });
             this.load.spritesheet("left_arrow_button", "./Assets/Images/UI/left_arrow_button.png", { frameWidth: 224.50, frameHeight: 187 });

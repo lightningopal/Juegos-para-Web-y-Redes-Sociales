@@ -57,7 +57,7 @@ public class Player extends PhysicsObject{
                 this.setMoveSpeed(3);
                 this.setMaxSpeed(15);
                 this.setGroundDrag(3);
-                this.setJumpForce(1);
+                this.setJumpForce(22);
                 this.setMaxHP(100);
                 this.basicWeapon = new Weapon();
                 break;
@@ -83,7 +83,7 @@ public class Player extends PhysicsObject{
                 this.setMoveSpeed(1);
                 this.setMaxSpeed(25);
                 this.setGroundDrag(6);
-                this.setJumpForce(1);
+                this.setJumpForce(22);
                 this.setMaxHP(100);
                 this.basicWeapon = new Weapon();
                 break;
@@ -96,7 +96,7 @@ public class Player extends PhysicsObject{
                 this.setMoveSpeed(3);
                 this.setMaxSpeed(30);
                 this.setGroundDrag(4);
-                this.setJumpForce(1);
+                this.setJumpForce(22);
                 this.setMaxHP(100);
                 this.basicWeapon = new Weapon();
                 break;

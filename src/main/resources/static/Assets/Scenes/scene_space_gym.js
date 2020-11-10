@@ -245,11 +245,15 @@ class Scene_Space_Gym extends Phaser.Scene {
             });
 
             this.cursors1.basicAttack.on("down", function (event) {
-                that.BasicAttack();
+                if (!that.attacking){
+                    that.BasicAttack();
+                }
             });
 
             this.cursors1.specialAttack.on("down", function (event) {
-                that.SpecialAttack();
+                if (!that.attacking){
+                    that.SpecialAttack();
+                }
             });
         }// Fin DEVICE == desktop
 
