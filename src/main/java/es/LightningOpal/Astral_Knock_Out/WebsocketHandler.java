@@ -416,11 +416,11 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						// Guardar la información del jugador B
 						ObjectNode playerB = mapper.createObjectNode();
 
-						playerB.put("playerId", thisPlayer.getPlayerId());
-						playerB.put("userName", thisPlayer.getUserName());
-						playerB.put("playerType", thisPlayer.getPlayerType());
-						playerB.put("skin", thisPlayer.getSkin());
-						playerB.put("skill", thisPlayer.getSkill());
+						playerB.put("playerId", rival.getPlayerId());
+						playerB.put("userName", rival.getUserName());
+						playerB.put("playerType", rival.getPlayerType());
+						playerB.put("skin", rival.getSkin());
+						playerB.put("skill", rival.getSkill());
 
 						players.addPOJO(playerB);
 
@@ -453,14 +453,11 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						 * // Enviar el mensaje synchronized(user.getSession()){
 						 * user.getSession().sendMessage(new TextMessage(msg.toString())); }
 						 */
-
 						if (DEBUG_MODE) {
 							name = user.getUser_name();
 							System.out.println("Buscando partida: " + name);
 						}
 					}
-					break;
-				// Cuando un jugador tiene todo listo para jugar
 				case "GAME_START":
 					// Obtenemos la sala del nodo
 					room = node.get("room").asInt();
@@ -475,19 +472,19 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 						// Se le envía el mensaje a ambos jugadores
 						GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
-					}
 
-					if (DEBUG_MODE) {
-						String debugString = "Comienza la partida: ";
-
-						for (Player player : GamesManager.INSTANCE.tournament_games.get(room).getPlayers()) {
-							debugString += player.getUserName() + " - ";
+						if (DEBUG_MODE) {
+							String debugString = "Comienza la partida: ";
+	
+							for (Player player : GamesManager.INSTANCE.tournament_games.get(room).getPlayers()) {
+								debugString += player.getUserName() + " - ";
+							}
+	
+							debugString = debugString.substring(0, debugString.length() - 3);
+							debugString += ".";
+	
+							System.out.println(debugString);
 						}
-
-						debugString = debugString.substring(0, debugString.length() - 2);
-						debugString += ".";
-
-						System.out.println(debugString);
 					}
 					break;
 				case "REMATCH":

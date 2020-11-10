@@ -57,12 +57,143 @@ class Scene_Level0 extends Phaser.Scene {
 
         this.projectiles = [];
 
+        /// Versus
+        // Background
+        this.versus_main_bg = this.add.image(0, 0, "simple_bg").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(10);
+        this.versus_stars = this.add.tileSprite(0, 0, RelativeScale(1920, "x"), RelativeScale(1080, "y"), "stars").setOrigin(0, 0).setDepth(11);
+
+        this.versus_bg = this.add.image(0, 0, "versus_bg").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(12);
+        this.versus_vs = this.add.image(RelativeScale(931.5, "x"), RelativeScale(539, "y"), "versus_vs").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(14);
+
+        // Si el enemigo es el B, el jugador es el A
+        if (game.mEnemy.AorB == "B")
+        {
+            this.versus_usernameA = this.add.text(RelativeScale(236.56, "x"), RelativeScale(950.19, "y"), game.mPlayer.userName).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(52);
+            this.versus_usernameB = this.add.text(RelativeScale(1602.39, "x"), RelativeScale(163.70, "y"), game.mEnemy.userName).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(52);
+
+            this.versus_characterA = this.add.image(RelativeScale(440, "x"), RelativeScale(450, "Y"), "splashart_" + game.mPlayer.characterSel.type).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(13);
+            this.versus_characterB = this.add.image(RelativeScale(1680, "x"), RelativeScale(700, "Y"), "splashart_" + game.mEnemy.characterSel.type).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(13);
+        }
+        // Si no, el jugador es el B
+        else
+        {
+            this.versus_usernameA = this.add.text(RelativeScale(236.56, "x"), RelativeScale(950.19, "y"), game.mEnemy.userName).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(52);
+            this.versus_usernameB = this.add.text(RelativeScale(1602.39, "x"), RelativeScale(163.70, "y"), game.mPlayer.userName).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(52);
+
+            this.versus_characterA = this.add.image(RelativeScale(440, "x"), RelativeScale(450, "Y"), "splashart_" + game.mEnemy.characterSel.type).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(13);
+            this.versus_characterB = this.add.image(RelativeScale(1680, "x"), RelativeScale(700, "Y"), "splashart_" + game.mPlayer.characterSel.type).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(13);
+        }
+
+        switch (game.mEnemy.AorB)
+        {
+            // Player is A
+            case "B":
+                // Player
+                switch (game.mPlayer.characterSel.type)
+                {
+                    case "bard":
+                        this.versus_characterA.x = RelativeScale(310, "x");
+                        this.versus_characterA.y = RelativeScale(280, "y");
+                        this.versus_characterA.setScale(RelativeScale(1.3, "x"));
+                        break;
+                    case "wizard":
+                        this.versus_characterA.setScale(RelativeScale(1.1, "x"));
+                        this.versus_characterA.setFlip(true);
+                        break;
+                    case "rogue":
+                        this.versus_characterA.x = RelativeScale(400, "x");
+                        this.versus_characterA.y = RelativeScale(380, "y");
+                        this.versus_characterA.setScale(RelativeScale(1.4, "x"));
+                        this.versus_characterA.setFlip(true);
+                        break;
+                    case "berserker":
+                        this.versus_characterA.x = RelativeScale(250, "x");
+                        this.versus_characterA.y = RelativeScale(340, "y");
+                        this.versus_characterA.setScale(RelativeScale(1.2, "x"));
+                        break;
+                }
+
+                // Enemy
+                switch (game.mEnemy.characterSel.type)
+                {
+                    case "bard":
+                        this.versus_characterB.x = RelativeScale(1600, "x");
+                        this.versus_characterB.y = RelativeScale(640, "y");
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterB.setFlip(true);
+                        break;
+                    case "wizard":
+                        this.versus_characterB.x = RelativeScale(1540, "x");
+                        this.versus_characterB.setScale(RelativeScale(1.1, "x"));
+                        break;
+                    case "rogue":
+                        this.versus_characterB.x = RelativeScale(1530, "x");
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        break;
+                    case "berserker":
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterB.setFlip(true);
+                        break;
+                }
+                break;
+            // Player is B
+            case "A":
+                // Player
+                switch (game.mPlayer.characterSel.type)
+                {
+                    case "bard":
+                        this.versus_characterB.x = RelativeScale(1600, "x");
+                        this.versus_characterB.y = RelativeScale(640, "y");
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterB.setFlip(true);
+                        break;
+                    case "wizard":
+                        this.versus_characterB.x = RelativeScale(1540, "x");
+                        this.versus_characterB.setScale(RelativeScale(1.1, "x"));
+                        break;
+                    case "rogue":
+                        this.versus_characterB.x = RelativeScale(1530, "x");
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        break;
+                    case "berserker":
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterB.setFlip(true);
+                        break;
+                }
+
+                // Enemy
+                switch (game.mEnemy.characterSel.type)
+                {
+                    case "bard":
+                        this.versus_characterA.x = RelativeScale(310, "x");
+                        this.versus_characterA.y = RelativeScale(280, "y");
+                        this.versus_characterA.setScale(RelativeScale(1.3, "x"));
+                        break;
+                    case "wizard":
+                        this.versus_characterA.setScale(RelativeScale(1.1, "x"));
+                        this.versus_characterA.setFlip(true);
+                        break;
+                    case "rogue":
+                        this.versus_characterA.x = RelativeScale(400, "x");
+                        this.versus_characterA.y = RelativeScale(380, "y");
+                        this.versus_characterA.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterA.setFlip(true);
+                        break;
+                    case "berserker":
+                        this.versus_characterA.x = RelativeScale(250, "x");
+                        this.versus_characterA.y = RelativeScale(340, "y");
+                        this.versus_characterA.setScale(RelativeScale(1.2, "x"));
+                        break;
+                }
+                break;
+        }
+
     } // Fin preload
 
     create() {
         // Set the scene
         var that = this;
-        game.global.actualScene = "scene_space_gym";
+        game.global.actualScene = "scene_level0";
         
         // Create mobileKeys
         this.mobileKeys = {
@@ -315,6 +446,12 @@ class Scene_Level0 extends Phaser.Scene {
         //this.physics.add.overlap(this.characters, this.bullets, this.BulletHit, player, bullet);
         //this.physics.add.collider(this.characters, this.platforms);
         this.physics.add.overlap(this.characters, this.hidePlatforms);
+
+        /// Comunicación
+        that.time.addEvent({
+            delay: 3000,
+            callback: () => (that.PreparedForPlay())
+          });
     } // Fin create
 
     update() {
@@ -345,6 +482,10 @@ class Scene_Level0 extends Phaser.Scene {
         */
         var debugText = document.getElementById("debugText");
         debugText.innerHTML = "Posición del ratón: {x: " + x + ", y: " + y + "} | FPS: " + Math.round(game.loop.actualFps);
+    
+        // Stars
+        this.versus_stars.tilePositionX += 0.2;
+        this.versus_stars.tilePositionY += 0.4;
     } // Fin update
 
     /** *
@@ -431,9 +572,22 @@ class Scene_Level0 extends Phaser.Scene {
         });
     }
 
+    PreparedForPlay()
+    {
+        game.global.socket.send(JSON.stringify({ event: "GAME_START", room: game.mPlayer.room }));
+    }
+
+    StartGame()
+    {
+        console.log("Se llama a esconder el versus");
+        this.versus_main_bg.setVisible(false);
+        this.versus_stars.setVisible(false);
+        this.versus_bg.setVisible(false);
+        this.versus_vs.setVisible(false);
+        this.versus_usernameA.setVisible(false);
+        this.versus_usernameB.setVisible(false);
+        this.versus_characterA.setVisible(false);
+        this.versus_characterB.setVisible(false);
+    }
 }
 
-function showCoords(event) {
-    x = Math.round(event.clientX * (game.config.width / 1920));
-    y = Math.round(event.clientY * (game.config.height / 1080));
-}
