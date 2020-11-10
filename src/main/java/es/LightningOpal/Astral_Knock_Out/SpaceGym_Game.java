@@ -156,6 +156,12 @@ public class SpaceGym_Game {
             for (PhysicsObject platform : platforms) {
                 player.collide(platform);
             }
+            // Controlar límites de la pantalla
+            if (player.getPosX() - player.getHalfWidth() < 0){
+                player.setPosX(player.getHalfWidth());
+            }else if (player.getPosX() + player.getHalfWidth() > 1920){
+                player.setPosX(1920 - player.getHalfWidth());
+            }
             // Guarda los datos en el ObjectNode 'jsonPlayer'
             jsonPlayer.put("posX", player.getPosX());
             jsonPlayer.put("posY", player.getPosY());
