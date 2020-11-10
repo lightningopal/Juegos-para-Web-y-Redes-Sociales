@@ -252,9 +252,10 @@ public class UsersController {
 				}
 
 				// Borrar la última ',' y añadir el cierre ']'
-				characters_available = characters_available.substring(0, characters_available.length() - 2);
+				characters_available = characters_available.substring(0, characters_available.length() - 1);
 				characters_available += "]";
 
+				//System.out.println("Datos:" + thisUser.getSkins_available().get(0).toString());
 				// Aspectos
 				skins_available = "[";
 
@@ -267,12 +268,12 @@ public class UsersController {
 						skins_available += skinID + "-";
 					}
 					// Borrar el último '-' y añadir el cierre '}' y el carácter ','
-					skins_available = skins_available.substring(0, skins_available.length() - 2);
+					skins_available = skins_available.substring(0, skins_available.length() - 1);
 					skins_available += "},";
 				}
 
 				// Borrar el último ',' y añadir el cierre ']'
-				skins_available = skins_available.substring(0, skins_available.length() - 2);
+				skins_available = skins_available.substring(0, skins_available.length() - 1);
 				skins_available += "]";	
 
 				userWritter.write(thisUser.getUserId() + ":" + thisUser.getUser_name() + ":" + characters_available + ":"
@@ -283,6 +284,9 @@ public class UsersController {
 
 			// Liberamos el cierre de escritura
 			writterLock.unlock();
+
+			System.out.println("Datos del servidor guardados.");
+
 		} catch (Exception e) {
 			// Si falla, muestra el error
 			e.printStackTrace();

@@ -315,13 +315,12 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						user.setSfxVol(value);
 					} else {
 						if (DEBUG_MODE) {
-							System.out
-									.println("Tipo de volumen no reconocido: " + volType + " - " + user.getUser_name());
+							System.out.println("Tipo de volumen no reconocido: " + volType + " - " + user.getUser_name());
 						}
 					}
 
 					if (DEBUG_MODE) {
-						System.out.println("Actualizado volumen: " + volType + " - " + user.getUser_name());
+						//System.out.println("Actualizado volumen: " + volType + " - " + user.getUser_name());
 					}
 					break;
 				case "UPDATE_GAME_STATE":

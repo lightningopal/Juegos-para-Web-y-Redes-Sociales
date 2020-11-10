@@ -8,6 +8,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.ArrayList;
 
 import org.springframework.boot.SpringApplication;
@@ -93,6 +95,7 @@ public class AKO_Server implements WebSocketConfigurer {
 
 					for (int j = 0; j < skinsFromCharacter_av.length; j++)
 					{
+						//System.out.println("Leido:" + skinsFromCharacter_av[j]);
 						auxList.add(Integer.parseInt(skinsFromCharacter_av[j]));
 					}
 					skins_available.add(auxList);
@@ -109,29 +112,16 @@ public class AKO_Server implements WebSocketConfigurer {
 			}
 			br.close();
 
-			// Guarda un método que se ejecuta cuando se cierra el servidor (NO FUNCIONA EN IDE)
-			Runtime.getRuntime().addShutdownHook(new Thread(new Runnable()
-			{
+			// Establece un timer
+			Timer dataTimer = new Timer();
+
+			// Se le indica al timer que cada 5 minutos guarde los archivos
+			dataTimer.scheduleAtFixedRate(new TimerTask() {
 				@Override
-				public void run()
-				{
-					System.out.println("Cerrando servidor...");
-
-					//Escribe los datos de los usuarios en el archivo 'usersData.txt'
-					UsersController.writeUsersData();
-
-					// Intenta escribir en el archivo de log
-					try {
-						AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
-						String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-						AKO_Server.logWriter.write(time + " - Server Closed.\n");
-						AKO_Server.logWriter.close();
-					} catch (Exception e) {
-						// Si falla, muestra el error
-						e.printStackTrace();
-					}
+				public void run() {
+				  UsersController.writeUsersData();
 				}
-			}, "Shutdown-thread"));
+			}, (1000)*(60)*5,(1000)*(60)*5);
 
 		} catch (Exception e) {
 			// Se imprime en consola el error que ha ocurrido

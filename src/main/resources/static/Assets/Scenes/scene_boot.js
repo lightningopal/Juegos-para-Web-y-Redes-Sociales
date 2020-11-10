@@ -150,8 +150,8 @@ class Scene_Boot extends Phaser.Scene {
                         }
                         else
                         {
-                            this.scene.get(game.global.actualScene).input.keyboard.removeAllKeys(true);
-                            this.scene.get(game.global.actualScene).scene.start("scene_disconnected");
+                            that.scene.get(game.global.actualScene).input.keyboard.removeAllKeys(true);
+                            that.scene.get(game.global.actualScene).scene.start("scene_disconnected");
                         }
                     } catch (error) {
                         if (game.global.DEBUG_MODE) {
@@ -302,10 +302,12 @@ class Scene_Boot extends Phaser.Scene {
             let loadingBar = this.add.graphics({
                 lineStyle: {
                     width: 5,
-                    color: 0x996600
+                    // color: 0x996600
+                    color: 0xe952c4
                 },
                 fillStyle: {
-                    color: 0xffff00
+                    color: 0x6c1386
+                    // color: 0xffff00
                 }
             });
 
@@ -335,7 +337,7 @@ class Scene_Boot extends Phaser.Scene {
                 text: '100%',
                 style: {
                     font: '20px font_Ftb',
-                    fill: '#000000'
+                    fill: '#e952c4'
                 }
             });
             percentText.setOrigin(0.5, 0.5);
@@ -397,8 +399,8 @@ class Scene_Boot extends Phaser.Scene {
                     }
                     else
                     {
-                        this.scene.get(game.global.actualScene).input.keyboard.removeAllKeys(true);
-                        this.scene.get(game.global.actualScene).scene.start("scene_disconnected");
+                        that.scene.get(game.global.actualScene).input.keyboard.removeAllKeys(true);
+                        that.scene.get(game.global.actualScene).scene.start("scene_disconnected");
                     }
                 } catch (error) {
                     if (game.global.DEBUG_MODE) {

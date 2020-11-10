@@ -47,6 +47,7 @@ class Scene_Disconnected extends Phaser.Scene {
             
         } else { // Ordenador
             this.input.keyboard.on('keydown-'+'ENTER', function (event) {
+                that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_boot");
             });
         }// Fin if Mobile
