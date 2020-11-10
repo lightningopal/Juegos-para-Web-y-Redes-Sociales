@@ -529,21 +529,24 @@ public class WebsocketHandler extends TextWebSocketHandler {
 		Player disconnectedPlayer = user.getPlayer_selected();
 		int room = disconnectedPlayer.getRoom();
 
-		if (GamesManager.INSTANCE.tournament_games.get(disconnectedPlayer.getRoom()).getPlayers().contains(disconnectedPlayer))
+		if (GamesManager.INSTANCE.tournament_games.containsKey(disconnectedPlayer.getRoom()))
 		{
-			// Define the winner player
-			Player winner = new Player();
+			if (GamesManager.INSTANCE.tournament_games.get(disconnectedPlayer.getRoom()).getPlayers().contains(disconnectedPlayer))
+			{
+				// Define the winner player
+				Player winner = new Player();
 
-			// Get winner and loser
-			for (Player player : GamesManager.INSTANCE.tournament_games.get(disconnectedPlayer.getRoom()).getPlayers()) {
-				if (player.getUserName() != disconnectedPlayer.getUserName())
-				{
-					winner = player;
+				// Get winner and loser
+				for (Player player : GamesManager.INSTANCE.tournament_games.get(disconnectedPlayer.getRoom()).getPlayers()) {
+					if (player.getUserName() != disconnectedPlayer.getUserName())
+					{
+						winner = player;
+					}
 				}
-			}
 
-			// Stop the game
-			GamesManager.INSTANCE.finishTournamentGame(room, winner, disconnectedPlayer, true);
+				// Stop the game
+				GamesManager.INSTANCE.finishTournamentGame(room, winner, disconnectedPlayer, true);
+			}
 		}
 
 		// Intenta escribir la información en el archivo de log
