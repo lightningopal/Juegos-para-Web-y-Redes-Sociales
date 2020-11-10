@@ -503,7 +503,6 @@ class Scene_Boot extends Phaser.Scene {
         // console.log(data.projectiles); // array
         // console.log(data.projectiles.length);
         for (var i = 0; i<data.projectiles.length; i++){
-            console.log(data.projectiles[i].isActive);
             this.scene.get('scene_space_gym').projectiles[i].setVisible(data.projectiles[i].isActive);
             this.scene.get('scene_space_gym').projectiles[i].x = RelativeScale(data.projectiles[i].posX,"x");
             this.scene.get('scene_space_gym').projectiles[i].y = RelativeScale(data.projectiles[i].posY,"y");
