@@ -420,11 +420,11 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						// Añade al jugador a la cola
 						GamesManager.INSTANCE.searching_players.add(thisPlayer);
 
-						// Asignar evento en el ObjectNode 'msg'
+						/*// Asignar evento en el ObjectNode 'msg'
 						msg.put("event", "SEARCHING_GAME");
 
 						// Enviar el mensaje
-						user.getSession().sendMessage(new TextMessage(msg.toString()));
+						user.getSession().sendMessage(new TextMessage(msg.toString()));*/
 
 						if (DEBUG_MODE) {
 							name = user.getUser_name();

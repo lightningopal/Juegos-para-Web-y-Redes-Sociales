@@ -38,7 +38,9 @@ window.onload = function () {
             Scene_Account,
             Scene_Select_Login,
             Scene_Score,
-            Scene_Disconnected
+            Scene_Disconnected,
+            Scene_Searching,
+            Scene_Level0
         ]
     };
 
@@ -69,7 +71,9 @@ window.onload = function () {
             Scene_Account,
             Scene_Select_Login,
             Scene_Score,
-            Scene_Disconnected
+            Scene_Disconnected,
+            Scene_Searching,
+            Scene_Level0
         ]
     };
 
