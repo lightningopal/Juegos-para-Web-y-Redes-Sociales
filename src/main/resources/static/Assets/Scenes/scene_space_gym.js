@@ -60,8 +60,10 @@ class Scene_Space_Gym extends Phaser.Scene {
     } // Fin preload
 
     create() {
+        // Set the scene
         var that = this;
-
+        game.global.actualScene = "scene_space_gym";
+        
         // Create mobileKeys
         this.mobileKeys = {
             joyStick: null,

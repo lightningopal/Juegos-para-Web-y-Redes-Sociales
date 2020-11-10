@@ -29,7 +29,10 @@ class Scene_Options extends Phaser.Scene {
     }// Fin preload
 
     create() {
+        // Set the scene
         var that = this;
+        game.global.actualScene = "scene_options";
+
         var tween = this.tweens.add({
             targets: that.nebula,
             angle: 360,

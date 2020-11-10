@@ -37,7 +37,10 @@ class Scene_Main_Menu extends Phaser.Scene {
     } // Fin preload
 
     create() {
+        // Set the scene
         var that = this;
+        game.global.actualScene = "scene_main_menu";
+
         var tween = this.tweens.add({
             targets: that.nebula,
             angle: 360,

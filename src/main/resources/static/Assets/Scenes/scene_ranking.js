@@ -52,7 +52,10 @@ class Scene_Ranking extends Phaser.Scene {
     } // Fin preload
 
     create() {
+        // Set the scene
         var that = this;
+        game.global.actualScene = "scene_ranking";
+
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
             this.input.on('pointerup', function () {
                 that.backBtn.setFrame(0);

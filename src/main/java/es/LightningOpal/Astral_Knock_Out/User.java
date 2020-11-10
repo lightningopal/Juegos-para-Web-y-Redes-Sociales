@@ -16,7 +16,6 @@ public class User {
 	private int difficulty_selected;
 	private boolean user_searching;
 	private boolean user_ready;
-	private int room;
 	private ArrayList<Integer> characters_available;
 	private ArrayList<ArrayList<Integer>> skins_available;
 	private float elo;
@@ -117,14 +116,6 @@ public class User {
 
 	public void setUser_ready(boolean user_ready) {
 		this.user_ready = user_ready;
-	}
-
-	public int getRoom() {
-		return room;
-	}
-	
-	public void setRoom(int room) {
-		this.room = room;
 	}
 
 	public ArrayList<Integer> getCharacters_available() {

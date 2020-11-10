@@ -130,6 +130,7 @@ public class Tournament_Game {
 				System.err.println("Execption sending message to player " + player.getSession().getId());
 				ex.printStackTrace(System.err);
 				// HAY QUE DARLE LA WIN AL JUGADOR QUE QUEDA
+				String disconnectedPlayer = player.getUserName();
 			}
 		}
 	}

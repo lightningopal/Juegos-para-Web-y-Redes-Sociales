@@ -71,6 +71,9 @@ public class GamesManager {
     {
         // Asigna el numero de sala
         int room = tournament_games.size();
+        playerA.setRoom(room);
+        playerB.setRoom(room);
+
         // Crea la partida
         Tournament_Game newGame = new Tournament_Game(playerA, playerB, level, room);
         // Añade la partida al mapa de partidas
@@ -120,5 +123,30 @@ public class GamesManager {
         
         // Inicia el game loop de esa partida
         tournament_games.get(room).startGameLoop(scheduler_tournament);
+    }
+
+    public void finishTournamentGame(int room, Player winner, Player loser, boolean wasDisconnection)
+    {
+        // Si existe la partida
+            if (tournament_games.containsKey(room))
+            {
+            // Para el game loop de esa partida
+            tournament_games.get(room).stopGameLoop();
+
+            // Elimina los datos de la partida
+            tournament_games.remove(room);
+            startGame_counters.remove(room);
+            startGame_locks.remove(room);
+            
+            // Aquí se calculan los puntos que se suman y restan a los jugadores
+            if (!wasDisconnection)
+            {
+                //  Si no hubo desconexión, se les envía el mensaje a ambos
+            }
+            else
+            {
+                // Si fue desconexión, solo al ganador.
+            }
+        }
     }
 }

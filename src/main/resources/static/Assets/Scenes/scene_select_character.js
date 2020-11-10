@@ -115,7 +115,10 @@ class Scene_Select_Character extends Phaser.Scene {
     }// Fin preload
 
     create() {
+        // Set the scene
         var that = this;
+        game.global.actualScene = "scene_select_character";
+
         // Movimiento del fondo
         var tween = this.tweens.add({
             targets: that.nebula,

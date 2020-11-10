@@ -32,7 +32,10 @@ class Scene_Score extends Phaser.Scene {
     }// Fin preload
 
     create(){
+        // Set the scene
         var that = this;
+        game.global.actualScene = "scene_score";
+
         var tween = this.tweens.add({
             targets: that.nebula,
             angle: 360,
