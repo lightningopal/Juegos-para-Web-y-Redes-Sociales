@@ -27,7 +27,6 @@ class Scene_Score extends Phaser.Scene {
         this.noBtn.setActive(false);
 
         // Controles
-        this.cursors;
         this.optionSelected;
     }// Fin preload
 
@@ -49,11 +48,6 @@ class Scene_Score extends Phaser.Scene {
             repeat: -1
         });
 
-        this.cursors = this.input.keyboard.addKeys({
-            'left': game.cursors1Keys.left,
-            'right': game.cursors1Keys.right,
-            'enter': Phaser.Input.Keyboard.KeyCodes.ENTER,
-        });
         this.optionSelected = 0;
     }// Fin create
 
@@ -109,14 +103,14 @@ class Scene_Score extends Phaser.Scene {
             });
 
         }else if (game.global.DEVICE === "desktop"){
-            this.cursors.right.on("down", function(event){
+            this.input.keyboard.on("keydown-"+"D", function(event){
                 that.optionSelected = (that.optionSelected + 1) % 2;
                 that.CheckOption();
                 if (game.global.DEBUG_MODE){
                     console.log(that.optionSelected);
                 }
             });
-            this.cursors.left.on("down", function(event){
+            this.input.keyboard.on("keydown-"+"A", function(event){
                 if (that.optionSelected == 1){
                     that.optionSelected -= 1;
                 }else{
@@ -128,7 +122,7 @@ class Scene_Score extends Phaser.Scene {
                 }
             });
 
-            this.cursors.enter.on("down", function(event){
+            this.input.keyboard.on("keydown-"+"ENTER", function(event){
                 if (that.optionSelected == 0){ // Play Again
                     
                     if (game.global.DEBUG_MODE){

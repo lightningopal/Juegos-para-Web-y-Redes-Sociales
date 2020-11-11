@@ -105,8 +105,6 @@ class Scene_Select_Character extends Phaser.Scene {
         this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
 
-        // Teclas
-        this.cursors;
         // Selectores
         this.characterSelectedRow;
         this.characterSelectedCol;
@@ -311,17 +309,9 @@ class Scene_Select_Character extends Phaser.Scene {
             this.berserkerBtn.setFrame(1);
             this.berserkerBtn.setAlpha(1);
             this.skinsSkills.setAlpha(0.7);
-            // Opciones de selección
-            this.cursors = this.input.keyboard.addKeys({
-                'left': game.cursors1Keys.left,
-                'right': game.cursors1Keys.right,
-                'up': game.cursors1Keys.jump,
-                'down': game.cursors1Keys.fall,
-                'enter': Phaser.Input.Keyboard.KeyCodes.ENTER,
-                'escape': Phaser.Input.Keyboard.KeyCodes.ESC,
-            });
 
-            this.cursors.escape.on("down", function (event) {
+            // Opciones de selección
+            this.input.keyboard.on("keydown-"+"ESC", function (event) {
                 if (that.selectingCharacter) { // Seleccionando personaje
                     that.input.keyboard.removeAllKeys(true);
                     that.scene.start("scene_main_menu");
@@ -348,7 +338,7 @@ class Scene_Select_Character extends Phaser.Scene {
                 }
             });
 
-            this.cursors.down.on("down", function (event) {
+            this.input.keyboard.on("keydown-"+"S", function (event) {
                 if (that.selectingCharacter) { // Seleccionando personaje
                     that.characterSelectedRow = (that.characterSelectedRow + 1) % 2;
                     that.CheckCharacter();
@@ -372,7 +362,7 @@ class Scene_Select_Character extends Phaser.Scene {
                     }
                 }
             });
-            this.cursors.up.on("down", function (event) {
+            this.input.keyboard.on("keydown-"+"W", function (event) {
                 if (that.selectingCharacter) { // Seleccionando personaje
                     if (that.characterSelectedRow == -1) {
                         that.characterSelectedRow = 1;
@@ -403,7 +393,7 @@ class Scene_Select_Character extends Phaser.Scene {
                 }
             });
 
-            this.cursors.right.on("down", function (event) {
+            this.input.keyboard.on("keydown-"+"D", function (event) {
                 if (that.selectingCharacter) { // Seleccionando personaje
                     if (that.characterSelectedRow != -1) {
                         that.characterSelectedCol = (that.characterSelectedCol + 1) % 3;
@@ -422,7 +412,7 @@ class Scene_Select_Character extends Phaser.Scene {
                     }
                 }
             });
-            this.cursors.left.on("down", function (event) {
+            this.input.keyboard.on("keydown-"+"A", function (event) {
                 if (that.selectingCharacter) { // Seleccionando personaje
                     if (that.characterSelectedRow != -1) {
                         if (that.characterSelectedCol === 0) {
@@ -450,7 +440,7 @@ class Scene_Select_Character extends Phaser.Scene {
                 }
             });
 
-            this.cursors.enter.on("down", function (event) {
+            this.input.keyboard.on("keydown-"+"ENTER", function (event) {
                 if (that.selectingCharacter) { // Seleccionando personaje
                     that.SelectCharacter();
                 } else if (that.selectingSkin) { // Seleccionando skin
