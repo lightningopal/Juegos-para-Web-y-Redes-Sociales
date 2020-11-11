@@ -567,6 +567,9 @@ class Scene_Boot extends Phaser.Scene {
                 case "GAME_STARTED":
                     this.scene.get('scene_boot').StartTournamentGame(data);
                     break;
+                case "GAME_RESULTS":
+                    this.scene.get('scene_boot').FinishTournamentGame(data);
+                    break;
                 default:
                     if (game.global.DEBUG_MODE) {
                         console.log("Tipo de mensaje no controlado");
@@ -775,5 +778,73 @@ class Scene_Boot extends Phaser.Scene {
         if (game.global.DEBUG_MODE) {
             console.log("Comienza la partida");
         }
+    }
+
+    StartTournamentGame(data) {
+        // Aquí hay que actualizar los datos (tienen que ser globales)
+        // Datos en data
+        /*msg.put("event", "GAME_RESULTS");
+            msg.put("wasDisconnection", wasDisconnection);
+            msg.put("eloDiferrence", Math.round(eloDifference));
+            msg.putPOJO("winner", winnerPlayer);
+            msg.putPOJO("loser", loserPlayer);*/
+
+            /*loserPlayer.put("userName", loser.getUserName());
+            loserPlayer.put("points", Math.round(eloForLoser));
+            loserPlayer.put("newCoins", extraCoinsForLoser);
+            loserPlayer.put("currency", loserCoins);*/
+
+        // Se guardan los resultados de la partida
+        // El jugador es el ganador
+        if (data.winner.userName == game.mPlayer.userName)
+        {
+            // Diferencia de puntos positiva
+            game.mPlayer.pointsDifference = data.pointsDifference;
+
+            // Asignar resto de datos
+            // Puntos
+            game.mPlayer.points = data.winner.points;
+            //game.mEnemy.points = data.loser.points;   Creo que no hace falta
+
+            // Monedas ganadas
+            game.mPlayer.newCoins = data.winner.newCoins;
+
+            // Monedas totales
+            game.mPlayer.currency = data.winner.currency;
+        }
+        // El jugador es el perdedor
+        {
+            // Diferencia de puntos negativa
+            game.mPlayer.pointsDifference = -(data.pointsDifference);
+
+            // Asignar resto de datos
+            // Puntos
+            game.mPlayer.points = data.loser.points;
+            //game.mEnemy.points = data.winner.points;   Creo que no hace falta
+
+            // Monedas ganadas
+            game.mPlayer.newCoins = data.loser.newCoins;
+
+            // Monedas totales
+            game.mPlayer.currency = data.loser.currency;
+        }
+
+        // Se muestra la pantalla de final de partida
+        this.scene.get(game.global.actualScene).FinishGame();
+
+        // Se cambia de escena cuando toque
+        this.time.addEvent({
+            delay: 2000,
+            callback: () => (that.ChangeToScore())
+          });
+
+        if (game.global.DEBUG_MODE) {
+            console.log("Fin de la partida");
+        }
+    }
+
+    ChangeToScore()
+    {
+        this.scene.get(game.global.actualScene).scene.start("scene_score");
     }
 }

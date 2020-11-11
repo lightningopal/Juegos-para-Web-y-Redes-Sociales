@@ -122,7 +122,10 @@ window.onload = function () {
         room:           -1,
         availableChar:  [0, 1, 2, 3], // Berserker, Mago, Bardo, Asesina, bloqueado
         availableSkins: [[0],[0],[0],[0]],
-        currency:       0
+        currency:       0,
+        newCoins:       0,
+        points:         0,
+        pointsDifference:  0
     };
 
     this.game.mEnemy = {
@@ -132,6 +135,7 @@ window.onload = function () {
         skinSel:        -1,
         skillSel:       -1,
         AorB:           undefined, // String
+        points:         0,
         image:          undefined
     };
 

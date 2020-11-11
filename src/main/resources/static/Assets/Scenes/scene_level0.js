@@ -573,5 +573,21 @@ class Scene_Level0 extends Phaser.Scene {
         this.versus_characterA.setVisible(false);
         this.versus_characterB.setVisible(false);
     }
+
+    FinishGame(wasDisconnection)
+    {
+        // Mostrar pantalla de fin de partida
+        // disconnectionText.setVisible(true); o addText
+        // Si fue una desconexión, mostrar al jugador el texto de desconexión
+        if (wasDisconnection)
+        {
+            // disconnectionText.setVisible(true);
+        }
+        // Si no, mostrar el texto de 'K.O.'
+        else
+        {
+            // koText.setVisible(true);
+        }
+    }
 }
 
