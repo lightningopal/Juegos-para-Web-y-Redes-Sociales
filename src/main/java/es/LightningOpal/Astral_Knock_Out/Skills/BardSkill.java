@@ -11,7 +11,7 @@ public class BardSkill extends Skill {
     private long elapsedTime;
     private long startTime;
 
-    public BardSkill(PhysicsObject caster, PhysicsObject target, long duration, boolean collidePlaforms, double speed, double damage) {
+    public BardSkill(Player caster, Player target, long duration, boolean collidePlaforms, double speed, double damage) {
         super(caster, target, duration, 10, 15, collidePlaforms);
         this.setMoveSpeed(speed);
         this.damage = damage;
@@ -59,6 +59,12 @@ public class BardSkill extends Skill {
         this.elapsedTime = 0;
         this.startTime = 0;
         // Causa daño al enemigo
+        double hp = target.damage(this.damage);
+        if (hp <= 0.0){
+            // Acabar partida
+        }else{
+            // Enviar mensaje con la nueva vida a los jugadores
+        }
     }
 
     @Override

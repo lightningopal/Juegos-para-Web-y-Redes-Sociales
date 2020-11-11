@@ -1,3 +1,9 @@
 18:03:37 - Server opened.
 18:04:50 - Conected user with session fb835e7c-9a2e-86ef-52f4-e004e9b4e056.
 18:04:55 - Player connected: Kratser.
+18:08:38 - Users data saved.
+18:13:38 - Users data saved.
+18:18:38 - Users data saved.
+18:23:38 - Users data saved.
+18:28:38 - Users data saved.
+18:33:38 - Users data saved.

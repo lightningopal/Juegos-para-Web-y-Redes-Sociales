@@ -1,5 +1,7 @@
 package es.LightningOpal.Astral_Knock_Out;
 
+import es.LightningOpal.Astral_Knock_Out.Skills.*;
+
 /// Imports
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,6 +9,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayDeque;
+import java.util.Queue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -40,8 +44,11 @@ public class Tournament_Game {
 	private int room;
 
 	private Map<String, Player> players = new ConcurrentHashMap<>();
+	private Player playerA;
+	private Player playerB;
 	private ArrayList<PhysicsObject> platforms = new ArrayList<PhysicsObject>(9);
-	//private Map<Integer, Projectile> projectiles = new ConcurrentHashMap<>();
+	private Queue<Skill> projectilesA = new ArrayDeque();
+	private Queue<Skill> projectilesB = new ArrayDeque();
 
     /// Métodos
     // Constructor de la clase que recibe el jugador de la partida y lo guarda
@@ -49,10 +56,72 @@ public class Tournament_Game {
 		// Añadimos los jugadores a la partida
 		players.put(playerA.getUserName(), playerA);
 		players.put(playerB.getUserName(), playerB);
+		this.playerA = playerA;
+		this.playerB = playerB;
 
 		// Asignamos la sala
 		room = room_;
 		
+		// PlayerA Weapon
+        switch (playerA.getPlayerType()) {
+            case "berserker":
+                for (int i = 0; i < 3; i++) {
+                    projectilesA.add(new BerserkerSkill(playerA, playerB, 1000, false, 30, 20)); // Target, duration, collidePlatforms, speed, damage
+                }
+                playerA.setBasicWeapon(new Weapon(projectilesA, 1, 1000));
+                break;
+            case "wizard":
+                for (int i = 0; i < 9; i++) {
+                    projectilesA.add(new WizardSkill(playerA, playerB, 500, true, 30, 20, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
+                }
+                playerA.setBasicWeapon(new Weapon(projectilesA, 3, 400));
+                break;
+            case "bard":
+                for (int i = 0; i < 3; i++) {
+                    projectilesA.add(new BardSkill(playerA, playerB, 2500, false, 20, 20)); // Target, duration, collidePlatforms, speed, damage
+                }
+                playerA.setBasicWeapon(new Weapon(projectilesA, 1, 500));
+                break;
+            case "rogue":
+                for (int i = 0; i < 9; i++) {
+                    projectilesA.add(new RogueSkill(playerA, playerB, 550, true, 30, 20, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
+                }
+                playerA.setBasicWeapon(new Weapon(projectilesA, 3, 200));
+                break;
+            default:
+                break;
+		}
+		
+		// PlayerA Weapon
+        switch (playerB.getPlayerType()) {
+            case "berserker":
+                for (int i = 0; i < 3; i++) {
+                    projectilesB.add(new BerserkerSkill(playerB, playerA, 1000, false, 30, 20)); // Target, duration, collidePlatforms, speed, damage
+                }
+                playerB.setBasicWeapon(new Weapon(projectilesA, 1, 1000));
+                break;
+            case "wizard":
+                for (int i = 0; i < 9; i++) {
+                    projectilesB.add(new WizardSkill(playerB, playerA, 500, true, 30, 20, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
+                }
+                playerB.setBasicWeapon(new Weapon(projectilesA, 3, 400));
+                break;
+            case "bard":
+                for (int i = 0; i < 3; i++) {
+                    projectilesB.add(new BardSkill(playerB, playerA, 2500, false, 20, 20)); // Target, duration, collidePlatforms, speed, damage
+                }
+                playerB.setBasicWeapon(new Weapon(projectilesA, 1, 500));
+                break;
+            case "rogue":
+                for (int i = 0; i < 9; i++) {
+                    projectilesB.add(new RogueSkill(playerB, playerA, 550, true, 30, 20, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
+                }
+                playerB.setBasicWeapon(new Weapon(projectilesA, 3, 200));
+                break;
+            default:
+                break;
+        }
+
 		// Dependiendo del nivel, situaremos distintas plataformas
 		if (level == 0)
 		{
@@ -135,82 +204,126 @@ public class Tournament_Game {
 	}
 
 	private void tick() {
-		/*ObjectNode json = mapper.createObjectNode();
-		ArrayNode arrayNodePlayers = mapper.createArrayNode();
-		//ArrayNode arrayNodeProjectiles = mapper.createArrayNode();*/
-
-		/*long thisInstant = System.currentTimeMillis();
-		Set<Integer> bullets2Remove = new HashSet<>();
-		boolean removeBullets = false;*/
+		// Se crea un ObjectNode 'json' para guardar la información del mensaje a enviar
+        ObjectNode json = mapper.createObjectNode();
+        // Se crea un ObjectNode 'jsonPlayer' para guardar la información del jugador
+        ObjectNode jsonPlayerA = mapper.createObjectNode();
+        ObjectNode jsonPlayerB = mapper.createObjectNode();
+		ObjectNode jsonProjectileA = mapper.createObjectNode();
+		ObjectNode jsonProjectileB = mapper.createObjectNode();
+		ArrayNode arrayNodeProjectilesA = mapper.createArrayNode();
+		ArrayNode arrayNodeProjectilesB = mapper.createArrayNode();
 
 		try {
-			/*// Intenta calcular las físicas de los jugadores y enviarle los datos
-            // Calcula las fisicas
-			for (Player player : players.values()) {
-				ObjectNode jsonPlayer = mapper.createObjectNode();
-
-				player.calculateMovement();
-				player.incVelocity(0, GRAVITY); // Gravedad
-				player.calculatePhysics();
-				player.SetOnFloor(false);
-
-				for (PhysicsObject platform : platforms) {
-					player.collide(platform);
-				}
-
-				// Guarda los datos en el ObjectNode 'jsonPlayer'
-				jsonPlayer.put("posX", player.getPosX());
-				jsonPlayer.put("posY", player.getPosY());
-				jsonPlayer.put("flipped", player.IsFlipped());
-				jsonPlayer.put("onFloor", player.IsOnFloor());
-				jsonPlayer.put("canBasicAttack", player.getBasicWeapon().CanAttack());
-				jsonPlayer.put("canSpecialAttack", player.getSpecialWeapon().CanAttack());
-				arrayNodePlayers.addPOJO(jsonPlayer);
+			// Intenta calcular las físicas de los jugadores y enviarle los datos
+			// Player A
+			playerA.incVelocity(0, GRAVITY); // Gravedad
+            playerA.calculatePhysics();
+            playerA.SetOnFloor(false);
+            for (PhysicsObject platform : platforms) {
+                playerA.collide(platform);
+            }
+            // Controlar límites de la pantalla
+            if (playerA.getPosX() - playerA.getHalfWidth() < 0){
+                playerA.setPosX(playerA.getHalfWidth());
+            }else if (playerA.getPosX() + playerA.getHalfWidth() > 1920){
+                playerA.setPosX(1920 - playerA.getHalfWidth());
+            }
+            // Guarda los datos en el ObjectNode 'jsonPlayer'
+            jsonPlayerA.put("posX", playerA.getPosX());
+            jsonPlayerA.put("posY", playerA.getPosY());
+            jsonPlayerA.put("flipped", playerA.IsFlipped());
+            jsonPlayerA.put("onFloor", playerA.IsOnFloor());
+            jsonPlayerA.put("canBasicAttack", playerA.getBasicWeapon().CanAttack());
+			jsonPlayerA.put("canSpecialAttack", playerA.getSpecialWeapon().CanAttack());
+			
+			// Player B
+			playerB.incVelocity(0, GRAVITY); // Gravedad
+            playerB.calculatePhysics();
+            playerB.SetOnFloor(false);
+            for (PhysicsObject platform : platforms) {
+                playerB.collide(platform);
+            }
+            // Controlar límites de la pantalla
+            if (playerB.getPosX() - playerB.getHalfWidth() < 0){
+                playerB.setPosX(playerB.getHalfWidth());
+            }else if (playerB.getPosX() + playerB.getHalfWidth() > 1920){
+                playerB.setPosX(1920 - playerB.getHalfWidth());
+            }
+            // Guarda los datos en el ObjectNode 'jsonPlayer'
+            jsonPlayerB.put("posX", playerB.getPosX());
+            jsonPlayerB.put("posY", playerB.getPosY());
+            jsonPlayerB.put("flipped", playerB.IsFlipped());
+            jsonPlayerB.put("onFloor", playerB.IsOnFloor());
+            jsonPlayerB.put("canBasicAttack", playerB.getBasicWeapon().CanAttack());
+			jsonPlayerB.put("canSpecialAttack", playerB.getSpecialWeapon().CanAttack());
+			
+			// Proyectiles A
+			for (Skill skill : projectilesA) {
+                jsonProjectileA = mapper.createObjectNode();
+                if (skill.isActive()) {
+                    // Calcular posición
+                    skill.calculatePhysics();
+                    if (skill.intersect(skill.getTarget())) {
+                        skill.setActive(false);
+                        skill.impact(); // Se lanza un mensaje a ambos jugadores en skill
+                    }
+                    if (skill.collidesWithPlatforms()){
+                        for (PhysicsObject platform : platforms){
+                            if (skill.intersect(platform)){
+                                skill.disable();
+                            }
+                        }
+                    }
+                }
+                // Guardar proyectiles en array y comunicar al cliente la posición
+                jsonProjectileA.put("isActive", skill.isActive());
+                jsonProjectileA.put("posX", skill.getPosX());
+                jsonProjectileA.put("posY", skill.getPosY());
+                jsonProjectileA.put("facingAngle", skill.getFacingAngle());
+                jsonProjectileA.put("flipX", skill.IsFlipped());
+                arrayNodeProjectilesA.addPOJO(jsonProjectileA);
+			}
+			
+			// Proyectiles B
+			for (Skill skill : projectilesB) {
+                jsonProjectileB = mapper.createObjectNode();
+                if (skill.isActive()) {
+                    // Calcular posición
+                    skill.calculatePhysics();
+                    if (skill.intersect(skill.getTarget())) {
+                        skill.setActive(false);
+                        skill.impact(); // Se lanza un mensaje a ambos jugadores en skill
+                    }
+                    if (skill.collidesWithPlatforms()){
+                        for (PhysicsObject platform : platforms){
+                            if (skill.intersect(platform)){
+                                skill.disable();
+                            }
+                        }
+                    }
+                }
+                // Guardar proyectiles en array y comunicar al cliente la posición
+                jsonProjectileB.put("isActive", skill.isActive());
+                jsonProjectileB.put("posX", skill.getPosX());
+                jsonProjectileB.put("posY", skill.getPosY());
+                jsonProjectileB.put("facingAngle", skill.getFacingAngle());
+                jsonProjectileB.put("flipX", skill.IsFlipped());
+                arrayNodeProjectilesB.addPOJO(jsonProjectileB);
 			}
 
-			// Update bullets and handle collision
-			/*for (Projectile projectile : getProjectiles()) {
-				projectile.applyVelocity2Position();
-
-				// Handle collision
-				for (Player player : getPlayers()) {
-					if ((projectile.getOwner().getPlayerId() != player.getPlayerId()) && player.intersect(projectile)) {
-						// System.out.println("Player " + player.getPlayerId() + " was hit!!!");
-						projectile.setHit(true);
-						break;
-					}
-				}
-
-				ObjectNode jsonProjectile = mapper.createObjectNode();
-				jsonProjectile.put("id", projectile.getId());
-
-				if (!projectile.isHit() && projectile.isAlive(thisInstant)) {
-					jsonProjectile.put("posX", projectile.getPosX());
-					jsonProjectile.put("posY", projectile.getPosY());
-					jsonProjectile.put("facingAngle", projectile.getFacingAngle());
-					jsonProjectile.put("isAlive", true);
-				} else {
-					removeBullets = true;
-					bullets2Remove.add(projectile.getId());
-					jsonProjectile.put("isAlive", false);
-					if (projectile.isHit()) {
-						jsonProjectile.put("isHit", true);
-						jsonProjectile.put("posX", projectile.getPosX());
-						jsonProjectile.put("posY", projectile.getPosY());
-					}
-				}
-				arrayNodeProjectiles.addPOJO(jsonProjectile);
-			}*/
-
-			/*if (removeBullets)
-				this.projectiles.keySet().removeAll(bullets2Remove);*/
-
-			/*json.put("event", "GAME STATE UPDATE");
-			json.putPOJO("players", arrayNodePlayers);*/
-			//json.putPOJO("projectiles", arrayNodeProjectiles);
-
+			// Mover escenario y plataformas para el nivel 2 y pasarlo en 'json'
+			
+			// Añade el evento correspondiente
+            json.put("event", "UPDATE_TOURNAMENT");
+            // Añade el ObjectNode 'jsonPlayer' al ObjectNode 'json' para unificar la
+            // información
+            json.putPOJO("playerA", jsonPlayerA);
+            json.putPOJO("playerB", jsonPlayerB);
+			json.putPOJO("projectilesA", arrayNodeProjectilesA);
+			json.putPOJO("projectilesB", arrayNodeProjectilesB);
 			// Envía a los jugadores un mensaje con la información del ObjectNode 'json'
-			//this.broadcast(json.toString());
+            this.broadcast(json.toString());
 		} catch (Throwable ex) {
 			// Excepcion
 		}

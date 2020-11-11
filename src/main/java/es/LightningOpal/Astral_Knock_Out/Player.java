@@ -16,8 +16,8 @@ public class Player extends PhysicsObject{
     private int skin;
     private int skill;
     private int numJumps;
-    private int maxHP;
-    private int currentHP;
+    private double maxHP;
+    private double currentHP;
 
     private Weapon basicWeapon;
     private Weapon specialWeapon;
@@ -154,11 +154,11 @@ public class Player extends PhysicsObject{
     public int getNumJumps(){ return numJumps; }
     public void setNumJumps(int nJ){ numJumps = nJ; }
 
-    public int getMaxHP(){ return maxHP; }
-    public void setMaxHP(int mHP){ maxHP = mHP; }
+    public double getMaxHP(){ return maxHP; }
+    public void setMaxHP(double mHP){ maxHP = mHP; }
 
-    public int getCurrentHP() { return currentHP; }
-    public void setCurrentHP(int currentHP) { this.currentHP = currentHP; }
+    public double getCurrentHP() { return currentHP; }
+    public void setCurrentHP(double currentHP) { this.currentHP = currentHP; }
 
     public Weapon getBasicWeapon() { return basicWeapon; }
     public void setBasicWeapon(Weapon basicWeapon) { this.basicWeapon = basicWeapon; }
@@ -176,7 +176,7 @@ public class Player extends PhysicsObject{
     public boolean isFalling(){ return falling; }
     public void setFalling(boolean f) { falling = f; }
 
-    public int damage (int dmg) { return currentHP -= dmg; }
+    public double damage (double dmg) { return currentHP -= dmg; }
 
     /// Otros métodos
     // Método updatePlayerValues, que actualiza los valores del jugador

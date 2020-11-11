@@ -12,7 +12,7 @@ public class RogueSkill extends Skill{
 
     private Timer startTimer;
 
-    public RogueSkill(PhysicsObject caster, PhysicsObject target, long duration, boolean collidePlaforms, double speed, double damage, int id){
+    public RogueSkill(Player caster, Player target, long duration, boolean collidePlaforms, double speed, double damage, int id){
         super(caster, target, duration, 15, 6.50, collidePlaforms);
         this.setMoveSpeed(speed);
         this.damage = damage;
@@ -61,7 +61,13 @@ public class RogueSkill extends Skill{
     public void impact() {
         super.impact();
         this.isActive = false;
-        // Causar daño
+        // Causa daño al enemigo
+        double hp = target.damage(this.damage);
+        if (hp <= 0.0){
+            // Acabar partida
+        }else{
+            // Enviar mensaje con la nueva vida a los jugadores
+        }
     }
 
     @Override

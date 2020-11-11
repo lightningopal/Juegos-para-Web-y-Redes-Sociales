@@ -40,7 +40,7 @@ public class SpaceGym_Game {
     ObjectMapper mapper = new ObjectMapper();
     private ScheduledFuture<?> future;
     private Player player;
-    private PhysicsObject dummy;
+    private Player dummy;
     private double dummyHP;
     private String userName;
 
@@ -55,7 +55,13 @@ public class SpaceGym_Game {
         userName = thisUser.getUser_name();
 
         // Dummy
-        this.dummy = new PhysicsObject(false, dummyPosX, dummyPosY, 23.0, 42.0, -7.0, -1.0);
+        this.dummy = new Player(/*false, dummyPosX, dummyPosY, 23.0, 42.0, -7.0, -1.0*/);
+        dummy.setPosX(dummyPosX);
+        dummy.setPosY(dummyPosY);
+        dummy.setHalfWidth(23.0);
+        dummy.setHalfHeight(42.0);
+        dummy.setOffsetX(-7.0);
+        dummy.setOffsetY(-1.0);
         this.dummyHP = 100;
 
         // Player Weapon
@@ -227,7 +233,6 @@ public class SpaceGym_Game {
                         }
                     }
                 }
-                // System.out.println(skill.isActive());
                 // Guardar proyectiles en array y comunicar al cliente la posición
                 jsonProjectile.put("isActive", skill.isActive());
                 jsonProjectile.put("posX", skill.getPosX());

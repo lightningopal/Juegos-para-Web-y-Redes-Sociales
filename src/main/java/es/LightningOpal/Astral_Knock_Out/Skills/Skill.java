@@ -4,8 +4,8 @@ import es.LightningOpal.Astral_Knock_Out.*;
 import java.util.Timer;
 
 public class Skill extends PhysicsObject{
-    protected PhysicsObject caster;
-    protected PhysicsObject target;
+    protected Player caster;
+    protected Player target;
     protected long duration;
     protected boolean isActive;
     protected boolean collidePlatforms;
@@ -13,7 +13,7 @@ public class Skill extends PhysicsObject{
 
     protected Timer stopTimer;
 
-    public Skill(PhysicsObject caster, PhysicsObject target, long duration, double hW, double hH, boolean collidePlatforms){
+    public Skill(Player caster, Player target, long duration, double hW, double hH, boolean collidePlatforms){
         this.caster = caster;
         this.target = target;
         this.duration = duration;
@@ -26,17 +26,17 @@ public class Skill extends PhysicsObject{
         stopTimer = new Timer();
     }
 
-    public PhysicsObject getCaster() {
+    public Player getCaster() {
         return caster;
     }
-    public void setCaster(PhysicsObject caster) {
+    public void setCaster(Player caster) {
         this.caster = caster;
     }
 
-    public PhysicsObject getTarget() {
+    public Player getTarget() {
         return target;
     }
-    public void setTarget(PhysicsObject target) {
+    public void setTarget(Player target) {
         this.target = target;
     }
 

@@ -10,7 +10,7 @@ public class WizardSkill extends Skill{
     private double damage;
     private int id;
 
-    public WizardSkill(PhysicsObject caster, PhysicsObject target, long duration, boolean collidePlaforms, double speed, double damage, int id){
+    public WizardSkill(Player caster, Player target, long duration, boolean collidePlaforms, double speed, double damage, int id){
         super(caster, target, duration, 25, 6.50, collidePlaforms);
         this.setMoveSpeed(speed);
         this.damage = damage;
@@ -87,7 +87,13 @@ public class WizardSkill extends Skill{
     public void impact() {
         super.impact();
         this.isActive = false;
-        // Causar daño
+        // Causa daño al enemigo
+        double hp = target.damage(this.damage);
+        if (hp <= 0.0){
+            // Acabar partida
+        }else{
+            // Enviar mensaje con la nueva vida a los jugadores
+        }
     }
 
     @Override
