@@ -55,9 +55,21 @@ public class BardSkill extends Skill {
     @Override
     public void impact() {
         super.impact();
+        this.isActive = false;
         this.elapsedTime = 0;
         this.startTime = 0;
         // Causa daño al enemigo
+    }
+
+    @Override
+    public double impact(double hp) {
+        super.impact();
+        this.isActive = false;
+        this.elapsedTime = 0;
+        this.startTime = 0;
+        // Causa daño al enemigo
+        return hp - this.damage;
+        
     }
 
     @Override

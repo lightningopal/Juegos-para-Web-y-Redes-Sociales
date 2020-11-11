@@ -40,6 +40,7 @@ public class SpaceGym_Game {
     private ScheduledExecutorService scheduler;
     private Player player;
     private PhysicsObject dummy;
+    private double dummyHP;
     private String userName;
 
     private ArrayList<PhysicsObject> platforms = new ArrayList<PhysicsObject>(9);
@@ -54,6 +55,7 @@ public class SpaceGym_Game {
 
         // Dummy
         this.dummy = new PhysicsObject(false, dummyPosX, dummyPosY, 23.0, 42.0, -7.0, -1.0);
+        this.dummyHP = 100;
 
         // Player Weapon
         switch (player.getPlayerType()) {
@@ -215,7 +217,10 @@ public class SpaceGym_Game {
                     skill.calculatePhysics();
                     if (skill.intersect(skill.getTarget())) {
                         skill.setActive(false);
-                        skill.impact();
+                        this.dummyHP = skill.impact(this.dummyHP);
+                        if (this.dummyHP <= 0){
+                            this.dummyHP = 100;
+                        }
                     }
                     if (skill.collidesWithPlatforms()){
                         for (PhysicsObject platform : platforms){
@@ -234,6 +239,7 @@ public class SpaceGym_Game {
                 jsonProjectile.put("flipX", skill.IsFlipped());
                 arrayNodeProjectiles.addPOJO(jsonProjectile);
             }
+            jsonDummy.put("hp", dummyHP);
 
             /*
              * if (removeBullets) this.projectiles.keySet().removeAll(bullets2Remove);

@@ -85,4 +85,9 @@ public class Skill extends PhysicsObject{
         // Implementado en los hijos
     }
 
+    public double impact(double hp){
+        // Implementado en los hijos
+        return hp;
+    }
+
 }

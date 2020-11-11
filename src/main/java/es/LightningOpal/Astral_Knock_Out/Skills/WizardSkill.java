@@ -84,6 +84,21 @@ public class WizardSkill extends Skill{
     }
 
     @Override
+    public void impact() {
+        super.impact();
+        this.isActive = false;
+        // Causar daño
+    }
+
+    @Override
+    public double impact(double hp) {
+        super.impact();
+        this.isActive = false;
+        // Causar daño
+        return hp - this.damage;
+    }
+
+    @Override
     public void calculatePhysics(){
         this.applyVelocity2Position();
     }
