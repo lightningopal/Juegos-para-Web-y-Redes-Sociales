@@ -12,7 +12,7 @@ public class BerserkerSkill extends Skill{
     private long elapsedTime;
     private long startTime;
 
-    public BerserkerSkill(PhysicsObject caster, PhysicsObject target, long duration, boolean collidePlaforms, double speed, double damage){
+    public BerserkerSkill(Player caster, Player target, long duration, boolean collidePlaforms, double speed, double damage){
         super(caster, target, duration, 45, 45, collidePlaforms);
         this.setMoveSpeed(speed);
         this.damage = damage;
@@ -59,7 +59,13 @@ public class BerserkerSkill extends Skill{
         this.isActive = false;
         this.elapsedTime = 0;
         this.startTime = 0;
-        // Causar daño
+        // Causa daño al enemigo
+        double hp = target.damage(this.damage);
+        if (hp <= 0.0){
+            // Acabar partida
+        }else{
+            // Enviar mensaje con la nueva vida a los jugadores
+        }
     }
 
     @Override
