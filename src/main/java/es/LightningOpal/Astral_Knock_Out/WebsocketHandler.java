@@ -457,6 +457,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 							System.out.println("Buscando partida: " + name);
 						}
 					}
+				break;
 				case "GAME_START":
 					// Obtenemos la sala del nodo
 					room = node.get("room").asInt();

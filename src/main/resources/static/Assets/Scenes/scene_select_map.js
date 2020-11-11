@@ -24,8 +24,13 @@ class Scene_Select_Map extends Phaser.Scene {
         this.mapButton1 = this.add.image(RelativeScale(1415, "x"), RelativeScale(523, "y"), "map_button1").setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.mapButton1.setFrame(0);
 
+        this.enterBtn = this.add.image(RelativeScale(1810.0, "x"), RelativeScale(1000.0, "x"), "enter_button")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2);
+        this.enterText;
+
         // Opciones de selección
         this.optionSelected = 0; // 0 -> Mapa 0 / 1 -> Mapa 1
+        this.alreadySelected = false;
 
     } // Fin preload
 
@@ -34,8 +39,12 @@ class Scene_Select_Map extends Phaser.Scene {
         var that = this;
         game.global.actualScene = "scene_select_map";
 
+        // Mobile
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
+            this.enterText = this.add.image(RelativeScale(1650.0, "x"), RelativeScale(910.0, "x"), "continue_text_mobile")
+                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
             that.mapButton0.setFrame(0);
+
             this.input.on('pointerup', function () {
                 that.backBtn.setFrame(0);
                 that.mapButton0.setFrame(0);
@@ -85,7 +94,11 @@ class Scene_Select_Map extends Phaser.Scene {
                     console.log("Mapa 2 soltado");
                 }
             });
+        // Desktop
         } else {
+            this.enterText = this.add.image(RelativeScale(1350.0, "x"), RelativeScale(1000.0, "x"), "continue_text_desktop")
+                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+            this.enterText.setVisible(false);
             this.backBtn.setFrame(1);
             game.mPlayer.difficultySel = 0;
 
@@ -111,9 +124,17 @@ class Scene_Select_Map extends Phaser.Scene {
             });
 
             this.input.keyboard.on('keydown-'+'ENTER', function (event) {
-                that.input.keyboard.removeAllKeys(true);
-                game.mPlayer.difficultySel = that.optionSelected;
-                that.scene.start("scene_searching");
+                if (!that.alreadySelected)
+                {
+                    that.enterText.setVisible(true);
+                    that.alreadySelected = true;
+                }
+                else
+                {
+                    that.input.keyboard.removeAllKeys(true);
+                    game.mPlayer.difficultySel = that.optionSelected;
+                    that.scene.start("scene_searching");
+                }
             });
         }
 
