@@ -17,9 +17,6 @@ class Scene_Ranking extends Phaser.Scene {
         this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
-        // Teclas
-        this.cursors;
-
         // Textos
         // Propio Ranking
         var rankingNameTexts = [];
@@ -75,17 +72,14 @@ class Scene_Ranking extends Phaser.Scene {
             });
         } else {
             this.backBtn.setFrame(1);
-            // Opciones de selección
-            this.cursors = this.input.keyboard.addKeys({
-                'escape': Phaser.Input.Keyboard.KeyCodes.ESC,
-                'enter': Phaser.Input.Keyboard.KeyCodes.ENTER,
-            });
 
-            this.cursors.escape.on('down', function (event) {
+            // Opciones de selección
+            this.input.keyboard.on('keydown-'+'ESC', function (event) {
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_main_menu");
             });
-            this.cursors.enter.on('down', function (event) {
+
+            this.input.keyboard.on('keydown-'+'ENTER', function (event) {
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_main_menu");
             });

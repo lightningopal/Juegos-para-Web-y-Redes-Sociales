@@ -201,7 +201,7 @@ class Scene_Boot extends Phaser.Scene {
             ///Escena de Créditos///
             this.load.image("credits_bg", "./Assets/Images/Tests/test_bg/Credits-BG.jpg");
 
-            ///Escena de Selección de Personaje, Habilidad y Escenario///
+            ///Escena de Selección de Personaje y Habilidad///
             this.load.image("select_character_t_interface", "./Assets/Images/UI/select_character_t_interface.png");
             this.load.image("select_character_sg_interface", "./Assets/Images/UI/select_character_sg_interface.png");
             this.load.image("select_character_lines_interface", "./Assets/Images/UI/select_character_lines_interface.png");
@@ -217,6 +217,11 @@ class Scene_Boot extends Phaser.Scene {
             this.load.image("enter_button", "./Assets/Images/UI/enter_button.png");
             this.load.image("continue_text_desktop", "./Assets/Images/UI/continue_text_desktop.png");
             this.load.image("continue_text_mobile", "./Assets/Images/UI/continue_text_mobile.png");
+
+            ///Escena de Seleccion de Escenario
+            this.load.image("select_map_text", "./Assets/Images/UI/select_map_text.png");
+            this.load.spritesheet("map_button0", "./Assets/Images/UI/map_button_0.png", { frameWidth: 1021, frameHeight: 627 });
+            this.load.spritesheet("map_button1", "./Assets/Images/UI/map_button_1.png", { frameWidth: 1021, frameHeight: 627 });
 
             ///Escena de búsqueda de partida
             this.load.image("searching_back_triangle", "./Assets/Images/UI/searching_back_triangle_connection_interface.png");

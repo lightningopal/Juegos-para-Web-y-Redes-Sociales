@@ -203,9 +203,9 @@ class Scene_Options extends Phaser.Scene {
 
         // Datos del usuario
         var userNameText = this.add.text(RelativeScale(160, "x"), RelativeScale(900, "y"), game.mPlayer.userName)
-        .setOrigin(0, 0.5).setFontSize(28); // Alineado a la izquierda
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setFontSize(48); // Alineado a la izquierda
         var userCurrencyText = this.add.text(RelativeScale(836, "x"), RelativeScale(900, "y"), game.mPlayer.currency)
-        .setOrigin(1, 0.5).setFontSize(28); // Alineado a la derecha
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(1, 0.5).setFontSize(48); // Alineado a la derecha
     }// Fin create
 
     update() {

@@ -40,7 +40,8 @@ window.onload = function () {
             Scene_Score,
             Scene_Disconnected,
             Scene_Searching,
-            Scene_Level0
+            Scene_Level0,
+            Scene_Select_Map
         ]
     };
 
@@ -73,7 +74,8 @@ window.onload = function () {
             Scene_Score,
             Scene_Disconnected,
             Scene_Searching,
-            Scene_Level0
+            Scene_Level0,
+            Scene_Select_Map
         ]
     };
 
