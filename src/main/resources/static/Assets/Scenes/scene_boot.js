@@ -592,7 +592,7 @@ class Scene_Boot extends Phaser.Scene {
     }
 
     AuthenticationError(data) {
-        game.global.feedbackLogin.setText(data.message);
+        game.global.feedbackLogin.innerHTML = "" + data.message;
 
         if (game.global.DEBUG_MODE) {
             console.log("Error de autenticacion: " + data.message);

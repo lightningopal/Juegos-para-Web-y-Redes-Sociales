@@ -3,9 +3,9 @@
       background: #eceeee;
       border: 1px solid #42464b;
       border-radius: 6px;
-      height: 400px;
+      height: 340px;
       margin: 0px auto 0;
-      width: 450px;
+      width: 370px;
     }
     .login h1 {
       background-image: linear-gradient(top, #f1f3f3, #d4dae0);
@@ -28,11 +28,11 @@
       box-shadow: 0 1px #fff;
       box-sizing: border-box;
       color: #696969;
-      height: 60px;
-      margin: 31px 0 0 29px;
+      height: 50px;
+      margin: 26px 0 0 15px;
       padding-left: 37px;
       transition: box-shadow 0.3s;
-      width: 400px;
+      width: 340px;
       font-family:Arial, "Helvetica", sans-serif;
       font-size:24px;
     }
@@ -68,8 +68,8 @@
     
 
     input[type="submit"] {
-      width:400px;
-      height:70px;
+      width:340px;
+      height:60px;
       display:block;
       font-family:Arial, "Helvetica", sans-serif;
       font-size:28px;
@@ -80,7 +80,7 @@
       text-align:center;
       text-shadow:1px 1px 0px #37a69b;
       padding-top:6px;
-      margin: 80px 0 0 29px;
+      margin: 40px 0 0 15px;
       position:relative;
       cursor:pointer;
       border: none;  
@@ -97,10 +97,20 @@
       top:3px;
       box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #31524d, 0px 5px 3px #999;
     }    
+
+    .feedbackText {
+      font-size: 24px;
+      color: #DD0000;
+      text-align:center;
+      display:block;
+      position:relative;
+      margin: 30px 0 0 0;
+    }
     </style>
     
     <div class="login" id="login">
         <input type="text" placeholder="Username" id="username" name="username" maxlength="14" max="14">
         <input type="password" placeholder="Password" id="password" name="password" maxlength="14" max="14">
         <input type="submit" id="submit" value="Log In" name="loginButton">
+        <p class="feedbackText" id="feedbackText"> </p>
     </div>
