@@ -13,6 +13,7 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -38,7 +39,7 @@ public class Tournament_Game {
     public final static int playerBPosY = 940;
 
 	ObjectMapper mapper = new ObjectMapper();
-	private ScheduledExecutorService scheduler;
+	private ScheduledFuture<?> future;
 
 	private int room;
 
@@ -155,20 +156,16 @@ public class Tournament_Game {
 
 	// Método startGameLoop, que inicia el game loop de la partida
     public void startGameLoop(ScheduledExecutorService scheduler_) {
-        // Guarda el scheduler
-        scheduler = scheduler_;
-        // ¿Crea un nuevo ThreadPool en el scheduler?
-        scheduler = Executors.newScheduledThreadPool(1);
-        // Inicia el hilo que ejecuta el método tick
-        scheduler.scheduleAtFixedRate(() -> tick(), TICK_DELAY, TICK_DELAY, TimeUnit.MILLISECONDS);
+		// Inicia y guarda el hilo que ejecuta el método tick
+        future = scheduler_.scheduleAtFixedRate(() -> tick(), TICK_DELAY, TICK_DELAY, TimeUnit.MILLISECONDS);
     }
 
     // Método stopGameLoop, que para el game loop de la partida
     public void stopGameLoop() {
-        // Si el scheduler existe y no es null, lo para
-        if (scheduler != null) {
-            scheduler.shutdown();
-            System.out.println("SE HA CERRADO EL SCHEDULER DE LA PARTIDA DE LOS JUGADORES " + players + ".");
+        // Si el future existe y no es null, lo para
+        if (future != null) {
+            future.cancel(true);
+            System.out.println("SE HA CERRADO EL FUTURE DE LA PARTIDA DE LOS JUGADORES " + players + ".");
         }
 	}
 	
