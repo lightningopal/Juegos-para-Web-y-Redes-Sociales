@@ -390,10 +390,10 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					// Se asignan los atributos
 					user.setPlayer_selected(thisPlayer);
 
-					// Si hay jugadores en cola, se empareja contra el primero
-					if (GamesManager.INSTANCE.searching_players.size() > 0) {
+					// Si hay jugadores en cola para ese nivel, se empareja contra el primero
+					if (GamesManager.INSTANCE.searching_players.get(level).size() > 0) {
 						// Obtenemos la información del rival
-						Player rival = GamesManager.INSTANCE.searching_players.remove();
+						Player rival = GamesManager.INSTANCE.searching_players.get(level).remove();
 
 						// Se crea la partida
 						room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
@@ -444,14 +444,8 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					// Si no, añadimos al jugador a la cola
 					else {
 						// Añade al jugador a la cola
-						GamesManager.INSTANCE.searching_players.add(thisPlayer);
+						GamesManager.INSTANCE.searching_players.get(level).add(thisPlayer);
 
-						/*
-						 * // Asignar evento en el ObjectNode 'msg' msg.put("event", "SEARCHING_GAME");
-						 * 
-						 * // Enviar el mensaje synchronized(user.getSession()){
-						 * user.getSession().sendMessage(new TextMessage(msg.toString())); }
-						 */
 						if (DEBUG_MODE) {
 							name = user.getUser_name();
 							System.out.println("Buscando partida: " + name);
