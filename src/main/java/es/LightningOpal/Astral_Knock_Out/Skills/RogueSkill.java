@@ -57,6 +57,21 @@ public class RogueSkill extends Skill{
         this.isActive = false;
     }
 
+    @Override
+    public void impact() {
+        super.impact();
+        this.isActive = false;
+        // Causar daño
+    }
+
+    @Override
+    public double impact(double hp) {
+        super.impact();
+        this.isActive = false;
+        // Causar daño
+        return hp - this.damage;
+    }
+
     public void start(){
         super.activate();
         this.setPosX(caster.getPosX());

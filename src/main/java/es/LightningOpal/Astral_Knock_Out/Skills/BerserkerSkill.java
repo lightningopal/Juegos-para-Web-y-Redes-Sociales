@@ -54,6 +54,25 @@ public class BerserkerSkill extends Skill{
     }
 
     @Override
+    public void impact() {
+        super.impact();
+        this.isActive = false;
+        this.elapsedTime = 0;
+        this.startTime = 0;
+        // Causar daño
+    }
+
+    @Override
+    public double impact(double hp) {
+        super.impact();
+        this.isActive = false;
+        this.elapsedTime = 0;
+        this.startTime = 0;
+        // Causar daño
+        return hp - this.damage;
+    }
+
+    @Override
     public void calculatePhysics(){
         elapsedTime = System.currentTimeMillis() - startTime;
         double remainingTime = duration - elapsedTime;

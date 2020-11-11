@@ -37,18 +37,7 @@ class Scene_Space_Gym extends Phaser.Scene {
         this.add.image(RelativeScale(114.50, "x"), RelativeScale(112.0, "y"), "back_button_interface")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(5);
         this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(5);;
-
-        this.cursors1 = this.input.keyboard.addKeys({
-            'jump': game.cursors1Keys.jump,
-            'fall': game.cursors1Keys.fall,
-            'left': game.cursors1Keys.left,
-            'right': game.cursors1Keys.right,
-            'basicAttack': game.cursors1Keys.basicAttack,
-            'specialAttack': game.cursors1Keys.specialAttack,
-            'enter': Phaser.Input.Keyboard.KeyCodes.ENTER,
-            'escape': Phaser.Input.Keyboard.KeyCodes.ESC
-        });
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(5);
 
         if (game.global.DEVICE == "mobile") {
             var url;
@@ -232,8 +221,17 @@ class Scene_Space_Gym extends Phaser.Scene {
         game.mPlayer.image.body.setSize(0, 0);
         game.mPlayer.image.body.allowGravity = false;
 
+        /*
+        this.input.keyboard.on('keydown-'+'D', function (event) {
+                that.optionSelectedCol = (that.optionSelectedCol + 1) % 3;
+                if (game.global.DEBUG_MODE){ 
+                    console.log("COL: "+that.optionSelectedCol);
+                }
+                that.CheckOption();
+        });
+        */
         if (game.global.DEVICE === "desktop") {
-            this.cursors1.left.on("down", function (event) {
+            this.input.keyboard.on("keydown-"+"A", function (event) {
                 if (!that.paused){
                     that.movingRight = false;
                     that.movingLeft = true;
@@ -241,13 +239,13 @@ class Scene_Space_Gym extends Phaser.Scene {
                     that.returnToMenu = !that.returnToMenu;
                 }
             });
-            this.cursors1.left.on("up", function (event) {
+            this.input.keyboard.on("keyup-"+"A", function (event) {
                 if (!that.paused){
                     that.movingLeft = false;
                 }
             });
 
-            this.cursors1.right.on("down", function (event) {
+            this.input.keyboard.on("keydown-"+"D", function (event) {
                 if (!that.paused){
                     that.movingRight = true;
                     that.movingLeft = false;
@@ -256,25 +254,25 @@ class Scene_Space_Gym extends Phaser.Scene {
                 }
                 
             });
-            this.cursors1.right.on("up", function (event) {
+            this.input.keyboard.on("keyup-"+"D", function (event) {
                 if (!that.paused){
                     that.movingRight = false;
                 }
             });
 
-            this.cursors1.jump.on("down", function (event) {
+            this.input.keyboard.on("keydown-"+"W", function (event) {
                 if (!that.paused){
                     that.Jump();
                 }
             });
 
-            this.cursors1.fall.on("down", function (event) {
+            this.input.keyboard.on("keydown-"+"S", function (event) {
                 if (!that.paused){
                     that.Fall();
                 }
             });
 
-            this.cursors1.basicAttack.on("down", function (event) {
+            this.input.keyboard.on("keydown-"+"O", function (event) {
                 if (!that.paused){
                     if (!that.attacking){
                         that.BasicAttack();
@@ -282,7 +280,7 @@ class Scene_Space_Gym extends Phaser.Scene {
                 }
             });
 
-            this.cursors1.specialAttack.on("down", function (event) {
+            this.input.keyboard.on("keydown-"+"P", function (event) {
                 if (!that.paused){
                     if (!that.attacking){
                         that.SpecialAttack();
@@ -290,14 +288,14 @@ class Scene_Space_Gym extends Phaser.Scene {
                 }
             });
 
-            this.cursors1.escape.on("down", function(event){
+            this.input.keyboard.on("keydown-"+"ESC", function(event){
                 that.paused = !that.paused;
                 that.returnToMenu = false;
                 that.movingLeft = false;
                 that.movingRight = false;
             });
 
-            this.cursors1.enter.on("down", function(event){
+            this.input.keyboard.on("keydown-"+"ENTER", function(event){
                 if (that.paused){
                     if (that.returnToMenu){
                         // Volver al menú

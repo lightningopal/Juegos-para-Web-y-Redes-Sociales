@@ -29,8 +29,6 @@ class Scene_Main_Menu extends Phaser.Scene {
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.optionsBtn = this.add.image(RelativeScale(138.50,"x"), RelativeScale(889.0,"y"), "options_button")
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        // Teclas
-        //this.cursors;
         // Opciones de selección
         this.optionSelectedRow;
         this.optionSelectedCol;
@@ -178,17 +176,7 @@ class Scene_Main_Menu extends Phaser.Scene {
                 }
             });
         }else{// Ordenador
-            // ESTO ES LO QUE JODE EL LOGIN
-            /*this.cursors = this.input.keyboard.addKeys({
-                'up': game.cursors1Keys.jump, //W
-                'down': game.cursors1Keys.fall, //S
-                'left': game.cursors1Keys.left, //A
-                'right': game.cursors1Keys.right, //D
-                'enter': Phaser.Input.Keyboard.KeyCodes.ENTER,
-                'escape': Phaser.Input.Keyboard.KeyCodes.ESC,
-            });*/
             // Opciones de selección
-    
             this.input.keyboard.on('keydown-'+'D', function (event) {
                 that.optionSelectedCol = (that.optionSelectedCol + 1) % 3;
                 if (game.global.DEBUG_MODE){ 
@@ -265,7 +253,7 @@ class Scene_Main_Menu extends Phaser.Scene {
                 }
             });
             /**
-            this.cursors.escape.on('down', function(event){
+            this.input.keyboard.on("keydown-"+"ESC", function(event){
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_account");
             });

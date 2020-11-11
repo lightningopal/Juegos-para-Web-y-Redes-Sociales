@@ -668,6 +668,7 @@ class Scene_Boot extends Phaser.Scene {
         // Dummy
         this.scene.get('scene_space_gym').dummy.x = RelativeScale(data.dummy.posX, "x");
         this.scene.get('scene_space_gym').dummy.y = RelativeScale(data.dummy.posY, "y");
+        this.scene.get('scene_space_gym').dummy.userInterface.currentHP = data.dummy.hp;
 
         // Proyectiles
         // console.log(data.projectiles); // array

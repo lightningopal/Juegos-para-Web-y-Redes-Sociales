@@ -22,8 +22,6 @@ class Scene_Options extends Phaser.Scene {
         this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.musicBtn.setFrame(1);
-        // Teclas
-        this.cursors;
         // Opciones de selección
         this.optionSelected;
     }// Fin preload
@@ -126,27 +124,18 @@ class Scene_Options extends Phaser.Scene {
             });
         }else if (game.global.DEVICE === "desktop") { // Odenador
             // Teclas de selección
-            this.cursors = this.input.keyboard.addKeys({
-                'up': game.cursors1Keys.jump,
-                'down': game.cursors1Keys.fall,
-                'left': game.cursors1Keys.left,
-                'right': game.cursors1Keys.right,
-                'enter': Phaser.Input.Keyboard.KeyCodes.ENTER,
-                'escape': Phaser.Input.Keyboard.KeyCodes.ESC
-            });
-
-            this.cursors.escape.on('down', function (event) {
+            this.input.keyboard.on("keydown-"+"ESC", function (event) {
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_main_menu");
             });
-            this.cursors.enter.on('down', function (event) {
+            this.input.keyboard.on("keydown-"+"ENTER", function (event) {
                 if (that.optionSelected == 0) {
                     that.input.keyboard.removeAllKeys(true);
                     that.scene.start("scene_main_menu");
                 }
             });
 
-            this.cursors.up.on('down', function (event) {
+            this.input.keyboard.on("keydown-"+"W", function (event) {
                 if (that.optionSelected == 0) {
                     that.optionSelected = 2;
                 } else {
@@ -157,7 +146,7 @@ class Scene_Options extends Phaser.Scene {
                 }
                 that.CheckOption();
             });
-            this.cursors.down.on('down', function (event) {
+            this.input.keyboard.on("keydown-"+"S", function (event) {
                 that.optionSelected = (that.optionSelected + 1) % 3;
                 if (game.global.DEBUG_MODE) {
                     console.log(that.optionSelected);
@@ -165,7 +154,7 @@ class Scene_Options extends Phaser.Scene {
                 that.CheckOption();
             });
 
-            this.cursors.right.on('down', function (event) {
+            this.input.keyboard.on("keydown-"+"D", function (event) {
                 if (that.optionSelected == 1) { // Música
                     game.options.musicVol = Phaser.Math.Clamp(game.options.musicVol + 0.1, 0, 1);
                     game.global.socket.send(JSON.stringify({ event: "UPDATE_VOL", volType: "musicVol", value: game.options.musicVol }));
@@ -182,7 +171,7 @@ class Scene_Options extends Phaser.Scene {
                     }
                 }
             });
-            this.cursors.left.on('down', function (event) {
+            this.input.keyboard.on("keydown-"+"A", function (event) {
                 if (that.optionSelected == 1) { // Música
                     game.options.musicVol = Phaser.Math.Clamp(game.options.musicVol - 0.1, 0, 1);
                     game.global.socket.send(JSON.stringify({ event: "UPDATE_VOL", volType: "musicVol", value: game.options.musicVol }));

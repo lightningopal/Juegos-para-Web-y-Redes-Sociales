@@ -34,15 +34,6 @@ class Scene_Level0 extends Phaser.Scene {
             repeat: -1
         });
 
-        this.cursors1 = this.input.keyboard.addKeys({
-            'jump': game.cursors1Keys.jump,
-            'fall': game.cursors1Keys.fall,
-            'left': game.cursors1Keys.left,
-            'right': game.cursors1Keys.right,
-            'basicAttack': game.cursors1Keys.basicAttack,
-            'specialAttack': game.cursors1Keys.specialAttack,
-        });
-
         if (game.global.DEVICE == "mobile") {
             var url;
             url = './Assets/Plugins/rexvirtualjoystickplugin.min.js';
@@ -351,35 +342,35 @@ class Scene_Level0 extends Phaser.Scene {
         game.mPlayer.image.body.allowGravity = false;
 
         if (game.global.DEVICE === "desktop") {
-            this.cursors1.left.on("down", function (event) {
+            this.input.keyboard.on("keydown-"+"A", function (event) {
                 that.movingRight = false;
                 that.movingLeft = true;
             });
-            this.cursors1.left.on("up", function (event) {
+            this.input.keyboard.on("keyup-"+"A", function (event) {
                 that.movingLeft = false;
             });
 
-            this.cursors1.right.on("down", function (event) {
+            this.input.keyboard.on("keydown-"+"D", function (event) {
                 that.movingRight = true;
                 that.movingLeft = false;
             });
-            this.cursors1.right.on("up", function (event) {
+            this.input.keyboard.on("keyup-"+"D", function (event) {
                 that.movingRight = false;
             });
 
-            this.cursors1.jump.on("down", function (event) {
+            this.input.keyboard.on("keydown-"+"W", function (event) {
                 that.Jump();
             });
 
-            this.cursors1.fall.on("down", function (event) {
+            this.input.keyboard.on("keydown-"+"S", function (event) {
                 that.Fall();
             });
 
-            this.cursors1.basicAttack.on("down", function (event) {
+            this.input.keyboard.on("keydown-"+"O", function (event) {
                 that.BasicAttack();
             });
 
-            this.cursors1.specialAttack.on("down", function (event) {
+            this.input.keyboard.on("keydown-"+"P", function (event) {
                 that.SpecialAttack();
             });
         }// Fin DEVICE == desktop
