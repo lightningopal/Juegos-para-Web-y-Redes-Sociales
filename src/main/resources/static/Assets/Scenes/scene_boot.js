@@ -757,6 +757,11 @@ class Scene_Boot extends Phaser.Scene {
         {
             this.scene.get('scene_searching').scene.start("scene_level0");
         }
+        else if (game.mPlayer.difficultySel == 1)
+        {
+            console.log("EL NIVEL 1 NO ESTÁ CRACK, ES LO QUE TOCA");
+            this.scene.get('scene_searching').scene.start("scene_level0");
+        }
         
         if (game.global.DEBUG_MODE) {
             console.log("Partida encontrada");

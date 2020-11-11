@@ -1,5 +1,6 @@
 package es.LightningOpal.Astral_Knock_Out;
 
+import java.util.ArrayList;
 /// Imports
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -35,13 +36,16 @@ public class GamesManager {
     // Mapa que guarda cerrojos que ayudan a iniciar partidas a la vez
     public Map<Integer, Lock> startGame_locks = new ConcurrentHashMap<>();
 
-    // Cola que guarda los jugadores que están buscando partida
-    public ConcurrentLinkedQueue<Player> searching_players = new ConcurrentLinkedQueue<>();
+    // Colas que guarda los jugadores que están buscando partida
+    public ArrayList<ConcurrentLinkedQueue<Player>> searching_players = new ArrayList<>();
 
     // Constructor vacio de la clase
     private GamesManager()
     {
-
+        ConcurrentLinkedQueue<Player> searchingLevel0 = new ConcurrentLinkedQueue<>();
+        searching_players.add(searchingLevel0);
+        ConcurrentLinkedQueue<Player> searchingLevel1 = new ConcurrentLinkedQueue<>();
+        searching_players.add(searchingLevel1);
     }
 
     /// Métodos
