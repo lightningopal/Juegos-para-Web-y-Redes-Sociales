@@ -53,18 +53,13 @@ public class BardSkill extends Skill {
     }
 
     @Override
-    public void impact() {
+    public double impact() {
         super.impact();
         this.isActive = false;
         this.elapsedTime = 0;
         this.startTime = 0;
         // Causa daño al enemigo
-        double hp = target.damage(this.damage);
-        if (hp <= 0.0){
-            // Acabar partida
-        }else{
-            // Enviar mensaje con la nueva vida a los jugadores
-        }
+        return target.damage(this.damage);
     }
 
     @Override

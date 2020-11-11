@@ -50,7 +50,7 @@ public class Weapon {
         this.groupSize = groupSize;
     }
 
-    public boolean attack(boolean flipped) {
+    public boolean attack() {
         boolean attacks = this.canAttack;
         // Coger proyectiles del pool y activarlos
         if (this.canAttack) {

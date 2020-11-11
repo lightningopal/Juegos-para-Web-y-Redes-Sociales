@@ -40,13 +40,20 @@ class Scene_Level0 extends Phaser.Scene {
             this.load.plugin('rexvirtualjoystickplugin', url, true);
         }
 
-        // Variables encargadas del control del personaje
-        this.movingLeft;
-        this.movingRight;
+        // Variables encargadas del control del jugador
+        this.myMovingLeft;
+        this.myMovingRight;
         this.falling;
-        this.attacking;
+        this.myAttacking;
+        this.myProjectiles = [];
+        this.myHP;
 
-        this.projectiles = [];
+        // Variables encargadas del control del enemigo
+        this.eMovingLeft;
+        this.eMovingRight;
+        this.eAttacking;
+        this.eProjectiles = [];
+        this.eHP;
 
         /// Versus
         // Background
@@ -57,8 +64,7 @@ class Scene_Level0 extends Phaser.Scene {
         this.versus_vs = this.add.image(RelativeScale(931.5, "x"), RelativeScale(539, "y"), "versus_vs").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(14);
 
         // Si el enemigo es el B, el jugador es el A
-        if (game.mEnemy.AorB == "B")
-        {
+        if (game.mEnemy.AorB == "B") {
             this.versus_usernameA = this.add.text(RelativeScale(236.56, "x"), RelativeScale(950.19, "y"), game.mPlayer.userName).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(52);
             this.versus_usernameB = this.add.text(RelativeScale(1602.39, "x"), RelativeScale(163.70, "y"), game.mEnemy.userName).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(52);
 
@@ -66,8 +72,7 @@ class Scene_Level0 extends Phaser.Scene {
             this.versus_characterB = this.add.image(RelativeScale(1680, "x"), RelativeScale(700, "Y"), "splashart_" + game.mEnemy.characterSel.type).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(13);
         }
         // Si no, el jugador es el B
-        else
-        {
+        else {
             this.versus_usernameA = this.add.text(RelativeScale(236.56, "x"), RelativeScale(950.19, "y"), game.mEnemy.userName).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(52);
             this.versus_usernameB = this.add.text(RelativeScale(1602.39, "x"), RelativeScale(163.70, "y"), game.mPlayer.userName).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(52);
 
@@ -75,13 +80,11 @@ class Scene_Level0 extends Phaser.Scene {
             this.versus_characterB = this.add.image(RelativeScale(1680, "x"), RelativeScale(700, "Y"), "splashart_" + game.mPlayer.characterSel.type).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(13);
         }
 
-        switch (game.mEnemy.AorB)
-        {
+        switch (game.mEnemy.AorB) {
             // Player is A
             case "B":
                 // Player
-                switch (game.mPlayer.characterSel.type)
-                {
+                switch (game.mPlayer.characterSel.type) {
                     case "bard":
                         this.versus_characterA.x = RelativeScale(310, "x");
                         this.versus_characterA.y = RelativeScale(280, "y");
@@ -105,8 +108,7 @@ class Scene_Level0 extends Phaser.Scene {
                 }
 
                 // Enemy
-                switch (game.mEnemy.characterSel.type)
-                {
+                switch (game.mEnemy.characterSel.type) {
                     case "bard":
                         this.versus_characterB.x = RelativeScale(1600, "x");
                         this.versus_characterB.y = RelativeScale(640, "y");
@@ -130,8 +132,7 @@ class Scene_Level0 extends Phaser.Scene {
             // Player is B
             case "A":
                 // Player
-                switch (game.mPlayer.characterSel.type)
-                {
+                switch (game.mPlayer.characterSel.type) {
                     case "bard":
                         this.versus_characterB.x = RelativeScale(1600, "x");
                         this.versus_characterB.y = RelativeScale(640, "y");
@@ -153,8 +154,7 @@ class Scene_Level0 extends Phaser.Scene {
                 }
 
                 // Enemy
-                switch (game.mEnemy.characterSel.type)
-                {
+                switch (game.mEnemy.characterSel.type) {
                     case "bard":
                         this.versus_characterA.x = RelativeScale(310, "x");
                         this.versus_characterA.y = RelativeScale(280, "y");
@@ -185,7 +185,7 @@ class Scene_Level0 extends Phaser.Scene {
         // Set the scene
         var that = this;
         game.global.actualScene = "scene_level0";
-        
+
         // Create mobileKeys
         this.mobileKeys = {
             joyStick: null,
@@ -213,11 +213,6 @@ class Scene_Level0 extends Phaser.Scene {
             this.input.addPointer(2);
         }
 
-        // Dummy de prácticas
-        this.dummy = this.add.image(RelativeScale(1500, "x"), RelativeScale(940, "y"), "dummy")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.dummyBar = new UserInterface(this, this.dummy, 100, 80);
-        this.dummy.userInterface = this.dummyBar;
         // Pool de habilidades
         /*Bardo*
         this.bardAttack1 = new BardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
@@ -274,10 +269,10 @@ class Scene_Level0 extends Phaser.Scene {
         // RelativeScale(850, "y"), "bard", RelativeScale(), this.cursors1, 
         // this.mobileKeys, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, this.basicWeapon, this.basicWeapon)
         // .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.movingLeft = false;
-        this.movingRight = false;
+        this.myMovingLeft = false;
+        this.myMovingRight = false;
         this.falling = false;
-        this.attacking = false;
+        this.myAttacking = false;
         this.canBasicAttack = true;
         this.canSpecialAttack = true;
         switch (game.mPlayer.characterSel.type) {
@@ -286,10 +281,10 @@ class Scene_Level0 extends Phaser.Scene {
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("berserker_idle");
                 this.myHP = new UserInterface(this, game.mPlayer.image, 100, 100);
-                for (var i = 0; i < 3; i++){
-                    this.projectiles.push(this.add.image(0,0, "berserker_projectile").
-                    setScale(RelativeScale(1, "x"), RelativeScale(1, "y")));
-                    this.projectiles[0].setVisible(false);
+                for (var i = 0; i < 3; i++) {
+                    this.myProjectiles.push(this.add.image(0, 0, "berserker_projectile").
+                        setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
+                    this.myProjectiles[0].setVisible(false);
                 }
                 break;
             case "wizard":
@@ -297,10 +292,10 @@ class Scene_Level0 extends Phaser.Scene {
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("wizard_idle");
                 this.myHP = new UserInterface(this, game.mPlayer.image, 100, 100);
-                for (var i = 0; i < 9; i++){
-                    this.projectiles.push(this.add.image(0,0, "wizard_projectile").
-                    setScale(RelativeScale(1, "x"), RelativeScale(1, "y")));
-                    this.projectiles[0].setVisible(false);
+                for (var i = 0; i < 9; i++) {
+                    this.myProjectiles.push(this.add.image(0, 0, "wizard_projectile").
+                        setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
+                    this.myProjectiles[0].setVisible(false);
                 }
                 break;
             case "bard":
@@ -308,10 +303,10 @@ class Scene_Level0 extends Phaser.Scene {
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("bard_idle");
                 this.myHP = new UserInterface(this, game.mPlayer.image, 100, 100);
-                for (var i = 0; i < 3; i++){
-                    this.projectiles.push(this.add.image(0,0, "bard_projectile").
-                    setScale(RelativeScale(1, "x"), RelativeScale(1, "y")));
-                    this.projectiles[0].setVisible(false);
+                for (var i = 0; i < 3; i++) {
+                    this.myProjectiles.push(this.add.image(0, 0, "bard_projectile").
+                        setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
+                    this.myProjectiles[0].setVisible(false);
                 }
                 break;
             case "rogue":
@@ -319,10 +314,10 @@ class Scene_Level0 extends Phaser.Scene {
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("rogue_idle");
                 this.myHP = new UserInterface(this, game.mPlayer.image, 100, 75);
-                for (var i = 0; i < 9; i++){
-                    this.projectiles.push(this.add.image(0,0, "rogue_projectile").
-                    setScale(RelativeScale(1, "x"), RelativeScale(1, "y")));
-                    this.projectiles[0].setVisible(false);
+                for (var i = 0; i < 9; i++) {
+                    this.myProjectiles.push(this.add.image(0, 0, "rogue_projectile").
+                        setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
+                    this.myProjectiles[0].setVisible(false);
                 }
                 break;
             default:
@@ -330,47 +325,110 @@ class Scene_Level0 extends Phaser.Scene {
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("bard_idle");
                 this.myHP = new UserInterface(this, game.mPlayer.image, 100, 50);
-                for (var i = 0; i < 3; i++){
-                    this.projectiles.push(this.add.image(0,0, "bard_projectile").
-                    setScale(RelativeScale(1, "x"), RelativeScale(1, "y")));
-                    this.projectiles[0].setVisible(false);
+                for (var i = 0; i < 3; i++) {
+                    this.myProjectiles.push(this.add.image(0, 0, "bard_projectile").
+                        setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
+                    this.myProjectiles[0].setVisible(false);
                 }
                 break;
         }
-        // console.log(this.projectiles[0]);
         game.mPlayer.image.body.setSize(0, 0);
         game.mPlayer.image.body.allowGravity = false;
 
+        // Enemigo
+        this.eMovingLeft = false;
+        this.eMovingRight = false;
+        this.eAttacking = false;
+        switch (game.mEnemy.characterSel.type) {
+            case "berserker":
+                game.mEnemy.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "berserker")
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                game.mEnemy.image.anims.play("berserker_idle");
+                this.eHP = new UserInterface(this, game.mEnemy.image, 100, 100);
+                for (var i = 0; i < 3; i++) {
+                    this.eProjectiles.push(this.add.image(0, 0, "berserker_projectile").
+                        setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
+                    this.eProjectiles[0].setVisible(false);
+                }
+                break;
+            case "wizard":
+                game.mEnemy.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "wizard")
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                game.mEnemy.image.anims.play("wizard_idle");
+                this.eHP = new UserInterface(this, game.mEnemy.image, 100, 100);
+                for (var i = 0; i < 9; i++) {
+                    this.eProjectiles.push(this.add.image(0, 0, "wizard_projectile").
+                        setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
+                    this.eProjectiles[0].setVisible(false);
+                }
+                break;
+            case "bard":
+                game.mEnemy.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                game.mEnemy.image.anims.play("bard_idle");
+                this.eHP = new UserInterface(this, game.mEnemy.image, 100, 100);
+                for (var i = 0; i < 3; i++) {
+                    this.eProjectiles.push(this.add.image(0, 0, "bard_projectile").
+                        setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
+                    this.eProjectiles[0].setVisible(false);
+                }
+                break;
+            case "rogue":
+                game.mEnemy.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "rogue")
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                game.mEnemy.image.anims.play("rogue_idle");
+                this.eHP = new UserInterface(this, game.mEnemy.image, 100, 75);
+                for (var i = 0; i < 9; i++) {
+                    this.eProjectiles.push(this.add.image(0, 0, "rogue_projectile").
+                        setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
+                    this.eProjectiles[0].setVisible(false);
+                }
+                break;
+            default:
+                game.mEnemy.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
+                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                game.mEnemy.image.anims.play("bard_idle");
+                this.eHP = new UserInterface(this, game.mEnemy.image, 100, 50);
+                for (var i = 0; i < 3; i++) {
+                    this.eProjectiles.push(this.add.image(0, 0, "bard_projectile").
+                        setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
+                    this.eProjectiles[0].setVisible(false);
+                }
+                break;
+        }
+        game.mEnemy.image.body.setSize(0, 0);
+        game.mEnemy.image.body.allowGravity = false;
+
         if (game.global.DEVICE === "desktop") {
-            this.input.keyboard.on("keydown-"+"A", function (event) {
-                that.movingRight = false;
-                that.movingLeft = true;
+            this.input.keyboard.on("keydown-" + "A", function (event) {
+                that.myMovingRight = false;
+                that.myMovingLeft = true;
             });
-            this.input.keyboard.on("keyup-"+"A", function (event) {
-                that.movingLeft = false;
-            });
-
-            this.input.keyboard.on("keydown-"+"D", function (event) {
-                that.movingRight = true;
-                that.movingLeft = false;
-            });
-            this.input.keyboard.on("keyup-"+"D", function (event) {
-                that.movingRight = false;
+            this.input.keyboard.on("keyup-" + "A", function (event) {
+                that.myMovingLeft = false;
             });
 
-            this.input.keyboard.on("keydown-"+"W", function (event) {
+            this.input.keyboard.on("keydown-" + "D", function (event) {
+                that.myMovingRight = true;
+                that.myMovingLeft = false;
+            });
+            this.input.keyboard.on("keyup-" + "D", function (event) {
+                that.myMovingRight = false;
+            });
+
+            this.input.keyboard.on("keydown-" + "W", function (event) {
                 that.Jump();
             });
 
-            this.input.keyboard.on("keydown-"+"S", function (event) {
+            this.input.keyboard.on("keydown-" + "S", function (event) {
                 that.Fall();
             });
 
-            this.input.keyboard.on("keydown-"+"O", function (event) {
+            this.input.keyboard.on("keydown-" + "O", function (event) {
                 that.BasicAttack();
             });
 
-            this.input.keyboard.on("keydown-"+"P", function (event) {
+            this.input.keyboard.on("keydown-" + "P", function (event) {
                 that.SpecialAttack();
             });
         }// Fin DEVICE == desktop
@@ -378,7 +436,16 @@ class Scene_Level0 extends Phaser.Scene {
         game.mPlayer.image.on("animationcomplete", function (anim) {
             if (anim.key === game.mPlayer.characterSel.type + "_attack") {
                 console.log("Fin de animación");
-                that.attacking = false;
+                that.myAttacking = false;
+                // Enviar mensaje de ataque
+                // game.global.socket.send(JSON.stringify({event: ""}));
+            }
+        }, this);
+
+        game.mEnemy.image.on("animationcomplete", function (anim) {
+            if (anim.key === game.mEnemy.characterSel.type + "_attack") {
+                console.log("Fin de animación");
+                that.eAttacking = false;
                 // Enviar mensaje de ataque
                 // game.global.socket.send(JSON.stringify({event: ""}));
             }
@@ -431,7 +498,7 @@ class Scene_Level0 extends Phaser.Scene {
         });
 
         //Colisiones
-        this.characters = [game.mPlayer.image, this.dummy/**, enemyPlayer/**/];
+        this.characters = [game.mPlayer.image, game.mEnemy.image/**, enemyPlayer/**/];
         //this.bullets = [];
 
         //this.physics.add.overlap(this.characters, this.bullets, this.BulletHit, player, bullet);
@@ -442,17 +509,27 @@ class Scene_Level0 extends Phaser.Scene {
         that.time.addEvent({
             delay: 3000,
             callback: () => (that.PreparedForPlay())
-          });
+        });
     } // Fin create
 
     update() {
-        if (this.movingLeft || this.movingRight) {
-            if (!this.attacking) {
+        if (this.myMovingLeft || this.myMovingRight) {
+            if (!this.myAttacking) {
                 game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_walk", true);
             }
         } else {
-            if (!this.attacking) {
+            if (!this.myAttacking) {
                 game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_idle", true);
+            }
+        }
+
+        if (this.eMovingLeft || this.eMovingRight) {
+            if (!this.eAttacking) {
+                game.mEnemy.image.anims.play(game.mEnemy.characterSel.type + "_walk", true);
+            }
+        } else {
+            if (!this.eAttacking) {
+                game.mEnemy.image.anims.play(game.mEnemy.characterSel.type + "_idle", true);
             }
         }
         this.UpdateGameState();
@@ -466,14 +543,9 @@ class Scene_Level0 extends Phaser.Scene {
                 this.ShowPlatform(platform);
             }
         });
-        /*
-        if (this.dummy.body.touching.down){
-            // this.dummy.body.velocity.y = RelativeScale(-800,"y");
-        }
-        */
         var debugText = document.getElementById("debugText");
         debugText.innerHTML = "Posición del ratón: {x: " + x + ", y: " + y + "} | FPS: " + Math.round(game.loop.actualFps);
-    
+
         // Stars
         this.versus_stars.tilePositionX += 0.2;
         this.versus_stars.tilePositionY += 0.4;
@@ -508,7 +580,7 @@ class Scene_Level0 extends Phaser.Scene {
     UpdateGameState() {
         game.global.socket.send(JSON.stringify({
             event: "UPDATE_SPACE_GYM",
-            movingLeft: this.movingLeft, movingRight: this.movingRight, falling: this.falling
+            movingLeft: this.myMovingLeft, movingRight: this.myMovingRight, falling: this.falling
         }));
     }
     // Petición de salto del personaje
@@ -563,13 +635,11 @@ class Scene_Level0 extends Phaser.Scene {
         });
     }
 
-    PreparedForPlay()
-    {
+    PreparedForPlay() {
         game.global.socket.send(JSON.stringify({ event: "GAME_START", room: game.mPlayer.room }));
     }
 
-    StartGame()
-    {
+    StartGame() {
         console.log("Se llama a esconder el versus");
         this.versus_main_bg.setVisible(false);
         this.versus_stars.setVisible(false);
@@ -581,4 +651,3 @@ class Scene_Level0 extends Phaser.Scene {
         this.versus_characterB.setVisible(false);
     }
 }
-

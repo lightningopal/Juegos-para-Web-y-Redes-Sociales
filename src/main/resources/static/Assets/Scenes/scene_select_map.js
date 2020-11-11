@@ -84,7 +84,7 @@ class Scene_Select_Map extends Phaser.Scene {
                 that.mapButton1.setFrame(1);
                 game.mPlayer.difficultySel = 1;
                 if (game.global.DEBUG_MODE) {
-                    console.log("Mapa 1 pulsado");
+                    console.log("Mapa 2 pulsado");
                 }
             });
             this.mapButton1.setInteractive().on('pointerup', function (pointer, localX, localY, event) {

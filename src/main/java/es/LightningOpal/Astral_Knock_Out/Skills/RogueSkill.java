@@ -58,16 +58,11 @@ public class RogueSkill extends Skill{
     }
 
     @Override
-    public void impact() {
+    public double impact() {
         super.impact();
         this.isActive = false;
         // Causa daño al enemigo
-        double hp = target.damage(this.damage);
-        if (hp <= 0.0){
-            // Acabar partida
-        }else{
-            // Enviar mensaje con la nueva vida a los jugadores
-        }
+        return target.damage(this.damage);
     }
 
     @Override

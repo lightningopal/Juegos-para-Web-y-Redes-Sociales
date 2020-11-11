@@ -81,8 +81,9 @@ public class Skill extends PhysicsObject{
         // Implementado el control en los hijos
     }
 
-    public void impact(){
+    public double impact(){
         // Implementado en los hijos
+        return 0.0;
     }
 
     public double impact(double hp){

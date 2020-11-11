@@ -31,8 +31,7 @@ class Scene_Boot extends Phaser.Scene {
         this.add.image(0, 0, "simple_bg").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.tilesprite = this.add.tileSprite(0, 0, RelativeScale(1920, "x"), RelativeScale(1080, "y"), "stars").setOrigin(0, 0);
 
-        if (!game.global.hasLoadData)
-        {
+        if (!game.global.hasLoadData) {
             /// Barra de carga ///
             let loadingBar = this.add.graphics({
                 lineStyle: {
@@ -101,13 +100,11 @@ class Scene_Boot extends Phaser.Scene {
                 loadingText.setText('Connecting to server...');
 
                 // WEBSOCKETS
-                try
-                {
+                try {
                     game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
                     //game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
                 }
-                catch(error)
-                {
+                catch (error) {
                     if (game.global.DEBUG_MODE) {
                         console.log('Cant connect to WS');
                     }
@@ -144,12 +141,10 @@ class Scene_Boot extends Phaser.Scene {
                         console.log('[DEBUG] WebSocket connection closed.');
                     }
                     try {
-                        if (this.scene.isActive("scene_boot"))
-                        {
+                        if (this.scene.isActive("scene_boot")) {
                             loadingText.setText('Connection failed, try again later');
                         }
-                        else
-                        {
+                        else {
                             that.scene.get(game.global.actualScene).input.keyboard.removeAllKeys(true);
                             that.scene.get(game.global.actualScene).scene.start("scene_disconnected");
                         }
@@ -163,7 +158,7 @@ class Scene_Boot extends Phaser.Scene {
                 }
                 assetText.setText('Load complete.');
             });
-        
+
 
             // Carga de imágenes
             ///Escena de Inicio de Empresa, Boot///
@@ -237,16 +232,16 @@ class Scene_Boot extends Phaser.Scene {
             ///Escena de desconexion///
             this.load.image("disconnected_text", "./Assets/Images/UI/connection_failed_text.png");
             this.load.spritesheet("retry_button", "./Assets/Images/UI/retry_button.png", { frameWidth: 604, frameHeight: 147 });
-            
+
             ///Versus
             this.load.image("versus_bg", "./Assets/Images/UI/versus_circles_interface.png");
             this.load.image("versus_vs", "./Assets/Images/UI/versus_vs_interface.png");
 
             ///Proyectiles
-			this.load.image("berserker_projectile", "./Assets/Images/Characters/Projectiles/berserker_projectile.png");
-			this.load.image("wizard_projectile", "./Assets/Images/Characters/Projectiles/wizard_projectile.png");
-			this.load.image("bard_projectile", "./Assets/Images/Characters/Projectiles/bard_projectile.png");
-			this.load.image("rogue_projectile", "./Assets/Images/Characters/Projectiles/rogue_projectile.png");
+            this.load.image("berserker_projectile", "./Assets/Images/Characters/Projectiles/berserker_projectile.png");
+            this.load.image("wizard_projectile", "./Assets/Images/Characters/Projectiles/wizard_projectile.png");
+            this.load.image("bard_projectile", "./Assets/Images/Characters/Projectiles/bard_projectile.png");
+            this.load.image("rogue_projectile", "./Assets/Images/Characters/Projectiles/rogue_projectile.png");
 
             ///Nivel 1///
             // Fondo
@@ -256,7 +251,7 @@ class Scene_Boot extends Phaser.Scene {
             this.load.image("level_1_fg_details", "./Assets/Images/BackGrounds/level_1_fg_details.png");
             this.load.image("level_1_fg_move", "./Assets/Images/BackGrounds/level_1_fg_move.png");
             this.load.image("level_1_plats_floor", "./Assets/Images/BackGrounds/level_1_plats_floor.png");
-			
+
             // Plataformas
             this.load.image("floor", "./Assets/Images/Platforms/floor.png");
             this.load.image("base_big_plat_2", "./Assets/Images/Platforms/base_big_plat_2.png");
@@ -318,7 +313,7 @@ class Scene_Boot extends Phaser.Scene {
 
             loadingBar.fillRect(this.game.renderer.width / 2 - this.game.renderer.width / 8,
                 this.game.renderer.height / 2,
-                this.game.renderer.width  / 4,
+                this.game.renderer.width / 4,
                 40);
             loadingBar.strokeRect(this.game.renderer.width / 2 - this.game.renderer.width / 8,
                 this.game.renderer.height / 2,
@@ -359,13 +354,11 @@ class Scene_Boot extends Phaser.Scene {
             assetText.setOrigin(0.5, 0.5);
 
             // WEBSOCKETS
-            try
-            {
+            try {
                 game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
                 //game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
             }
-            catch(error)
-            {
+            catch (error) {
                 if (game.global.DEBUG_MODE) {
                     console.log('Cant connect to WS');
                 }
@@ -402,8 +395,7 @@ class Scene_Boot extends Phaser.Scene {
                     if (this.scene.isActive("scene_boot")) {
                         loadingText.setText('Connection failed, try again later');
                     }
-                    else
-                    {
+                    else {
                         that.scene.get(game.global.actualScene).input.keyboard.removeAllKeys(true);
                         that.scene.get(game.global.actualScene).scene.start("scene_disconnected");
                     }
@@ -567,6 +559,9 @@ class Scene_Boot extends Phaser.Scene {
                 case "GAME_STARTED":
                     this.scene.get('scene_boot').StartTournamentGame(data);
                     break;
+                case "UPDATE_TOURNAMENT":
+                    this.scene.get('scene_boot').UpdateTournament(data);
+                    break;
                 default:
                     if (game.global.DEBUG_MODE) {
                         console.log("Tipo de mensaje no controlado");
@@ -671,12 +666,10 @@ class Scene_Boot extends Phaser.Scene {
         this.scene.get('scene_space_gym').dummy.userInterface.currentHP = data.dummy.hp;
 
         // Proyectiles
-        // console.log(data.projectiles); // array
-        // console.log(data.projectiles.length);
-        for (var i = 0; i<data.projectiles.length; i++){
+        for (var i = 0; i < data.projectiles.length; i++) {
             this.scene.get('scene_space_gym').projectiles[i].setVisible(data.projectiles[i].isActive);
-            this.scene.get('scene_space_gym').projectiles[i].x = RelativeScale(data.projectiles[i].posX,"x");
-            this.scene.get('scene_space_gym').projectiles[i].y = RelativeScale(data.projectiles[i].posY,"y");
+            this.scene.get('scene_space_gym').projectiles[i].x = RelativeScale(data.projectiles[i].posX, "x");
+            this.scene.get('scene_space_gym').projectiles[i].y = RelativeScale(data.projectiles[i].posY, "y");
             this.scene.get('scene_space_gym').projectiles[i].setAngle(data.projectiles[i].facingAngle);
             this.scene.get('scene_space_gym').projectiles[i].flipX = data.projectiles[i].flipX;
         }
@@ -691,15 +684,19 @@ class Scene_Boot extends Phaser.Scene {
                 } else {
                     if (game.mPlayer.difficultySel === 0) { // Primer mapa
                         if (game.mPlayer.userName === data.player_name) { // Mi jugador lanza la habilidad
+                            this.scene.get("scene_level0").myAttacking = true;
                             game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_attack", true);
                         } else { // El otro jugador lanza la habilidad
-
+                            this.scene.get("scene_level0").eAttacking = true;
+                            game.mEnemy.image.anims.play(game.mEnemy.characterSel.type + "_attack", true);
                         }
                     } else { // Segundo mapa
                         if (game.mPlayer.userName === data.player_name) { // Mi jugador lanza la habilidad
+                            this.scene.get("scene_level1").myAttacking = true;
                             game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_attack", true);
                         } else { // El otro jugador lanza la habilidad
-
+                            this.scene.get("scene_level1").eAttacking = true;
+                            game.mEnemy.image.anims.play(game.mEnemy.characterSel.type + "_attack", true);
                         }
                     }
                 }
@@ -723,7 +720,7 @@ class Scene_Boot extends Phaser.Scene {
                         }
                     }
                 }
-            break;
+                break;
         }
     }
 
@@ -731,8 +728,7 @@ class Scene_Boot extends Phaser.Scene {
         // Aquí hay que superponer el versus, antes de empezar la escena hay que guardar los datos
         // Si es el jugador A, el enemigo e el B
         console.log(data);
-        if (data.players[0].userName == game.mPlayer.userName)
-        {
+        if (data.players[0].userName == game.mPlayer.userName) {
             game.mEnemy.AorB = "B";
             game.mEnemy.id = data.players[1].playerId;
             game.mEnemy.userName = data.players[1].userName;
@@ -741,8 +737,7 @@ class Scene_Boot extends Phaser.Scene {
             game.mEnemy.skillSel = data.players[1].skill;
         }
         // Si no, es al revés
-        else
-        {
+        else {
             game.mEnemy.AorB = "A";
             game.mEnemy.id = data.players[0].playerId;
             game.mEnemy.userName = data.players[0].userName;
@@ -754,16 +749,14 @@ class Scene_Boot extends Phaser.Scene {
         game.mPlayer.room = data.room;
 
         // Se cambia la escena
-        if (game.mPlayer.difficultySel == 0)
-        {
+        if (game.mPlayer.difficultySel == 0) {
             this.scene.get('scene_searching').scene.start("scene_level0");
         }
-        else if (game.mPlayer.difficultySel == 1)
-        {
+        else if (game.mPlayer.difficultySel == 1) {
             console.log("EL NIVEL 1 NO ESTÁ CRACK, ES LO QUE TOCA");
             this.scene.get('scene_searching').scene.start("scene_level0");
         }
-        
+
         if (game.global.DEBUG_MODE) {
             console.log("Partida encontrada");
         }
@@ -774,6 +767,111 @@ class Scene_Boot extends Phaser.Scene {
 
         if (game.global.DEBUG_MODE) {
             console.log("Comienza la partida");
+        }
+    }
+
+    UpdateTournament(data) {
+        /*
+        // Player
+        game.mPlayer.image.x = RelativeScale(data.player.posX, "x");
+        game.mPlayer.image.y = RelativeScale(data.player.posY, "y");
+        game.mPlayer.image.flipX = data.player.flipped;
+        if (data.player.onFloor) {
+            this.scene.get('scene_space_gym').falling = false;
+        }
+        this.scene.get('scene_space_gym').canBasicAttack = data.player.canBasicAttack;
+        this.scene.get('scene_space_gym').canSpecialAttack = data.player.canSpecialAttack;
+
+        // Dummy
+        this.scene.get('scene_space_gym').dummy.x = RelativeScale(data.dummy.posX, "x");
+        this.scene.get('scene_space_gym').dummy.y = RelativeScale(data.dummy.posY, "y");
+        this.scene.get('scene_space_gym').dummy.userInterface.currentHP = data.dummy.hp;
+
+        // Proyectiles
+        for (var i = 0; i<data.projectiles.length; i++){
+            this.scene.get('scene_space_gym').projectiles[i].setVisible(data.projectiles[i].isActive);
+            this.scene.get('scene_space_gym').projectiles[i].x = RelativeScale(data.projectiles[i].posX,"x");
+            this.scene.get('scene_space_gym').projectiles[i].y = RelativeScale(data.projectiles[i].posY,"y");
+            this.scene.get('scene_space_gym').projectiles[i].setAngle(data.projectiles[i].facingAngle);
+            this.scene.get('scene_space_gym').projectiles[i].flipX = data.projectiles[i].flipX;
+        }
+        */
+        var level;
+        if (data.level == 0) { // Nivel 0
+            level = this.scene.get('scene_level0');
+            if (game.mEnemy.AorB === 'A') { // Mi jugador es el B
+                // Mi jugador
+                game.mPlayer.image.x = RelativeScale(data.playerB.posX, "x");
+                game.mPlayer.image.y = RelativeScale(data.playerB.posY, "y");
+                game.mPlayer.image.flipX = data.playerB.flipped;
+                if (data.playerB.onFloor) {
+                    level.falling = false;
+                }
+                level.canBasicAttack = data.playerB.canBasicAttack;
+                level.canSpecialAttack = data.playerB.canSpecialAttack;
+
+                // Proyectiles
+                for (var i = 0; i < data.projectilesB.length; i++) {
+                    level.myProjectiles[i].setVisible(data.projectilesB[i].isActive);
+                    level.myProjectiles[i].x = RelativeScale(data.projectilesB[i].posX, "x");
+                    level.myProjectiles[i].y = RelativeScale(data.projectilesB[i].posY, "y");
+                    level.myProjectiles[i].setAngle(data.projectilesB[i].facingAngle);
+                    level.myProjectiles[i].flipX = data.projectilesB[i].flipX;
+                }
+
+                // Jugador enemigo
+                game.mEnemy.image.x = RelativeScale(data.playerA.posX, "x");
+                game.mEnemy.image.y = RelativeScale(data.playerA.posY, "y");
+                level.eMovingLeft = data.playerA.movingLeft;
+                level.eMovingRight = data.playerA.movingRight;
+                game.mEnemy.image.flipX = data.playerA.flipped;
+
+                // Proyectiles
+                for (var i = 0; i < data.projectilesA.length; i++) {
+                    level.eProjectiles[i].setVisible(data.projectilesA[i].isActive);
+                    level.eProjectiles[i].x = RelativeScale(data.projectilesA[i].posX, "x");
+                    level.eProjectiles[i].y = RelativeScale(data.projectilesA[i].posY, "y");
+                    level.eProjectiles[i].setAngle(data.projectilesA[i].facingAngle);
+                    level.eProjectiles[i].flipX = data.projectilesA[i].flipX;
+                }
+            } else { // Mi jugador es el A
+                // Mi jugador
+                game.mPlayer.image.x = RelativeScale(data.playerA.posX, "x");
+                game.mPlayer.image.y = RelativeScale(data.playerA.posY, "y");
+                game.mPlayer.image.flipX = data.playerA.flipped;
+                if (data.playerA.onFloor) {
+                    level.falling = false;
+                }
+                level.canBasicAttack = data.playerA.canBasicAttack;
+                level.canSpecialAttack = data.playerA.canSpecialAttack;
+
+                // Proyectiles
+                for (var i = 0; i < data.projectilesA.length; i++) {
+                    level.myProjectiles[i].setVisible(data.projectilesA[i].isActive);
+                    level.myProjectiles[i].x = RelativeScale(data.projectilesA[i].posX, "x");
+                    level.myProjectiles[i].y = RelativeScale(data.projectilesA[i].posY, "y");
+                    level.myProjectiles[i].setAngle(data.projectilesA[i].facingAngle);
+                    level.myProjectiles[i].flipX = data.projectilesA[i].flipX;
+                }
+
+                // Jugador enemigo
+                game.mEnemy.image.x = RelativeScale(data.playerB.posX, "x");
+                game.mEnemy.image.y = RelativeScale(data.playerB.posY, "y");
+                level.eMovingLeft = data.playerB.movingLeft;
+                level.eMovingRight = data.playerB.movingRight;
+                game.mEnemy.image.flipX = data.playerB.flipped;
+
+                // Proyectiles
+                for (var i = 0; i < data.projectilesB.length; i++) {
+                    level.eProjectiles[i].setVisible(data.projectilesB[i].isActive);
+                    level.eProjectiles[i].x = RelativeScale(data.projectilesB[i].posX, "x");
+                    level.eProjectiles[i].y = RelativeScale(data.projectilesB[i].posY, "y");
+                    level.eProjectiles[i].setAngle(data.projectilesB[i].facingAngle);
+                    level.eProjectiles[i].flipX = data.projectilesB[i].flipX;
+                }
+            }
+        } else { // Nivel 1
+            level = this.scene.get('scene_level1');
         }
     }
 }

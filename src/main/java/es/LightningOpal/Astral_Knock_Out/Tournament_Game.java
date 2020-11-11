@@ -42,6 +42,7 @@ public class Tournament_Game {
 	private ScheduledFuture<?> future;
 
 	private int room;
+	private int level;
 
 	private Map<String, Player> players = new ConcurrentHashMap<>();
 	private Player playerA;
@@ -61,6 +62,7 @@ public class Tournament_Game {
 
 		// Asignamos la sala
 		room = room_;
+		this.level = level;
 		
 		// PlayerA Weapon
         switch (playerA.getPlayerType()) {
@@ -98,25 +100,25 @@ public class Tournament_Game {
                 for (int i = 0; i < 3; i++) {
                     projectilesB.add(new BerserkerSkill(playerB, playerA, 1000, false, 30, 20)); // Target, duration, collidePlatforms, speed, damage
                 }
-                playerB.setBasicWeapon(new Weapon(projectilesA, 1, 1000));
+                playerB.setBasicWeapon(new Weapon(projectilesB, 1, 1000));
                 break;
             case "wizard":
                 for (int i = 0; i < 9; i++) {
                     projectilesB.add(new WizardSkill(playerB, playerA, 500, true, 30, 20, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
-                playerB.setBasicWeapon(new Weapon(projectilesA, 3, 400));
+                playerB.setBasicWeapon(new Weapon(projectilesB, 3, 400));
                 break;
             case "bard":
                 for (int i = 0; i < 3; i++) {
                     projectilesB.add(new BardSkill(playerB, playerA, 2500, false, 20, 20)); // Target, duration, collidePlatforms, speed, damage
                 }
-                playerB.setBasicWeapon(new Weapon(projectilesA, 1, 500));
+                playerB.setBasicWeapon(new Weapon(projectilesB, 1, 500));
                 break;
             case "rogue":
                 for (int i = 0; i < 9; i++) {
                     projectilesB.add(new RogueSkill(playerB, playerA, 550, true, 30, 20, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
-                playerB.setBasicWeapon(new Weapon(projectilesA, 3, 200));
+                playerB.setBasicWeapon(new Weapon(projectilesB, 3, 200));
                 break;
             default:
                 break;
@@ -212,7 +214,9 @@ public class Tournament_Game {
 		ObjectNode jsonProjectileA = mapper.createObjectNode();
 		ObjectNode jsonProjectileB = mapper.createObjectNode();
 		ArrayNode arrayNodeProjectilesA = mapper.createArrayNode();
-		ArrayNode arrayNodeProjectilesB = mapper.createArrayNode();
+        ArrayNode arrayNodeProjectilesB = mapper.createArrayNode();
+        ObjectNode jsonPlayerAHP = mapper.createObjectNode();
+        ObjectNode jsonPlayerBHP = mapper.createObjectNode();
 
 		try {
 			// Intenta calcular las físicas de los jugadores y enviarle los datos
@@ -232,6 +236,8 @@ public class Tournament_Game {
             // Guarda los datos en el ObjectNode 'jsonPlayer'
             jsonPlayerA.put("posX", playerA.getPosX());
             jsonPlayerA.put("posY", playerA.getPosY());
+            jsonPlayerA.put("movingRight", playerA.isMovingRight());
+            jsonPlayerA.put("movingLeft", playerA.isMovingLeft());
             jsonPlayerA.put("flipped", playerA.IsFlipped());
             jsonPlayerA.put("onFloor", playerA.IsOnFloor());
             jsonPlayerA.put("canBasicAttack", playerA.getBasicWeapon().CanAttack());
@@ -253,6 +259,8 @@ public class Tournament_Game {
             // Guarda los datos en el ObjectNode 'jsonPlayer'
             jsonPlayerB.put("posX", playerB.getPosX());
             jsonPlayerB.put("posY", playerB.getPosY());
+            jsonPlayerB.put("movingRight", playerB.isMovingRight());
+            jsonPlayerB.put("movingLeft", playerB.isMovingLeft());
             jsonPlayerB.put("flipped", playerB.IsFlipped());
             jsonPlayerB.put("onFloor", playerB.IsOnFloor());
             jsonPlayerB.put("canBasicAttack", playerB.getBasicWeapon().CanAttack());
@@ -266,7 +274,17 @@ public class Tournament_Game {
                     skill.calculatePhysics();
                     if (skill.intersect(skill.getTarget())) {
                         skill.setActive(false);
-                        skill.impact(); // Se lanza un mensaje a ambos jugadores en skill
+                        double hp = skill.impact(); // Se lanza un mensaje a ambos jugadores
+                        if (hp <= 0.0){
+                            // Acabar partida
+                        }else{
+                            // Enviar mensaje con la nueva vida a los jugadores
+                            jsonPlayerBHP.put("type", "DAMAGE");
+                            jsonPlayerBHP.put("player_name", skill.getTarget().getUserName());
+                            jsonPlayerBHP.put("hp", hp);
+                            // broadcast(jsonPlayerBHP.toString());
+                        }
+
                     }
                     if (skill.collidesWithPlatforms()){
                         for (PhysicsObject platform : platforms){
@@ -293,7 +311,16 @@ public class Tournament_Game {
                     skill.calculatePhysics();
                     if (skill.intersect(skill.getTarget())) {
                         skill.setActive(false);
-                        skill.impact(); // Se lanza un mensaje a ambos jugadores en skill
+                        double hp = skill.impact(); // Se lanza un mensaje a ambos jugadores
+                        if (hp <= 0.0){
+                            // Acabar partida
+                        }else{
+                            // Enviar mensaje con la nueva vida a los jugadores
+                            jsonPlayerAHP.put("type", "DAMAGE");
+                            jsonPlayerAHP.put("player_name", skill.getTarget().getUserName());
+                            jsonPlayerAHP.put("hp", hp);
+                            // broadcast(jsonPlayerBHP.toString());
+                        }
                     }
                     if (skill.collidesWithPlatforms()){
                         for (PhysicsObject platform : platforms){
@@ -303,7 +330,7 @@ public class Tournament_Game {
                         }
                     }
                 }
-                // Guardar proyectiles en array y comunicar al cliente la posición
+                // Guardar proyejsonPlayerAHPctiles en array y comunicar al cliente la posición
                 jsonProjectileB.put("isActive", skill.isActive());
                 jsonProjectileB.put("posX", skill.getPosX());
                 jsonProjectileB.put("posY", skill.getPosY());
@@ -315,7 +342,8 @@ public class Tournament_Game {
 			// Mover escenario y plataformas para el nivel 2 y pasarlo en 'json'
 			
 			// Añade el evento correspondiente
-            json.put("event", "UPDATE_TOURNAMENT");
+			json.put("event", "UPDATE_TOURNAMENT");
+			json.put("level", level);
             // Añade el ObjectNode 'jsonPlayer' al ObjectNode 'json' para unificar la
             // información
             json.putPOJO("playerA", jsonPlayerA);
