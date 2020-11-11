@@ -1,8 +1,3 @@
-// this.sys.game.device.os --> Muestra un array de bools que indica el dispositivo en el que se abre la página
-// Debug
-var x = 0;
-var y = 0;
-
 class Scene_Level0 extends Phaser.Scene {
     constructor() {
         super({ key: "scene_level0" });
@@ -649,5 +644,21 @@ class Scene_Level0 extends Phaser.Scene {
         this.versus_usernameB.setVisible(false);
         this.versus_characterA.setVisible(false);
         this.versus_characterB.setVisible(false);
+    }
+
+    FinishGame(wasDisconnection)
+    {
+        // Mostrar pantalla de fin de partida
+        // disconnectionText.setVisible(true); o addText
+        // Si fue una desconexión, mostrar al jugador el texto de desconexión
+        if (wasDisconnection)
+        {
+            // disconnectionText.setVisible(true);
+        }
+        // Si no, mostrar el texto de 'K.O.'
+        else
+        {
+            // koText.setVisible(true);
+        }
     }
 }

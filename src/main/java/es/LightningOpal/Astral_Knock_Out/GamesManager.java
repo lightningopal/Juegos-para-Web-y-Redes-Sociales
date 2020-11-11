@@ -3,6 +3,7 @@ package es.LightningOpal.Astral_Knock_Out;
 import java.util.ArrayList;
 /// Imports
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
@@ -10,6 +11,11 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import org.springframework.web.socket.TextMessage;
 
 // Clase GamesManager, que se encarga de las partidas en el servidor
 public class GamesManager {
@@ -38,6 +44,9 @@ public class GamesManager {
 
     // Colas que guarda los jugadores que están buscando partida
     public ArrayList<ConcurrentLinkedQueue<Player>> searching_players = new ArrayList<>();
+
+    // Mapper para enviar mensajes
+    private ObjectMapper mapper = new ObjectMapper();
 
     // Constructor vacio de la clase
     private GamesManager()
@@ -141,15 +150,91 @@ public class GamesManager {
             tournament_games.remove(room);
             startGame_counters.remove(room);
             startGame_locks.remove(room);
-            
-            // Aquí se calculan los puntos que se suman y restan a los jugadores
-            if (!wasDisconnection)
+
+            // Se obtienen los usuarios de los jugadores
+            User winnerUser = UsersController.allUsers.get(winner.getUserName());
+            User loserUser = UsersController.allUsers.get(loser.getUserName());
+
+            // Se calculan y asignan las nuevas victorias y derrotas
+            winnerUser.setWins(winnerUser.getWins() + 1);
+            loserUser.setLoses(loserUser.getLoses() + 1);
+
+            // Se calcula la diferencia de elo ganada
+            float eloDifference = (loserUser.getElo() * 0.1f);
+            float eloForWinner = winnerUser.getElo() + eloDifference;
+            float eloForLoser = loserUser.getElo() - eloDifference;
+
+            // Se asignan los nuevos elos en el servidor
+            winnerUser.setElo(eloForWinner);
+            loserUser.setElo(eloForLoser);
+
+            // Se calculan las monedas que obtiene cada jugador
+            // El ganador obtiene de base 40 y el perdedor 20
+            // Además, hay una parte aleatoria entre 0 y 20 para el ganador
+            // y entre 0 y 10 para el perdedor.
+            Random random = new Random();
+            int extraCoinsForWinner = 40 + random.nextInt(21);
+            int extraCoinsForLoser = 20 + random.nextInt(11);
+
+            // Si fue una desconexión, el perdedor no obtiene monedas
+            if (wasDisconnection)
             {
-                //  Si no hubo desconexión, se les envía el mensaje a ambos
+                extraCoinsForLoser = 0;
             }
-            else
+
+            // Se calculan las nuevas economías de ambos jugadores
+            int winnerCoins = winnerUser.getCurrency() + extraCoinsForWinner;
+            int loserCoins = loserUser.getCurrency() + extraCoinsForLoser;
+
+            // Se asignan las nuevas economías
+            winnerUser.setCurrency(winnerCoins);
+            loserUser.setCurrency(loserCoins);
+
+            // Creamos tres ObjectNode para guardar datos, 'msg' para el principal y
+            // 'winnerPlayer' y 'loserPlayer' para los jugadores
+            ObjectNode msg = mapper.createObjectNode();
+            ObjectNode winnerPlayer = mapper.createObjectNode();
+            ObjectNode loserPlayer = mapper.createObjectNode();
+
+            // Winner Player
+            winnerPlayer.put("userName", winner.getUserName());
+            winnerPlayer.put("points", Math.round(eloForWinner));
+            winnerPlayer.put("newCoins", extraCoinsForWinner);
+            winnerPlayer.put("currency", winnerCoins);
+            
+            // Loser Player
+            loserPlayer.put("userName", loser.getUserName());
+            loserPlayer.put("points", Math.round(eloForLoser));
+            loserPlayer.put("newCoins", extraCoinsForLoser);
+            loserPlayer.put("currency", loserCoins);
+
+            // Añadimos los datos al ObjectNode 'msg'
+            msg.put("event", "GAME_RESULTS");
+            msg.put("wasDisconnection", wasDisconnection);
+            msg.put("pointsDiferrence", Math.round(eloDifference));
+            msg.putPOJO("winner", winnerPlayer);
+            msg.putPOJO("loser", loserPlayer);
+
+            // Se les envía el mensaje a los jugadores
+            try
             {
-                // Si fue desconexión, solo al ganador.
+                // Se le envía al ganador
+                synchronized (winnerUser.getSession()) {
+                    winnerUser.getSession().sendMessage(new TextMessage(msg.toString()));
+                }
+
+                // Si no hubo desconexión, también al perdedor
+                if (!wasDisconnection)
+                {
+                    synchronized (loserUser.getSession()) {
+                        loserUser.getSession().sendMessage(new TextMessage(msg.toString()));
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                // Se muestra la excepcion
+                e.printStackTrace();
             }
         }
     }

@@ -562,6 +562,9 @@ class Scene_Boot extends Phaser.Scene {
                 case "UPDATE_TOURNAMENT":
                     this.scene.get('scene_boot').UpdateTournament(data);
                     break;
+                case "GAME_RESULTS":
+                    this.scene.get('scene_boot').FinishTournamentGame(data);
+                    break;
                 default:
                     if (game.global.DEBUG_MODE) {
                         console.log("Tipo de mensaje no controlado");
@@ -587,7 +590,7 @@ class Scene_Boot extends Phaser.Scene {
     }
 
     AuthenticationError(data) {
-        game.global.feedbackLogin.setText(data.message);
+        game.global.feedbackLogin.innerHTML = "" + data.message;
 
         if (game.global.DEBUG_MODE) {
             console.log("Error de autenticacion: " + data.message);
@@ -771,31 +774,6 @@ class Scene_Boot extends Phaser.Scene {
     }
 
     UpdateTournament(data) {
-        /*
-        // Player
-        game.mPlayer.image.x = RelativeScale(data.player.posX, "x");
-        game.mPlayer.image.y = RelativeScale(data.player.posY, "y");
-        game.mPlayer.image.flipX = data.player.flipped;
-        if (data.player.onFloor) {
-            this.scene.get('scene_space_gym').falling = false;
-        }
-        this.scene.get('scene_space_gym').canBasicAttack = data.player.canBasicAttack;
-        this.scene.get('scene_space_gym').canSpecialAttack = data.player.canSpecialAttack;
-
-        // Dummy
-        this.scene.get('scene_space_gym').dummy.x = RelativeScale(data.dummy.posX, "x");
-        this.scene.get('scene_space_gym').dummy.y = RelativeScale(data.dummy.posY, "y");
-        this.scene.get('scene_space_gym').dummy.userInterface.currentHP = data.dummy.hp;
-
-        // Proyectiles
-        for (var i = 0; i<data.projectiles.length; i++){
-            this.scene.get('scene_space_gym').projectiles[i].setVisible(data.projectiles[i].isActive);
-            this.scene.get('scene_space_gym').projectiles[i].x = RelativeScale(data.projectiles[i].posX,"x");
-            this.scene.get('scene_space_gym').projectiles[i].y = RelativeScale(data.projectiles[i].posY,"y");
-            this.scene.get('scene_space_gym').projectiles[i].setAngle(data.projectiles[i].facingAngle);
-            this.scene.get('scene_space_gym').projectiles[i].flipX = data.projectiles[i].flipX;
-        }
-        */
         var level;
         if (data.level == 0) { // Nivel 0
             level = this.scene.get('scene_level0');
@@ -873,5 +851,72 @@ class Scene_Boot extends Phaser.Scene {
         } else { // Nivel 1
             level = this.scene.get('scene_level1');
         }
+    }
+    FinishTournamentGame(data) {
+        // Aquí hay que actualizar los datos (tienen que ser globales)
+        // Datos en data
+        /*msg.put("event", "GAME_RESULTS");
+            msg.put("wasDisconnection", wasDisconnection);
+            msg.put("eloDiferrence", Math.round(eloDifference));
+            msg.putPOJO("winner", winnerPlayer);
+            msg.putPOJO("loser", loserPlayer);*/
+
+            /*loserPlayer.put("userName", loser.getUserName());
+            loserPlayer.put("points", Math.round(eloForLoser));
+            loserPlayer.put("newCoins", extraCoinsForLoser);
+            loserPlayer.put("currency", loserCoins);*/
+
+        // Se guardan los resultados de la partida
+        // El jugador es el ganador
+        if (data.winner.userName == game.mPlayer.userName)
+        {
+            // Diferencia de puntos positiva
+            game.mPlayer.pointsDifference = data.pointsDifference;
+
+            // Asignar resto de datos
+            // Puntos
+            game.mPlayer.points = data.winner.points;
+            //game.mEnemy.points = data.loser.points;   Creo que no hace falta
+
+            // Monedas ganadas
+            game.mPlayer.newCoins = data.winner.newCoins;
+
+            // Monedas totales
+            game.mPlayer.currency = data.winner.currency;
+        }
+        // El jugador es el perdedor
+        {
+            // Diferencia de puntos negativa
+            game.mPlayer.pointsDifference = -(data.pointsDifference);
+
+            // Asignar resto de datos
+            // Puntos
+            game.mPlayer.points = data.loser.points;
+            //game.mEnemy.points = data.winner.points;   Creo que no hace falta
+
+            // Monedas ganadas
+            game.mPlayer.newCoins = data.loser.newCoins;
+
+            // Monedas totales
+            game.mPlayer.currency = data.loser.currency;
+        }
+
+        // Se muestra la pantalla de final de partida
+        this.scene.get(game.global.actualScene).FinishGame();
+
+        // Se cambia de escena cuando toque
+        this.time.addEvent({
+            delay: 2000,
+            callback: () => (that.ChangeToScore())
+          });
+
+        if (game.global.DEBUG_MODE) {
+            console.log("Fin de la partida");
+        }
+    }
+
+    ChangeToScore()
+    {
+        this.scene.get(game.global.actualScene).scene.start("scene_score");
     }
 }

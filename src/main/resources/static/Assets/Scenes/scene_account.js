@@ -93,12 +93,12 @@ class Scene_Account extends Phaser.Scene {
                             // Log In
                             if (that.game.global.logInOption == 0)
                             {
-                                game.global.feedbackLogin.setText("Password is incorrect");
+                                game.global.feedbackLogin.innerHTML = "Password is incorrect";
                             }
                             // Sign Up
                             else
                             {
-                                game.global.feedbackLogin.setText("Password must have between 4 and 14 characters");
+                                game.global.feedbackLogin.innerHTML = "Password must have between 4 and 14 characters";
                             }
                         }
                     }
@@ -108,12 +108,12 @@ class Scene_Account extends Phaser.Scene {
                         // Log In
                         if (that.game.global.logInOption == 0)
                         {
-                            game.global.feedbackLogin.setText("User doesn't exist");
+                            game.global.feedbackLogin.innerHTML = "User doesn't exist";
                         }
                         // Sign Up
                         else
                         {
-                            game.global.feedbackLogin.setText("Username must have less than 14 characters");
+                            game.global.feedbackLogin.innerHTML = "Username must have less than 14 characters";
                         }
                     }
                 }
@@ -132,8 +132,7 @@ class Scene_Account extends Phaser.Scene {
         }
 
         // Texto de feedback
-        game.global.feedbackLogin = this.add.text(RelativeScale(1920/2, "x"), RelativeScale(980, "y"), "")
-        .setColor("#DD0000").setAlign("center").setOrigin(0.5, 0.5).setFontSize(22);
+        game.global.feedbackLogin = document.getElementById("feedbackText");
 
         //element.setVisible(false);
 

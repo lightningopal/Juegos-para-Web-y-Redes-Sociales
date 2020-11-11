@@ -125,7 +125,7 @@ class Scene_Main_Menu extends Phaser.Scene {
             this.rankingBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
                 if (that.optionSelectedRow == 2 && that.optionSelectedCol == 1){
                     that.rankingBtn.setFrame(0);
-                    that.scene.start("scene_ranking");
+                    game.global.socket.send(JSON.stringify({ event: "REQUEST_RANKING" }));
                 }
                 if (game.global.DEBUG_MODE){ 
                     console.log("ranking soltado");
