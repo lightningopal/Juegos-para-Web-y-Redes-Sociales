@@ -40,10 +40,10 @@ class Scene_Ranking extends Phaser.Scene {
         }
 
         // Usuario
-        var winsLosesString = game.global.ranking[10].winsCount + " / " + game.global.ranking[10].losesCount;
+        var winsLosesStringUser = game.global.ranking[10].winsCount + " / " + game.global.ranking[10].losesCount;
 
         rankingNameTexts[10] = this.add.text(RelativeScale(1580, "x"), RelativeScale(680, "y"), game.global.ranking[10].userName).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(32);
-        rankingWinsLosesTexts[10] = this.add.text(RelativeScale(1580, "x"), RelativeScale(795, "y"), winsLosesString).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(32);
+        rankingWinsLosesTexts[10] = this.add.text(RelativeScale(1580, "x"), RelativeScale(795, "y"), winsLosesStringUser).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(32);
         rankingPointsTexts[10] = this.add.text(RelativeScale(1580, "x"), RelativeScale(900, "y"), game.global.ranking[10].points).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(32);
 
     } // Fin preload

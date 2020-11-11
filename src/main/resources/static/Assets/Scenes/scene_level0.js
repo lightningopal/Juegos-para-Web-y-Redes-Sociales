@@ -1,8 +1,3 @@
-// this.sys.game.device.os --> Muestra un array de bools que indica el dispositivo en el que se abre la página
-// Debug
-var x = 0;
-var y = 0;
-
 class Scene_Level0 extends Phaser.Scene {
     constructor() {
         super({ key: "scene_level0" });
@@ -471,9 +466,7 @@ class Scene_Level0 extends Phaser.Scene {
             // this.dummy.body.velocity.y = RelativeScale(-800,"y");
         }
         */
-        var debugText = document.getElementById("debugText");
-        debugText.innerHTML = "Posición del ratón: {x: " + x + ", y: " + y + "} | FPS: " + Math.round(game.loop.actualFps);
-    
+
         // Stars
         this.versus_stars.tilePositionX += 0.2;
         this.versus_stars.tilePositionY += 0.4;
