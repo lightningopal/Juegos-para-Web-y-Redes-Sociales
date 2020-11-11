@@ -19,10 +19,10 @@ public class GamesManager {
     /// Variables
     //// Partidas "space gym"
     // Scheduler de las partidas "space gym"
-    private ScheduledExecutorService scheduler_spaceGym = Executors.newScheduledThreadPool(1);
+    private ScheduledExecutorService scheduler_spaceGym = Executors.newScheduledThreadPool(10);
 
     // Scheduler de las partidas "tournament"
-    private ScheduledExecutorService scheduler_tournament = Executors.newScheduledThreadPool(1);
+    private ScheduledExecutorService scheduler_tournament = Executors.newScheduledThreadPool(20);
 
     // Mapa que guarda las partidas "space gym" que se están ejecutando
     public Map<Player, SpaceGym_Game> spaceGym_games = new ConcurrentHashMap<>();
