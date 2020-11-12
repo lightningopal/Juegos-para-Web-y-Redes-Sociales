@@ -538,8 +538,8 @@ class Scene_Level0 extends Phaser.Scene {
                 this.ShowPlatform(platform);
             }
         });
-        var debugText = document.getElementById("debugText");
-        debugText.innerHTML = "Posición del ratón: {x: " + x + ", y: " + y + "} | FPS: " + Math.round(game.loop.actualFps);
+        // var debugText = document.getElementById("debugText");
+        // debugText.innerHTML = "Posición del ratón: {x: " + x + ", y: " + y + "} | FPS: " + Math.round(game.loop.actualFps);
 
         // Stars
         this.versus_stars.tilePositionX += 0.2;

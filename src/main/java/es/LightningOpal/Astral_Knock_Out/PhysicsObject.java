@@ -268,7 +268,7 @@ public class PhysicsObject {
 		if (colWidth >= 0 && colHeight >= 0){
 			collides = true;
 			if (colHeight >= colWidth){ // Se prioriza el ancho
-				if (this.posX >= other.getPosX()){ // Se encuentra a la derecha del objeto
+				if ((this.posX-this.velX) >= other.getPosX()){ // Se encuentra a la derecha del objeto
 					if (this.velX <= 0){
 						this.velX = 0;
 					}
@@ -280,7 +280,7 @@ public class PhysicsObject {
 					this.posX -= colWidth;
 				}
 			}else{ // Alto
-				if (this.posY <= other.getPosY()){ // Se encuentra encima del objeto
+				if ((this.posY-this.velY) <= other.getPosY()){ // Se encuentra encima del objeto
 					if (this.velY >= 0){
 						this.velY = 0;
 					}

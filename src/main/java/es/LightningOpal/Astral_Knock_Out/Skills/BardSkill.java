@@ -77,8 +77,8 @@ public class BardSkill extends Skill {
     public void calculatePhysics() {
         elapsedTime = System.currentTimeMillis() - startTime;
         double remainingTime = duration - elapsedTime;
-        double directionX = target.getPosX() - this.getPosX();
-        double directionY = target.getPosY() - this.getPosY();
+        double directionX = (target.getPosX()+target.getVelX()) - this.getPosX();
+        double directionY = (target.getPosY()+target.getVelY()) - this.getPosY();
         double module = Math.sqrt(Math.pow(directionX, 2) + Math.pow(directionY, 2));
 
         directionX = directionX / module;
