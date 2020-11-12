@@ -364,7 +364,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					}
 					break;
 				// Cuando se reciben los datos del usuario para actualizar el space gym
-				case "UPDATE_SPACE_GYM":
+				case "UPDATE_CLIENT":
 					// Se obtiene el jugador del usuario
 					thisPlayer = user.getPlayer_selected();
 

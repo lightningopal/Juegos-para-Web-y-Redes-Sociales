@@ -427,7 +427,7 @@ class Scene_Space_Gym extends Phaser.Scene {
     // Comunicación de estado con el servidor
     UpdateGameState() {
         game.global.socket.send(JSON.stringify({
-            event: "UPDATE_SPACE_GYM",
+            event: "UPDATE_CLIENT",
             movingLeft: this.movingLeft, movingRight: this.movingRight, falling: this.falling
         }));
     }

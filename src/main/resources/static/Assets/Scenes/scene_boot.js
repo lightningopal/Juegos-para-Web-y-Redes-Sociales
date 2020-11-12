@@ -413,7 +413,6 @@ class Scene_Boot extends Phaser.Scene {
 
     create() {
         // Set the scene
-        var that = this;
         game.global.actualScene = "scene_boot";
 
         // Creamos las animaciones
@@ -561,6 +560,9 @@ class Scene_Boot extends Phaser.Scene {
                     break;
                 case "UPDATE_TOURNAMENT":
                     this.scene.get('scene_boot').UpdateTournament(data);
+                    break;
+                case "DAMAGE":
+                    this.scene.get('scene_boot').Damage(data);
                     break;
                 case "GAME_RESULTS":
                     this.scene.get('scene_boot').FinishTournamentGame(data);
@@ -852,7 +854,17 @@ class Scene_Boot extends Phaser.Scene {
             level = this.scene.get('scene_level1');
         }
     }
+
+    Damage(data){
+        if (data.playerName === game.mPlayer.userName){ // Mi jugador ha sido dañado
+            this.scene.get(game.global.actualScene).myHP.currentHP = data.hp;
+        }else{ // El enemigo ha sido dañado
+            this.scene.get(game.global.actualScene).eHP.currentHP = data.hp;
+        }
+    }
+
     FinishTournamentGame(data) {
+        var that = this;
         // Aquí hay que actualizar los datos (tienen que ser globales)
         // Datos en data
         /*msg.put("event", "GAME_RESULTS");
@@ -905,7 +917,7 @@ class Scene_Boot extends Phaser.Scene {
         this.scene.get(game.global.actualScene).FinishGame();
 
         // Se cambia de escena cuando toque
-        this.time.addEvent({
+        this.scene.get(game.global.actualScene).time.addEvent({
             delay: 2000,
             callback: () => (that.ChangeToScore())
           });

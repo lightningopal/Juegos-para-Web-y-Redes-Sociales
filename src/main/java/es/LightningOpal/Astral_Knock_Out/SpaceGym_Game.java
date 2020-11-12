@@ -116,7 +116,7 @@ public class SpaceGym_Game {
     public void stopGameLoop() {
         // Si el future existe y no es null, lo para
         if (future != null) {
-            future.cancel(true);
+            future.cancel(false);
             System.out.println("SE HA CERRADO EL FUTURE PARA EL JUGADOR " + userName + ".");
         }
     }

@@ -49,8 +49,7 @@ public class GamesManager {
     private ObjectMapper mapper = new ObjectMapper();
 
     // Constructor vacio de la clase
-    private GamesManager()
-    {
+    private GamesManager() {
         ConcurrentLinkedQueue<Player> searchingLevel0 = new ConcurrentLinkedQueue<>();
         searching_players.add(searchingLevel0);
         ConcurrentLinkedQueue<Player> searchingLevel1 = new ConcurrentLinkedQueue<>();
@@ -58,9 +57,9 @@ public class GamesManager {
     }
 
     /// Métodos
-    // Método startSpaceGym, que inicia una partida de "space gym" para el jugador indicado
-    public void startSpaceGym(Player thisPlayer)
-    {
+    // Método startSpaceGym, que inicia una partida de "space gym" para el jugador
+    /// indicado
+    public void startSpaceGym(Player thisPlayer) {
         // Crea la partida para el jugador
         SpaceGym_Game newGame = new SpaceGym_Game(thisPlayer);
         // Inicia el game loop de esa partida
@@ -70,8 +69,7 @@ public class GamesManager {
     }
 
     // Método stopSpaceGym, que para la partida de "space gym" del jugador indicado
-    public void stopSpaceGym(Player thisPlayer)
-    {
+    public void stopSpaceGym(Player thisPlayer) {
         // Obtiene la partida que hay que parar
         SpaceGym_Game gameToStop = spaceGym_games.get(thisPlayer);
         // Para el game loop de esa partida
@@ -80,8 +78,7 @@ public class GamesManager {
         spaceGym_games.remove(thisPlayer);
     }
 
-    public int createTournamentGame(Player playerA, Player playerB, int level)
-    {
+    public int createTournamentGame(Player playerA, Player playerB, int level) {
         // Asigna el numero de sala
         int room = tournament_games.size();
         playerA.setRoom(room);
@@ -106,8 +103,7 @@ public class GamesManager {
         return room;
     }
 
-    public boolean ready(int room)
-    {
+    public boolean ready(int room) {
         // Definimos un booleano que controla si puede empezar
         boolean canStartGame = false;
 
@@ -116,8 +112,7 @@ public class GamesManager {
         int playersReady = startGame_counters.get(room).incrementAndGet();
 
         // Empezamos
-        if (playersReady == 2)
-        {
+        if (playersReady == 2) {
             startTournamentGame(room);
             canStartGame = true;
         }
@@ -129,27 +124,17 @@ public class GamesManager {
         return canStartGame;
     }
 
-    public void startTournamentGame(int room)
-    {
+    public void startTournamentGame(int room) {
         // Establece la posición de los jugadores
         tournament_games.get(room).setPlayersPosition();
-        
+
         // Inicia el game loop de esa partida
         tournament_games.get(room).startGameLoop(scheduler_tournament);
     }
 
-    public void finishTournamentGame(int room, Player winner, Player loser, boolean wasDisconnection)
-    {
+    public void finishTournamentGame(int room, Player winner, Player loser, boolean wasDisconnection) {
         // Si existe la partida
-            if (tournament_games.containsKey(room))
-            {
-            // Para el game loop de esa partida
-            tournament_games.get(room).stopGameLoop();
-
-            // Elimina los datos de la partida
-            tournament_games.remove(room);
-            startGame_counters.remove(room);
-            startGame_locks.remove(room);
+        if (tournament_games.containsKey(room)) {
 
             // Se obtienen los usuarios de los jugadores
             User winnerUser = UsersController.allUsers.get(winner.getUserName());
@@ -177,8 +162,7 @@ public class GamesManager {
             int extraCoinsForLoser = 20 + random.nextInt(11);
 
             // Si fue una desconexión, el perdedor no obtiene monedas
-            if (wasDisconnection)
-            {
+            if (wasDisconnection) {
                 extraCoinsForLoser = 0;
             }
 
@@ -201,7 +185,7 @@ public class GamesManager {
             winnerPlayer.put("points", Math.round(eloForWinner));
             winnerPlayer.put("newCoins", extraCoinsForWinner);
             winnerPlayer.put("currency", winnerCoins);
-            
+
             // Loser Player
             loserPlayer.put("userName", loser.getUserName());
             loserPlayer.put("points", Math.round(eloForLoser));
@@ -216,23 +200,27 @@ public class GamesManager {
             msg.putPOJO("loser", loserPlayer);
 
             // Se les envía el mensaje a los jugadores
-            try
-            {
+            try {
                 // Se le envía al ganador
                 synchronized (winnerUser.getSession()) {
                     winnerUser.getSession().sendMessage(new TextMessage(msg.toString()));
                 }
 
                 // Si no hubo desconexión, también al perdedor
-                if (!wasDisconnection)
-                {
+                if (!wasDisconnection) {
                     synchronized (loserUser.getSession()) {
                         loserUser.getSession().sendMessage(new TextMessage(msg.toString()));
                     }
                 }
-            }
-            catch(Exception e)
-            {
+
+                // Para el game loop de esa partida
+                tournament_games.get(room).stopGameLoop();
+
+                // Elimina los datos de la partida
+                tournament_games.remove(room);
+                startGame_counters.remove(room);
+                startGame_locks.remove(room);
+            } catch (Exception e) {
                 // Se muestra la excepcion
                 e.printStackTrace();
             }

@@ -16,6 +16,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.springframework.web.socket.TextMessage;
 
@@ -39,7 +41,8 @@ public class Tournament_Game {
     public final static int playerBPosY = 940;
 
 	ObjectMapper mapper = new ObjectMapper();
-	private ScheduledFuture<?> future;
+    private ScheduledFuture<?> future;
+    private Lock threadLock = new ReentrantLock();
 
 	private int room;
 	private int level;
@@ -166,7 +169,9 @@ public class Tournament_Game {
     public void stopGameLoop() {
         // Si el future existe y no es null, lo para
         if (future != null) {
-            future.cancel(true);
+            threadLock.lock();
+            future.cancel(false);
+            threadLock.unlock();
             System.out.println("SE HA CERRADO EL FUTURE DE LA PARTIDA DE LOS JUGADORES " + players + ".");
         }
 	}
@@ -193,9 +198,11 @@ public class Tournament_Game {
 	public void broadcast(String message) {
 		for (Player player : players.values()) {
 			try {
+                threadLock.lock();
 				synchronized(player.getSession()){
 					player.getSession().sendMessage(new TextMessage(message.toString()));
-				}
+                }
+                threadLock.unlock();
 			} catch (Throwable ex) {
 				System.err.println("Execption sending message to player " + player.getSession().getId());
 				ex.printStackTrace(System.err);
@@ -277,12 +284,13 @@ public class Tournament_Game {
                         double hp = skill.impact(); // Se lanza un mensaje a ambos jugadores
                         if (hp <= 0.0){
                             // Acabar partida
+                            GamesManager.INSTANCE.finishTournamentGame(room, playerA, playerB, false);
                         }else{
                             // Enviar mensaje con la nueva vida a los jugadores
-                            jsonPlayerBHP.put("type", "DAMAGE");
-                            jsonPlayerBHP.put("player_name", skill.getTarget().getUserName());
+                            jsonPlayerBHP.put("event", "DAMAGE");
+                            jsonPlayerBHP.put("playerName", skill.getTarget().getUserName());
                             jsonPlayerBHP.put("hp", hp);
-                            // broadcast(jsonPlayerBHP.toString());
+                            broadcast(jsonPlayerBHP.toString());
                         }
 
                     }
@@ -314,12 +322,13 @@ public class Tournament_Game {
                         double hp = skill.impact(); // Se lanza un mensaje a ambos jugadores
                         if (hp <= 0.0){
                             // Acabar partida
+                            GamesManager.INSTANCE.finishTournamentGame(room, playerB, playerA, false);
                         }else{
                             // Enviar mensaje con la nueva vida a los jugadores
-                            jsonPlayerAHP.put("type", "DAMAGE");
-                            jsonPlayerAHP.put("player_name", skill.getTarget().getUserName());
+                            jsonPlayerAHP.put("event", "DAMAGE");
+                            jsonPlayerAHP.put("playerName", skill.getTarget().getUserName());
                             jsonPlayerAHP.put("hp", hp);
-                            // broadcast(jsonPlayerBHP.toString());
+                            broadcast(jsonPlayerAHP.toString());
                         }
                     }
                     if (skill.collidesWithPlatforms()){
