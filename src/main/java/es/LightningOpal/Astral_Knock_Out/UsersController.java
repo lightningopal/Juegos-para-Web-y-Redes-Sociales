@@ -80,6 +80,9 @@ public class UsersController {
 
 			String characters_available = "[0,1,2,3]";
 			String skins_available = "[{0},{0},{0},{0}}]";
+			
+			//Error que arregla Thund3r
+			//thisUser.setCh
 
 			userWritter.write(thisUser.getUserId() + ":" + thisUser.getUser_name() + ":" + characters_available + ":"
 					+ skins_available + ":" + thisUser.getElo() + ":" + thisUser.getWins() + ":" + thisUser.getLoses()
