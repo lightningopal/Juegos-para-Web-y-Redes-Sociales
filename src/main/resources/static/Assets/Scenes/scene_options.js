@@ -125,11 +125,11 @@ class Scene_Options extends Phaser.Scene {
                 }
             });
         }else if (game.global.DEVICE === "desktop") { // Odenador
-            this.controlsBtn = this.add.image(RelativeScale(0.0, "x"), RelativeScale(0.0, "y"), "controls_button")
+            this.controlsBtn = this.add.image(RelativeScale(578.0, "x"), RelativeScale(579.50, "y"), "controls_button")
                 .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
             this.controlsImage = this.add.image(RelativeScale(962.50, "x"), RelativeScale(850.0, "y"), "controls_image")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-            this.controlsBtn.setAlpha(0);
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+            this.controlsImage.setAlpha(0);
             // Teclas de selección
             this.input.keyboard.on("keydown-"+"ESC", function (event) {
                 that.input.keyboard.removeAllKeys(true);

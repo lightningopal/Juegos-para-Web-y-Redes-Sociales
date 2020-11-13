@@ -1,0 +1,13 @@
+19:10:18 - Server opened.
+19:11:01 - Conected user with session 62785098-c1e5-2c43-c4f8-b1090d5fe968.
+19:11:09 - Player connected: prueba2.
+19:11:27 - Player disconnected: prueba2.
+19:11:34 - Conected user with session 988fb990-23f8-9552-a835-4715048ba747.
+19:11:39 - Player connected: prueba2.
+19:12:05 - Player disconnected: prueba2.
+19:12:12 - Conected user with session 65f231c0-4cf1-dd30-8201-fc66757ff5e4.
+19:12:18 - Player connected: prueba2.
+19:14:04 - Player disconnected: prueba2.
+19:14:09 - Conected user with session 5f109ab4-c303-3fcc-c993-dd51ceb24800.
+19:14:15 - Player connected: prueba2.
+19:15:18 - Users data saved.
