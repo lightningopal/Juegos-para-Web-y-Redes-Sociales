@@ -42,7 +42,6 @@ public class BerserkerSkill extends Skill{
             }
         }, duration);
         startTime = System.currentTimeMillis();
-        System.out.println("Habilidad de Berserker");
     }
 
     @Override

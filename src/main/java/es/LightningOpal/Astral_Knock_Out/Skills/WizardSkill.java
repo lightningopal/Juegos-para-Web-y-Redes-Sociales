@@ -74,7 +74,6 @@ public class WizardSkill extends Skill{
                 disable();
             }
         }, duration);
-        System.out.println("Habilidad de Mago");
     }
 
     @Override

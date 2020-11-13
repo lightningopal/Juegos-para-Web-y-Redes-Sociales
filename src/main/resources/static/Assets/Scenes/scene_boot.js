@@ -265,7 +265,14 @@ class Scene_Boot extends Phaser.Scene {
             this.load.image("t_plat", "./Assets/Images/Platforms/t_plat.png");
             this.load.image("bard", "./Assets/Images/Characters/Bard.png");
             this.load.image("dummy", "./Assets/Images/Characters/Dummy.png");
-            this.load.image("projectile", "./Assets/Images/Tests/projectile.png");
+
+            ///Nivel 2///
+            // Fondo
+            this.load.image("level_2_bg", "./Assets/Images/BackGrounds/level_2_bg.png");
+            this.load.image("level_2_bg_details", "./Assets/Images/BackGrounds/level_2_bg_details.png");
+            this.load.image("level_2_bg_move", "./Assets/Images/BackGrounds/level_2_bg_move.png");
+            this.load.image("level_2_fg_details", "./Assets/Images/BackGrounds/level_2_fg_details.png");
+            this.load.image("level_2_fg_move", "./Assets/Images/BackGrounds/level_2_fg_move.png");
 
             // Animaciones Bardo
             this.load.spritesheet("bard_idle", "./Assets/Images/Characters/Animations/IdleAnimation_Bard.png", { frameWidth: 170, frameHeight: 170 });
@@ -758,8 +765,7 @@ class Scene_Boot extends Phaser.Scene {
             this.scene.get('scene_searching').scene.start("scene_level0");
         }
         else if (game.mPlayer.difficultySel == 1) {
-            console.log("EL NIVEL 1 NO ESTÁ CRACK, ES LO QUE TOCA");
-            this.scene.get('scene_searching').scene.start("scene_level0");
+            this.scene.get('scene_searching').scene.start("scene_level1");
         }
 
         if (game.global.DEBUG_MODE) {
@@ -851,7 +857,85 @@ class Scene_Boot extends Phaser.Scene {
                 }
             }
         } else { // Nivel 1
+            console.log(data);
             level = this.scene.get('scene_level1');
+            level.bg.tilePositionY = data.backgroundPos;
+            level.bgDetails.tilePositionY = data.stagePos;
+            level.bgMove.tilePositionY = data.stagePos;
+            level.fgDetails.tilePositionY = data.stagePos;
+            level.fgMove.tilePositionY = data.stagePos;
+
+            if (game.mEnemy.AorB === 'A') { // Mi jugador es el B
+                // Mi jugador
+                game.mPlayer.image.x = RelativeScale(data.playerB.posX, "x");
+                game.mPlayer.image.y = RelativeScale(data.playerB.posY, "y");
+                game.mPlayer.image.flipX = data.playerB.flipped;
+                if (data.playerB.onFloor) {
+                    level.falling = false;
+                }
+                level.canBasicAttack = data.playerB.canBasicAttack;
+                level.canSpecialAttack = data.playerB.canSpecialAttack;
+
+                // Proyectiles
+                for (var i = 0; i < data.projectilesB.length; i++) {
+                    level.myProjectiles[i].setVisible(data.projectilesB[i].isActive);
+                    level.myProjectiles[i].x = RelativeScale(data.projectilesB[i].posX, "x");
+                    level.myProjectiles[i].y = RelativeScale(data.projectilesB[i].posY, "y");
+                    level.myProjectiles[i].setAngle(data.projectilesB[i].facingAngle);
+                    level.myProjectiles[i].flipX = data.projectilesB[i].flipX;
+                }
+
+                // Jugador enemigo
+                game.mEnemy.image.x = RelativeScale(data.playerA.posX, "x");
+                game.mEnemy.image.y = RelativeScale(data.playerA.posY, "y");
+                level.eMovingLeft = data.playerA.movingLeft;
+                level.eMovingRight = data.playerA.movingRight;
+                game.mEnemy.image.flipX = data.playerA.flipped;
+
+                // Proyectiles
+                for (var i = 0; i < data.projectilesA.length; i++) {
+                    level.eProjectiles[i].setVisible(data.projectilesA[i].isActive);
+                    level.eProjectiles[i].x = RelativeScale(data.projectilesA[i].posX, "x");
+                    level.eProjectiles[i].y = RelativeScale(data.projectilesA[i].posY, "y");
+                    level.eProjectiles[i].setAngle(data.projectilesA[i].facingAngle);
+                    level.eProjectiles[i].flipX = data.projectilesA[i].flipX;
+                }
+            } else { // Mi jugador es el A
+                // Mi jugador
+                game.mPlayer.image.x = RelativeScale(data.playerA.posX, "x");
+                game.mPlayer.image.y = RelativeScale(data.playerA.posY, "y");
+                game.mPlayer.image.flipX = data.playerA.flipped;
+                if (data.playerA.onFloor) {
+                    level.falling = false;
+                }
+                level.canBasicAttack = data.playerA.canBasicAttack;
+                level.canSpecialAttack = data.playerA.canSpecialAttack;
+
+                // Proyectiles
+                for (var i = 0; i < data.projectilesA.length; i++) {
+                    level.myProjectiles[i].setVisible(data.projectilesA[i].isActive);
+                    level.myProjectiles[i].x = RelativeScale(data.projectilesA[i].posX, "x");
+                    level.myProjectiles[i].y = RelativeScale(data.projectilesA[i].posY, "y");
+                    level.myProjectiles[i].setAngle(data.projectilesA[i].facingAngle);
+                    level.myProjectiles[i].flipX = data.projectilesA[i].flipX;
+                }
+
+                // Jugador enemigo
+                game.mEnemy.image.x = RelativeScale(data.playerB.posX, "x");
+                game.mEnemy.image.y = RelativeScale(data.playerB.posY, "y");
+                level.eMovingLeft = data.playerB.movingLeft;
+                level.eMovingRight = data.playerB.movingRight;
+                game.mEnemy.image.flipX = data.playerB.flipped;
+
+                // Proyectiles
+                for (var i = 0; i < data.projectilesB.length; i++) {
+                    level.eProjectiles[i].setVisible(data.projectilesB[i].isActive);
+                    level.eProjectiles[i].x = RelativeScale(data.projectilesB[i].posX, "x");
+                    level.eProjectiles[i].y = RelativeScale(data.projectilesB[i].posY, "y");
+                    level.eProjectiles[i].setAngle(data.projectilesB[i].facingAngle);
+                    level.eProjectiles[i].flipX = data.projectilesB[i].flipX;
+                }
+            }
         }
     }
 

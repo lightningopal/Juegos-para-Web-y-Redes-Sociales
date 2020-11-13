@@ -41,7 +41,6 @@ public class BardSkill extends Skill {
             }
         }, duration);
         startTime = System.currentTimeMillis();
-        System.out.println("Habilidad de Bardo");
     }
 
     @Override

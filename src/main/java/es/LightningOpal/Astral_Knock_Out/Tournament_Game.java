@@ -35,17 +35,20 @@ public class Tournament_Game {
 
 	public final double GRAVITY = 1.0;
 
-	public final static int playerAPosX = 500;
-    public final static int playerAPosY = 0;
-    public final static int playerBPosX = 1500;
-    public final static int playerBPosY = 940;
+	public static int playerAPosX = 500;
+    public static int playerAPosY = 0;
+    public static int playerBPosX = 1500;
+    public static int playerBPosY = 940;
 
 	ObjectMapper mapper = new ObjectMapper();
     private ScheduledFuture<?> future;
     private Lock threadLock = new ReentrantLock();
 
+    private boolean gameStarted;
 	private int room;
-	private int level;
+    private int level;
+    private double backgroundPos = 0;
+    private double stagePos = 0;
 
 	private Map<String, Player> players = new ConcurrentHashMap<>();
 	private Player playerA;
@@ -130,6 +133,10 @@ public class Tournament_Game {
 		// Dependiendo del nivel, situaremos distintas plataformas
 		if (level == 0)
 		{
+            playerAPosX = 500;
+            playerAPosY = 0;
+            playerBPosX = 1500;
+            playerBPosY = 940;
 			//Plataformas
 			platforms.add(new PhysicsObject(true, 960.0, 1038.0, 960.0, 33.0, 0.0, 9.0)); // floor
 			platforms.add(new PhysicsObject(true, 1527.50, 747.50, 187.50, 37.50, 0.0, -41.0)); // base_big_plat_2
@@ -140,8 +147,34 @@ public class Tournament_Game {
 			platforms.add(new PhysicsObject(true, 517.50, 213.50, 109.0, 30.0, 0.0, -26.0)); // plat_2
 			platforms.add(new PhysicsObject(true, 1230.50, 115.0, 104.50, 32.50, 0.0, -9.0)); // plat_3
 			platforms.add(new PhysicsObject(true, 945.50, 371.50, 34.0, 84.50, 0.0, -4.50)); // t_plat
-		}
-	}
+		} else if (level == 1){
+            playerAPosX = 486;
+            playerAPosY = 725;
+            playerBPosX = 1491;
+            playerBPosY = 746;
+            //Plataformas
+            // isStatic, posX, posY, hW, hH, offX, offY
+            platforms.add(new PhysicsObject(true, 486.50, 2184.0, 272.50, 38.0, 0.0, 0.0));
+            platforms.add(new PhysicsObject(true, 1454.0, 2183.0, 273.0, 38.0, 0.0, 0.0));
+            platforms.add(new PhysicsObject(true, 964.50, 1825.0, 180.50, 38.0, 0.0, 0.0));
+            platforms.add(new PhysicsObject(true, 319.50, 1431.0, 319.50, 38.0, 0.0, 0.0));
+            platforms.add(new PhysicsObject(true, 963.50, 1698.50, 31.50, 88.50, 0.0, 0.0));
+            platforms.add(new PhysicsObject(true, 1336.50, 1246.0, 272.50, 38.0, 0.0, 0.0));
+            platforms.add(new PhysicsObject(true, 1671.0, 869.0, 251.0, 38.0, 0.0, 0.0));
+            platforms.add(new PhysicsObject(true, 1810.0, 490.0, 110.0, 37.0, 0.0, 0.0));
+            platforms.add(new PhysicsObject(true, 475.50, 846.0, 244.50, 38.0, 0.0, 0.0));
+            platforms.add(new PhysicsObject(true, 267.0, 700.50, 36.0, 109.50, 0.0, 0.0));
+            platforms.add(new PhysicsObject(true, 151.50, 553.50, 151.50, 37.50, 0.0, 0.0));
+            platforms.add(new PhysicsObject(true, 983.0, 261.0, 453.0, 38.0, 0.0, 0.0));
+        }
+    }
+    
+    public boolean isGameStarted(){
+        return gameStarted;
+    }
+    public void setGameStarted(boolean gameStarted){
+        this.gameStarted = gameStarted;
+    }
 	
 	public Collection<Player> getPlayers() {
 		return players.values();
@@ -168,6 +201,7 @@ public class Tournament_Game {
     // Método stopGameLoop, que para el game loop de la partida
     public void stopGameLoop() {
         // Si el future existe y no es null, lo para
+        this.gameStarted = false;
         if (future != null) {
             threadLock.lock();
             future.cancel(false);
@@ -213,6 +247,9 @@ public class Tournament_Game {
 	}
 
 	private void tick() {
+        if (!gameStarted){ // Impedir el movimiento de las plataformas y de los personajes en el servidor
+            return;
+        }
 		// Se crea un ObjectNode 'json' para guardar la información del mensaje a enviar
         ObjectNode json = mapper.createObjectNode();
         // Se crea un ObjectNode 'jsonPlayer' para guardar la información del jugador
@@ -226,6 +263,24 @@ public class Tournament_Game {
         ObjectNode jsonPlayerBHP = mapper.createObjectNode();
 
 		try {
+            // SI EL JUGADOR SE CAE PIERDE
+            // Movemos las plataformas y el fondo en el level 1
+            if (level == 1){
+                backgroundPos -= 1;
+                stagePos -= 2;
+                if (backgroundPos <= -2349){
+                    backgroundPos = 0;
+                }
+                if (stagePos <= -2349){
+                    stagePos = 0;
+                }
+                for (PhysicsObject platform : platforms){
+                    platform.setPosY(platform.getPosY()+2);
+                    if (platform.getPosY()-platform.getHalfHeight() >= 1080){
+                        platform.setPosY(-1269 - platform.getHalfHeight());
+                    }
+                }
+            }
 			// Intenta calcular las físicas de los jugadores y enviarle los datos
 			// Player A
 			playerA.incVelocity(0, GRAVITY); // Gravedad
@@ -239,6 +294,10 @@ public class Tournament_Game {
                 playerA.setPosX(playerA.getHalfWidth());
             }else if (playerA.getPosX() + playerA.getHalfWidth() > 1920){
                 playerA.setPosX(1920 - playerA.getHalfWidth());
+            }
+            if (playerA.getPosY() - playerA.getHalfHeight() >= 1080){
+                // El jugador se ha caído del mapa y pierde la partida
+                //GamesManager.INSTANCE.finishTournamentGame(room, playerB, playerA, false);
             }
             // Guarda los datos en el ObjectNode 'jsonPlayer'
             jsonPlayerA.put("posX", playerA.getPosX());
@@ -262,6 +321,10 @@ public class Tournament_Game {
                 playerB.setPosX(playerB.getHalfWidth());
             }else if (playerB.getPosX() + playerB.getHalfWidth() > 1920){
                 playerB.setPosX(1920 - playerB.getHalfWidth());
+            }
+            if (playerB.getPosY() - playerB.getHalfHeight() >= 1080){
+                // El jugador se ha caído del mapa y pierde la partida
+                //GamesManager.INSTANCE.finishTournamentGame(room, playerA, playerB, false);
             }
             // Guarda los datos en el ObjectNode 'jsonPlayer'
             jsonPlayerB.put("posX", playerB.getPosX());
@@ -347,12 +410,15 @@ public class Tournament_Game {
                 jsonProjectileB.put("flipX", skill.IsFlipped());
                 arrayNodeProjectilesB.addPOJO(jsonProjectileB);
 			}
-
-			// Mover escenario y plataformas para el nivel 2 y pasarlo en 'json'
 			
 			// Añade el evento correspondiente
 			json.put("event", "UPDATE_TOURNAMENT");
-			json.put("level", level);
+            json.put("level", level);
+            // Mover escenario y plataformas para el nivel 2 y pasarlo en 'json'
+            if (level == 1){
+                json.put("backgroundPos", backgroundPos);
+                json.put("stagePos", stagePos);
+            }
             // Añade el ObjectNode 'jsonPlayer' al ObjectNode 'json' para unificar la
             // información
             json.putPOJO("playerA", jsonPlayerA);

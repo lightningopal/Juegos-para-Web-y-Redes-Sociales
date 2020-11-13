@@ -47,8 +47,6 @@ public class RogueSkill extends Skill{
                 start();
             }
         }, this.id * 100);
-        
-        System.out.println("Habilidad de Pícara");
     }
 
     @Override

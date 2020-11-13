@@ -59,6 +59,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 		// Se intenta escribir la información en el log
 		try {
+			// Concurrencia de un usuario cerrando mientras otro escribe THUND3R
 			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
 			String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
 			AKO_Server.logWriter.write(time + " - Conected user with session " + user.getSession().getId() + ".\n");
@@ -463,7 +464,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					if (gameStarted) {
 						// Asignar evento en el ObjectNode 'msg'
 						msg.put("event", "GAME_STARTED");
-
+						GamesManager.INSTANCE.tournament_games.get(room).setGameStarted(true);
 						// Se le envía el mensaje a ambos jugadores
 						GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
 

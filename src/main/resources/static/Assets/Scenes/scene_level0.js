@@ -35,6 +35,8 @@ class Scene_Level0 extends Phaser.Scene {
             this.load.plugin('rexvirtualjoystickplugin', url, true);
         }
 
+        this.gamePaused;
+        this.gameStopped;
         // Variables encargadas del control del jugador
         this.myMovingLeft;
         this.myMovingRight;
@@ -180,6 +182,9 @@ class Scene_Level0 extends Phaser.Scene {
         // Set the scene
         var that = this;
         game.global.actualScene = "scene_level0";
+
+        this.gamePaused = false;
+        this.gameStopped = true;
 
         // Create mobileKeys
         this.mobileKeys = {
@@ -573,28 +578,39 @@ class Scene_Level0 extends Phaser.Scene {
 
     // Comunicación de estado con el servidor
     UpdateGameState() {
-        game.global.socket.send(JSON.stringify({
-            event: "UPDATE_CLIENT",
-            movingLeft: this.myMovingLeft, movingRight: this.myMovingRight, falling: this.falling
-        }));
+        if (!this.gameStopped && !this.gamePaused){
+            game.global.socket.send(JSON.stringify({
+                event: "UPDATE_CLIENT",
+                movingLeft: this.myMovingLeft, movingRight: this.myMovingRight, falling: this.falling
+            }));
+        }
     }
     // Petición de salto del personaje
     Jump() {
-        this.falling = false;
-        game.global.socket.send(JSON.stringify({ event: "ACTION", type: "JUMP" }));
+        if (!this.gameStopped && !this.gamePaused){
+            this.falling = false;
+            game.global.socket.send(JSON.stringify({ event: "ACTION", type: "JUMP" }));
+        }
+        
     }
     Fall() {
-        this.falling = true;
-        game.global.socket.send(JSON.stringify({ event: "ACTION", type: "FALL" }));
+        if (!this.gameStopped && !this.gamePaused){
+            this.falling = true;
+            game.global.socket.send(JSON.stringify({ event: "ACTION", type: "FALL" }));
+        }
     }
 
     // Petición de ataque básico
     BasicAttack() {
-        game.global.socket.send(JSON.stringify({ event: "ACTION", type: "BASIC_ATTACK", room: game.mPlayer.room }));
+        if (!this.gameStopped && !this.gamePaused){
+            game.global.socket.send(JSON.stringify({ event: "ACTION", type: "BASIC_ATTACK", room: game.mPlayer.room }));
+        }
     }
     // Petición de ataque especial
     SpecialAttack() {
-        game.global.socket.send(JSON.stringify({ event: "ACTION", type: "SPECIAL_ATTACK", room: game.mPlayer.room }));
+        if (!this.gameStopped && !this.gamePaused){
+            game.global.socket.send(JSON.stringify({ event: "ACTION", type: "SPECIAL_ATTACK", room: game.mPlayer.room }));
+        }
     }
 
     // Joystick movil
@@ -636,6 +652,7 @@ class Scene_Level0 extends Phaser.Scene {
 
     StartGame() {
         console.log("Se llama a esconder el versus");
+        this.gameStopped = false;
         this.versus_main_bg.setVisible(false);
         this.versus_stars.setVisible(false);
         this.versus_bg.setVisible(false);
@@ -649,6 +666,7 @@ class Scene_Level0 extends Phaser.Scene {
     FinishGame(wasDisconnection)
     {
         // Mostrar pantalla de fin de partida
+        this.gameStopped = true;
         // disconnectionText.setVisible(true); o addText
         // Si fue una desconexión, mostrar al jugador el texto de desconexión
         if (wasDisconnection)
