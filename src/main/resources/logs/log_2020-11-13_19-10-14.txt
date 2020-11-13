@@ -27,3 +27,4 @@
 19:38:42 - Player disconnected: prueba2.
 19:38:48 - Conected user with session cd068350-567a-3b46-1233-db5eab74d57d.
 19:38:53 - Player connected: prueba2.
+19:40:18 - Users data saved.
