@@ -159,6 +159,7 @@ class Scene_Boot extends Phaser.Scene {
                 assetText.setText('Load complete.');
             });
 
+            this.load.plugin('rexvirtualjoystickplugin', './Assets/Plugins/rexvirtualjoystickplugin.min.js', true);
 
             // Carga de imágenes
             ///Escena de Inicio de Empresa, Boot///
@@ -194,7 +195,8 @@ class Scene_Boot extends Phaser.Scene {
             this.load.image("back_button_interface", "./Assets/Images/UI/back_button_interface.png");
 
             ///Escena de Créditos///
-            this.load.image("credits_bg", "./Assets/Images/Tests/test_bg/Credits-BG.jpg");
+            this.load.image("credits_dust", "./Assets/Images/UI/credits_dust.png");
+            this.load.image("credits_dust", "./Assets/Images/UI/credits_dust.png");
 
             ///Escena de Selección de Personaje y Habilidad///
             this.load.image("select_character_t_interface", "./Assets/Images/UI/select_character_t_interface.png");
@@ -231,7 +233,7 @@ class Scene_Boot extends Phaser.Scene {
 
             ///Escena de desconexion///
             this.load.image("disconnected_text", "./Assets/Images/UI/connection_failed_text.png");
-            this.load.spritesheet("retry_button", "./Assets/Images/UI/retry_button.png", { frameWidth: 604, frameHeight: 147 });
+            this.load.spritesheet("retry_button", "./Assets/Images/UI/retry_button.png", { frameWidth: 591, frameHeight: 101 });
 
             ///Versus
             this.load.image("versus_bg", "./Assets/Images/UI/versus_circles_interface.png");

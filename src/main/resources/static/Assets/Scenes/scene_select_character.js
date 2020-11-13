@@ -101,10 +101,13 @@ class Scene_Select_Character extends Phaser.Scene {
 
         // Skins
 
-
         this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
 
+        game.mPlayer.characterSel.id = -1;
+        game.mPlayer.characterSel.type = undefined;
+        game.mPlayer.skinSel = -1;
+        game.mPlayer.skillSel = -1;
         // Selectores
         this.characterSelectedRow;
         this.characterSelectedCol;
