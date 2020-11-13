@@ -8,9 +8,9 @@ class Scene_Select_Map extends Phaser.Scene {
         //Creación de imágenes
         this.background = this.add.image(0, 0, "main_menu_bg").setOrigin(0, 0)
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.nebula = this.add.image(game.config.width/2, game.config.height/2, "main_menu_nebula")
+        this.nebula = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_nebula")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.stars = this.add.image(game.config.width/2, game.config.height/2, "main_menu_stars")
+        this.stars = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_stars")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
         this.add.image(RelativeScale(114.50, "x"), RelativeScale(112.0, "y"), "back_button_interface")
@@ -29,6 +29,8 @@ class Scene_Select_Map extends Phaser.Scene {
         this.enterText;
 
         // Opciones de selección
+        game.mPlayer.difficultySel = -1;
+        this.return = false;
         this.optionSelected = 0; // 0 -> Mapa 0 / 1 -> Mapa 1
         this.alreadySelected = false;
 
@@ -46,20 +48,21 @@ class Scene_Select_Map extends Phaser.Scene {
             that.mapButton0.setFrame(0);
 
             this.input.on('pointerup', function () {
+                that.return = false;
                 that.backBtn.setFrame(0);
-                that.mapButton0.setFrame(0);
-                that.mapButton1.setFrame(0);
             });
             // Botón atrás
             this.backBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-                that.backBtn.setFrame(1);
+                // that.backBtn.setFrame(1);
+                that.return = true;
+                that.CheckOption();
                 if (game.global.DEBUG_MODE) {
                     console.log("Back pulsado");
                 }
             });
             this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
                 that.backBtn.setFrame(0);
-                that.scene.start("scene_main_menu");
+                that.scene.start("scene_select_character");
                 if (game.global.DEBUG_MODE) {
                     console.log("Back soltado");
                 }
@@ -67,20 +70,22 @@ class Scene_Select_Map extends Phaser.Scene {
             // Primer mapa
             this.mapButton0.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
                 that.mapButton0.setFrame(1);
+                that.mapButton1.setFrame(0);
                 game.mPlayer.difficultySel = 0;
                 if (game.global.DEBUG_MODE) {
                     console.log("Mapa 1 pulsado");
                 }
             });
             this.mapButton0.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-                that.mapButton0.setFrame(0);
-                that.scene.start("scene_searching");
+                // that.mapButton0.setFrame(0);
+                // that.scene.start("scene_searching");
                 if (game.global.DEBUG_MODE) {
                     console.log("Mapa 1 soltado");
                 }
             });
             // Segundo mapa
             this.mapButton1.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                that.mapButton0.setFrame(0);
                 that.mapButton1.setFrame(1);
                 game.mPlayer.difficultySel = 1;
                 if (game.global.DEBUG_MODE) {
@@ -88,52 +93,82 @@ class Scene_Select_Map extends Phaser.Scene {
                 }
             });
             this.mapButton1.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-                that.mapButton1.setFrame(0);
-                that.scene.start("scene_searching");
+                // that.mapButton1.setFrame(0);
+                // that.scene.start("scene_searching");
                 if (game.global.DEBUG_MODE) {
                     console.log("Mapa 2 soltado");
                 }
             });
-        // Desktop
+            this.enterBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+                if (game.mPlayer.difficultySel == 0 || game.mPlayer.difficultySel == 1){
+                    that.scene.start("scene_searching");
+                }
+            });
+            // Desktop
         } else {
             this.enterText = this.add.image(RelativeScale(1350.0, "x"), RelativeScale(1000.0, "x"), "continue_text_desktop")
                 .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
             this.enterText.setVisible(false);
-            this.backBtn.setFrame(1);
+            this.backBtn.setFrame(0);
             game.mPlayer.difficultySel = 0;
 
             // Opciones de selección
-            this.input.keyboard.on('keydown-'+'A', function (event) {
-                that.optionSelected = (that.optionSelected + 1) % 2;
-                that.CheckOption();
-                if (game.global.DEBUG_MODE) {
-                    console.log(that.optionSelected);
-                }
-            });
-            this.input.keyboard.on('keydown-'+'D', function (event) {
+            this.input.keyboard.on('keydown-' + 'A', function (event) {
+                if (!that.return && !that.alreadySelected) {
                     that.optionSelected = (that.optionSelected + 1) % 2;
                     that.CheckOption();
                     if (game.global.DEBUG_MODE) {
                         console.log(that.optionSelected);
                     }
-                });
-            
-            this.input.keyboard.on('keydown-'+'ESC', function (event) {
-                that.input.keyboard.removeAllKeys(true);
-                that.scene.start("scene_select_character");
+                }
+            });
+            this.input.keyboard.on('keydown-' + 'D', function (event) {
+                if (!that.return && !that.alreadySelected) {
+                    that.optionSelected = (that.optionSelected + 1) % 2;
+                    that.CheckOption();
+                    if (game.global.DEBUG_MODE) {
+                        console.log(that.optionSelected);
+                    }
+                }
+            });
+            this.input.keyboard.on('keydown-'+'W', function(event){
+                that.return = !that.return;
+                that.CheckOption();
+            });
+            this.input.keyboard.on('keydown-'+'S', function(event){
+                that.return = false;
+                that.CheckOption();
             });
 
-            this.input.keyboard.on('keydown-'+'ENTER', function (event) {
-                if (!that.alreadySelected)
-                {
-                    that.enterText.setVisible(true);
-                    that.alreadySelected = true;
-                }
-                else
-                {
+            this.input.keyboard.on('keydown-' + 'ESC', function (event) {
+                if (!that.alreadySelected){
                     that.input.keyboard.removeAllKeys(true);
-                    game.mPlayer.difficultySel = that.optionSelected;
-                    that.scene.start("scene_searching");
+                    that.scene.start("scene_select_character");
+                }else{
+                    that.enterText.setVisible(false);
+                    that.alreadySelected = false;
+                }
+                
+            });
+
+            this.input.keyboard.on('keydown-' + 'ENTER', function (event) {
+                if (!that.return){
+                    if (!that.alreadySelected) {
+                        that.enterText.setVisible(true);
+                        that.alreadySelected = true;
+                    }else {
+                        that.input.keyboard.removeAllKeys(true);
+                        game.mPlayer.difficultySel = that.optionSelected;
+                        that.scene.start("scene_searching");
+                    }
+                }else{
+                    if (!that.alreadySelected){
+                        that.input.keyboard.removeAllKeys(true);
+                        that.scene.start("scene_select_character");
+                    }else{
+                        that.enterText.setVisible(false);
+                        that.alreadySelected = false;
+                    }
                 }
             });
         }
@@ -150,13 +185,18 @@ class Scene_Select_Map extends Phaser.Scene {
 
     } // Fin update
 
-    CheckOption(){
-        if (this.optionSelected == 0){
-            this.mapButton0.setFrame(1);
-            this.mapButton1.setFrame(0);
+    CheckOption() {
+        if (this.return){
+            this.backBtn.setFrame(1);
         }else{
-            this.mapButton0.setFrame(0);
-            this.mapButton1.setFrame(1);
+            this.backBtn.setFrame(0);
+            if (this.optionSelected == 0) {
+                this.mapButton0.setFrame(1);
+                this.mapButton1.setFrame(0);
+            } else {
+                this.mapButton0.setFrame(0);
+                this.mapButton1.setFrame(1);
+            }
         }
     }
 

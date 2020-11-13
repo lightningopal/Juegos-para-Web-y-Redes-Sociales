@@ -159,6 +159,7 @@ class Scene_Boot extends Phaser.Scene {
                 assetText.setText('Load complete.');
             });
 
+            this.load.plugin('rexvirtualjoystickplugin', './Assets/Plugins/rexvirtualjoystickplugin.min.js', true);
 
             // Carga de imágenes
             ///Escena de Inicio de Empresa, Boot///
@@ -190,11 +191,14 @@ class Scene_Boot extends Phaser.Scene {
             ///Escena de Opciones///
             this.load.image("options_interface", "./Assets/Images/UI/options_interface.png");
             this.load.spritesheet("volume_button", "./Assets/Images/UI/volume_button.png", { frameWidth: 76, frameHeight: 143 });
-            this.load.spritesheet("back_button", "./Assets/Images/UI/back_button.png", { frameWidth: 144, frameHeight: 121 })
+            this.load.spritesheet("back_button", "./Assets/Images/UI/back_button.png", { frameWidth: 144, frameHeight: 121 });
             this.load.image("back_button_interface", "./Assets/Images/UI/back_button_interface.png");
+            this.load.spritesheet("controls_button", "./Assets/Images/UI/controls_button.png", { frameWidth: 1, frameHeight: 1 });
+            this.load.image("controls_image", "./Assets/Images/UI/controls_image.png");
 
             ///Escena de Créditos///
-            this.load.image("credits_bg", "./Assets/Images/Tests/test_bg/Credits-BG.jpg");
+            this.load.image("credits_dust", "./Assets/Images/UI/credits_dust.png");
+            this.load.spritesheet("credits_images", "./Assets/Images/UI/credits_images.png", { frameWidth: 1919.50, frameHeight: 1080 });
 
             ///Escena de Selección de Personaje y Habilidad///
             this.load.image("select_character_t_interface", "./Assets/Images/UI/select_character_t_interface.png");

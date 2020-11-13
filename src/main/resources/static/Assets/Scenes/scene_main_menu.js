@@ -80,6 +80,7 @@ class Scene_Main_Menu extends Phaser.Scene {
             });
             this.tournamentBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
                 if (that.optionSelectedRow == 0 && that.optionSelectedCol == 1){
+                    game.mPlayer.isVersus = true;
                     that.tournamentBtn.setFrame(0);
                     that.scene.start("scene_select_character");
                 }
@@ -102,6 +103,7 @@ class Scene_Main_Menu extends Phaser.Scene {
             });
             this.gymBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
                 if (that.optionSelectedRow == 1 && that.optionSelectedCol == 1){
+                    game.mPlayer.isVersus = false;
                     that.gymBtn.setFrame(0);
                     that.scene.start("scene_select_character");
                 }
