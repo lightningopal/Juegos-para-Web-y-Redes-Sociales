@@ -255,6 +255,8 @@ class Scene_Boot extends Phaser.Scene {
             this.load.image("level_1_fg_details", "./Assets/Images/BackGrounds/level_1_fg_details.png");
             this.load.image("level_1_fg_move", "./Assets/Images/BackGrounds/level_1_fg_move.png");
             this.load.image("level_1_plats_floor", "./Assets/Images/BackGrounds/level_1_plats_floor.png");
+            this.load.image("msg_bg", "./Assets/Images/UI/msg_bg.png");
+            this.load.image("pause_text", "./Assets/Images/UI/pause_text.png");
 
             // Plataformas
             this.load.image("floor", "./Assets/Images/Platforms/floor.png");
