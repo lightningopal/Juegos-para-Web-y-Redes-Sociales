@@ -5,35 +5,91 @@ class Scene_Score extends Phaser.Scene {
 
     preload(){
         //Creación de imágenes
-        this.background = this.add.image(0, 0, "main_menu_bg").setOrigin(0,0)
+        this.background = this.add.image(0, 0, "main_menu_bg").setOrigin(0, 0)
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.nebula = this.add.image(game.config.width/2, game.config.height/2, "main_menu_nebula")
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.stars = this.add.image(game.config.width/2, game.config.height/2, "main_menu_stars")
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+
         // Interfaz
-        this.add.image(RelativeScale(960.0,"x"), RelativeScale(658.50,"y"), "score_interface")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.add.image(0, 0, "score_interface").setOrigin(0, 0)
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(5);
+
+        // Ganador y perdedor
+        this.loserCharacter;
+        this.winnerCharacter;
+        this.loserUserName;
+        this.winnerUserName;
+        this.pointsDiff;
+        
+        // Si la diferencia de puntos es positiva, el ganador es este jugador
+        if (game.mPlayer.pointsDifference > 0)
+        {
+            this.loserCharacter = this.add.image(RelativeScale(300,"x"), RelativeScale(700,"y"), "splashart_" + game.mEnemy.characterSel.type)
+            .setScale(RelativeScale(0.8, "x"), RelativeScale(0.8, "y")).setDepth(4);
+            this.loserUserName = this.add.text(RelativeScale(60, "x"), RelativeScale(920, "y"), game.mEnemy.userName)
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(6).setAngle(22).setFontSize(52);
+            
+            this.winnerCharacter = this.add.image(RelativeScale(1320,"x"), RelativeScale(580,"y"), "splashart_" + game.mPlayer.characterSel.type)
+            .setScale(RelativeScale(1.1, "x"), RelativeScale(1.1, "y")).setDepth(4);
+            this.winnerUserName = this.add.text(RelativeScale(1850, "x"), RelativeScale(820, "y"), game.mPlayer.userName)
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(1, 0.5).setDepth(6).setAngle(-22).setFontSize(52);
+            
+            this.pointsDiff = this.add.text(RelativeScale(790, "x"), RelativeScale(120, "y"), "+" + game.mPlayer.pointsDifference + " pt")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(7).setFontSize(52);
+        }
+        // Si es negativa, es el rival
+        else
+        {
+            this.loserCharacter = this.add.image(RelativeScale(300,"x"), RelativeScale(700,"y"), "splashart_" + game.mPlayer.characterSel.type)
+            .setScale(RelativeScale(0.8, "x"), RelativeScale(0.8, "y")).setDepth(4);
+            this.loserUserName = this.add.text(RelativeScale(60, "x"), RelativeScale(920, "y"), game.mPlayer.userName)
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(6).setAngle(22).setFontSize(52);
+            
+            this.winnerCharacter = this.add.image(RelativeScale(1320,"x"), RelativeScale(580,"y"), "splashart_" + game.mEnemy.characterSel.type)
+            .setScale(RelativeScale(1.1, "x"), RelativeScale(1.1, "y")).setDepth(4);
+            this.winnerUserName = this.add.text(RelativeScale(1850, "x"), RelativeScale(820, "y"), game.mEnemy.userName)
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(1, 0.5).setDepth(6).setAngle(-22).setFontSize(52);
+            
+            this.pointsDiff = this.add.text(RelativeScale(790, "x"), RelativeScale(120, "y"), game.mPlayer.pointsDifference + " pt")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(7).setFontSize(52);
+        }
+
+        this.newCoins = this.add.text(RelativeScale(790, "x"), RelativeScale(200, "y"), "+" + game.mPlayer.newCoins)
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(7).setFontSize(52);
+
+        var userNameText = this.add.text(RelativeScale(160, "x"), RelativeScale(165, "y"), game.mPlayer.userName)
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setFontSize(48).setDepth(8); // Alineado a la izquierda
+        var userCurrencyText = this.add.text(RelativeScale(620, "x"), RelativeScale(165, "y"), game.mPlayer.currency)
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(1, 0.5).setFontSize(48).setDepth(8); // Alineado a la derecha
 
         this.playAgain = this.add.image(0, 0, "play_again_screen").setOrigin(0,0)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.playAgain.setActive(false);
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(20);
+        this.playAgain.setVisible(false);
         this.yesBtn = this.add.image(RelativeScale(587.0,"x"), RelativeScale(616.0,"y"), "yes_button")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(21);
         this.yesBtn.setFrame(1);
-        this.yesBtn.setActive(false);
+        this.yesBtn.setVisible(false);
         this.noBtn = this.add.image(RelativeScale(1325.50,"x"), RelativeScale(616.0,"y"), "no_button")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.noBtn.setActive(false);
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(21);
+        this.noBtn.setVisible(false);
 
         // Controles
         this.optionSelected;
+        this.canSelectOption = false;
     }// Fin preload
 
     create(){
         // Set the scene
         var that = this;
         game.global.actualScene = "scene_score";
+
+        // Timer que muestra la pantalla de volver a jugar
+        this.time.addEvent({
+            delay: 2000,
+            callback: () => (that.PlayAgainScreen())
+          });
 
         var tween = this.tweens.add({
             targets: that.nebula,
@@ -57,9 +113,9 @@ class Scene_Score extends Phaser.Scene {
 
     PlayAgainScreen(){
         var that = this;
-        this.playAgain.setActive(true);
-        this.yesBtn.setActive(true);
-        this.noBtn.setActive(true);
+        this.playAgain.setVisible(true);
+        this.yesBtn.setVisible(true);
+        this.noBtn.setVisible(true);
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE){
 
             this.input.on('pointerup', function () {

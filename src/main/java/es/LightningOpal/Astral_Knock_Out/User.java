@@ -30,7 +30,7 @@ public class User {
 	public User() {
 		this.user_name = "";
 		this.player_selected = new Player();
-		this.elo = 100;
+		this.elo = 1000;
 		this.currency = 0;
 		this.musicVol = 1.0f;
 		this.sfxVol = 1.0f;
