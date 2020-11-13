@@ -51,6 +51,11 @@ class Scene_Searching extends Phaser.Scene {
         var randomTip = Math.floor(Math.random() * 10);
         this.tipImage.setFrame(randomTip);
 
+        this.add.image(RelativeScale(114.50, "x"), RelativeScale(112.0, "y"), "back_button_interface")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(30);
+        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(31);
+
     } // Fin preload
 
     create() {
@@ -60,6 +65,37 @@ class Scene_Searching extends Phaser.Scene {
 
         // Search game
         game.global.socket.send(JSON.stringify({ event: "SEARCHING_GAME", playerType: game.mPlayer.characterSel.type, skill: game.mPlayer.skillSel, level: game.mPlayer.difficultySel }));
+
+        // Móvil
+        if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
+            this.input.on('pointerup', function () {
+                that.backBtn.setFrame(0);
+            });
+
+            // Botón de volver
+            this.backBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                that.backBtn.setFrame(1);
+                if (game.global.DEBUG_MODE) {
+                    console.log("Back pulsado");
+                }
+            });
+            this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+                that.backBtn.setFrame(0);
+                that.input.keyboard.removeAllKeys(true);
+                game.global.socket.send(JSON.stringify({ event: "CANCEL_QUEUE", level: game.mPlayer.difficultySel }));
+                if (game.global.DEBUG_MODE) {
+                    console.log("Back soltado");
+                }
+            });
+        }
+        // Desktop
+        else if (game.global.DEVICE === "desktop")
+        {
+            this.input.keyboard.on("keydown-"+"ESC", function (event) {
+                that.input.keyboard.removeAllKeys(true);
+                game.global.socket.send(JSON.stringify({ event: "CANCEL_QUEUE", level: game.mPlayer.difficultySel }));
+            });
+        }
 
         var tween = this.tweens.add({
             targets: that.nebula,

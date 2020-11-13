@@ -594,6 +594,9 @@ class Scene_Boot extends Phaser.Scene {
                 case "GAME_RESULTS":
                     this.scene.get('scene_boot').FinishTournamentGame(data);
                     break;
+                case "CANCELED_QUEUE":
+                    this.scene.get('scene_boot').CanceledQueue();
+                    break;
                 default:
                     if (game.global.DEBUG_MODE) {
                         console.log("Tipo de mensaje no controlado");
@@ -1026,5 +1029,10 @@ class Scene_Boot extends Phaser.Scene {
     ChangeToScore()
     {
         this.scene.get(game.global.actualScene).scene.start("scene_score");
+    }
+
+    CanceledQueue()
+    {
+        this.scene.get(game.global.actualScene).scene.start("scene_main_menu");
     }
 }

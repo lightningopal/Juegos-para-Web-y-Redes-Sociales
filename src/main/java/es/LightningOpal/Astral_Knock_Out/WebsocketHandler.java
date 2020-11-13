@@ -86,7 +86,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 			// Variables que se utilizan en distintos casos.
 			String name, password, playerType;
-			int secondarySkill, room;
+			int secondarySkill, room, level;
 			Player thisPlayer;
 
 			if (DEBUG_MODE) {
@@ -382,7 +382,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					// Se obtienen los atributos elegidos
 					playerType = node.get("playerType").asText();
 					secondarySkill = node.get("skill").asInt();
-					int level = node.get("level").asInt();
+					level = node.get("level").asInt();
 
 					// Se crea el jugador con los datos
 					thisPlayer = new Player(user.getUserId(), user.getSession(), user.getUser_name(), playerType,
@@ -482,7 +482,28 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						}
 					}
 					break;
-				case "REMATCH":
+				case "CANCEL_QUEUE":
+					// Se obtienen los atributos elegidos
+					level = node.get("level").asInt();
+
+					// Se obtiene el jugador de los datos
+					thisPlayer = user.getPlayer_selected();
+
+					// Borra al jugador de la cola
+					GamesManager.INSTANCE.searching_players.get(level).remove(thisPlayer);
+
+					// Asignar evento, sala y jugadores en el ObjectNode 'msg'
+					msg.put("event", "CANCELED_QUEUE");
+
+					// Enviar el mensaje al usuario
+					synchronized (user.getSession()) {
+						user.getSession().sendMessage(new TextMessage(msg.toString()));
+					}
+
+					if (DEBUG_MODE) {
+						name = user.getUser_name();
+						System.out.println("Deja de buscar partida: " + name);
+					}
 					break;
 				case "LEAVE_GAME":
 					room = node.get("room").asInt();
