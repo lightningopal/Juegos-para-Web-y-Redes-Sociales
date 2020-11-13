@@ -38,12 +38,31 @@ class Scene_Level1 extends Phaser.Scene {
             repeat: -1
         });
 
+        this.add.image(RelativeScale(114.50, "x"), RelativeScale(112.0, "y"), "back_button_interface")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(5);
+        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(5);
+
+        this.msgImg = this.add.image(RelativeScale(0.0, "x"), RelativeScale(0.0, "y"), "msg_bg").setOrigin(0, 0)
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(10);
+        this.msgImg.setAlpha(0);
+        this.pauseText = this.add.image(RelativeScale(960.0, "x"), RelativeScale(270.0, "y"), "pause_text")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(10);
+        this.pauseText.setAlpha(0);
+        this.noBtn = this.add.image(RelativeScale(1325.50, "x"), RelativeScale(616.0, "y"), "no!!_button")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(10);
+        this.noBtn.setAlpha(0);
+        this.yesBtn = this.add.image(RelativeScale(587.0, "x"), RelativeScale(616.0, "y"), "yes..._button")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(10);
+        this.yesBtn.setAlpha(0);
+
         if (game.global.DEVICE == "mobile") {
             var url;
             url = './Assets/Plugins/rexvirtualjoystickplugin.min.js';
             this.load.plugin('rexvirtualjoystickplugin', url, true);
         }
 
+        this.returnToMenu;
         this.gamePaused;
         this.gameStopped;
         // Variables encargadas del control del jugador
@@ -202,6 +221,7 @@ class Scene_Level1 extends Phaser.Scene {
         var that = this;
         game.global.actualScene = "scene_level1";
 
+        this.returnToMenu = false;
         this.gamePaused = false;
         this.gameStopped = true;
 
@@ -364,16 +384,38 @@ class Scene_Level1 extends Phaser.Scene {
 
         if (game.global.DEVICE === "desktop") {
             this.input.keyboard.on("keydown-" + "A", function (event) {
-                that.myMovingRight = false;
-                that.myMovingLeft = true;
+                if (!that.gamePaused){
+                    that.myMovingRight = false;
+                    that.myMovingLeft = true;
+                }else{
+                    that.returnToMenu = !that.returnToMenu;
+                    if (that.returnToMenu) {
+                        that.yesBtn.setFrame(1);
+                        that.noBtn.setFrame(0);
+                    } else {
+                        that.yesBtn.setFrame(0);
+                        that.noBtn.setFrame(1);
+                    }
+                }
             });
             this.input.keyboard.on("keyup-" + "A", function (event) {
                 that.myMovingLeft = false;
             });
 
             this.input.keyboard.on("keydown-" + "D", function (event) {
-                that.myMovingRight = true;
-                that.myMovingLeft = false;
+                if (!that.gamePaused){
+                    that.myMovingRight = true;
+                    that.myMovingLeft = false;
+                }else{
+                    that.returnToMenu = !that.returnToMenu;
+                    if (that.returnToMenu) {
+                        that.yesBtn.setFrame(1);
+                        that.noBtn.setFrame(0);
+                    } else {
+                        that.yesBtn.setFrame(0);
+                        that.noBtn.setFrame(1);
+                    }
+                }
             });
             this.input.keyboard.on("keyup-" + "D", function (event) {
                 that.myMovingRight = false;
@@ -393,6 +435,46 @@ class Scene_Level1 extends Phaser.Scene {
 
             this.input.keyboard.on("keydown-" + "P", function (event) {
                 that.SpecialAttack();
+            });
+
+            this.input.keyboard.on("keydown-" + "ESC", function (event) {
+                if (!that.gamePaused && !that.gameStopped) {
+                    that.msgImg.setAlpha(1);
+                    that.pauseText.setAlpha(1);
+                    that.yesBtn.setAlpha(1);
+                    that.yesBtn.setFrame(0);
+                    that.noBtn.setAlpha(1);
+                    that.noBtn.setFrame(1);
+                } else if (that.gamePaused && !that.gameStopped){
+                    that.msgImg.setAlpha(0);
+                    that.pauseText.setAlpha(0);
+                    that.yesBtn.setAlpha(0);
+                    that.noBtn.setAlpha(0);
+                }
+                if (!that.gameStopped){
+                    that.gamePaused = !that.gamePaused;
+                }
+                that.returnToMenu = false;
+                that.movingLeft = false;
+                that.movingRight = false;
+            });
+
+            this.input.keyboard.on("keydown-" + "ENTER", function (event) {
+                if (that.gamePaused) {
+                    if (that.returnToMenu) {
+                        // Volver al menú
+                        game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
+                        that.input.keyboard.removeAllKeys(true);
+                        that.scene.start("scene_main_menu");
+                    } else {
+                        that.gamePaused = false;
+                        that.returnToMenu = false;
+                        that.msgImg.setAlpha(0);
+                        that.pauseText.setAlpha(0);
+                        that.yesBtn.setAlpha(0);
+                        that.noBtn.setAlpha(0);
+                    }
+                }
             });
         }// Fin DEVICE == desktop
 

@@ -1,0 +1,5 @@
+21:22:58 - Server opened.
+21:23:16 - Conected user with session 8db28e15-b9fc-d053-c832-1927f264666f.
+21:23:25 - Player connected: prueba2.
+21:23:37 - Conected user with session 6db10255-fbe3-75a1-e73b-c8dbdc5a9e51.
+21:24:29 - Player connected: ranking.

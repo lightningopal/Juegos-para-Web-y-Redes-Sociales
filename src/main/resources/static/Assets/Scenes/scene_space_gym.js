@@ -40,10 +40,10 @@ class Scene_Space_Gym extends Phaser.Scene {
         this.pauseText = this.add.image(RelativeScale(960.0, "x"), RelativeScale(270.0, "y"), "pause_text")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(10);
         this.pauseText.setAlpha(0);
-        this.noBtn = this.add.image(RelativeScale(1325.50, "x"), RelativeScale(616.0, "y"), "no_button")
+        this.noBtn = this.add.image(RelativeScale(1325.50, "x"), RelativeScale(616.0, "y"), "no!!_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(10);
         this.noBtn.setAlpha(0);
-        this.yesBtn = this.add.image(RelativeScale(587.0, "x"), RelativeScale(616.0, "y"), "yes_button")
+        this.yesBtn = this.add.image(RelativeScale(587.0, "x"), RelativeScale(616.0, "y"), "yes..._button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(10);
         this.yesBtn.setAlpha(0);
         // this.yesBtn.disableInteractive()

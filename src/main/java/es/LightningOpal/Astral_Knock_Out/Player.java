@@ -1,7 +1,5 @@
 package es.LightningOpal.Astral_Knock_Out;
 
-import es.LightningOpal.Astral_Knock_Out.Skills.*;
-
 /// Imports
 import org.springframework.web.socket.WebSocketSession;
 

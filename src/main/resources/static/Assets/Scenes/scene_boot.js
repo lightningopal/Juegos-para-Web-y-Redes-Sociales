@@ -266,6 +266,8 @@ class Scene_Boot extends Phaser.Scene {
             this.load.image("level_1_plats_floor", "./Assets/Images/BackGrounds/level_1_plats_floor.png");
             this.load.image("msg_bg", "./Assets/Images/UI/msg_bg.png");
             this.load.image("pause_text", "./Assets/Images/UI/pause_text.png");
+            this.load.spritesheet("yes..._button", "./Assets/Images/UI/yes..._button.png", { frameWidth: 533.0, frameHeight: 211.0 });
+            this.load.spritesheet("no!!_button", "./Assets/Images/UI/no!!_button.png", { frameWidth: 533.0, frameHeight: 211.0 });
 
             // Plataformas
             this.load.image("floor", "./Assets/Images/Platforms/floor.png");
@@ -309,8 +311,8 @@ class Scene_Boot extends Phaser.Scene {
             ///Escena de Fin de Partida///
             this.load.image("score_interface", "./Assets/Images/UI/score_interface.png");
             this.load.image("play_again_screen", "./Assets/Images/UI/play_again_screen.png");
-            this.load.spritesheet("yes_button", "./Assets/Images/UI/yes_button.png", { frameWidth: 414.0, frameHeight: 128.0 });
-            this.load.spritesheet("no_button", "./Assets/Images/UI/no_button.png", { frameWidth: 393.50, frameHeight: 128.0 });
+            this.load.spritesheet("yes!!_button", "./Assets/Images/UI/yes!!_button.png", { frameWidth: 414.0, frameHeight: 128.0 });
+            this.load.spritesheet("no..._button", "./Assets/Images/UI/no..._button.png", { frameWidth: 393.50, frameHeight: 128.0 });
 
             /// Formulario ///
             this.load.html('nameform', './Assets/Text/loginform.html');
@@ -1008,7 +1010,7 @@ class Scene_Boot extends Phaser.Scene {
         }
 
         // Se muestra la pantalla de final de partida
-        this.scene.get(game.global.actualScene).FinishGame();
+        this.scene.get(game.global.actualScene).FinishGame(data.wasDisconnection);
 
         // Se cambia de escena cuando toque
         this.scene.get(game.global.actualScene).time.addEvent({
