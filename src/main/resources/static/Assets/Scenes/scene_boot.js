@@ -592,6 +592,9 @@ class Scene_Boot extends Phaser.Scene {
                 case "GAME_RESULTS":
                     this.scene.get('scene_boot').FinishTournamentGame(data);
                     break;
+                case "CANCELED_QUEUE":
+                    this.scene.get('scene_boot').CanceledQueue();
+                    break;
                 default:
                     if (game.global.DEBUG_MODE) {
                         console.log("Tipo de mensaje no controlado");
@@ -1008,7 +1011,7 @@ class Scene_Boot extends Phaser.Scene {
         }
 
         // Se muestra la pantalla de final de partida
-        this.scene.get(game.global.actualScene).FinishGame();
+        this.scene.get(game.global.actualScene).FinishGame(data.wasDisconnection);
 
         // Se cambia de escena cuando toque
         this.scene.get(game.global.actualScene).time.addEvent({
@@ -1024,5 +1027,10 @@ class Scene_Boot extends Phaser.Scene {
     ChangeToScore()
     {
         this.scene.get(game.global.actualScene).scene.start("scene_score");
+    }
+
+    CanceledQueue()
+    {
+        this.scene.get(game.global.actualScene).scene.start("scene_main_menu");
     }
 }
