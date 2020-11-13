@@ -236,13 +236,14 @@ public class Tournament_Game {
 				synchronized(player.getSession()){
 					player.getSession().sendMessage(new TextMessage(message.toString()));
                 }
-                threadLock.unlock();
 			} catch (Throwable ex) {
 				System.err.println("Execption sending message to player " + player.getSession().getId());
 				ex.printStackTrace(System.err);
 				// HAY QUE DARLE LA WIN AL JUGADOR QUE QUEDA
 				String disconnectedPlayer = player.getUserName();
-			}
+			}finally{
+                threadLock.unlock();
+            }
 		}
 	}
 

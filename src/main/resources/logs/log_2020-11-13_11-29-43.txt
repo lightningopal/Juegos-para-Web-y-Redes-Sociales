@@ -3,3 +3,4 @@
 11:30:00 - Player connected: ranking.
 11:30:03 - Conected user with session e4b9ad3f-a651-c36e-fce5-5ff0dd6415b2.
 11:30:10 - Player connected: prueba2.
+11:32:28 - Player disconnected: ranking.
