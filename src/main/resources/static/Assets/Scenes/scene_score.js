@@ -120,11 +120,11 @@ class Scene_Score extends Phaser.Scene {
         this.play_again_text = this.add.image(RelativeScale(960,"x"), RelativeScale(310,"y"), "play_again_text")
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(22);
         this.play_again_text.setVisible(false);
-        this.yesBtn = this.add.image(RelativeScale(587.0,"x"), RelativeScale(616.0,"y"), "yes_button")
+        this.yesBtn = this.add.image(RelativeScale(587.0,"x"), RelativeScale(616.0,"y"), "yes!!_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(22);
         this.yesBtn.setFrame(1);
         this.yesBtn.setVisible(false);
-        this.noBtn = this.add.image(RelativeScale(1325.50,"x"), RelativeScale(616.0,"y"), "no_button")
+        this.noBtn = this.add.image(RelativeScale(1325.50,"x"), RelativeScale(616.0,"y"), "no..._button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(22);
         this.noBtn.setVisible(false);
 
@@ -135,13 +135,51 @@ class Scene_Score extends Phaser.Scene {
     create(){
         // Set the scene
         var that = this;
+        game.mPlayer.room = -1;
         game.global.actualScene = "scene_score";
 
         // Timer que muestra la pantalla de volver a jugar
-        this.time.addEvent({
+        /*this.time.addEvent({
             delay: 2000,
             callback: () => (that.PlayAgainScreen())
-          });
+        });
+        var tween = this.tweens.add({
+            targets: that.images,
+            alpha: 1,
+            duration: 2000,
+            repeat: 0,
+            ease: 'Sine.easeInOut',
+            yoyo: true,
+            hold: 1500,
+            onComplete: function () {
+                that.currentImage++;
+                that.images.setFrame(that.currentImage);
+                if (that.currentImage <= 4) {
+                    that.ShowImage();
+                }else{
+                    that.FinalImage();
+                }
+            }
+        });
+        */
+        var tween = this.tweens.add({
+            targets: that.pointsDiff,
+            alpha: 0,
+            delay: 2000,
+            duration: 2000,
+            repeat: 0,
+            ease: 'Sine.easeInOut',
+            yoyo: true,
+            onYoyo: function () {
+                that.pointsDiff.setText(game.mPlayer.points);
+            },
+            onComplete: function () {
+                that.time.addEvent({
+                    delay: 2000,
+                    callback: () => (that.PlayAgainScreen())
+                });
+            }
+        });
 
         var tween = this.tweens.add({
             targets: that.nebula,
