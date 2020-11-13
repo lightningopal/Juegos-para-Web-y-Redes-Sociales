@@ -23,16 +23,21 @@ public class GamesManager {
     public static GamesManager INSTANCE = new GamesManager();
 
     /// Variables
+    // Número de partidas de cada uno
+    public final int MAX_SPACEGYM_GAMES = 5;
+    public final int MAX_TOURNAMENT_GAMES = 10;
+
     //// Partidas "space gym"
     // Scheduler de las partidas "space gym"
-    private ScheduledExecutorService scheduler_spaceGym = Executors.newScheduledThreadPool(10);
+    private ScheduledExecutorService scheduler_spaceGym = Executors.newScheduledThreadPool(MAX_SPACEGYM_GAMES);
 
     // Scheduler de las partidas "tournament"
-    private ScheduledExecutorService scheduler_tournament = Executors.newScheduledThreadPool(20);
+    private ScheduledExecutorService scheduler_tournament = Executors.newScheduledThreadPool(MAX_TOURNAMENT_GAMES);
 
     // Mapa que guarda las partidas "space gym" que se están ejecutando
     public Map<Player, SpaceGym_Game> spaceGym_games = new ConcurrentHashMap<>();
 
+    //// Partidas "tournament"
     // Mapa que guarda las partidas "tournament" que se están ejecutando
     public Map<Integer, Tournament_Game> tournament_games = new ConcurrentHashMap<>();
 

@@ -3,15 +3,9 @@ package es.LightningOpal.Astral_Knock_Out;
 import es.LightningOpal.Astral_Knock_Out.Skills.*;
 
 /// Imports
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Queue;
-import java.util.Set;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -45,7 +39,7 @@ public class SpaceGym_Game {
     private String userName;
 
     private ArrayList<PhysicsObject> platforms = new ArrayList<PhysicsObject>(9);
-    private Queue<Skill> projectiles = new ArrayDeque();
+    private Queue<Skill> projectiles = new ArrayDeque<>();
 
     /// Métodos
     // Constructor de la clase que recibe el jugador de la partida y lo guarda

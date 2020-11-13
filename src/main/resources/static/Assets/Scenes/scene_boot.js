@@ -80,7 +80,7 @@ class Scene_Boot extends Phaser.Scene {
 
             this.load.on('progress', (percent) => {
                 loadingBar.clear();
-                percentText.setText(parseInt(percent * 100));
+                percentText.setText(parseInt(percent * 100) + "%");
 
                 loadingBar.fillRect(this.game.renderer.width / 2 - this.game.renderer.width / 8,
                     this.game.renderer.height / 2,
@@ -158,8 +158,6 @@ class Scene_Boot extends Phaser.Scene {
                 }
                 assetText.setText('Load complete.');
             });
-
-            this.load.plugin('rexvirtualjoystickplugin', './Assets/Plugins/rexvirtualjoystickplugin.min.js', true);
 
             // Carga de imágenes
             ///Escena de Inicio de Empresa, Boot///
@@ -595,6 +593,9 @@ class Scene_Boot extends Phaser.Scene {
                 case "CANCELED_QUEUE":
                     this.scene.get('scene_boot').CanceledQueue();
                     break;
+                case "GAMES_FULL":
+                    this.scene.get('scene_boot').GamesFull();
+                    break;
                 default:
                     if (game.global.DEBUG_MODE) {
                         console.log("Tipo de mensaje no controlado");
@@ -1017,7 +1018,7 @@ class Scene_Boot extends Phaser.Scene {
         this.scene.get(game.global.actualScene).time.addEvent({
             delay: 2000,
             callback: () => (that.ChangeToScore())
-          });
+        });
 
         if (game.global.DEBUG_MODE) {
             console.log("Fin de la partida");
@@ -1032,5 +1033,10 @@ class Scene_Boot extends Phaser.Scene {
     CanceledQueue()
     {
         this.scene.get(game.global.actualScene).scene.start("scene_main_menu");
+    }
+
+    GamesFull()
+    {
+        this.scene.get(game.global.actualScene).FullError();
     }
 }

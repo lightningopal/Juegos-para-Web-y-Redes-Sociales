@@ -108,6 +108,17 @@ class Scene_Select_Character extends Phaser.Scene {
         game.mPlayer.characterSel.type = undefined;
         game.mPlayer.skinSel = -1;
         game.mPlayer.skillSel = -1;
+
+        // Error message
+        this.error_bg = this.add.image(0,0, "error_bg").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(21);
+        this.no_matches_text = this.add.image(RelativeScale(960, "x"), RelativeScale(404.5, "Y"), "no_matches_text").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(22);
+        this.go_back_button = this.add.image(RelativeScale(960, "x"), RelativeScale(763, "Y"), "go_back_button").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(23);
+
+        this.error_bg.setVisible(false);
+        this.no_matches_text.setVisible(false);
+        this.go_back_button.setFrame(1);
+        this.go_back_button.setVisible(false);
+
         // Selectores
         this.characterSelectedRow;
         this.characterSelectedCol;
@@ -120,6 +131,7 @@ class Scene_Select_Character extends Phaser.Scene {
         this.confirmingSkin;
         this.selectingSkill;
         this.selectingMap;
+        this.errorMessage;
     }// Fin preload
 
     create() {
@@ -161,6 +173,7 @@ class Scene_Select_Character extends Phaser.Scene {
             this.skinsSkills.setFrame(4);
             this.leftArrowBtn.setFrame(1);
             this.rightArrowBtn.setFrame(1);
+            this.go_back_button.setFrame(1);
             this.input.on('pointerup', function () {
                 that.backBtn.setFrame(0);
             });
@@ -299,6 +312,21 @@ class Scene_Select_Character extends Phaser.Scene {
                         // that.input.keyboard.removeAllKeys(true);
                         // that.scene.start("scene_space_gym");
                     }
+                }
+            });
+
+            this.go_back_button.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                that.backgo_back_buttonBtn.setFrame(1);
+                if (game.global.DEBUG_MODE) {
+                    console.log("Go Back pulsado");
+                }
+            });
+            this.go_back_button.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+                that.go_back_button.setFrame(0);
+                that.input.keyboard.removeAllKeys(true);
+                that.scene.start("scene_main_menu");
+                if (game.global.DEBUG_MODE) {
+                    console.log("Go Back soltado");
                 }
             });
 
@@ -454,9 +482,9 @@ class Scene_Select_Character extends Phaser.Scene {
                             // Selección de Skill/Mapa
                             that.scene.start("scene_select_map");
                         } else {
-                            // that.input.keyboard.removeAllKeys(true);
-                            // that.scene.start("scene_space_gym");
                             // debería pasar a seleccionar habilidad
+                            that.confirmingSkin = false;
+                            that.confirmSkin = false;
                             game.global.socket.send(JSON.stringify({ event: "CREATE_SPACE_GYM", playerType: game.mPlayer.characterSel.type, skill: game.mPlayer.skillSel }));
                         }
                     } else {
@@ -470,6 +498,9 @@ class Scene_Select_Character extends Phaser.Scene {
                         that.confirmSkin = true;
                         that.selectingSkin = true;
                     }
+                } else if (that.errorMessage)
+                {
+                    that.scene.start("scene_main_menu");
                 }
             });
         }// Fin mobile/desktop
@@ -717,5 +748,13 @@ class Scene_Select_Character extends Phaser.Scene {
             }
         }
     }// Fin SelectSkin
+
+    FullError()
+    {
+        this.error_bg.setVisible(true);
+        this.no_matches_text.setVisible(true);
+        this.go_back_button.setVisible(true);
+        this.errorMessage = true;
+    }
 
 }// Fin Scene_Select_Character

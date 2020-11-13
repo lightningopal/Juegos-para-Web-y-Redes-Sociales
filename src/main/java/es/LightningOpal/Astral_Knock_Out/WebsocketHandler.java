@@ -12,8 +12,6 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import ch.qos.logback.core.joran.conditional.ElseAction;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -340,28 +338,48 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					break;
 				// Cuando se solicita la creación de una partida de "space gym"
 				case "CREATE_SPACE_GYM":
-					// Se obtienen los atributos elegidos
-					playerType = node.get("playerType").asText();
-					secondarySkill = node.get("skill").asInt();
+					// Si hay partidas disponibles
+					if (GamesManager.INSTANCE.spaceGym_games.size() < GamesManager.INSTANCE.MAX_SPACEGYM_GAMES)
+					{
+						// Se obtienen los atributos elegidos
+						playerType = node.get("playerType").asText();
+						secondarySkill = node.get("skill").asInt();
 
-					// Se asignan los atributos
-					user.setPlayer_selected(new Player(user.getUserId(), user.getSession(), user.getUser_name(),
-							playerType, secondarySkill, SpaceGym_Game.playerPosX, SpaceGym_Game.playerPosY));
+						// Se asignan los atributos
+						user.setPlayer_selected(new Player(user.getUserId(), user.getSession(), user.getUser_name(),
+								playerType, secondarySkill, SpaceGym_Game.playerPosX, SpaceGym_Game.playerPosY));
 
-					// Se crea la partida de space gym
-					GamesManager.INSTANCE.startSpaceGym(user.getPlayer_selected());
+						// Se crea la partida de space gym
+						GamesManager.INSTANCE.startSpaceGym(user.getPlayer_selected());
 
-					// Asignar evento en el ObjectNode 'msg'
-					msg.put("event", "CREATED_SPACE_GYM");
+						// Asignar evento en el ObjectNode 'msg'
+						msg.put("event", "CREATED_SPACE_GYM");
 
-					// Enviar el mensaje
-					synchronized (user.getSession()) {
-						user.getSession().sendMessage(new TextMessage(msg.toString()));
+						// Enviar el mensaje
+						synchronized (user.getSession()) {
+							user.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
+
+						if (DEBUG_MODE) {
+							name = user.getUser_name();
+							System.out.println("Space Gym: " + name);
+						}
 					}
+					// Si no hay partidas disponibles
+					else
+					{
+						// Asignar evento en el ObjectNode 'msg'
+						msg.put("event", "GAMES_FULL");
 
-					if (DEBUG_MODE) {
-						name = user.getUser_name();
-						System.out.println("Space Gym: " + name);
+						// Enviar el mensaje
+						synchronized (user.getSession()) {
+							user.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
+
+						if (DEBUG_MODE) {
+							name = user.getUser_name();
+							System.out.println("No hay partidas de Space Gym disponibles: " + name);
+						}
 					}
 					break;
 				// Cuando se reciben los datos del usuario para actualizar el space gym
@@ -379,77 +397,97 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					break;
 				// Cuando un jugador busca partida
 				case "SEARCHING_GAME":
-					// Se obtienen los atributos elegidos
-					playerType = node.get("playerType").asText();
-					secondarySkill = node.get("skill").asInt();
-					level = node.get("level").asInt();
+					// Si hay partidas disponibles
+					if (GamesManager.INSTANCE.tournament_games.size() < GamesManager.INSTANCE.MAX_TOURNAMENT_GAMES)
+					{
+						// Se obtienen los atributos elegidos
+						playerType = node.get("playerType").asText();
+						secondarySkill = node.get("skill").asInt();
+						level = node.get("level").asInt();
 
-					// Se crea el jugador con los datos
-					thisPlayer = new Player(user.getUserId(), user.getSession(), user.getUser_name(), playerType,
-							secondarySkill, 0, 0);
+						// Se crea el jugador con los datos
+						thisPlayer = new Player(user.getUserId(), user.getSession(), user.getUser_name(), playerType,
+								secondarySkill, 0, 0);
 
-					// Se asignan los atributos
-					user.setPlayer_selected(thisPlayer);
+						// Se asignan los atributos
+						user.setPlayer_selected(thisPlayer);
 
-					// Si hay jugadores en cola para ese nivel, se empareja contra el primero
-					if (GamesManager.INSTANCE.searching_players.get(level).size() > 0) {
-						// Obtenemos la información del rival
-						Player rival = GamesManager.INSTANCE.searching_players.get(level).remove();
+						// Si hay jugadores en cola para ese nivel, se empareja contra el primero
+						if (GamesManager.INSTANCE.searching_players.get(level).size() > 0) {
+							// Obtenemos la información del rival
+							Player rival = GamesManager.INSTANCE.searching_players.get(level).remove();
 
-						// Se crea la partida
-						room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
+							// Se crea la partida
+							room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
 
-						// Creamos un ArrayNode 'players' para guardar la información de ambos jugadores
-						ArrayNode players = mapper.createArrayNode();
+							// Creamos un ArrayNode 'players' para guardar la información de ambos jugadores
+							ArrayNode players = mapper.createArrayNode();
 
-						// Guardar la información del jugador A
-						ObjectNode playerA = mapper.createObjectNode();
+							// Guardar la información del jugador A
+							ObjectNode playerA = mapper.createObjectNode();
 
-						playerA.put("playerId", thisPlayer.getPlayerId());
-						playerA.put("userName", thisPlayer.getUserName());
-						playerA.put("playerType", thisPlayer.getPlayerType());
-						playerA.put("skin", thisPlayer.getSkin());
-						playerA.put("skill", thisPlayer.getSkill());
+							playerA.put("playerId", thisPlayer.getPlayerId());
+							playerA.put("userName", thisPlayer.getUserName());
+							playerA.put("playerType", thisPlayer.getPlayerType());
+							playerA.put("skin", thisPlayer.getSkin());
+							playerA.put("skill", thisPlayer.getSkill());
 
-						players.addPOJO(playerA);
+							players.addPOJO(playerA);
 
-						// Guardar la información del jugador B
-						ObjectNode playerB = mapper.createObjectNode();
+							// Guardar la información del jugador B
+							ObjectNode playerB = mapper.createObjectNode();
 
-						playerB.put("playerId", rival.getPlayerId());
-						playerB.put("userName", rival.getUserName());
-						playerB.put("playerType", rival.getPlayerType());
-						playerB.put("skin", rival.getSkin());
-						playerB.put("skill", rival.getSkill());
+							playerB.put("playerId", rival.getPlayerId());
+							playerB.put("userName", rival.getUserName());
+							playerB.put("playerType", rival.getPlayerType());
+							playerB.put("skin", rival.getSkin());
+							playerB.put("skill", rival.getSkill());
 
-						players.addPOJO(playerB);
+							players.addPOJO(playerB);
 
-						// Asignar evento, sala y jugadores en el ObjectNode 'msg'
-						msg.put("event", "GAME_FOUND");
-						msg.put("room", room);
-						msg.putPOJO("players", players);
+							// Asignar evento, sala y jugadores en el ObjectNode 'msg'
+							msg.put("event", "GAME_FOUND");
+							msg.put("room", room);
+							msg.putPOJO("players", players);
 
-						// Enviar el mensaje a ambos usuarios
-						synchronized (thisPlayer.getSession()) {
-							thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
+							// Enviar el mensaje a ambos usuarios
+							synchronized (thisPlayer.getSession()) {
+								thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
+							}
+							synchronized (rival.getSession()) {
+								rival.getSession().sendMessage(new TextMessage(msg.toString()));
+							}
+
+							if (DEBUG_MODE) {
+								System.out.println(
+										"Partida creada: " + thisPlayer.getUserName() + " - " + rival.getUserName());
+							}
 						}
-						synchronized (rival.getSession()) {
-							rival.getSession().sendMessage(new TextMessage(msg.toString()));
-						}
+						// Si no, añadimos al jugador a la cola
+						else {
+							// Añade al jugador a la cola
+							GamesManager.INSTANCE.searching_players.get(level).add(thisPlayer);
 
-						if (DEBUG_MODE) {
-							System.out.println(
-									"Partida creada: " + thisPlayer.getUserName() + " - " + rival.getUserName());
+							if (DEBUG_MODE) {
+								name = user.getUser_name();
+								System.out.println("Buscando partida: " + name);
+							}
 						}
 					}
-					// Si no, añadimos al jugador a la cola
-					else {
-						// Añade al jugador a la cola
-						GamesManager.INSTANCE.searching_players.get(level).add(thisPlayer);
+					// Si no hay partidas disponibles
+					else
+					{
+						// Asignar evento en el ObjectNode 'msg'
+						msg.put("event", "GAMES_FULL");
+
+						// Enviar el mensaje
+						synchronized (user.getSession()) {
+							user.getSession().sendMessage(new TextMessage(msg.toString()));
+						}
 
 						if (DEBUG_MODE) {
 							name = user.getUser_name();
-							System.out.println("Buscando partida: " + name);
+							System.out.println("No hay partidas de Tournament disponibles: " + name);
 						}
 					}
 				break;

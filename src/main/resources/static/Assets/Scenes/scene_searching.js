@@ -51,10 +51,21 @@ class Scene_Searching extends Phaser.Scene {
         var randomTip = Math.floor(Math.random() * 10);
         this.tipImage.setFrame(randomTip);
 
+        // Back button
         this.add.image(RelativeScale(114.50, "x"), RelativeScale(112.0, "y"), "back_button_interface")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(30);
         this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(31);
+
+        // Error message
+        this.error_bg = this.add.image(0,0, "error_bg").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(41);
+        this.no_matches_text = this.add.image(RelativeScale(960, "x"), RelativeScale(404.5, "Y"), "no_matches_text").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(42);
+        this.go_back_button = this.add.image(RelativeScale(960, "x"), RelativeScale(763, "Y"), "go_back_button").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(43);
+
+        this.error_bg.setVisible(false);
+        this.no_matches_text.setVisible(false);
+        this.go_back_button.setFrame(1);
+        this.go_back_button.setVisible(false);
 
     } // Fin preload
 
@@ -115,4 +126,13 @@ class Scene_Searching extends Phaser.Scene {
         this.stars.tilePositionX += RelativeScale(0.2, "x");
         this.stars.tilePositionY += RelativeScale(0.4, "y");
     } // Fin update
+
+    FullError()
+    {
+        that.input.keyboard.removeAllKeys(true);
+        this.error_bg.setVisible(true);
+        this.no_matches_text.setVisible(true);
+        this.go_back_button.setVisible(true);
+        this.errorMessage = true;
+    }
 }

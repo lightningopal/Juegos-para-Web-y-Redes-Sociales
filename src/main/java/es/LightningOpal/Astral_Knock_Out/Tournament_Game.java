@@ -5,17 +5,13 @@ import es.LightningOpal.Astral_Knock_Out.Skills.*;
 /// Imports
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.ArrayDeque;
 import java.util.Queue;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -54,8 +50,8 @@ public class Tournament_Game {
 	private Player playerA;
 	private Player playerB;
 	private ArrayList<PhysicsObject> platforms = new ArrayList<PhysicsObject>(9);
-	private Queue<Skill> projectilesA = new ArrayDeque();
-	private Queue<Skill> projectilesB = new ArrayDeque();
+	private Queue<Skill> projectilesA = new ArrayDeque<>();
+	private Queue<Skill> projectilesB = new ArrayDeque<>();
 
     /// Métodos
     // Constructor de la clase que recibe el jugador de la partida y lo guarda
@@ -239,8 +235,6 @@ public class Tournament_Game {
 			} catch (Throwable ex) {
 				System.err.println("Execption sending message to player " + player.getSession().getId());
 				ex.printStackTrace(System.err);
-				// HAY QUE DARLE LA WIN AL JUGADOR QUE QUEDA
-				String disconnectedPlayer = player.getUserName();
 			}finally{
                 threadLock.unlock();
             }
