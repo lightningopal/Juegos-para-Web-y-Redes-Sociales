@@ -77,7 +77,6 @@ class Scene_Score extends Phaser.Scene {
 
         // Controles
         this.optionSelected;
-        this.canSelectOption = false;
     }// Fin preload
 
     create(){
@@ -116,6 +115,7 @@ class Scene_Score extends Phaser.Scene {
         this.playAgain.setVisible(true);
         this.yesBtn.setVisible(true);
         this.noBtn.setVisible(true);
+        
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE){
 
             this.input.on('pointerup', function () {
@@ -134,7 +134,7 @@ class Scene_Score extends Phaser.Scene {
             });
             this.yesBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
                 if (that.optionSelected == 0){ // Play Again
-
+                    that.scene.start("scene_searching");
                 }
                 if (game.global.DEBUG_MODE){ 
                     console.log("yes soltado");
@@ -151,7 +151,7 @@ class Scene_Score extends Phaser.Scene {
             });
             this.noBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
                 if (that.optionSelected == 1){ // Main Menu
-
+                    that.scene.start("scene_main_menu");
                 }
                 if (game.global.DEBUG_MODE){ 
                     console.log("no soltado");
@@ -167,11 +167,7 @@ class Scene_Score extends Phaser.Scene {
                 }
             });
             this.input.keyboard.on("keydown-"+"A", function(event){
-                if (that.optionSelected == 1){
-                    that.optionSelected -= 1;
-                }else{
-                    that.optionSelected = 1;
-                }
+                that.optionSelected = (that.optionSelected + 1) % 2;
                 that.CheckOption();
                 if (game.global.DEBUG_MODE){
                     console.log(that.optionSelected);
@@ -179,16 +175,14 @@ class Scene_Score extends Phaser.Scene {
             });
 
             this.input.keyboard.on("keydown-"+"ENTER", function(event){
-                if (that.optionSelected == 0){ // Play Again
-                    
-                    if (game.global.DEBUG_MODE){
-                        console.log("Play again");
-                    }
-                }else{ // Main Menu
-                    
-                    if (game.global.DEBUG_MODE){
-                        console.log("Main menu");
-                    }
+                // Play again
+                if (that.optionSelected == 0){
+                    that.input.keyboard.removeAllKeys(true);
+                    that.scene.start("scene_searching");
+                // Go to the main menu 
+                }else{
+                    that.input.keyboard.removeAllKeys(true);
+                    that.scene.start("scene_main_menu");
                 }
             });
         }

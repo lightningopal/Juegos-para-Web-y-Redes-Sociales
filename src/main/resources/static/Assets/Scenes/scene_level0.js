@@ -693,10 +693,6 @@ class Scene_Level0 extends Phaser.Scene {
         else
         {
             this.knock_out_text.setVisible(true);
-            /*this.time.addEvent({
-                delay: 2000,
-                callback: () => (this.knock_out_text.setVisible(false))
-            });*/
         }
     }
 }
