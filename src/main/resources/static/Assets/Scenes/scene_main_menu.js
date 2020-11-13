@@ -42,7 +42,7 @@ class Scene_Main_Menu extends Phaser.Scene {
         var tween = this.tweens.add({
             targets: that.nebula,
             angle: 360,
-            duration: 500000,
+            duration: 250000,
             repeat: -1
         });
         var tween = this.tweens.add({
