@@ -62,6 +62,12 @@ class Scene_Searching extends Phaser.Scene {
         game.global.socket.send(JSON.stringify({ event: "SEARCHING_GAME", playerType: game.mPlayer.characterSel.type, skill: game.mPlayer.skillSel, level: game.mPlayer.difficultySel }));
 
         var tween = this.tweens.add({
+            targets: that.nebula,
+            angle: 360,
+            duration: 250000,
+            repeat: -1
+        });
+        var tween = this.tweens.add({
             targets: that.stars,
             angle: 360,
             duration: 500000,

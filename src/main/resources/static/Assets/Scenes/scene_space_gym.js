@@ -34,6 +34,20 @@ class Scene_Space_Gym extends Phaser.Scene {
         this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(5);
 
+        this.msgImg = this.add.image(RelativeScale(0.0, "x"), RelativeScale(0.0, "y"), "msg_bg").setOrigin(0, 0)
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(10);
+        this.msgImg.setAlpha(0);
+        this.pauseText = this.add.image(RelativeScale(960.0, "x"), RelativeScale(270.0, "y"), "pause_text")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(10);
+        this.pauseText.setAlpha(0);
+        this.noBtn = this.add.image(RelativeScale(1325.50, "x"), RelativeScale(616.0, "y"), "no_button")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(10);
+        this.noBtn.setAlpha(0);
+        this.yesBtn = this.add.image(RelativeScale(587.0, "x"), RelativeScale(616.0, "y"), "yes_button")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(10);
+        this.yesBtn.setAlpha(0);
+        // this.yesBtn.disableInteractive()
+
         if (game.global.DEVICE == "mobile") {
             var url;
             url = './Assets/Plugins/rexvirtualjoystickplugin.min.js';
@@ -223,13 +237,20 @@ class Scene_Space_Gym extends Phaser.Scene {
             this.mobileKeys.jumpButton = this.add.circle(RelativeScale(1160, "x"), RelativeScale(630, "y"), 20, 0xdddddd).setAlpha(0.7).setScale(RelativeScale()).setDepth(1000).setInteractive();
             console.log(this.mobileKeys.jumpButton);
             this.input.addPointer(2);
-        }else if (game.global.DEVICE === "desktop") {
+        } else if (game.global.DEVICE === "desktop") {
             this.input.keyboard.on("keydown-" + "A", function (event) {
                 if (!that.paused) {
                     that.movingRight = false;
                     that.movingLeft = true;
                 } else {
                     that.returnToMenu = !that.returnToMenu;
+                    if (that.returnToMenu) {
+                        that.yesBtn.setFrame(1);
+                        that.noBtn.setFrame(0);
+                    } else {
+                        that.yesBtn.setFrame(0);
+                        that.noBtn.setFrame(1);
+                    }
                 }
             });
             this.input.keyboard.on("keyup-" + "A", function (event) {
@@ -244,8 +265,14 @@ class Scene_Space_Gym extends Phaser.Scene {
                     that.movingLeft = false;
                 } else {
                     that.returnToMenu = !that.returnToMenu;
+                    if (that.returnToMenu) {
+                        that.yesBtn.setFrame(1);
+                        that.noBtn.setFrame(0);
+                    } else {
+                        that.yesBtn.setFrame(0);
+                        that.noBtn.setFrame(1);
+                    }
                 }
-
             });
             this.input.keyboard.on("keyup-" + "D", function (event) {
                 if (!that.paused) {
@@ -282,6 +309,19 @@ class Scene_Space_Gym extends Phaser.Scene {
             });
 
             this.input.keyboard.on("keydown-" + "ESC", function (event) {
+                if (!that.paused) {
+                    that.msgImg.setAlpha(1);
+                    that.pauseText.setAlpha(1);
+                    that.yesBtn.setAlpha(1);
+                    that.yesBtn.setFrame(0);
+                    that.noBtn.setAlpha(1);
+                    that.noBtn.setFrame(1);
+                } else {
+                    that.msgImg.setAlpha(0);
+                    that.pauseText.setAlpha(0);
+                    that.yesBtn.setAlpha(0);
+                    that.noBtn.setAlpha(0);
+                }
                 that.paused = !that.paused;
                 that.returnToMenu = false;
                 that.movingLeft = false;
@@ -299,6 +339,10 @@ class Scene_Space_Gym extends Phaser.Scene {
                     } else {
                         that.paused = false;
                         that.returnToMenu = false;
+                        that.msgImg.setAlpha(0);
+                        that.pauseText.setAlpha(0);
+                        that.yesBtn.setAlpha(0);
+                        that.noBtn.setAlpha(0);
                     }
                 }
             });
