@@ -19,6 +19,8 @@ class Scene_Options extends Phaser.Scene {
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.musicBtn = this.add.image(RelativeScale((game.options.musicVol * 671) + 962, "x"), RelativeScale(338.5, "y"), "volume_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.controlsBtn;
+        this.controlsImage;
         this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.musicBtn.setFrame(1);
@@ -123,6 +125,11 @@ class Scene_Options extends Phaser.Scene {
                 }
             });
         }else if (game.global.DEVICE === "desktop") { // Odenador
+            this.controlsBtn = this.add.image(RelativeScale(0.0, "x"), RelativeScale(0.0, "y"), "controls_button")
+                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+            this.controlsImage = this.add.image(RelativeScale(962.50, "x"), RelativeScale(850.0, "y"), "controls_image")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+            this.controlsBtn.setAlpha(0);
             // Teclas de selección
             this.input.keyboard.on("keydown-"+"ESC", function (event) {
                 that.input.keyboard.removeAllKeys(true);
@@ -137,9 +144,9 @@ class Scene_Options extends Phaser.Scene {
 
             this.input.keyboard.on("keydown-"+"W", function (event) {
                 if (that.optionSelected == 0) {
-                    that.optionSelected = 2;
+                    that.optionSelected = 3;
                 } else {
-                    that.optionSelected = (that.optionSelected - 1) % 3;
+                    that.optionSelected = (that.optionSelected - 1) % 4;
                 }
                 if (game.global.DEBUG_MODE) {
                     console.log(that.optionSelected);
@@ -147,7 +154,7 @@ class Scene_Options extends Phaser.Scene {
                 that.CheckOption();
             });
             this.input.keyboard.on("keydown-"+"S", function (event) {
-                that.optionSelected = (that.optionSelected + 1) % 3;
+                that.optionSelected = (that.optionSelected + 1) % 4;
                 if (game.global.DEBUG_MODE) {
                     console.log(that.optionSelected);
                 }
@@ -206,17 +213,26 @@ class Scene_Options extends Phaser.Scene {
             this.backBtn.setFrame(1);
             this.musicBtn.setFrame(0);
             this.sfxBtn.setFrame(0);
+            this.controlsBtn.setFrame(0);
+            this.controlsImage.setAlpha(0);
         } else if (this.optionSelected == 1) { // Música
             this.backBtn.setFrame(0);
             this.musicBtn.setFrame(1);
             this.sfxBtn.setFrame(0);
+            this.controlsBtn.setFrame(0);
+            this.controlsImage.setAlpha(0);
         } else if (this.optionSelected == 2) { // SFX
             this.backBtn.setFrame(0);
             this.musicBtn.setFrame(0);
             this.sfxBtn.setFrame(1);
+            this.controlsBtn.setFrame(0);
+            this.controlsImage.setAlpha(0);
+        } else if (this.optionSelected == 3){ // Controles
+            this.backBtn.setFrame(0);
+            this.musicBtn.setFrame(0);
+            this.sfxBtn.setFrame(0);
+            this.controlsBtn.setFrame(1);
+            this.controlsImage.setAlpha(1);
         }
     }
 }
-
-// 1633
-// 962
