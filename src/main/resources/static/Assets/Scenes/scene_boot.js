@@ -231,11 +231,20 @@ class Scene_Boot extends Phaser.Scene {
 
             ///Escena de desconexion///
             this.load.image("disconnected_text", "./Assets/Images/UI/connection_failed_text.png");
-            this.load.spritesheet("retry_button", "./Assets/Images/UI/retry_button.png", { frameWidth: 604, frameHeight: 147 });
+            this.load.spritesheet("retry_button", "./Assets/Images/UI/retry_button.png", { frameWidth: 591, frameHeight: 101 });
+
+            ///Otros mensajes del server
+            this.load.image("message_bg", "./Assets/Images/UI/msg_bg.png");
+            this.load.image("error_bg", "./Assets/Images/UI/error_bg.png");
+            this.load.image("no_matches_text", "./Assets/Images/UI/match_unavailable_text.png");
+            this.load.image("opponent_disconnected_text", "./Assets/Images/UI/opponent_disconnected_text.png");
+            this.load.spritesheet("go_back_button", "./Assets/Images/UI/go_back_button.png", { frameWidth: 825, frameHeight: 134 });
 
             ///Versus
             this.load.image("versus_bg", "./Assets/Images/UI/versus_circles_interface.png");
             this.load.image("versus_vs", "./Assets/Images/UI/versus_vs_interface.png");
+            this.load.image("versus_fight", "./Assets/Images/UI/fight_text.png");
+            this.load.image("versus_knock_out", "./Assets/Images/UI/knock_out_text.png");
 
             ///Proyectiles
             this.load.image("berserker_projectile", "./Assets/Images/Characters/Projectiles/berserker_projectile.png");
@@ -299,6 +308,9 @@ class Scene_Boot extends Phaser.Scene {
 
             /// Formulario ///
             this.load.html('nameform', './Assets/Text/loginform.html');
+
+            /// Plugin joystick ///
+            this.load.plugin('rexvirtualjoystickplugin', './Assets/Plugins/rexvirtualjoystickplugin.min.js', true);
 
             game.global.hasLoadData = true;
         }
@@ -950,22 +962,12 @@ class Scene_Boot extends Phaser.Scene {
     FinishTournamentGame(data) {
         var that = this;
         // Aquí hay que actualizar los datos (tienen que ser globales)
-        // Datos en data
-        /*msg.put("event", "GAME_RESULTS");
-            msg.put("wasDisconnection", wasDisconnection);
-            msg.put("eloDiferrence", Math.round(eloDifference));
-            msg.putPOJO("winner", winnerPlayer);
-            msg.putPOJO("loser", loserPlayer);*/
-
-            /*loserPlayer.put("userName", loser.getUserName());
-            loserPlayer.put("points", Math.round(eloForLoser));
-            loserPlayer.put("newCoins", extraCoinsForLoser);
-            loserPlayer.put("currency", loserCoins);*/
 
         // Se guardan los resultados de la partida
         // El jugador es el ganador
         if (data.winner.userName == game.mPlayer.userName)
         {
+            console.log("GANADOR!");
             // Diferencia de puntos positiva
             game.mPlayer.pointsDifference = data.pointsDifference;
 
@@ -981,7 +983,9 @@ class Scene_Boot extends Phaser.Scene {
             game.mPlayer.currency = data.winner.currency;
         }
         // El jugador es el perdedor
+        else
         {
+            console.log("Perdedor...");
             // Diferencia de puntos negativa
             game.mPlayer.pointsDifference = -(data.pointsDifference);
 

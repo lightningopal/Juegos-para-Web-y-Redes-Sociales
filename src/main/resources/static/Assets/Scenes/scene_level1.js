@@ -94,22 +94,22 @@ class Scene_Level1 extends Phaser.Scene {
                     case "bard":
                         this.versus_characterA.x = RelativeScale(310, "x");
                         this.versus_characterA.y = RelativeScale(280, "y");
-                        this.versus_characterA.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterA.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         break;
                     case "wizard":
-                        this.versus_characterA.setScale(RelativeScale(1.1, "x"));
+                        this.versus_characterA.setScale(RelativeScale(1.1, "x"), RelativeScale(1.1, "y"));
                         this.versus_characterA.setFlip(true);
                         break;
                     case "rogue":
                         this.versus_characterA.x = RelativeScale(400, "x");
                         this.versus_characterA.y = RelativeScale(380, "y");
-                        this.versus_characterA.setScale(RelativeScale(1.4, "x"));
+                        this.versus_characterA.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         this.versus_characterA.setFlip(true);
                         break;
                     case "berserker":
                         this.versus_characterA.x = RelativeScale(250, "x");
                         this.versus_characterA.y = RelativeScale(340, "y");
-                        this.versus_characterA.setScale(RelativeScale(1.2, "x"));
+                        this.versus_characterA.setScale(RelativeScale(1.2, "x"), RelativeScale(1.3, "y"));
                         break;
                 }
 
@@ -118,19 +118,19 @@ class Scene_Level1 extends Phaser.Scene {
                     case "bard":
                         this.versus_characterB.x = RelativeScale(1600, "x");
                         this.versus_characterB.y = RelativeScale(640, "y");
-                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         this.versus_characterB.setFlip(true);
                         break;
                     case "wizard":
                         this.versus_characterB.x = RelativeScale(1540, "x");
-                        this.versus_characterB.setScale(RelativeScale(1.1, "x"));
+                        this.versus_characterB.setScale(RelativeScale(1.1, "x"), RelativeScale(1.1, "y"));
                         break;
                     case "rogue":
                         this.versus_characterB.x = RelativeScale(1530, "x");
-                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         break;
                     case "berserker":
-                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         this.versus_characterB.setFlip(true);
                         break;
                 }
@@ -142,19 +142,19 @@ class Scene_Level1 extends Phaser.Scene {
                     case "bard":
                         this.versus_characterB.x = RelativeScale(1600, "x");
                         this.versus_characterB.y = RelativeScale(640, "y");
-                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         this.versus_characterB.setFlip(true);
                         break;
                     case "wizard":
                         this.versus_characterB.x = RelativeScale(1540, "x");
-                        this.versus_characterB.setScale(RelativeScale(1.1, "x"));
+                        this.versus_characterB.setScale(RelativeScale(1.1, "x"), RelativeScale(1.1, "y"));
                         break;
                     case "rogue":
                         this.versus_characterB.x = RelativeScale(1530, "x");
-                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         break;
                     case "berserker":
-                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         this.versus_characterB.setFlip(true);
                         break;
                 }
@@ -164,22 +164,22 @@ class Scene_Level1 extends Phaser.Scene {
                     case "bard":
                         this.versus_characterA.x = RelativeScale(310, "x");
                         this.versus_characterA.y = RelativeScale(280, "y");
-                        this.versus_characterA.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterA.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         break;
                     case "wizard":
-                        this.versus_characterA.setScale(RelativeScale(1.1, "x"));
+                        this.versus_characterA.setScale(RelativeScale(1.1, "x"), RelativeScale(1.1, "y"));
                         this.versus_characterA.setFlip(true);
                         break;
                     case "rogue":
                         this.versus_characterA.x = RelativeScale(400, "x");
                         this.versus_characterA.y = RelativeScale(380, "y");
-                        this.versus_characterA.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterA.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         this.versus_characterA.setFlip(true);
                         break;
                     case "berserker":
                         this.versus_characterA.x = RelativeScale(250, "x");
                         this.versus_characterA.y = RelativeScale(340, "y");
-                        this.versus_characterA.setScale(RelativeScale(1.2, "x"));
+                        this.versus_characterA.setScale(RelativeScale(1.2, "x"), RelativeScale(1.2, "y"));
                         break;
                 }
                 break;

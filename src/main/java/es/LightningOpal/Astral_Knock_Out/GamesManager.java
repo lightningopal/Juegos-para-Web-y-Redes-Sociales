@@ -195,7 +195,7 @@ public class GamesManager {
             // Añadimos los datos al ObjectNode 'msg'
             msg.put("event", "GAME_RESULTS");
             msg.put("wasDisconnection", wasDisconnection);
-            msg.put("pointsDiferrence", Math.round(eloDifference));
+            msg.put("pointsDifference", Math.round(eloDifference));
             msg.putPOJO("winner", winnerPlayer);
             msg.putPOJO("loser", loserPlayer);
 

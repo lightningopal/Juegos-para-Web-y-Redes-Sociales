@@ -85,22 +85,22 @@ class Scene_Level0 extends Phaser.Scene {
                     case "bard":
                         this.versus_characterA.x = RelativeScale(310, "x");
                         this.versus_characterA.y = RelativeScale(280, "y");
-                        this.versus_characterA.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterA.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         break;
                     case "wizard":
-                        this.versus_characterA.setScale(RelativeScale(1.1, "x"));
+                        this.versus_characterA.setScale(RelativeScale(1.1, "x"), RelativeScale(1.1, "y"));
                         this.versus_characterA.setFlip(true);
                         break;
                     case "rogue":
                         this.versus_characterA.x = RelativeScale(400, "x");
                         this.versus_characterA.y = RelativeScale(380, "y");
-                        this.versus_characterA.setScale(RelativeScale(1.4, "x"));
+                        this.versus_characterA.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         this.versus_characterA.setFlip(true);
                         break;
                     case "berserker":
                         this.versus_characterA.x = RelativeScale(250, "x");
                         this.versus_characterA.y = RelativeScale(340, "y");
-                        this.versus_characterA.setScale(RelativeScale(1.2, "x"));
+                        this.versus_characterA.setScale(RelativeScale(1.2, "x"), RelativeScale(1.2, "y"));
                         break;
                 }
 
@@ -109,19 +109,19 @@ class Scene_Level0 extends Phaser.Scene {
                     case "bard":
                         this.versus_characterB.x = RelativeScale(1600, "x");
                         this.versus_characterB.y = RelativeScale(640, "y");
-                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         this.versus_characterB.setFlip(true);
                         break;
                     case "wizard":
                         this.versus_characterB.x = RelativeScale(1540, "x");
-                        this.versus_characterB.setScale(RelativeScale(1.1, "x"));
+                        this.versus_characterB.setScale(RelativeScale(1.1, "x"), RelativeScale(1.1, "y"));
                         break;
                     case "rogue":
                         this.versus_characterB.x = RelativeScale(1530, "x");
-                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         break;
                     case "berserker":
-                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         this.versus_characterB.setFlip(true);
                         break;
                 }
@@ -133,19 +133,19 @@ class Scene_Level0 extends Phaser.Scene {
                     case "bard":
                         this.versus_characterB.x = RelativeScale(1600, "x");
                         this.versus_characterB.y = RelativeScale(640, "y");
-                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         this.versus_characterB.setFlip(true);
                         break;
                     case "wizard":
                         this.versus_characterB.x = RelativeScale(1540, "x");
-                        this.versus_characterB.setScale(RelativeScale(1.1, "x"));
+                        this.versus_characterB.setScale(RelativeScale(1.1, "x"), RelativeScale(1.1, "y"));
                         break;
                     case "rogue":
                         this.versus_characterB.x = RelativeScale(1530, "x");
-                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         break;
                     case "berserker":
-                        this.versus_characterB.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterB.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         this.versus_characterB.setFlip(true);
                         break;
                 }
@@ -155,27 +155,37 @@ class Scene_Level0 extends Phaser.Scene {
                     case "bard":
                         this.versus_characterA.x = RelativeScale(310, "x");
                         this.versus_characterA.y = RelativeScale(280, "y");
-                        this.versus_characterA.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterA.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         break;
                     case "wizard":
-                        this.versus_characterA.setScale(RelativeScale(1.1, "x"));
+                        this.versus_characterA.setScale(RelativeScale(1.1, "x"), RelativeScale(1.1, "y"));
                         this.versus_characterA.setFlip(true);
                         break;
                     case "rogue":
                         this.versus_characterA.x = RelativeScale(400, "x");
                         this.versus_characterA.y = RelativeScale(380, "y");
-                        this.versus_characterA.setScale(RelativeScale(1.3, "x"));
+                        this.versus_characterA.setScale(RelativeScale(1.3, "x"), RelativeScale(1.3, "y"));
                         this.versus_characterA.setFlip(true);
                         break;
                     case "berserker":
                         this.versus_characterA.x = RelativeScale(250, "x");
                         this.versus_characterA.y = RelativeScale(340, "y");
-                        this.versus_characterA.setScale(RelativeScale(1.2, "x"));
+                        this.versus_characterA.setScale(RelativeScale(1.2, "x"), RelativeScale(1.2, "y"));
                         break;
                 }
                 break;
         }
 
+        // Versus texts
+        this.fight_text = this.add.image(RelativeScale(959, "x"), RelativeScale(428, "Y"), "versus_fight").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(20);
+        this.knock_out_text = this.add.image(RelativeScale(960, "x"), RelativeScale(414.5, "Y"), "versus_knock_out").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(20);
+        this.error_bg = this.add.image(0,0, "error_bg").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(21);
+        this.opponent_disconnected_text = this.add.image(RelativeScale(960, "x"), RelativeScale(528.5, "Y"), "opponent_disconnected_text").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(22);
+
+        this.fight_text.setVisible(false);
+        this.knock_out_text.setVisible(false);
+        this.error_bg.setVisible(false);
+        this.opponent_disconnected_text.setVisible(false);
     } // Fin preload
 
     create() {
@@ -661,22 +671,32 @@ class Scene_Level0 extends Phaser.Scene {
         this.versus_usernameB.setVisible(false);
         this.versus_characterA.setVisible(false);
         this.versus_characterB.setVisible(false);
+
+        this.fight_text.setVisible(true);
+        this.time.addEvent({
+            delay: 1500,
+            callback: () => (this.fight_text.setVisible(false))
+        });
     }
 
     FinishGame(wasDisconnection)
     {
         // Mostrar pantalla de fin de partida
         this.gameStopped = true;
-        // disconnectionText.setVisible(true); o addText
         // Si fue una desconexión, mostrar al jugador el texto de desconexión
         if (wasDisconnection)
         {
-            // disconnectionText.setVisible(true);
+            this.error_bg.setVisible(true);
+            this.opponent_disconnected_text.setVisible(true);
         }
         // Si no, mostrar el texto de 'K.O.'
         else
         {
-            // koText.setVisible(true);
+            this.knock_out_text.setVisible(true);
+            /*this.time.addEvent({
+                delay: 2000,
+                callback: () => (this.knock_out_text.setVisible(false))
+            });*/
         }
     }
 }
