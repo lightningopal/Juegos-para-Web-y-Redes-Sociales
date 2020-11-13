@@ -308,7 +308,7 @@ class Scene_Boot extends Phaser.Scene {
 
             ///Escena de Fin de Partida///
             this.load.image("score_interface", "./Assets/Images/UI/score_interface.png");
-            this.load.image("play_again_screen", "./Assets/Images/UI/play_again_screen.png");
+            this.load.image("play_again_text", "./Assets/Images/UI/play_again_text.png");
             this.load.spritesheet("yes_button", "./Assets/Images/UI/yes_button.png", { frameWidth: 414.0, frameHeight: 128.0 });
             this.load.spritesheet("no_button", "./Assets/Images/UI/no_button.png", { frameWidth: 393.50, frameHeight: 128.0 });
 

@@ -38,6 +38,31 @@ class Scene_Score extends Phaser.Scene {
             
             this.pointsDiff = this.add.text(RelativeScale(790, "x"), RelativeScale(120, "y"), "+" + game.mPlayer.pointsDifference + " pt")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(7).setFontSize(52);
+
+            // Jugador
+            switch (game.mPlayer.characterSel.type)
+            {
+                case "bard":
+                    this.winnerCharacter.setFlip(true);
+                    break;
+                case "berserker":
+                    this.winnerCharacter.x = RelativeScale(1380,"x");
+                    this.winnerCharacter.setFlip(true);
+                    break;
+            }
+
+            switch (game.mEnemy.characterSel.type)
+            {
+                case "wizard":
+                    this.loserCharacter.setFlip(true);
+                    break;
+                case "rogue":
+                    this.loserCharacter.setFlip(true);
+                    break;
+                case "bard":
+                    this.loserCharacter.y = RelativeScale(660,"y");
+                    break;
+            }
         }
         // Si es negativa, es el rival
         else
@@ -54,6 +79,31 @@ class Scene_Score extends Phaser.Scene {
             
             this.pointsDiff = this.add.text(RelativeScale(790, "x"), RelativeScale(120, "y"), game.mPlayer.pointsDifference + " pt")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(7).setFontSize(52);
+        
+            switch (game.mEnemy.characterSel.type)
+            {
+                case "bard":
+                    this.winnerCharacter.setFlip(true);
+                    break;
+                case "berserker":
+                    this.winnerCharacter.x = RelativeScale(1380,"x");
+                    this.winnerCharacter.setFlip(true);
+                    break;
+            }
+
+            switch (game.mPlayer.characterSel.type)
+            {
+                case "wizard":
+                    this.loserCharacter.setFlip(true);
+                    break;
+                case "rogue":
+                    this.loserCharacter.setFlip(true);
+                    break;
+                case "bard":
+                    this.loserCharacter.y = RelativeScale(660,"y");
+                    break;
+            }
+        
         }
 
         this.newCoins = this.add.text(RelativeScale(790, "x"), RelativeScale(200, "y"), "+" + game.mPlayer.newCoins)
@@ -64,15 +114,18 @@ class Scene_Score extends Phaser.Scene {
         var userCurrencyText = this.add.text(RelativeScale(620, "x"), RelativeScale(165, "y"), game.mPlayer.currency)
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(1, 0.5).setFontSize(48).setDepth(8); // Alineado a la derecha
 
-        this.playAgain = this.add.image(0, 0, "play_again_screen").setOrigin(0,0)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(20);
-        this.playAgain.setVisible(false);
+        this.msg_bg = this.add.image(0, 0, "message_bg").setOrigin(0, 0)
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(20);
+        this.msg_bg.setVisible(false);
+        this.play_again_text = this.add.image(RelativeScale(960,"x"), RelativeScale(310,"y"), "play_again_text")
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(22);
+        this.play_again_text.setVisible(false);
         this.yesBtn = this.add.image(RelativeScale(587.0,"x"), RelativeScale(616.0,"y"), "yes_button")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(21);
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(22);
         this.yesBtn.setFrame(1);
         this.yesBtn.setVisible(false);
         this.noBtn = this.add.image(RelativeScale(1325.50,"x"), RelativeScale(616.0,"y"), "no_button")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(21);
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(22);
         this.noBtn.setVisible(false);
 
         // Controles
@@ -112,7 +165,8 @@ class Scene_Score extends Phaser.Scene {
 
     PlayAgainScreen(){
         var that = this;
-        this.playAgain.setVisible(true);
+        this.msg_bg.setVisible(true);
+        this.play_again_text.setVisible(true);
         this.yesBtn.setVisible(true);
         this.noBtn.setVisible(true);
         
