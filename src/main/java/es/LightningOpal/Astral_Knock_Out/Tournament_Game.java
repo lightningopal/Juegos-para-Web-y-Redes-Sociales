@@ -276,8 +276,8 @@ public class Tournament_Game {
                 }
                 for (PhysicsObject platform : platforms){
                     platform.setPosY(platform.getPosY()+2);
-                    if (platform.getPosY()-platform.getHalfHeight() >= 1080){
-                        platform.setPosY(-1269 - platform.getHalfHeight());
+                    if (platform.getPosY()-platform.getHalfHeight() >= 1280){
+                        platform.setPosY(platform.getPosY()-2349);
                     }
                 }
             }
@@ -295,9 +295,9 @@ public class Tournament_Game {
             }else if (playerA.getPosX() + playerA.getHalfWidth() > 1920){
                 playerA.setPosX(1920 - playerA.getHalfWidth());
             }
-            if (playerA.getPosY() - playerA.getHalfHeight() >= 1080){
+            if (playerA.getPosY() - playerA.getHalfHeight() >= 1180){
                 // El jugador se ha caído del mapa y pierde la partida
-                //GamesManager.INSTANCE.finishTournamentGame(room, playerB, playerA, false);
+                GamesManager.INSTANCE.finishTournamentGame(room, playerB, playerA, false);
             }
             // Guarda los datos en el ObjectNode 'jsonPlayer'
             jsonPlayerA.put("posX", playerA.getPosX());
@@ -322,9 +322,9 @@ public class Tournament_Game {
             }else if (playerB.getPosX() + playerB.getHalfWidth() > 1920){
                 playerB.setPosX(1920 - playerB.getHalfWidth());
             }
-            if (playerB.getPosY() - playerB.getHalfHeight() >= 1080){
+            if (playerB.getPosY() - playerB.getHalfHeight() >= 1180){
                 // El jugador se ha caído del mapa y pierde la partida
-                //GamesManager.INSTANCE.finishTournamentGame(room, playerA, playerB, false);
+                GamesManager.INSTANCE.finishTournamentGame(room, playerA, playerB, false);
             }
             // Guarda los datos en el ObjectNode 'jsonPlayer'
             jsonPlayerB.put("posX", playerB.getPosX());
