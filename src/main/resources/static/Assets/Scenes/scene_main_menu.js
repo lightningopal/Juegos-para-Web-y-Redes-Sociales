@@ -62,7 +62,7 @@ class Scene_Main_Menu extends Phaser.Scene {
         this.optionSelectedRow = 0;
         this.optionSelectedCol = 1;
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE){
-
+            this.tournamentBtn.setFrame(0);
             this.input.on('pointerup', function () {
                 that.optionSelectedRow = -1;
                 that.optionSelectedCol = -1;

@@ -1,0 +1,3 @@
+[Start: 2020-11-14_20-36-03 - End: 2020-11-14_20-36-43] - Winner: prueba2[Id: 6, PlayerType: berserker, SecondarySkill: -1, Skin: 0, Points: 876] - Loser: ranking[Id: 10, PlayerType: wizard, SecondarySkill: -1, Skin: 0, Points: 416].
+[Start: 2020-11-14_20-41-56 - End: 2020-11-14_20-43-44] - Winner: prueba2[Id: 6, PlayerType: berserker, SecondarySkill: -1, Skin: 0, Points: 876] - Loser: ranking[Id: 10, PlayerType: rogue, SecondarySkill: -1, Skin: 0, Points: 416].
+[Start: 2020-11-14_21-15-17 - End: 2020-11-14_21-15-53] - Winner: ranking[Id: 10, PlayerType: wizard, SecondarySkill: -1, Skin: 0, Points: 416] - Loser: prueba2[Id: 6, PlayerType: berserker, SecondarySkill: -1, Skin: 0, Points: 876].

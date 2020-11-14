@@ -47,6 +47,7 @@ class Scene_Level0 extends Phaser.Scene {
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(10);
         this.yesBtn.setAlpha(0);
 
+        this.mobileKeys;
         if (game.global.DEVICE == "mobile") {
             var url;
             url = './Assets/Plugins/rexvirtualjoystickplugin.min.js';
@@ -227,33 +228,6 @@ class Scene_Level0 extends Phaser.Scene {
         this.returnToMenu = false;
         this.gamePaused = false;
         this.gameStopped = true;
-
-        // Create mobileKeys
-        this.mobileKeys = {
-            joyStick: null,
-            jumpButton: null
-        };
-
-        // Si el dispositivo es movil, añadir un joystick y un boton
-        if (game.global.DEVICE == "mobile" || game.global.DEBUG_PHONE) {
-            this.mobileKeys.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
-                x: RelativeScale(100, "x"),
-                y: RelativeScale(630, "y"),
-                radius: 15,
-                base: this.add.circle(0, 0, RelativeScale(60, "x"), 0x888888).setAlpha(0.7).setScale(RelativeScale()).setDepth(1000),
-                thumb: this.add.circle(0, 0, RelativeScale(45, "x"), 0xcccccc).setAlpha(0.7).setScale(RelativeScale()).setDepth(1001),
-                // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
-                // forceMin: 16,
-                // enable: true
-            }).on('update', this.dumpJoyStickState, this);
-
-            this.text = this.add.text(0, 0);
-            this.dumpJoyStickState();
-
-            this.mobileKeys.jumpButton = this.add.circle(RelativeScale(1160, "x"), RelativeScale(630, "y"), 20, 0xdddddd).setAlpha(0.7).setScale(RelativeScale()).setDepth(1000).setInteractive();
-
-            this.input.addPointer(2);
-        }
 
         // Pool de habilidades
         /*Bardo*
@@ -441,7 +415,110 @@ class Scene_Level0 extends Phaser.Scene {
         game.mEnemy.image.body.setSize(0, 0);
         game.mEnemy.image.body.allowGravity = false;
 
-        if (game.global.DEVICE === "desktop") {
+        // Si el dispositivo es movil, añadir un joystick y un boton
+        if (game.global.DEVICE == "mobile" || game.global.DEBUG_PHONE) {
+            // Create mobileKeys
+            this.mobileKeys = {
+                joyStick: null,
+                jumpButton: null,
+                attackButton: null
+            };
+
+            this.mobileKeys.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
+                x: RelativeScale(200, "x"),
+                y: RelativeScale(900, "y"),
+                radius: 15,
+                base: this.add.circle(0, 0, RelativeScale(60, "x"), 0x888888).setAlpha(0.7).setDepth(8),
+                thumb: this.add.circle(0, 0, RelativeScale(45, "x"), 0xcccccc).setAlpha(0.7).setDepth(9),
+                // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
+                // forceMin: 16,
+                // enable: true
+            }).on('update', this.DumpJoyStickState, this);
+
+            this.text = this.add.text(0, 0);
+            this.DumpJoyStickState();
+
+            this.input.addPointer(2);
+            this.mobileKeys.jumpButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(950, "y"), RelativeScale(80, "x"), 0xdddddd).setAlpha(0.7).setDepth(8).setInteractive();
+            this.mobileKeys.jumpButton.on('pointerdown', that.Jump, this);
+
+            switch (game.mPlayer.characterSel.type) {
+                case 'berserker':
+                    this.mobileKeys.attackButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(800, "y"), RelativeScale(50, "x"), 0xffffff00).setAlpha(0.7).setDepth(8).setInteractive();
+                    this.mobileKeys.attackButton.on('pointerdown', that.BasicAttack, this);
+                    break;
+                case 'wizard':
+                    this.mobileKeys.attackButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(800, "y"), RelativeScale(50, "x"), 0xff00ff00).setAlpha(0.7).setDepth(8).setInteractive();
+                    this.mobileKeys.attackButton.on('pointerdown', that.BasicAttack, this);
+                    break;
+                case 'bard':
+                    this.mobileKeys.attackButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(800, "y"), RelativeScale(50, "x"), 0xffff00ff).setAlpha(0.7).setDepth(8).setInteractive();
+                    this.mobileKeys.attackButton.on('pointerdown', that.BasicAttack, this);
+                    break;
+                case 'rogue':
+                    this.mobileKeys.attackButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(800, "y"), RelativeScale(50, "x"), 0x000000ff).setAlpha(0.7).setDepth(8).setInteractive();
+                    this.mobileKeys.attackButton.on('pointerdown', that.BasicAttack, this);
+                    break;
+                default:
+                    this.mobileKeys.attackButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(800, "y"), RelativeScale(50, "x"), 0xffffff00).setAlpha(0.7).setDepth(8).setInteractive();
+                    this.mobileKeys.attackButton.on('pointerdown', that.BasicAttack, this);
+                    break;
+            }
+
+            this.input.on('pointerup', function () {
+                that.backBtn.setFrame(0);
+                that.yesBtn.setFrame(0);
+                that.noBtn.setFrame(0);
+            });
+
+            this.backBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                that.backBtn.setFrame(1);
+                if (game.global.DEBUG_MODE) {
+                    console.log("Back pulsado");
+                }
+            });
+            this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+                that.backBtn.setFrame(0);
+                if (!that.gamePaused) {
+                    that.backBtn.disableInteractive();
+                    that.msgImg.setAlpha(1);
+                    that.pauseText.setAlpha(1);
+                    that.yesBtn.setAlpha(1);
+                    that.yesBtn.setFrame(0);
+                    that.noBtn.setAlpha(1);
+                    that.noBtn.setFrame(0);
+                }
+                that.gamePaused = !that.gamePaused;
+                that.myMovingLeft = false;
+                that.myMovingRight = false;
+                if (game.global.DEBUG_MODE) {
+                    console.log("Back soltado");
+                }
+            });
+
+            this.yesBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                that.yesBtn.setFrame(1);
+                that.noBtn.setFrame(0);
+            });
+            this.yesBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+                game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
+                that.scene.start("scene_main_menu");
+            });
+
+            this.noBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                that.yesBtn.setFrame(0);
+                that.noBtn.setFrame(1);
+            });
+            this.noBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+                that.backBtn.setInteractive();
+                that.gamePaused = false;
+                that.msgImg.setAlpha(0);
+                that.pauseText.setAlpha(0);
+                that.yesBtn.setAlpha(0);
+                that.noBtn.setAlpha(0);
+                that.noBtn.setFrame(0)
+            });
+        }else if (game.global.DEVICE === "desktop") {
             this.input.keyboard.on("keydown-" + "A", function (event) {
                 if (!that.gamePaused){
                     that.myMovingRight = false;
@@ -514,8 +591,8 @@ class Scene_Level0 extends Phaser.Scene {
                     that.gamePaused = !that.gamePaused;
                 }
                 that.returnToMenu = false;
-                that.movingLeft = false;
-                that.movingRight = false;
+                that.myMovingLeft = false;
+                that.myMovingRight = false;
             });
 
             this.input.keyboard.on("keydown-" + "ENTER", function (event) {
@@ -603,10 +680,7 @@ class Scene_Level0 extends Phaser.Scene {
 
         //Colisiones
         this.characters = [game.mPlayer.image, game.mEnemy.image/**, enemyPlayer/**/];
-        //this.bullets = [];
-
-        //this.physics.add.overlap(this.characters, this.bullets, this.BulletHit, player, bullet);
-        //this.physics.add.collider(this.characters, this.platforms);
+        
         this.physics.add.overlap(this.characters, this.hidePlatforms);
 
         /// Comunicación
@@ -636,6 +710,29 @@ class Scene_Level0 extends Phaser.Scene {
                 game.mEnemy.image.anims.play(game.mEnemy.characterSel.type + "_idle", true);
             }
         }
+
+        if (game.global.DEVICE == "mobile" || game.global.DEBUG_PHONE){
+            console.log("Móvil");
+            if (!this.gamePaused) {
+                console.log("No hay pausa");
+                // Izquierda
+                if ((this.mobileKeys.joyStick.angle < -(90) || this.mobileKeys.joyStick.angle > 135) && this.mobileKeys.joyStick.force > 16) {
+                    console.log("Izquierda");
+                    this.myMovingLeft = true;
+                    this.myMovingRight = false;
+                }
+                // Derecha
+                else if ((this.mobileKeys.joyStick.angle > -(90) && this.mobileKeys.joyStick.angle < 45) && this.mobileKeys.joyStick.force > 16) {
+                    this.myMovingRight = true;
+                    this.myMovingLeft = false;
+                } else if ((this.mobileKeys.joyStick.angle > 45 && this.mobileKeys.joyStick.angle < 135) && this.mobileKeys.joyStick.force > 16) {
+                    this.Fall();
+                } else {
+                    this.myMovingRight = false;
+                    this.myMovingLeft = false;
+                }
+            }
+        }
         this.UpdateGameState();
 
         // Mostrar u ocultar las plataformas al pasar por encima
@@ -647,8 +744,6 @@ class Scene_Level0 extends Phaser.Scene {
                 this.ShowPlatform(platform);
             }
         });
-        // var debugText = document.getElementById("debugText");
-        // debugText.innerHTML = "Posición del ratón: {x: " + x + ", y: " + y + "} | FPS: " + Math.round(game.loop.actualFps);
 
         // Stars
         this.versus_stars.tilePositionX += 0.2;

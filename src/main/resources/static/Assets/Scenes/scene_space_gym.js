@@ -209,9 +209,9 @@ class Scene_Space_Gym extends Phaser.Scene {
         game.mPlayer.image.body.setSize(0, 0);
         game.mPlayer.image.body.allowGravity = false;
 
-        // Create mobileKeys
         // Si el dispositivo es movil, añadir un joystick y un boton
         if (game.global.DEVICE == "mobile" || game.global.DEBUG_PHONE) {
+            // Create mobileKeys
             this.mobileKeys = {
                 joyStick: null,
                 jumpButton: null,

@@ -269,8 +269,8 @@ class Scene_Boot extends Phaser.Scene {
             this.load.image("level_1_plats_floor", "./Assets/Images/BackGrounds/level_1_plats_floor.png");
             this.load.image("msg_bg", "./Assets/Images/UI/msg_bg.png");
             this.load.image("pause_text", "./Assets/Images/UI/pause_text.png");
-            this.load.spritesheet("yes..._button", "./Assets/Images/UI/yes..._button.png", { frameWidth: 533.0, frameHeight: 211.0 });
-            this.load.spritesheet("no!!_button", "./Assets/Images/UI/no!!_button.png", { frameWidth: 533.0, frameHeight: 211.0 });
+            this.load.spritesheet("yes..._button", "./Assets/Images/UI/yes_exit_button.png", { frameWidth: 533.0, frameHeight: 211.0 });
+            this.load.spritesheet("no!!_button", "./Assets/Images/UI/no_exit_button.png", { frameWidth: 533.0, frameHeight: 211.0 });
 
             // Plataformas
             this.load.image("floor", "./Assets/Images/Platforms/floor.png");
@@ -314,8 +314,8 @@ class Scene_Boot extends Phaser.Scene {
             ///Escena de Fin de Partida///
             this.load.image("score_interface", "./Assets/Images/UI/score_interface.png");
             this.load.image("play_again_text", "./Assets/Images/UI/play_again_text.png");
-            this.load.spritesheet("yes!!_button", "./Assets/Images/UI/yes!!_button.png", { frameWidth: 414.0, frameHeight: 128.0 });
-            this.load.spritesheet("no..._button", "./Assets/Images/UI/no..._button.png", { frameWidth: 393.50, frameHeight: 128.0 });
+            this.load.spritesheet("yes!!_button", "./Assets/Images/UI/yes_play_button.png", { frameWidth: 414.0, frameHeight: 128.0 });
+            this.load.spritesheet("no..._button", "./Assets/Images/UI/no_play_button.png", { frameWidth: 393.50, frameHeight: 128.0 });
 
             /// Formulario ///
             this.load.html('nameform', './Assets/Text/loginform.html');
