@@ -28,16 +28,16 @@ class Scene_Score extends Phaser.Scene {
         {
             this.loserCharacter = this.add.image(RelativeScale(300,"x"), RelativeScale(700,"y"), "splashart_" + game.mEnemy.characterSel.type)
             .setScale(RelativeScale(0.8, "x"), RelativeScale(0.8, "y")).setDepth(4);
-            this.loserUserName = this.add.text(RelativeScale(60, "x"), RelativeScale(920, "y"), game.mEnemy.userName)
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(6).setAngle(22).setFontSize(52);
+            this.loserUserName = this.add.text(RelativeScale(60, "x"), RelativeScale(920, "y"), game.mEnemy.userName, { fontFamily: 'font_Write' })
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(6).setAngle(22).setFontSize(Math.round(RelativeScale(104, "x")));
             
             this.winnerCharacter = this.add.image(RelativeScale(1320,"x"), RelativeScale(580,"y"), "splashart_" + game.mPlayer.characterSel.type)
             .setScale(RelativeScale(1.1, "x"), RelativeScale(1.1, "y")).setDepth(4);
-            this.winnerUserName = this.add.text(RelativeScale(1850, "x"), RelativeScale(820, "y"), game.mPlayer.userName)
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(1, 0.5).setDepth(6).setAngle(-22).setFontSize(52);
+            this.winnerUserName = this.add.text(RelativeScale(1850, "x"), RelativeScale(820, "y"), game.mPlayer.userName, { fontFamily: 'font_Write' })
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(1, 0.5).setDepth(6).setAngle(-22).setFontSize(Math.round(RelativeScale(104, "x")));
             
-            this.pointsDiff = this.add.text(RelativeScale(790, "x"), RelativeScale(120, "y"), "+" + game.mPlayer.pointsDifference + " pt")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(7).setFontSize(52);
+            this.pointsDiff = this.add.text(RelativeScale(790, "x"), RelativeScale(120, "y"), "+" + game.mPlayer.pointsDifference + " pt", { fontFamily: 'font_Write' })
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(7).setFontSize(Math.round(RelativeScale(104, "x")));
 
             // Jugador
             switch (game.mPlayer.characterSel.type)
@@ -69,16 +69,16 @@ class Scene_Score extends Phaser.Scene {
         {
             this.loserCharacter = this.add.image(RelativeScale(300,"x"), RelativeScale(700,"y"), "splashart_" + game.mPlayer.characterSel.type)
             .setScale(RelativeScale(0.8, "x"), RelativeScale(0.8, "y")).setDepth(4);
-            this.loserUserName = this.add.text(RelativeScale(60, "x"), RelativeScale(920, "y"), game.mPlayer.userName)
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(6).setAngle(22).setFontSize(52);
+            this.loserUserName = this.add.text(RelativeScale(60, "x"), RelativeScale(920, "y"), game.mPlayer.userName, { fontFamily: 'font_Write' })
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(6).setAngle(22).setFontSize(Math.round(RelativeScale(104, "x")));
             
             this.winnerCharacter = this.add.image(RelativeScale(1320,"x"), RelativeScale(580,"y"), "splashart_" + game.mEnemy.characterSel.type)
             .setScale(RelativeScale(1.1, "x"), RelativeScale(1.1, "y")).setDepth(4);
-            this.winnerUserName = this.add.text(RelativeScale(1850, "x"), RelativeScale(820, "y"), game.mEnemy.userName)
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(1, 0.5).setDepth(6).setAngle(-22).setFontSize(52);
+            this.winnerUserName = this.add.text(RelativeScale(1850, "x"), RelativeScale(820, "y"), game.mEnemy.userName, { fontFamily: 'font_Write' })
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(1, 0.5).setDepth(6).setAngle(-22).setFontSize(Math.round(RelativeScale(104, "x")));
             
-            this.pointsDiff = this.add.text(RelativeScale(790, "x"), RelativeScale(120, "y"), game.mPlayer.pointsDifference + " pt")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(7).setFontSize(52);
+            this.pointsDiff = this.add.text(RelativeScale(790, "x"), RelativeScale(120, "y"), game.mPlayer.pointsDifference + " pt", { fontFamily: 'font_Write' })
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(7).setFontSize(Math.round(RelativeScale(104, "x")));
         
             switch (game.mEnemy.characterSel.type)
             {
@@ -106,13 +106,13 @@ class Scene_Score extends Phaser.Scene {
         
         }
 
-        this.newCoins = this.add.text(RelativeScale(790, "x"), RelativeScale(200, "y"), "+" + game.mPlayer.newCoins)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(7).setFontSize(52);
+        this.newCoins = this.add.text(RelativeScale(790, "x"), RelativeScale(200, "y"), "+" + game.mPlayer.newCoins, { fontFamily: 'font_Write' })
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(7).setFontSize(Math.round(RelativeScale(104, "x")));
 
-        var userNameText = this.add.text(RelativeScale(160, "x"), RelativeScale(165, "y"), game.mPlayer.userName)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setFontSize(48).setDepth(8); // Alineado a la izquierda
-        var userCurrencyText = this.add.text(RelativeScale(620, "x"), RelativeScale(165, "y"), game.mPlayer.currency)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(1, 0.5).setFontSize(48).setDepth(8); // Alineado a la derecha
+        var userNameText = this.add.text(RelativeScale(160, "x"), RelativeScale(165, "y"), game.mPlayer.userName, { fontFamily: 'font_Write' })
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setFontSize(Math.round(RelativeScale(96, "x"))).setDepth(8); // Alineado a la izquierda
+        var userCurrencyText = this.add.text(RelativeScale(620, "x"), RelativeScale(165, "y"), game.mPlayer.currency, { fontFamily: 'font_Write' })
+        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(1, 0.5).setFontSize(Math.round(RelativeScale(96, "x"))).setDepth(8); // Alineado a la derecha
 
         this.msg_bg = this.add.image(0, 0, "message_bg").setOrigin(0, 0)
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(20);

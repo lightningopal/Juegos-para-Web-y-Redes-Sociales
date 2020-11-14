@@ -29,9 +29,9 @@ class Scene_Ranking extends Phaser.Scene {
             {
                 var winsLosesString = game.global.ranking[i].winsCount + " / " + game.global.ranking[i].losesCount;
 
-                rankingNameTexts[i] = this.add.text(RelativeScale(240, "x"), RelativeScale(398 + (67 * i), "y"), game.global.ranking[i].userName).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(32);
-                rankingWinsLosesTexts[i] = this.add.text(RelativeScale(660, "x"), RelativeScale(398 + (67 * i), "y"), winsLosesString).setOrigin(0.5, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(32);
-                rankingPointsTexts[i] = this.add.text(RelativeScale(940, "x"), RelativeScale(398 + (67 * i), "y"), game.global.ranking[i].points).setOrigin(0.5, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(32);
+                rankingNameTexts[i] = this.add.text(RelativeScale(240, "x"), RelativeScale(398 + (67 * i), "y"), game.global.ranking[i].userName, { fontFamily: 'font_Write' }).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(Math.round(RelativeScale(64, "x")));
+                rankingWinsLosesTexts[i] = this.add.text(RelativeScale(660, "x"), RelativeScale(398 + (67 * i), "y"), winsLosesString, { fontFamily: 'font_Write' }).setOrigin(0.5, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(Math.round(RelativeScale(64, "x")));
+                rankingPointsTexts[i] = this.add.text(RelativeScale(940, "x"), RelativeScale(398 + (67 * i), "y"), game.global.ranking[i].points, { fontFamily: 'font_Write' }).setOrigin(0.5, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(Math.round(RelativeScale(64, "x")));
             }
             else
             {
@@ -42,9 +42,9 @@ class Scene_Ranking extends Phaser.Scene {
         // Usuario
         var winsLosesStringUser = game.global.ranking[10].winsCount + " / " + game.global.ranking[10].losesCount;
 
-        rankingNameTexts[10] = this.add.text(RelativeScale(1580, "x"), RelativeScale(680, "y"), game.global.ranking[10].userName).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(32);
-        rankingWinsLosesTexts[10] = this.add.text(RelativeScale(1580, "x"), RelativeScale(795, "y"), winsLosesStringUser).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(32);
-        rankingPointsTexts[10] = this.add.text(RelativeScale(1580, "x"), RelativeScale(900, "y"), game.global.ranking[10].points).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(32);
+        rankingNameTexts[10] = this.add.text(RelativeScale(1580, "x"), RelativeScale(680, "y"), game.global.ranking[10].userName, { fontFamily: 'font_Write' }).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(Math.round(RelativeScale(64, "x")));
+        rankingWinsLosesTexts[10] = this.add.text(RelativeScale(1580, "x"), RelativeScale(795, "y"), winsLosesStringUser, { fontFamily: 'font_Write' }).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(Math.round(RelativeScale(64, "x")));
+        rankingPointsTexts[10] = this.add.text(RelativeScale(1580, "x"), RelativeScale(900, "y"), game.global.ranking[10].points, { fontFamily: 'font_Write' }).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(Math.round(RelativeScale(64, "x")));
 
     } // Fin preload
 
