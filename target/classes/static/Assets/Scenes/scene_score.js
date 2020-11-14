@@ -171,7 +171,7 @@ class Scene_Score extends Phaser.Scene {
             ease: 'Sine.easeInOut',
             yoyo: true,
             onYoyo: function () {
-                that.pointsDiff.setText(game.mPlayer.points + "pt");
+                that.pointsDiff.setText(game.mPlayer.points + " pt");
             },
             onComplete: function () {
                 that.time.addEvent({
