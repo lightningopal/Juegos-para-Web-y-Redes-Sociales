@@ -186,18 +186,6 @@ public class Tournament_Game {
 		return players.values();
 	}
 
-	/*public void addProjectile(int id, Projectile projectile) {
-		projectiles.put(id, projectile);
-	}
-
-	public Collection<Projectile> getProjectiles() {
-		return projectiles.values();
-	}
-
-	public void removeProjectile(Projectile projectile) {
-		players.remove(projectile.getId(), projectile);
-	}*/
-
 	// Método startGameLoop, que inicia el game loop de la partida
     public void startGameLoop(ScheduledExecutorService scheduler_) {
 		// Inicia y guarda el hilo que ejecuta el método tick
@@ -243,8 +231,7 @@ public class Tournament_Game {
 					player.getSession().sendMessage(new TextMessage(message.toString()));
                 }
 			} catch (Throwable ex) {
-				System.err.println("Execption sending message to player " + player.getSession().getId());
-                ex.printStackTrace(System.err);
+				System.err.println("Exception sending message to player " + player.getUserName());
                 
                 // Intenta escribir la información del error en el archivo de log
                 try {
@@ -460,10 +447,5 @@ public class Tournament_Game {
 				e2.printStackTrace();
 			}
 		}
-	}
-
-	// Método HandleCollision, de momento no hace nada y puede que no sirva
-	public void handleCollision() {
-
 	}
 }

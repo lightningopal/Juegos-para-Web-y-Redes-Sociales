@@ -324,22 +324,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						//System.out.println("Actualizado volumen: " + volType + " - " + user.getUser_name());
 					}
 					break;
-				case "UPDATE_GAME_STATE":
-					// Recibir datos de control (movingLeft,movingRight...)
-					// Recibir Id de la sala
-					// Recibir isVersus para comunicar a SpaceGym_Game o a Tournament_Game
-					/*
-					 * player.loadMovement(node.path("movement").get("thrust").asBoolean(),
-					 * node.path("movement").get("brake").asBoolean(),
-					 * node.path("movement").get("rotLeft").asBoolean(),
-					 * node.path("movement").get("rotRight").asBoolean()); if
-					 * (node.path("bullet").asBoolean()) { Projectile projectile = new
-					 * Projectile(player, this.projectileId.incrementAndGet());
-					 * game.addProjectile(projectile.getId(), projectile); }
-					 */
-					break;
 				// Cuando se solicita la creación de una partida de "space gym"
 				case "CREATE_SPACE_GYM":
+					GamesManager.INSTANCE.spaceGymGamesLock.lock();
 					// Si hay partidas disponibles
 					if (GamesManager.INSTANCE.spaceGym_games.size() < GamesManager.INSTANCE.MAX_SPACEGYM_GAMES)
 					{
@@ -353,6 +340,8 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 						// Se crea la partida de space gym
 						GamesManager.INSTANCE.startSpaceGym(user.getPlayer_selected());
+
+						GamesManager.INSTANCE.spaceGymGamesLock.unlock();
 
 						// Asignar evento en el ObjectNode 'msg'
 						msg.put("event", "CREATED_SPACE_GYM");
@@ -370,6 +359,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					// Si no hay partidas disponibles
 					else
 					{
+						GamesManager.INSTANCE.spaceGymGamesLock.unlock();
 						// Asignar evento en el ObjectNode 'msg'
 						msg.put("event", "GAMES_FULL");
 
@@ -399,6 +389,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					break;
 				// Cuando un jugador busca partida
 				case "SEARCHING_GAME":
+					GamesManager.INSTANCE.tournamentGamesLock.lock();
 					// Si hay partidas disponibles
 					if (GamesManager.INSTANCE.tournament_games.size() < GamesManager.INSTANCE.MAX_TOURNAMENT_GAMES)
 					{
@@ -436,6 +427,8 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 							// Se crea la partida
 							room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
+
+							GamesManager.INSTANCE.tournamentGamesLock.unlock();
 
 							// Intenta escribir la información en el archivo de log
 							try {
@@ -500,6 +493,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						else {
 							// Añade al jugador a la cola
 							GamesManager.INSTANCE.searching_players.get(level).add(thisPlayer);
+							GamesManager.INSTANCE.tournamentGamesLock.unlock();
 
 							if (DEBUG_MODE) {
 								name = user.getUser_name();
@@ -510,6 +504,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					// Si no hay partidas disponibles
 					else
 					{
+						GamesManager.INSTANCE.tournamentGamesLock.unlock();
 						// Asignar evento en el ObjectNode 'msg'
 						msg.put("event", "GAMES_FULL");
 
@@ -561,7 +556,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					thisPlayer = user.getPlayer_selected();
 
 					// Borra al jugador de la cola
+					GamesManager.INSTANCE.tournamentGamesLock.lock();
 					GamesManager.INSTANCE.searching_players.get(level).remove(thisPlayer);
+					GamesManager.INSTANCE.tournamentGamesLock.unlock();
 
 					// Asignar evento, sala y jugadores en el ObjectNode 'msg'
 					msg.put("event", "CANCELED_QUEUE");

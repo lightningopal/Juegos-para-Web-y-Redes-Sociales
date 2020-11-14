@@ -1,0 +1,27 @@
+19:10:53 - Server opened.
+19:11:19 - Conected user with session bc33800b-684a-bd44-7b40-cdf7f9cae48b.
+19:11:27 - Player connected: Thund3r.
+19:12:26 - Conected user with session 94bba801-f200-1717-e6bf-2d3caa2eeb1a.
+19:12:58 - Player connected: prueba4.
+19:13:08 - Searching Tournament Game: prueba4 [PlayerType: rogue, SecondarySkill: -1, Skin: 0, Level: 0, Points: 900].
+19:13:16 - Searching Tournament Game: Thund3r [PlayerType: bard, SecondarySkill: -1, Skin: 0, Level: 0, Points: 1846].
+19:13:16 - Create Tournament Game: Thund3r - prueba4 - Level: 0, Room: 0.
+19:14:22 - End Tournament Game: prueba4 - Thund3r - Room: 0. Disconnection: true.
+19:14:22 - Player disconnected: Thund3r.
+19:14:30 - Player disconnected: prueba4.
+19:15:58 - Users data saved.
+19:16:24 - Conected user with session 4cdf9c80-1715-faf4-d307-84682839b7bf.
+19:17:39 - Conected user with session d736eb13-1692-efe4-4a61-e51ece7c1a7e.
+19:18:23 - Player connected: Thund3r.
+19:18:49 - Player connected: prueba4.
+19:18:54 - Searching Tournament Game: prueba4 [PlayerType: wizard, SecondarySkill: -1, Skin: 0, Level: 0, Points: 1085].
+19:19:01 - Searching Tournament Game: Thund3r [PlayerType: bard, SecondarySkill: -1, Skin: 0, Level: 0, Points: 1661].
+19:19:01 - Create Tournament Game: Thund3r - prueba4 - Level: 0, Room: 0.
+19:19:24 - End Tournament Game: Thund3r - prueba4 - Room: 0. Disconnection: false.
+19:20:25 - Searching Tournament Game: Thund3r [PlayerType: rogue, SecondarySkill: -1, Skin: 0, Level: 0, Points: 1770].
+19:20:33 - Searching Tournament Game: prueba4 [PlayerType: wizard, SecondarySkill: -1, Skin: 0, Level: 0, Points: 976].
+19:20:33 - Create Tournament Game: prueba4 - Thund3r - Level: 0, Room: 0.
+19:20:53 - Users data saved.
+19:21:00 - End Tournament Game: Thund3r - prueba4 - Room: 0. Disconnection: false.
+19:21:08 - Player disconnected: prueba4.
+19:21:12 - Player disconnected: Thund3r.
