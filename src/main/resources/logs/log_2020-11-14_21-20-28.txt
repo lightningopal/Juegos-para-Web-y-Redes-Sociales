@@ -1,0 +1,6 @@
+21:20:37 - Server opened.
+21:20:51 - Conected user with session 8dfafd2b-ebf5-98a4-db8b-c58173c634cb.
+21:20:58 - Player connected: prueba2.
+21:21:04 - Create Space Gym: prueba2.
+21:21:07 - Leave Space Gym: prueba2.
+21:21:12 - Player disconnected: prueba2.
