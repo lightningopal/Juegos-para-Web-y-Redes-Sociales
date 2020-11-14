@@ -1,8 +1,0 @@
-17:25:10 - Server opened.
-17:25:16 - Conected user with session 8d5e8a3e-1ed5-af85-e0db-be1f8ba915df.
-17:25:33 - Player connected: Kratser.
-17:28:14 - Player disconnected: Kratser.
-17:28:20 - Conected user with session 35b54744-a6fb-d947-4f2e-d007e3f4c97f.
-17:28:52 - Disconnected user with session 35b54744-a6fb-d947-4f2e-d007e3f4c97f.
-17:28:58 - Conected user with session 031691d9-6acb-3d37-9e8a-ed2bd87bf49e.
-17:30:10 - Users data saved.

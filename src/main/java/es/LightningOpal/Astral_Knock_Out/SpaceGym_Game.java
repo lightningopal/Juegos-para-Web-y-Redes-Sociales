@@ -10,6 +10,11 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import org.springframework.web.socket.TextMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -128,6 +133,19 @@ public class SpaceGym_Game {
             // ex.printStackTrace(System.err);
             GamesManager.INSTANCE.stopSpaceGym(player);
             System.out.println("No se ha podido enviar mensaje al jugador " + userName + ".");
+
+            // Intenta escribir la información del error en el archivo de log
+			try {
+				AKO_Server.logLock.lock();
+				AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+				String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+				AKO_Server.logWriter.write(time + " - SERVER ERROR ON BROADCAST [SpaceGym, Player: " + player.getUserName() + "]: " + ex.getStackTrace() + ".\n");
+                AKO_Server.logWriter.close();
+                AKO_Server.logLock.unlock();
+			} catch (Exception e2) {
+				// Si falla, se muestra el error
+				e2.printStackTrace();
+			}
         }
     }
 
@@ -254,6 +272,19 @@ public class SpaceGym_Game {
         } catch (Throwable ex) {
             // Excepcion
             System.out.println(ex);
+
+            // Intenta escribir la información del error en el archivo de log
+			try {
+				AKO_Server.logLock.lock();
+				AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+				String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+				AKO_Server.logWriter.write(time + " - SERVER ERROR ON TICK [SpaceGym, Player: " + player.getUserName() + "]: " + ex.getStackTrace() + ".\n");
+                AKO_Server.logWriter.close();
+                AKO_Server.logLock.unlock();
+			} catch (Exception e2) {
+				// Si falla, se muestra el error
+				e2.printStackTrace();
+			}
         }
     }
 

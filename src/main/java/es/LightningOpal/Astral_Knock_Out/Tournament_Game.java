@@ -15,6 +15,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import org.springframework.web.socket.TextMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,6 +51,8 @@ public class Tournament_Game {
     private double backgroundPos = 0;
     private double stagePos = 0;
 
+    public String initGameTime;
+
 	private Map<String, Player> players = new ConcurrentHashMap<>();
 	private Player playerA;
 	private Player playerB;
@@ -64,7 +71,10 @@ public class Tournament_Game {
 
 		// Asignamos la sala
 		room = room_;
-		this.level = level;
+        this.level = level;
+        
+        // Establecemos la hora de inicio
+        initGameTime = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Calendar.getInstance().getTime());
 		
 		// PlayerA Weapon
         switch (playerA.getPlayerType()) {
@@ -234,7 +244,20 @@ public class Tournament_Game {
                 }
 			} catch (Throwable ex) {
 				System.err.println("Execption sending message to player " + player.getSession().getId());
-				ex.printStackTrace(System.err);
+                ex.printStackTrace(System.err);
+                
+                // Intenta escribir la información del error en el archivo de log
+                try {
+                    AKO_Server.logLock.lock();
+                    AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+                    String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+                    AKO_Server.logWriter.write(time + " - SERVER ERROR ON BROADCAST [Tournament, Room: " + room + "]: " + ex.getStackTrace() + ".\n");
+                    AKO_Server.logWriter.close();
+                    AKO_Server.logLock.unlock();
+                } catch (Exception e2) {
+                    // Si falla, se muestra el error
+                    e2.printStackTrace();
+                }
 			}finally{
                 threadLock.unlock();
             }
@@ -423,7 +446,19 @@ public class Tournament_Game {
 			// Envía a los jugadores un mensaje con la información del ObjectNode 'json'
             this.broadcast(json.toString());
 		} catch (Throwable ex) {
-			// Excepcion
+            // Excepcion
+            // Intenta escribir la información del error en el archivo de log
+			try {
+				AKO_Server.logLock.lock();
+				AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+				String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+				AKO_Server.logWriter.write(time + " - SERVER ERROR ON TICK [Tournament, Room: " + room + "]: " + ex.getStackTrace() + ".\n");
+                AKO_Server.logWriter.close();
+                AKO_Server.logLock.unlock();
+			} catch (Exception e2) {
+				// Si falla, se muestra el error
+				e2.printStackTrace();
+			}
 		}
 	}
 

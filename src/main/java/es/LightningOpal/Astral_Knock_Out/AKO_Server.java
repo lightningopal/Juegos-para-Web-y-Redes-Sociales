@@ -12,6 +12,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.ArrayList;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -31,6 +34,7 @@ public class AKO_Server implements WebSocketConfigurer {
 	public static BufferedWriter logWriter = null;
 	public static String timeLog = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Calendar.getInstance().getTime());
 	public static File logFile;
+	public static Lock logLock = new ReentrantLock();
 
 	/// Métodos
 	// Método main, que ejecuta el servidor
@@ -40,12 +44,14 @@ public class AKO_Server implements WebSocketConfigurer {
 
 		try {
 			// Intenta crear el log y escribir en el
+			logLock.lock();
 			logFile = new File("src/main/resources/logs/log_" + timeLog + ".txt");
 
 			logWriter = new BufferedWriter(new FileWriter(logFile));
 			String openTime = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
 			logWriter.write(openTime + " - Server opened.\n");
 			logWriter.close();
+			logLock.unlock();
 
 			// Intenta leer los datos de inicio de sesión del archivo 'usersLogin.txt'
 			File loginFile = new File("src/main/resources/data/usersLogin.txt");
@@ -95,7 +101,6 @@ public class AKO_Server implements WebSocketConfigurer {
 
 					for (int j = 0; j < skinsFromCharacter_av.length; j++)
 					{
-						//System.out.println("Leido:" + skinsFromCharacter_av[j]);
 						auxList.add(Integer.parseInt(skinsFromCharacter_av[j]));
 					}
 					skins_available.add(auxList);
@@ -128,6 +133,20 @@ public class AKO_Server implements WebSocketConfigurer {
 			// SI EXISTE UN ERROR Y SE EJECUTA ESTE TROZO DE CÓDIGO, HABRÍA QUE
 			// ARREGLAR EL PROBLEMA Y REINICIAR EL SERVIDOR, NO PUEDE FUNCIONAR
 			// SIN LOS DATOS NECESARIOS DE LOGIN Y USUARIOS
+
+			// Intenta escribir la información del error en el archivo de log
+			try {
+				AKO_Server.logLock.lock();
+				AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+				String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+				AKO_Server.logWriter.write(time + " - SERVER ERROR ON OPENING: " + e.getStackTrace() + ".\n");
+				AKO_Server.logWriter.close();
+				AKO_Server.logLock.unlock();
+			} catch (Exception e2) {
+				// Si falla, se muestra el error
+				e2.printStackTrace();
+			}
+
 			e.printStackTrace();
 		}
 	}

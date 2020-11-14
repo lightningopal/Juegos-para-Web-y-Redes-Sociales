@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -47,10 +48,12 @@ public class UsersController {
 
 		// Intenta escribir en el archivo de log
 		try {
+			AKO_Server.logLock.lock();
 			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
 			String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
 			AKO_Server.logWriter.write(time + " - Player connected: " + userName + ".\n");
 			AKO_Server.logWriter.close();
+			AKO_Server.logLock.unlock();
 		} catch (Exception e) {
 			// Si falla, muestra el error
 			e.printStackTrace();
@@ -78,14 +81,32 @@ public class UsersController {
 
 			userWritter = new BufferedWriter(new FileWriter(new File("src/main/resources/data/usersData.txt"), true));
 
-			String characters_available = "[0,1,2,3]";
-			String skins_available = "[{0},{0},{0},{0}}]";
+			String characters_availableST = "[0,1,2,3]";
+			String skins_availableST = "[{0},{0},{0},{0}}]";
 			
-			//Error que arregla Thund3r
-			//thisUser.setCh
+			// Personajes
+			ArrayList<Integer> characters_available = new ArrayList<Integer>();
+			for (int i = 0; i < 4; i++)
+			{
+				characters_available.add(i);
+			}
+			
+			// Aspectos
+			ArrayList<ArrayList<Integer>> skins_available = new ArrayList<ArrayList<Integer>>();
+			ArrayList<Integer> auxList;
 
-			userWritter.write(thisUser.getUserId() + ":" + thisUser.getUser_name() + ":" + characters_available + ":"
-					+ skins_available + ":" + thisUser.getElo() + ":" + thisUser.getWins() + ":" + thisUser.getLoses()
+			for (int i = 0; i < 4; i++)
+			{
+				auxList = new ArrayList<Integer>();
+				auxList.add(0);
+				skins_available.add(auxList);
+			}
+			
+			thisUser.setCharacters_available(characters_available);
+			thisUser.setSkins_available(skins_available);
+
+			userWritter.write(thisUser.getUserId() + ":" + thisUser.getUser_name() + ":" + characters_availableST + ":"
+					+ skins_availableST + ":" + thisUser.getElo() + ":" + thisUser.getWins() + ":" + thisUser.getLoses()
 					+ ":" + thisUser.getCurrency() + ":" + thisUser.getMusicVol() + ":" + thisUser.getSfxVol() + "\n");
 
 			userWritter.close();
@@ -95,6 +116,19 @@ public class UsersController {
 		} catch (Exception e) {
 			// Si falla, muestra el error
 			e.printStackTrace();
+
+			// Intenta escribir la información del error en el archivo de log
+			try {
+				AKO_Server.logLock.lock();
+				AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+				String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+				AKO_Server.logWriter.write(time + " - SERVER ERROR ON CONNECT NEW USER: " + e.getStackTrace() + ".\n");
+				AKO_Server.logWriter.close();
+				AKO_Server.logLock.unlock();
+			} catch (Exception e2) {
+				// Si falla, se muestra el error
+				e2.printStackTrace();
+			}
 		}
 
 		// Lo añade al mapa de usuarios conectados
@@ -129,14 +163,29 @@ public class UsersController {
 		} catch (Exception e) {
 			// Si falla, muestra el error
 			e.printStackTrace();
+
+			// Intenta escribir la información del error en el archivo de log
+			try {
+				AKO_Server.logLock.lock();
+				AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+				String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+				AKO_Server.logWriter.write(time + " - SERVER ERROR ON REGISTER NEW USER: " + e.getStackTrace() + ".\n");
+				AKO_Server.logWriter.close();
+				AKO_Server.logLock.unlock();
+			} catch (Exception e2) {
+				// Si falla, se muestra el error
+				e2.printStackTrace();
+			}
 		}
 
 		// Intenta escribir en el archivo de log
 		try {
+			AKO_Server.logLock.lock();
 			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
 			String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
 			AKO_Server.logWriter.write(time + " - Player registered: " + name + ".\n");
 			AKO_Server.logWriter.close();
+			AKO_Server.logLock.unlock();
 		} catch (Exception e) {
 			// Si falla, muestra el error
 			e.printStackTrace();
@@ -293,14 +342,29 @@ public class UsersController {
 		} catch (Exception e) {
 			// Si falla, muestra el error
 			e.printStackTrace();
+
+			// Intenta escribir la información del error en el archivo de log
+			try {
+				AKO_Server.logLock.lock();
+				AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+				String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+				AKO_Server.logWriter.write(time + " - SERVER ERROR ON WRITE USERS DATA: " + e.getStackTrace() + ".\n");
+				AKO_Server.logWriter.close();
+				AKO_Server.logLock.unlock();
+			} catch (Exception e2) {
+				// Si falla, se muestra el error
+				e2.printStackTrace();
+			}
 		}
 
 		// Intenta escribir en el archivo de log
 		try {
+			AKO_Server.logLock.lock();
 			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
 			String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
 			AKO_Server.logWriter.write(time + " - Users data saved.\n");
 			AKO_Server.logWriter.close();
+			AKO_Server.logLock.unlock();
 		} catch (Exception e) {
 			// Si falla, muestra el error
 			e.printStackTrace();

@@ -57,11 +57,12 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 		// Se intenta escribir la información en el log
 		try {
-			// Concurrencia de un usuario cerrando mientras otro escribe THUND3R
+			AKO_Server.logLock.lock();
 			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
 			String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
 			AKO_Server.logWriter.write(time + " - Conected user with session " + user.getSession().getId() + ".\n");
 			AKO_Server.logWriter.close();
+			AKO_Server.logLock.unlock();
 		} catch (Exception e) {
 			// Si falla, se muestra el error
 			e.printStackTrace();
@@ -289,6 +290,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					msg.put("sfxVol", user.getSfxVol());
 					msg.put("name", user.getUser_name());
 					msg.put("currency", user.getCurrency());
+					msg.put("points", Math.round(user.getElo()));
 
 					// Enviar el mensaje
 					synchronized (user.getSession()) {
@@ -347,7 +349,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 						// Se asignan los atributos
 						user.setPlayer_selected(new Player(user.getUserId(), user.getSession(), user.getUser_name(),
-								playerType, secondarySkill, SpaceGym_Game.playerPosX, SpaceGym_Game.playerPosY));
+								playerType, Math.round(user.getElo()), secondarySkill, SpaceGym_Game.playerPosX, SpaceGym_Game.playerPosY));
 
 						// Se crea la partida de space gym
 						GamesManager.INSTANCE.startSpaceGym(user.getPlayer_selected());
@@ -407,10 +409,25 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 						// Se crea el jugador con los datos
 						thisPlayer = new Player(user.getUserId(), user.getSession(), user.getUser_name(), playerType,
-								secondarySkill, 0, 0);
+								Math.round(user.getElo()), secondarySkill, 0, 0);
 
 						// Se asignan los atributos
 						user.setPlayer_selected(thisPlayer);
+
+						// Intenta escribir la información en el archivo de log
+						try {
+							AKO_Server.logLock.lock();
+							AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+							String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+							AKO_Server.logWriter.write(time + " - Searching Tournament Game: " + thisPlayer.getUserName() + 
+							" [PlayerType: " + playerType + ", SecondarySkill: " + secondarySkill + ", Skin: " + thisPlayer.getSkin() +
+							", Level: " + level + ", Points: " + thisPlayer.getPoints() + "]" + ".\n");
+							AKO_Server.logWriter.close();
+							AKO_Server.logLock.unlock();
+						} catch (Exception e) {
+							// Si falla, se muestra el error
+							e.printStackTrace();
+						}
 
 						// Si hay jugadores en cola para ese nivel, se empareja contra el primero
 						if (GamesManager.INSTANCE.searching_players.get(level).size() > 0) {
@@ -419,6 +436,20 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 							// Se crea la partida
 							room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
+
+							// Intenta escribir la información en el archivo de log
+							try {
+								AKO_Server.logLock.lock();
+								AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+								String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+								AKO_Server.logWriter.write(time + " - Create Tournament Game: " + thisPlayer.getUserName() +
+								" - " + rival.getUserName() + " - Level: " + level + ", Room: " + room + ".\n");
+								AKO_Server.logWriter.close();
+								AKO_Server.logLock.unlock();
+							} catch (Exception e) {
+								// Si falla, se muestra el error
+								e.printStackTrace();
+							}
 
 							// Creamos un ArrayNode 'players' para guardar la información de ambos jugadores
 							ArrayNode players = mapper.createArrayNode();
@@ -431,6 +462,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 							playerA.put("playerType", thisPlayer.getPlayerType());
 							playerA.put("skin", thisPlayer.getSkin());
 							playerA.put("skill", thisPlayer.getSkill());
+							playerA.put("points", thisPlayer.getPoints());
 
 							players.addPOJO(playerA);
 
@@ -442,6 +474,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 							playerB.put("playerType", rival.getPlayerType());
 							playerB.put("skin", rival.getSkin());
 							playerB.put("skill", rival.getSkill());
+							playerB.put("points", rival.getPoints());
 
 							players.addPOJO(playerB);
 
@@ -623,6 +656,19 @@ public class WebsocketHandler extends TextWebSocketHandler {
 			// Si se produce un error, se imprime
 			System.err.println("Exception processing message " + message.getPayload());
 			e.printStackTrace(System.err);
+
+			// Intenta escribir la información del error en el archivo de log
+			try {
+				AKO_Server.logLock.lock();
+				AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+				String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+				AKO_Server.logWriter.write(time + " - SERVER ERROR ON HANDLE TEXT MESSAGE: " + e.getStackTrace() + ".\n");
+				AKO_Server.logWriter.close();
+				AKO_Server.logLock.unlock();
+			} catch (Exception e2) {
+				// Si falla, se muestra el error
+				e2.printStackTrace();
+			}
 		}
 	}
 
@@ -657,6 +703,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 		// Intenta escribir la información en el archivo de log
 		try {
+			AKO_Server.logLock.lock();
 			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
 			String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
 			if (user.getUser_name() != "") {
@@ -666,6 +713,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						.write(time + " - Disconnected user with session " + user.getSession().getId() + ".\n");
 			}
 			AKO_Server.logWriter.close();
+			AKO_Server.logLock.unlock();
 		} catch (Exception e) {
 			// Si falla, se muestra el error
 			e.printStackTrace();
@@ -675,7 +723,11 @@ public class WebsocketHandler extends TextWebSocketHandler {
 		UsersController.DisconnectUser(user.getUser_name());
 
 		if (DEBUG_MODE) {
-			System.out.println("Usuario desconectado: " + user.getUser_name());
+			if (user.getUser_name() != "") {
+				System.out.println("Usuario desconectado: " + user.getUser_name());
+			} else {
+				System.out.println("Disconnected user with session " + user.getSession().getId());
+			}
 		}
 	}
 }

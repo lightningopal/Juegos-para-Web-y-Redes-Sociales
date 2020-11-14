@@ -308,7 +308,7 @@ class Scene_Boot extends Phaser.Scene {
 
             ///Escena de Fin de Partida///
             this.load.image("score_interface", "./Assets/Images/UI/score_interface.png");
-            this.load.image("play_again_screen", "./Assets/Images/UI/play_again_screen.png");
+            this.load.image("play_again_text", "./Assets/Images/UI/play_again_text.png");
             this.load.spritesheet("yes!!_button", "./Assets/Images/UI/yes!!_button.png", { frameWidth: 414.0, frameHeight: 128.0 });
             this.load.spritesheet("no..._button", "./Assets/Images/UI/no..._button.png", { frameWidth: 393.50, frameHeight: 128.0 });
 
@@ -648,6 +648,7 @@ class Scene_Boot extends Phaser.Scene {
         game.options.SFXVol = data.sfxVol;
         game.mPlayer.userName = data.name;
         game.mPlayer.currency = data.currency;
+        game.mPlayer.points = data.points;
 
         // Cambia de escena a la escena del menú principal
         this.scene.get('scene_account').scene.start("scene_main_menu");
@@ -771,6 +772,7 @@ class Scene_Boot extends Phaser.Scene {
             game.mEnemy.characterSel.type = data.players[1].playerType;
             game.mEnemy.skinSel = data.players[1].skin;
             game.mEnemy.skillSel = data.players[1].skill;
+            game.mEnemy.points = data.players[1].points;
         }
         // Si no, es al revés
         else {
@@ -780,6 +782,7 @@ class Scene_Boot extends Phaser.Scene {
             game.mEnemy.characterSel.type = data.players[0].playerType;
             game.mEnemy.skinSel = data.players[0].skin;
             game.mEnemy.skillSel = data.players[0].skill;
+            game.mEnemy.points = data.players[0].points;
         }
 
         game.mPlayer.room = data.room;

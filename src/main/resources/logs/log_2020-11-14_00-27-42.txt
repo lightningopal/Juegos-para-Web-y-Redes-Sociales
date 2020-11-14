@@ -1,0 +1,7 @@
+00:27:48 - Server opened.
+00:28:35 - Conected user with session 002dd35c-6774-06d1-104b-5a7f0c90bd0f.
+00:29:01 - Disconnected user with session 002dd35c-6774-06d1-104b-5a7f0c90bd0f.
+00:30:52 - Conected user with session 466283c2-303c-5713-fb3f-673a50096de9.
+00:32:48 - Users data saved.
+00:33:36 - Player connected: Thund3r.
+00:37:48 - Users data saved.

@@ -1,3 +1,0 @@
-16:32:35 - Server opened.
-16:33:05 - Conected user with session 4c390ad0-ea87-e2be-8ddb-3b373fc895d1.
-16:33:28 - Player connected: Thund3r.

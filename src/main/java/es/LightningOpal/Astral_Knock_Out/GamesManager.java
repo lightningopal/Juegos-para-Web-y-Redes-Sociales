@@ -12,6 +12,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -53,6 +59,11 @@ public class GamesManager {
     // Mapper para enviar mensajes
     private ObjectMapper mapper = new ObjectMapper();
 
+    //Archivo de log de partidas "tournament"
+    public static BufferedWriter tournamentGamesLogWriter = null;
+	public static File tournamentGamesLogFile = new File("src/main/resources/data/tournamentGamesLog.txt");;
+	public static Lock tournamentGamesLogLock = new ReentrantLock();
+
     // Constructor vacio de la clase
     private GamesManager() {
         ConcurrentLinkedQueue<Player> searchingLevel0 = new ConcurrentLinkedQueue<>();
@@ -71,6 +82,19 @@ public class GamesManager {
         newGame.startGameLoop(scheduler_spaceGym);
         // Añade la partida al mapa de partidas
         spaceGym_games.put(thisPlayer, newGame);
+
+        // Intenta escribir la información en el archivo de log
+		try {
+			AKO_Server.logLock.lock();
+			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+			String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+			AKO_Server.logWriter.write(time + " - Create Space Gym: " + thisPlayer.getUserName() + ".\n");
+			AKO_Server.logWriter.close();
+			AKO_Server.logLock.unlock();
+		} catch (Exception e) {
+			// Si falla, se muestra el error
+			e.printStackTrace();
+		}
     }
 
     // Método stopSpaceGym, que para la partida de "space gym" del jugador indicado
@@ -81,6 +105,19 @@ public class GamesManager {
         gameToStop.stopGameLoop();
         // Elimina la partida del mapa de partidas
         spaceGym_games.remove(thisPlayer);
+
+        // Intenta escribir la información en el archivo de log
+		try {
+			AKO_Server.logLock.lock();
+			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+			String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+			AKO_Server.logWriter.write(time + " - Leave Space Gym: " + thisPlayer.getUserName() + ".\n");
+			AKO_Server.logWriter.close();
+			AKO_Server.logLock.unlock();
+		} catch (Exception e) {
+			// Si falla, se muestra el error
+			e.printStackTrace();
+		}
     }
 
     public int createTournamentGame(Player playerA, Player playerB, int level) {
@@ -179,6 +216,20 @@ public class GamesManager {
             winnerUser.setCurrency(winnerCoins);
             loserUser.setCurrency(loserCoins);
 
+            // Intenta escribir la información en el archivo de log
+            try {
+                AKO_Server.logLock.lock();
+                AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+                String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+                AKO_Server.logWriter.write(time + " - End Tournament Game: " + winner.getUserName() +
+                " - " + loser.getUserName() + " - Room: " + room + ". Disconnection: " + wasDisconnection  + ".\n");
+                AKO_Server.logWriter.close();
+                AKO_Server.logLock.unlock();
+            } catch (Exception e) {
+                // Si falla, se muestra el error
+                e.printStackTrace();
+            }
+
             // Creamos tres ObjectNode para guardar datos, 'msg' para el principal y
             // 'winnerPlayer' y 'loserPlayer' para los jugadores
             ObjectNode msg = mapper.createObjectNode();
@@ -221,11 +272,45 @@ public class GamesManager {
                 // Para el game loop de esa partida
                 tournament_games.get(room).stopGameLoop();
 
+                // Intenta escribir la información de la partida en el archivo de log tournament
+                try {
+                    tournamentGamesLogLock.lock();
+                    tournamentGamesLogWriter = new BufferedWriter(new FileWriter(tournamentGamesLogFile, true));
+                    String time = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Calendar.getInstance().getTime());
+                    
+                    tournamentGamesLogWriter.write("[Start: " + tournament_games.get(room).initGameTime + " - End: " +
+                    time + "] - Winner: " + winner.getUserName() + "[Id: " + winner.getPlayerId() + ", PlayerType: " + 
+                    winner.getPlayerType() + ", SecondarySkill: " + winner.getSkill() + ", Skin: " + winner.getSkin() +
+                    ", Points: " + winner.getPoints() + "] - Loser: " + loser.getUserName() + "[Id: " + loser.getPlayerId() +
+                    ", PlayerType: " +  loser.getPlayerType() + ", SecondarySkill: " + loser.getSkill() + ", Skin: " +
+                    loser.getSkin() + ", Points: " + loser.getPoints() + "].\n");
+
+                    tournamentGamesLogWriter.close();
+                    tournamentGamesLogLock.unlock();
+                } catch (Exception e2) {
+                    // Si falla, se muestra el error
+                    e2.printStackTrace();
+                }
+
                 // Elimina los datos de la partida
                 tournament_games.remove(room);
                 startGame_counters.remove(room);
                 startGame_locks.remove(room);
+
             } catch (Exception e) {
+                // Intenta escribir la información del error en el archivo de log
+                try {
+                    AKO_Server.logLock.lock();
+                    AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+                    String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+                    AKO_Server.logWriter.write(time + " - SERVER ERROR ON TOURNAMENT GAME END: " + e.getStackTrace() + ".\n");
+                    AKO_Server.logWriter.close();
+                    AKO_Server.logLock.unlock();
+                } catch (Exception e2) {
+                    // Si falla, se muestra el error
+                    e2.printStackTrace();
+                }
+                
                 // Se muestra la excepcion
                 e.printStackTrace();
             }

@@ -1,6 +1,0 @@
-11:29:47 - Server opened.
-11:29:52 - Conected user with session dd55bcd4-0583-a624-a5f1-dd5e8179bce5.
-11:30:00 - Player connected: ranking.
-11:30:03 - Conected user with session e4b9ad3f-a651-c36e-fce5-5ff0dd6415b2.
-11:30:10 - Player connected: prueba2.
-11:32:28 - Player disconnected: ranking.
