@@ -138,6 +138,13 @@ class Scene_Score extends Phaser.Scene {
         game.mPlayer.room = -1;
         game.global.actualScene = "scene_score";
 
+        // Idle timer
+        that.time.addEvent({
+            delay: 10000,
+            callback: that.scene.get("scene_boot").IdleMessage,
+            loop: true
+        });
+
         // Timer que muestra la pantalla de volver a jugar
         /*this.time.addEvent({
             delay: 2000,

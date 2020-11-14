@@ -74,6 +74,13 @@ class Scene_Searching extends Phaser.Scene {
         var that = this;
         game.global.actualScene = "scene_searching";
 
+        // Idle timer
+        that.time.addEvent({
+            delay: 10000,
+            callback: that.scene.get("scene_boot").IdleMessage,
+            loop: true
+        });
+
         // Search game
         game.global.socket.send(JSON.stringify({ event: "SEARCHING_GAME", playerType: game.mPlayer.characterSel.type, skill: game.mPlayer.skillSel, level: game.mPlayer.difficultySel }));
 

@@ -41,6 +41,13 @@ class Scene_Select_Map extends Phaser.Scene {
         var that = this;
         game.global.actualScene = "scene_select_map";
 
+        // Idle timer
+        that.time.addEvent({
+            delay: 10000,
+            callback: that.scene.get("scene_boot").IdleMessage,
+            loop: true
+        });
+
         // Mobile
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
             this.enterText = this.add.image(RelativeScale(1650.0, "x"), RelativeScale(910.0, "x"), "continue_text_mobile")

@@ -201,8 +201,8 @@ class Scene_Level0 extends Phaser.Scene {
         }
 
         // Versus texts
-        this.fight_text = this.add.image(RelativeScale(959, "x"), RelativeScale(428, "Y"), "versus_fight").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(20);
-        this.knock_out_text = this.add.image(RelativeScale(960, "x"), RelativeScale(414.5, "Y"), "versus_knock_out").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(20);
+        this.fight_text = this.add.image(RelativeScale(959, "x"), RelativeScale(428, "Y"), "versus_fight").setScale(RelativeScale(0.2, "x"), RelativeScale(0.2, "y")).setDepth(20);
+        this.knock_out_text = this.add.image(RelativeScale(960, "x"), RelativeScale(414.5, "Y"), "versus_knock_out").setScale(RelativeScale(0.2, "x"), RelativeScale(0.2, "y")).setDepth(20);
         this.error_bg = this.add.image(0,0, "error_bg").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(21);
         this.opponent_disconnected_text = this.add.image(RelativeScale(960, "x"), RelativeScale(528.5, "Y"), "opponent_disconnected_text").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(22);
 
@@ -216,6 +216,13 @@ class Scene_Level0 extends Phaser.Scene {
         // Set the scene
         var that = this;
         game.global.actualScene = "scene_level0";
+
+        // Idle timer
+        that.time.addEvent({
+            delay: 10000,
+            callback: that.scene.get("scene_boot").IdleMessage,
+            loop: true
+        });
 
         this.returnToMenu = false;
         this.gamePaused = false;
@@ -748,6 +755,8 @@ class Scene_Level0 extends Phaser.Scene {
     }
 
     StartGame() {
+        var that = this;
+        
         console.log("Se llama a esconder el versus");
         this.gameStopped = false;
         this.versus_main_bg.setVisible(false);
@@ -762,14 +771,27 @@ class Scene_Level0 extends Phaser.Scene {
         this.versus_pointsB.setVisible(false);
 
         this.fight_text.setVisible(true);
-        this.time.addEvent({
-            delay: 1500,
-            callback: () => (this.fight_text.setVisible(false))
+
+        var tween = this.tweens.add({
+            targets: that.fight_text,
+            scale: (RelativeScale(1, "x"), RelativeScale(1, "y")),
+            duration: 500,
+            repeat: 0,
+        });
+
+        var tween = this.tweens.add({
+            targets: that.fight_text,
+            alpha: 0,
+            delay: 500,
+            duration: 1000,
+            repeat: 0,
         });
     }
 
     FinishGame(wasDisconnection)
     {
+        var that = this;
+
         // Mostrar pantalla de fin de partida
         this.gameStopped = true;
         // Si fue una desconexión, mostrar al jugador el texto de desconexión
@@ -783,5 +805,12 @@ class Scene_Level0 extends Phaser.Scene {
         {
             this.knock_out_text.setVisible(true);
         }
+
+        var tween = this.tweens.add({
+            targets: that.knock_out_text,
+            scale: (RelativeScale(1, "x"), RelativeScale(1, "y")),
+            duration: 400,
+            repeat: 0,
+        });
     }
 }

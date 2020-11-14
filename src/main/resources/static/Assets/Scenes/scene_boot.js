@@ -133,6 +133,11 @@ class Scene_Boot extends Phaser.Scene {
                     }
                     finally {
                         game.global.WS_CONNECTION = true;
+                        that.time.addEvent({
+                            delay: 10000,
+                            callback: that.IdleMessage,
+                            loop: true
+                        });
                     }
                 }
 
@@ -409,6 +414,11 @@ class Scene_Boot extends Phaser.Scene {
                 }
                 finally {
                     game.global.WS_CONNECTION = true;
+                    that.time.addEvent({
+                        delay: 10000,
+                        callback: that.IdleMessage,
+                        loop: true
+                    });
                 }
             }
 
@@ -1043,5 +1053,10 @@ class Scene_Boot extends Phaser.Scene {
     GamesFull()
     {
         this.scene.get(game.global.actualScene).FullError();
+    }
+
+    IdleMessage()
+    {
+        game.global.socket.send(JSON.stringify({ event: "IDLE_MESSAGE" }));
     }
 }

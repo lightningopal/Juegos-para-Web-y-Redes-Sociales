@@ -39,6 +39,13 @@ class Scene_Main_Menu extends Phaser.Scene {
         var that = this;
         game.global.actualScene = "scene_main_menu";
 
+        // Idle timer
+        that.time.addEvent({
+            delay: 10000,
+            callback: that.scene.get("scene_boot").IdleMessage,
+            loop: true
+        });
+
         var tween = this.tweens.add({
             targets: that.nebula,
             angle: 360,

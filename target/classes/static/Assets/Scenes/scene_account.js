@@ -23,6 +23,13 @@ class Scene_Account extends Phaser.Scene {
         var that = this;
         game.global.actualScene = "scene_account";
 
+        // Idle timer
+        that.time.addEvent({
+            delay: 10000,
+            callback: that.scene.get("scene_boot").IdleMessage,
+            loop: true
+        });
+
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE){
 
             this.input.on('pointerup', function () {

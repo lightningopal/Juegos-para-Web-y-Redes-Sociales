@@ -73,6 +73,13 @@ class Scene_Space_Gym extends Phaser.Scene {
         var that = this;
         game.global.actualScene = "scene_space_gym";
 
+        // Idle timer
+        that.time.addEvent({
+            delay: 10000,
+            callback: that.scene.get("scene_boot").IdleMessage,
+            loop: true
+        });
+
         // Dummy de prácticas
         this.dummy = this.add.image(RelativeScale(1500, "x"), RelativeScale(940, "y"), "dummy")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));

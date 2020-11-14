@@ -139,6 +139,13 @@ class Scene_Select_Character extends Phaser.Scene {
         var that = this;
         game.global.actualScene = "scene_select_character";
 
+        // Idle timer
+        that.time.addEvent({
+            delay: 10000,
+            callback: that.scene.get("scene_boot").IdleMessage,
+            loop: true
+        });
+
         // Movimiento del fondo
         var tween = this.tweens.add({
             targets: that.nebula,

@@ -29,6 +29,13 @@ class Scene_Credits extends Phaser.Scene {
         var that = this;
         game.global.actualScene = "scene_credits";
 
+        // Idle timer
+        that.time.addEvent({
+            delay: 10000,
+            callback: that.scene.get("scene_boot").IdleMessage,
+            loop: true
+        });
+
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
             that.backBtn.setFrame(0);
             this.input.on('pointerup', function () {

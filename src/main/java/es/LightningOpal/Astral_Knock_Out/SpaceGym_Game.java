@@ -128,9 +128,7 @@ public class SpaceGym_Game {
                 player.getSession().sendMessage(new TextMessage(message.toString()));
             }
         } catch (Throwable ex) {
-            // System.err.println("Exception sending message to player " +
-            // player.getSession().getId());
-            // ex.printStackTrace(System.err);
+            //ex.printStackTrace(System.err);
             GamesManager.INSTANCE.stopSpaceGym(player);
             System.out.println("No se ha podido enviar mensaje al jugador " + userName + ".");
 
@@ -159,10 +157,6 @@ public class SpaceGym_Game {
         ObjectNode jsonProjectile = mapper.createObjectNode();
         // ArrayNode arrayNodePlatforms = mapper.createArrayNode();
         ArrayNode arrayNodeProjectiles = mapper.createArrayNode();
-
-        // long thisInstant = System.currentTimeMillis();
-        // Set<Integer> bullets2Remove = new HashSet<>();
-        // boolean removeBullets = false;
 
         try {
             // Intenta calcular las físicas del jugador y enviarle los datos
@@ -202,29 +196,6 @@ public class SpaceGym_Game {
             jsonDummy.put("posY", dummy.getPosY());
 
             // Update bullets and handle collision
-            /*
-             * for (Projectile projectile : getProjectiles()) {
-             * projectile.applyVelocity2Position();
-             * 
-             * // Handle collision for (Player player : getPlayers()) { if
-             * ((projectile.getOwner().getPlayerId() != player.getPlayerId()) &&
-             * player.intersect(projectile)) { // System.out.println("Player " +
-             * player.getPlayerId() + " was hit!!!"); projectile.setHit(true); break; } }
-             * 
-             * ObjectNode jsonProjectile = mapper.createObjectNode();
-             * jsonProjectile.put("id", projectile.getId());
-             * 
-             * if (!projectile.isHit() && projectile.isAlive(thisInstant)) {
-             * jsonProjectile.put("posX", projectile.getPosX()); jsonProjectile.put("posY",
-             * projectile.getPosY()); jsonProjectile.put("facingAngle",
-             * projectile.getFacingAngle()); jsonProjectile.put("isAlive", true); } else {
-             * removeBullets = true; bullets2Remove.add(projectile.getId());
-             * jsonProjectile.put("isAlive", false); if (projectile.isHit()) {
-             * jsonProjectile.put("isHit", true); jsonProjectile.put("posX",
-             * projectile.getPosX()); jsonProjectile.put("posY", projectile.getPosY()); } }
-             * arrayNodeProjectiles.addPOJO(jsonProjectile); }
-             */
-
             for (Skill skill : projectiles) {
                 jsonProjectile = mapper.createObjectNode();
                 if (skill.isActive()) {
@@ -286,10 +257,5 @@ public class SpaceGym_Game {
 				e2.printStackTrace();
 			}
         }
-    }
-
-    // Método HandleCollision, de momento no hace nada y puede que no sirva
-    public void handleCollision() {
-
     }
 }

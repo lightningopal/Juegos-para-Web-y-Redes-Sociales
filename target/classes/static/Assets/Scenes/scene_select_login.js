@@ -29,6 +29,13 @@ class Scene_Select_Login extends Phaser.Scene {
         var that = this;
         game.global.actualScene = "scene_select_login";
 
+        // Idle timer
+        that.time.addEvent({
+            delay: 10000,
+            callback: that.scene.get("scene_boot").IdleMessage,
+            loop: true
+        });
+
         this.optionSelected = 0;
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) { // Móvil
             this.input.on('pointerup', function () {

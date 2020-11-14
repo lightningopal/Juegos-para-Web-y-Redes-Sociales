@@ -53,6 +53,13 @@ class Scene_Ranking extends Phaser.Scene {
         var that = this;
         game.global.actualScene = "scene_ranking";
 
+        // Idle timer
+        that.time.addEvent({
+            delay: 10000,
+            callback: that.scene.get("scene_boot").IdleMessage,
+            loop: true
+        });
+
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
             this.input.on('pointerup', function () {
                 that.backBtn.setFrame(0);

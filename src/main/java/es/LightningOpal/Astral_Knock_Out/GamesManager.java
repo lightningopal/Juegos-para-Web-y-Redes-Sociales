@@ -32,16 +32,19 @@ public class GamesManager {
     // Número de partidas de cada uno
     public final int MAX_SPACEGYM_GAMES = 5;
     public final int MAX_TOURNAMENT_GAMES = 10;
-
-    //// Partidas "space gym"
+    
     // Scheduler de las partidas "space gym"
     private ScheduledExecutorService scheduler_spaceGym = Executors.newScheduledThreadPool(MAX_SPACEGYM_GAMES);
 
     // Scheduler de las partidas "tournament"
     private ScheduledExecutorService scheduler_tournament = Executors.newScheduledThreadPool(MAX_TOURNAMENT_GAMES);
 
+    //// Partidas "space gym"
     // Mapa que guarda las partidas "space gym" que se están ejecutando
     public Map<Player, SpaceGym_Game> spaceGym_games = new ConcurrentHashMap<>();
+
+    // Cerrojo que impide tocar a la vez las partidas de "space gym"
+    public Lock spaceGymGamesLock = new ReentrantLock();
 
     //// Partidas "tournament"
     // Mapa que guarda las partidas "tournament" que se están ejecutando
@@ -55,6 +58,9 @@ public class GamesManager {
 
     // Colas que guarda los jugadores que están buscando partida
     public ArrayList<ConcurrentLinkedQueue<Player>> searching_players = new ArrayList<>();
+
+    // Cerrojo que impide tocar a la vez las partidas de "tournament"
+    public Lock tournamentGamesLock = new ReentrantLock();
 
     // Mapper para enviar mensajes
     private ObjectMapper mapper = new ObjectMapper();
@@ -99,12 +105,14 @@ public class GamesManager {
 
     // Método stopSpaceGym, que para la partida de "space gym" del jugador indicado
     public void stopSpaceGym(Player thisPlayer) {
+        spaceGymGamesLock.lock();
         // Obtiene la partida que hay que parar
         SpaceGym_Game gameToStop = spaceGym_games.get(thisPlayer);
         // Para el game loop de esa partida
         gameToStop.stopGameLoop();
         // Elimina la partida del mapa de partidas
         spaceGym_games.remove(thisPlayer);
+        spaceGymGamesLock.unlock();
 
         // Intenta escribir la información en el archivo de log
 		try {
@@ -270,7 +278,9 @@ public class GamesManager {
                 }
 
                 // Para el game loop de esa partida
+                tournamentGamesLock.lock();
                 tournament_games.get(room).stopGameLoop();
+                tournamentGamesLock.unlock();
 
                 // Intenta escribir la información de la partida en el archivo de log tournament
                 try {
@@ -293,9 +303,11 @@ public class GamesManager {
                 }
 
                 // Elimina los datos de la partida
+                tournamentGamesLock.lock();
                 tournament_games.remove(room);
                 startGame_counters.remove(room);
                 startGame_locks.remove(room);
+                tournamentGamesLock.unlock();
 
             } catch (Exception e) {
                 // Intenta escribir la información del error en el archivo de log
