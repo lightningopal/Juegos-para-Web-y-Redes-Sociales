@@ -46,8 +46,8 @@ class Scene_Space_Gym extends Phaser.Scene {
         this.yesBtn = this.add.image(RelativeScale(587.0, "x"), RelativeScale(616.0, "y"), "yes..._button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(10);
         this.yesBtn.setAlpha(0);
-        // this.yesBtn.disableInteractive()
 
+        this.mobileKeys;
         if (game.global.DEVICE == "mobile") {
             var url;
             url = './Assets/Plugins/rexvirtualjoystickplugin.min.js';
@@ -206,44 +206,112 @@ class Scene_Space_Gym extends Phaser.Scene {
                 }
                 break;
         }
-        // console.log(this.projectiles[0]);
         game.mPlayer.image.body.setSize(0, 0);
         game.mPlayer.image.body.allowGravity = false;
 
-        /*
-        this.input.keyboard.on('keydown-'+'D', function (event) {
-                that.optionSelectedCol = (that.optionSelectedCol + 1) % 3;
-                if (game.global.DEBUG_MODE){ 
-                    console.log("COL: "+that.optionSelectedCol);
-                }
-                that.CheckOption();
-        });
-        */
         // Create mobileKeys
-        this.mobileKeys = {
-            joyStick: null,
-            jumpButton: null
-        };
-
         // Si el dispositivo es movil, añadir un joystick y un boton
         if (game.global.DEVICE == "mobile" || game.global.DEBUG_PHONE) {
+            this.mobileKeys = {
+                joyStick: null,
+                jumpButton: null,
+                attackButton: null
+            };
+
             this.mobileKeys.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
-                x: RelativeScale(100, "x"),
-                y: RelativeScale(630, "y"),
+                x: RelativeScale(200, "x"),
+                y: RelativeScale(900, "y"),
                 radius: 15,
-                base: this.add.circle(0, 0, RelativeScale(60, "x"), 0x888888).setAlpha(0.7).setScale(RelativeScale()).setDepth(1000),
-                thumb: this.add.circle(0, 0, RelativeScale(45, "x"), 0xcccccc).setAlpha(0.7).setScale(RelativeScale()).setDepth(1001),
+                base: this.add.circle(0, 0, RelativeScale(60, "x"), 0x888888).setAlpha(0.7).setDepth(8),
+                thumb: this.add.circle(0, 0, RelativeScale(45, "x"), 0xcccccc).setAlpha(0.7).setDepth(9),
                 // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
                 // forceMin: 16,
                 // enable: true
             }).on('update', this.DumpJoyStickState, this);
-
             this.text = this.add.text(0, 0);
             this.DumpJoyStickState();
 
-            this.mobileKeys.jumpButton = this.add.circle(RelativeScale(1160, "x"), RelativeScale(630, "y"), 20, 0xdddddd).setAlpha(0.7).setScale(RelativeScale()).setDepth(1000).setInteractive();
-            console.log(this.mobileKeys.jumpButton);
             this.input.addPointer(2);
+            this.mobileKeys.jumpButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(950, "y"), RelativeScale(80, "x"), 0xdddddd).setAlpha(0.7).setDepth(8).setInteractive();
+            this.mobileKeys.jumpButton.on('pointerdown', that.Jump, this);
+
+            switch (game.mPlayer.characterSel.type) {
+                case 'berserker':
+                    this.mobileKeys.attackButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(800, "y"), RelativeScale(50, "x"), 0xffffff00).setAlpha(0.7).setDepth(8).setInteractive();
+                    this.mobileKeys.attackButton.on('pointerdown', that.BasicAttack, this);
+                    break;
+                case 'wizard':
+                    this.mobileKeys.attackButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(800, "y"), RelativeScale(50, "x"), 0xff00ff00).setAlpha(0.7).setDepth(8).setInteractive();
+                    this.mobileKeys.attackButton.on('pointerdown', that.BasicAttack, this);
+                    break;
+                case 'bard':
+                    this.mobileKeys.attackButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(800, "y"), RelativeScale(50, "x"), 0xffff00ff).setAlpha(0.7).setDepth(8).setInteractive();
+                    this.mobileKeys.attackButton.on('pointerdown', that.BasicAttack, this);
+                    break;
+                case 'rogue':
+                    this.mobileKeys.attackButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(800, "y"), RelativeScale(50, "x"), 0x000000ff).setAlpha(0.7).setDepth(8).setInteractive();
+                    this.mobileKeys.attackButton.on('pointerdown', that.BasicAttack, this);
+                    break;
+                default:
+                    this.mobileKeys.attackButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(800, "y"), RelativeScale(50, "x"), 0xffffff00).setAlpha(0.7).setDepth(8).setInteractive();
+                    this.mobileKeys.attackButton.on('pointerdown', that.BasicAttack, this);
+                    break;
+            }
+
+            this.input.on('pointerup', function () {
+                that.backBtn.setFrame(0);
+                that.yesBtn.setFrame(0);
+                that.noBtn.setFrame(0);
+            });
+
+            this.backBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                that.backBtn.setFrame(1);
+                if (game.global.DEBUG_MODE) {
+                    console.log("Back pulsado");
+                }
+            });
+            this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+                that.backBtn.setFrame(0);
+                if (!that.paused) {
+                    that.backBtn.disableInteractive();
+                    that.msgImg.setAlpha(1);
+                    that.pauseText.setAlpha(1);
+                    that.yesBtn.setAlpha(1);
+                    that.yesBtn.setFrame(0);
+                    that.noBtn.setAlpha(1);
+                    that.noBtn.setFrame(0);
+                }
+                that.paused = !that.paused;
+                that.movingLeft = false;
+                that.movingRight = false;
+                if (game.global.DEBUG_MODE) {
+                    console.log("Back soltado");
+                }
+            });
+
+            this.yesBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                that.yesBtn.setFrame(1);
+                that.noBtn.setFrame(0);
+            });
+            this.yesBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+                game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
+                that.scene.start("scene_main_menu");
+            });
+
+            this.noBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                that.yesBtn.setFrame(0);
+                that.noBtn.setFrame(1);
+            });
+            this.noBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+                that.backBtn.setInteractive();
+                that.paused = false;
+                that.msgImg.setAlpha(0);
+                that.pauseText.setAlpha(0);
+                that.yesBtn.setAlpha(0);
+                that.noBtn.setAlpha(0);
+                that.noBtn.setFrame(0)
+            });
+
         } else if (game.global.DEVICE === "desktop") {
             this.input.keyboard.on("keydown-" + "A", function (event) {
                 if (!that.paused) {
@@ -340,7 +408,6 @@ class Scene_Space_Gym extends Phaser.Scene {
                     if (that.returnToMenu) {
                         // Volver al menú
                         game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
-                        // Reiniciar variables de selección de pj y eso antes de cambiar
                         that.input.keyboard.removeAllKeys(true);
                         that.scene.start("scene_main_menu");
                     } else {
@@ -411,11 +478,7 @@ class Scene_Space_Gym extends Phaser.Scene {
         });
 
         //Colisiones
-        this.characters = [game.mPlayer.image, this.dummy/**, enemyPlayer/**/];
-        //this.bullets = [];
-
-        //this.physics.add.overlap(this.characters, this.bullets, this.BulletHit, player, bullet);
-        //this.physics.add.collider(this.characters, this.platforms);
+        this.characters = [game.mPlayer.image, this.dummy];
         this.physics.add.overlap(this.characters, this.hidePlatforms);
     } // Fin create
 
@@ -429,6 +492,27 @@ class Scene_Space_Gym extends Phaser.Scene {
                 game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_idle", true);
             }
         }
+
+        if (game.global.DEVICE == "mobile" || game.global.DEBUG_PHONE){
+            if (!this.paused) {
+                // Izquierda
+                if ((this.mobileKeys.joyStick.angle < -(90) || this.mobileKeys.joyStick.angle > 135) && this.mobileKeys.joyStick.force > 16) {
+                    this.movingLeft = true;
+                    this.movingRight = false;
+                }
+                // Derecha
+                else if ((this.mobileKeys.joyStick.angle > -(90) && this.mobileKeys.joyStick.angle < 45) && this.mobileKeys.joyStick.force > 16) {
+                    this.movingRight = true;
+                    this.movingLeft = false;
+                } else if ((this.mobileKeys.joyStick.angle > 45 && this.mobileKeys.joyStick.angle < 135) && this.mobileKeys.joyStick.force > 16) {
+                    this.Fall();
+                } else {
+                    this.movingRight = false;
+                    this.movingLeft = false;
+                }
+            }
+        }
+
         this.UpdateGameState();
 
         // Mostrar u ocultar las plataformas al pasar por encima
@@ -440,12 +524,6 @@ class Scene_Space_Gym extends Phaser.Scene {
                 this.ShowPlatform(platform);
             }
         });
-        /*
-        if (this.dummy.body.touching.down){
-            // this.dummy.body.velocity.y = RelativeScale(-800,"y");
-        }
-        */
-
     } // Fin update
 
     /** *
@@ -482,21 +560,30 @@ class Scene_Space_Gym extends Phaser.Scene {
     }
     // Petición de salto del personaje
     Jump() {
-        this.falling = false;
-        game.global.socket.send(JSON.stringify({ event: "ACTION", type: "JUMP" }));
+        if (!this.paused) {
+            this.falling = false;
+            game.global.socket.send(JSON.stringify({ event: "ACTION", type: "JUMP" }));
+        }
     }
     Fall() {
-        this.falling = true;
-        game.global.socket.send(JSON.stringify({ event: "ACTION", type: "FALL" }));
+        if (!this.paused) {
+            this.falling = true;
+            game.global.socket.send(JSON.stringify({ event: "ACTION", type: "FALL" }));
+        }
+
     }
 
     // Petición de ataque básico
     BasicAttack() {
-        game.global.socket.send(JSON.stringify({ event: "ACTION", type: "BASIC_ATTACK", room: game.mPlayer.room }));
+        if (!this.paused) {
+            game.global.socket.send(JSON.stringify({ event: "ACTION", type: "BASIC_ATTACK", room: game.mPlayer.room }));
+        }
     }
     // Petición de ataque especial
     SpecialAttack() {
-        game.global.socket.send(JSON.stringify({ event: "ACTION", type: "SPECIAL_ATTACK", room: game.mPlayer.room }));
+        if (!this.paused) {
+            game.global.socket.send(JSON.stringify({ event: "ACTION", type: "SPECIAL_ATTACK", room: game.mPlayer.room }));
+        }
     }
 
     // Joystick movil
