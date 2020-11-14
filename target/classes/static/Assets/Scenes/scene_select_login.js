@@ -38,6 +38,7 @@ class Scene_Select_Login extends Phaser.Scene {
 
         this.optionSelected = 0;
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) { // Móvil
+            this.logInBtn.setFrame(0);
             this.input.on('pointerup', function () {
                 that.optionSelected = -1;
                 that.logInBtn.setFrame(0);
