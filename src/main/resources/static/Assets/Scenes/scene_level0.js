@@ -80,25 +80,25 @@ class Scene_Level0 extends Phaser.Scene {
 
         // Si el enemigo es el B, el jugador es el A
         if (game.mEnemy.AorB == "B") {
-            this.versus_usernameA = this.add.text(RelativeScale(236.56, "x"), RelativeScale(950.19, "y"), game.mPlayer.userName).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(52);
-            this.versus_usernameB = this.add.text(RelativeScale(1582.39, "x"), RelativeScale(133.70, "y"), game.mEnemy.userName).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(52);
+            this.versus_usernameA = this.add.text(RelativeScale(236.56, "x"), RelativeScale(950.19, "y"), game.mPlayer.userName, { fontFamily: 'font_Write' }).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(Math.round(RelativeScale(104, "x")));
+            this.versus_usernameB = this.add.text(RelativeScale(1582.39, "x"), RelativeScale(133.70, "y"), game.mEnemy.userName, { fontFamily: 'font_Write' }).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(Math.round(RelativeScale(104, "x")));
 
             this.versus_characterA = this.add.image(RelativeScale(440, "x"), RelativeScale(450, "Y"), "splashart_" + game.mPlayer.characterSel.type).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(13);
             this.versus_characterB = this.add.image(RelativeScale(1680, "x"), RelativeScale(700, "Y"), "splashart_" + game.mEnemy.characterSel.type).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(13);
 
-            this.versus_pointsA = this.add.text(RelativeScale(236.56, "x"), RelativeScale(1000.19, "y"), "Points: " + game.mPlayer.points).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(44);
-            this.versus_pointsB = this.add.text(RelativeScale(1582.39, "x"), RelativeScale(183.70, "y"), "Points: " + game.mEnemy.points).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(44);
+            this.versus_pointsA = this.add.text(RelativeScale(236.56, "x"), RelativeScale(1000.19, "y"), "Points: " + game.mPlayer.points, { fontFamily: 'font_Write' }).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(Math.round(RelativeScale(88, "x")));
+            this.versus_pointsB = this.add.text(RelativeScale(1582.39, "x"), RelativeScale(183.70, "y"), "Points: " + game.mEnemy.points, { fontFamily: 'font_Write' }).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(Math.round(RelativeScale(88, "x")));
         }
         // Si no, el jugador es el B
         else {
-            this.versus_usernameA = this.add.text(RelativeScale(236.56, "x"), RelativeScale(950.19, "y"), game.mEnemy.userName).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(52);
-            this.versus_usernameB = this.add.text(RelativeScale(1582.39, "x"), RelativeScale(133.70, "y"), game.mPlayer.userName).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(52);
+            this.versus_usernameA = this.add.text(RelativeScale(236.56, "x"), RelativeScale(950.19, "y"), game.mEnemy.userName, { fontFamily: 'font_Write' }).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(Math.round(RelativeScale(104, "x")));
+            this.versus_usernameB = this.add.text(RelativeScale(1582.39, "x"), RelativeScale(133.70, "y"), game.mPlayer.userName, { fontFamily: 'font_Write' }).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(Math.round(RelativeScale(104, "x")));
 
             this.versus_characterA = this.add.image(RelativeScale(440, "x"), RelativeScale(450, "Y"), "splashart_" + game.mEnemy.characterSel.type).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(13);
             this.versus_characterB = this.add.image(RelativeScale(1680, "x"), RelativeScale(700, "Y"), "splashart_" + game.mPlayer.characterSel.type).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(13);
         
-            this.versus_pointsA = this.add.text(RelativeScale(236.56, "x"), RelativeScale(1000.19, "y"), "Points: " + game.mEnemy.points).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(44);
-            this.versus_pointsB = this.add.text(RelativeScale(1582.39, "x"), RelativeScale(183.70, "y"), "Points: " + game.mPlayer.points).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(44);
+            this.versus_pointsA = this.add.text(RelativeScale(236.56, "x"), RelativeScale(1000.19, "y"), "Points: " + game.mEnemy.points, { fontFamily: 'font_Write' }).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(Math.round(RelativeScale(88, "x")));
+            this.versus_pointsB = this.add.text(RelativeScale(1582.39, "x"), RelativeScale(183.70, "y"), "Points: " + game.mPlayer.points, { fontFamily: 'font_Write' }).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0.5, 0.5).setDepth(15).setFontSize(Math.round(RelativeScale(88, "x")));
         }
 
         switch (game.mEnemy.AorB) {

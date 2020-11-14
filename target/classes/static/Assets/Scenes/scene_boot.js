@@ -50,7 +50,7 @@ class Scene_Boot extends Phaser.Scene {
                 y: this.game.renderer.height / 2 - 30,
                 text: 'Please wait...',
                 style: {
-                    font: '24px font_Ftb',
+                    font: '24px font_Write',
                     fill: '#ffffff'
                 }
             });
@@ -61,7 +61,7 @@ class Scene_Boot extends Phaser.Scene {
                 y: this.game.renderer.height / 2 + 20,
                 text: '0%',
                 style: {
-                    font: '20px font_Ftb',
+                    font: '20px font_Write',
                     fill: '#e952c4'
                 }
             });
@@ -72,7 +72,7 @@ class Scene_Boot extends Phaser.Scene {
                 y: this.game.renderer.height / 2 + 70,
                 text: '',
                 style: {
-                    font: '24px font_Ftb',
+                    font: '24px font_Write',
                     fill: '#ffffff'
                 }
             });
@@ -355,7 +355,7 @@ class Scene_Boot extends Phaser.Scene {
                 y: this.game.renderer.height / 2 - 30,
                 text: 'Connecting to server...',
                 style: {
-                    font: '24px font_Ftb',
+                    font: '24px font_Write',
                     fill: '#ffffff'
                 }
             });
@@ -366,7 +366,7 @@ class Scene_Boot extends Phaser.Scene {
                 y: this.game.renderer.height / 2 + 20,
                 text: '100%',
                 style: {
-                    font: '20px font_Ftb',
+                    font: '20px font_Write',
                     fill: '#e952c4'
                 }
             });
@@ -377,7 +377,7 @@ class Scene_Boot extends Phaser.Scene {
                 y: this.game.renderer.height / 2 + 70,
                 text: 'Load complete.',
                 style: {
-                    font: '24px font_Ftb',
+                    font: '24px font_Write',
                     fill: '#ffffff'
                 }
             });
