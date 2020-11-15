@@ -235,6 +235,11 @@ class Scene_Boot extends Phaser.Scene {
             this.load.image("splashart_wizard", "./Assets/Images/UI/splash_arts/wizard_splashart.png");
             this.load.image("splashart_rogue", "./Assets/Images/UI/splash_arts/rogue_splashart.png");
             this.load.image("splashart_berserker", "./Assets/Images/UI/splash_arts/berserker_splashart.png");
+            ///Skings personajes
+            this.load.spritesheet("berserker_skins", "./Assets/Images/UI/berserker_skins.png", { frameWidth: 463, frameHeight: 213 });
+            this.load.spritesheet("wizard_skins", "./Assets/Images/UI/wizard_skins.png", { frameWidth: 463, frameHeight: 213 });
+            this.load.spritesheet("bard_skins", "./Assets/Images/UI/bard_skins.png", { frameWidth: 463, frameHeight: 213 });
+            this.load.spritesheet("rogue_skins", "./Assets/Images/UI/rogue_skins.png", { frameWidth: 463, frameHeight: 213 });
 
             ///Escena de desconexion///
             this.load.image("disconnected_text", "./Assets/Images/UI/connection_failed_text.png");
@@ -260,6 +265,9 @@ class Scene_Boot extends Phaser.Scene {
             this.load.image("rogue_projectile", "./Assets/Images/Characters/Projectiles/rogue_projectile.png");
 
             ///Nivel 1///
+            // Interfaz de móvil
+            this.load.image("jump_button_mobile", "./Assets/Images/UI/jump_button_mobile.png");
+            this.load.spritesheet("skills_button_mobile", "./Assets/Images/UI/skills_button_mobile.png", { frameWidth: 272.25, frameHeight: 211.0 });
             // Fondo
             this.load.image("level_1_bg", "./Assets/Images/BackGrounds/level_1_bg.png");
             this.load.image("level_1_bg_details", "./Assets/Images/BackGrounds/level_1_bg_details.png");

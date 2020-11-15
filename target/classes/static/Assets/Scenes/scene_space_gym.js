@@ -221,9 +221,9 @@ class Scene_Space_Gym extends Phaser.Scene {
             this.mobileKeys.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
                 x: RelativeScale(200, "x"),
                 y: RelativeScale(900, "y"),
-                radius: 15,
-                base: this.add.circle(0, 0, RelativeScale(60, "x"), 0x888888).setAlpha(0.7).setDepth(8),
-                thumb: this.add.circle(0, 0, RelativeScale(45, "x"), 0xcccccc).setAlpha(0.7).setDepth(9),
+                radius: RelativeScale(40,"x"),
+                base: this.add.circle(0, 0, RelativeScale(100, "x"), 0x888888).setAlpha(0.7).setDepth(8),
+                thumb: this.add.circle(0, 0, RelativeScale(80, "x"), 0xcccccc).setAlpha(0.7).setDepth(9),
                 // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
                 // forceMin: 16,
                 // enable: true
@@ -232,36 +232,45 @@ class Scene_Space_Gym extends Phaser.Scene {
             this.DumpJoyStickState();
 
             this.input.addPointer(2);
-            this.mobileKeys.jumpButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(950, "y"), RelativeScale(80, "x"), 0xdddddd).setAlpha(0.7).setDepth(8).setInteractive();
-            this.mobileKeys.jumpButton.on('pointerdown', that.Jump, this);
-
+            
+            this.mobileKeys.jumpButton = this.add.image(RelativeScale(1717.50, "x"), RelativeScale(895.50, "y"), "jump_button_mobile")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setAlpha(0.5).setDepth(8);
+            this.mobileKeys.jumpButton.setInteractive().on('pointerdown', that.Jump, this);
+            
+            this.mobileKeys.attackButton = this.add.image(RelativeScale(1614.00, "x"), RelativeScale(635.50, "y"), "skills_button_mobile")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setAlpha(0.5).setDepth(8);
             switch (game.mPlayer.characterSel.type) {
                 case 'berserker':
-                    this.mobileKeys.attackButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(800, "y"), RelativeScale(50, "x"), 0xffffff00).setAlpha(0.7).setDepth(8).setInteractive();
-                    this.mobileKeys.attackButton.on('pointerdown', that.BasicAttack, this);
+                    this.mobileKeys.attackButton.setFrame(2);
                     break;
                 case 'wizard':
-                    this.mobileKeys.attackButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(800, "y"), RelativeScale(50, "x"), 0xff00ff00).setAlpha(0.7).setDepth(8).setInteractive();
-                    this.mobileKeys.attackButton.on('pointerdown', that.BasicAttack, this);
+                    this.mobileKeys.attackButton.setFrame(0);
                     break;
                 case 'bard':
-                    this.mobileKeys.attackButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(800, "y"), RelativeScale(50, "x"), 0xffff00ff).setAlpha(0.7).setDepth(8).setInteractive();
-                    this.mobileKeys.attackButton.on('pointerdown', that.BasicAttack, this);
+                    this.mobileKeys.attackButton.setFrame(3);
                     break;
                 case 'rogue':
-                    this.mobileKeys.attackButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(800, "y"), RelativeScale(50, "x"), 0x000000ff).setAlpha(0.7).setDepth(8).setInteractive();
-                    this.mobileKeys.attackButton.on('pointerdown', that.BasicAttack, this);
+                    this.mobileKeys.attackButton.setFrame(1);
                     break;
                 default:
-                    this.mobileKeys.attackButton = this.add.circle(RelativeScale(1800, "x"), RelativeScale(800, "y"), RelativeScale(50, "x"), 0xffffff00).setAlpha(0.7).setDepth(8).setInteractive();
-                    this.mobileKeys.attackButton.on('pointerdown', that.BasicAttack, this);
+                    this.mobileKeys.attackButton.setFrame(0);
                     break;
             }
+            this.mobileKeys.attackButton.setInteractive().on('pointerdown', that.BasicAttack, this);
+
+            this.input.on('pointerdown', function (pointer, localX, localY, event) {
+                if (Unscale(pointer.downX,"x") < 960 && Unscale(pointer.downY, "y") > 540){
+                    that.mobileKeys.joyStick.x = pointer.downX;
+                    that.mobileKeys.joyStick.y = pointer.downY;
+                }
+            });
 
             this.input.on('pointerup', function () {
                 that.backBtn.setFrame(0);
                 that.yesBtn.setFrame(0);
                 that.noBtn.setFrame(0);
+                that.mobileKeys.joyStick.x = RelativeScale(200, "x");
+                that.mobileKeys.joyStick.y = RelativeScale(900, "y");
             });
 
             this.backBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
@@ -494,6 +503,7 @@ class Scene_Space_Gym extends Phaser.Scene {
         }
 
         if (game.global.DEVICE == "mobile" || game.global.DEBUG_PHONE){
+            // Movimiento
             if (!this.paused) {
                 // Izquierda
                 if ((this.mobileKeys.joyStick.angle < -(90) || this.mobileKeys.joyStick.angle > 135) && this.mobileKeys.joyStick.force > 16) {
@@ -510,6 +520,11 @@ class Scene_Space_Gym extends Phaser.Scene {
                     this.movingRight = false;
                     this.movingLeft = false;
                 }
+            }
+            // Mover el joystick si se sale del radio
+            if (this.mobileKeys.joyStick.force > (RelativeScale(150,"x"))){
+                this.mobileKeys.joyStick.x += ((this.mobileKeys.joyStick.thumb.x - this.mobileKeys.joyStick.base.x));
+                this.mobileKeys.joyStick.y += ((this.mobileKeys.joyStick.thumb.y - this.mobileKeys.joyStick.base.y));
             }
         }
 

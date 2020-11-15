@@ -1,3 +1,4 @@
 [Start: 2020-11-14_21-01-16 - End: 2020-11-14_21-01-37] - Winner: Thund3r[Id: 0, PlayerType: rogue, SecondarySkill: -1, Skin: 0, Points: 1770] - Loser: prueba5[Id: 9, PlayerType: bard, SecondarySkill: -1, Skin: 0, Points: 1000].
 [Start: 2020-11-15_13-24-38 - End: 2020-11-15_13-25-20] - Winner: ranking[Id: 10, PlayerType: wizard, SecondarySkill: -1, Skin: 0, Points: 504] - Loser: prueba2[Id: 6, PlayerType: berserker, SecondarySkill: -1, Skin: 0, Points: 876].
 [Start: 2020-11-15_13-41-52 - End: 2020-11-15_13-42-16] - Winner: prueba2[Id: 6, PlayerType: berserker, SecondarySkill: -1, Skin: 0, Points: 876] - Loser: ranking[Id: 10, PlayerType: rogue, SecondarySkill: -1, Skin: 0, Points: 504].
+[Start: 2020-11-16_00-04-48 - End: 2020-11-16_00-05-35] - Winner: ranking[Id: 10, PlayerType: berserker, SecondarySkill: -1, Skin: 0, Points: 453] - Loser: prueba2[Id: 6, PlayerType: wizard, SecondarySkill: -1, Skin: 0, Points: 927].
