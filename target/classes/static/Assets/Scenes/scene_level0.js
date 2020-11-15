@@ -229,62 +229,6 @@ class Scene_Level0 extends Phaser.Scene {
         this.gamePaused = false;
         this.gameStopped = true;
 
-        // Pool de habilidades
-        /*Bardo*
-        this.bardAttack1 = new BardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-        this.bardAttack2 = new BardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-        /**/
-        /*Berserker*
-        this.berserkerAttack1 = new BerserkerSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-        this.berserkerAttack2 = new Berserker(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 800)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-        /**/
-        /*Mago*
-         this.wizardAttack1 = new WizardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-         this.wizardAttack2 = new WizardSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-         this.wizardAttack3 = new WizardSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-         this.wizardAttack4 = new WizardSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-         this.wizardAttack5 = new WizardSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-         this.wizardAttack6 = new WizardSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 1500, 350)
-         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-         /**/
-        /*Pícaro*
-        this.rogueAttack1 = new RogueSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 350, 0)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-        this.rogueAttack2 = new RogueSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 2000, 350, 150)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-        this.rogueAttack3 = new RogueSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 2000, 350, 300)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-        this.rogueAttack4 = new RogueSkill(this, 0, 0, 0,"projectile", this.dummy, 10, 2000, 350, 0)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-        this.rogueAttack5 = new RogueSkill(this, 1, 0, 0,"projectile", this.dummy, 10, 2000, 350, 150)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-        this.rogueAttack6 = new RogueSkill(this, 2, 0, 0,"projectile", this.dummy, 10, 2000, 350, 300)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6);
-        /**/
-        /**
-        // Se añade el pool a un array y se pasa al arma del personaje (que maneja el id del ataque a lanzar)
-        this.bardBasicAttacks = [this.bardAttack1, this.bardAttack2];
-        // var berserkerBasicAttacks = [this.berserkerAttack1, this.berserkerAttack2];
-        // var wizardBasicAttacks = [this.wizardAttack1,this.wizardAttack2,this.wizardAttack3, 
-            // this.wizardAttack4,this.wizardAttack5,this.wizardAttack6];
-        // var rogueBasicAttacks = [this.rogueAttack1,this.rogueAttack2,this.rogueAttack3, 
-        //     this.rogueAttack4,this.rogueAttack5,this.rogueAttack6];
-        this.basicWeapon = new Weapon(this, 700, this.bardBasicAttacks, 1);
-        /**/
-        // Crear el personaje
-        // this.myPlayer = new Character_Controller(this, 0, RelativeScale(250, "x"),
-        // RelativeScale(850, "y"), "bard", RelativeScale(), this.cursors1, 
-        // this.mobileKeys, RelativeScale(500, "x"), RelativeScale(1020, "y"), 100, this.basicWeapon, this.basicWeapon)
-        // .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.myMovingLeft = false;
         this.myMovingRight = false;
         this.falling = false;
@@ -679,7 +623,7 @@ class Scene_Level0 extends Phaser.Scene {
         });
 
         //Colisiones
-        this.characters = [game.mPlayer.image, game.mEnemy.image/**, enemyPlayer/**/];
+        this.characters = [game.mPlayer.image, game.mEnemy.image];
         
         this.physics.add.overlap(this.characters, this.hidePlatforms);
 
@@ -712,12 +656,9 @@ class Scene_Level0 extends Phaser.Scene {
         }
 
         if (game.global.DEVICE == "mobile" || game.global.DEBUG_PHONE){
-            console.log("Móvil");
             if (!this.gamePaused) {
-                console.log("No hay pausa");
                 // Izquierda
                 if ((this.mobileKeys.joyStick.angle < -(90) || this.mobileKeys.joyStick.angle > 135) && this.mobileKeys.joyStick.force > 16) {
-                    console.log("Izquierda");
                     this.myMovingLeft = true;
                     this.myMovingRight = false;
                 }
@@ -750,12 +691,12 @@ class Scene_Level0 extends Phaser.Scene {
         this.versus_stars.tilePositionY += 0.4;
     } // Fin update
 
-    /** *
+    
     BulletHit(player, bullet) {
         this.DamagePlayer(player, bullet);
         this.RemoveBullet(bullet);
     }
-
+    /** *
     RemoveBullet(bullet) {
         var index = bullet.bulletIndex;
         this.bullets[index].destroy();

@@ -92,7 +92,7 @@ window.onload = function () {
         DEVICE:         null,
         FPS:            60,
         DEBUG_MODE:     true,
-        DEBUG_PHONE:    false,
+        DEBUG_PHONE:    true,
         WS_CONNECTION:  false,
         socket:         null,
         IP:             "192.168.1.35",
