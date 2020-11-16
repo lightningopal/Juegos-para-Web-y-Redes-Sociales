@@ -21,17 +21,23 @@ class Scene_Select_Character extends Phaser.Scene {
         }
         this.add.image(RelativeScale(498.0,"x"), RelativeScale(665.0,"y"), "select_character_lines_interface")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.texts = this.add.image(RelativeScale(1425.02, "x"), RelativeScale(410.0, "x"), "description_text")
+        this.texts = this.add.image(RelativeScale(1425.02, "x"), RelativeScale(410.0, "y"), "description_text")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
-        this.skinsSkills = this.add.image(RelativeScale(1476.17, "x"), RelativeScale(777.88, "x"), "skins_skills")
+        this.skinsSkills = this.add.image(RelativeScale(1476.17, "x"), RelativeScale(777.88, "y"), "skins_skills")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
-        this.leftArrowBtn = this.add.image(RelativeScale(1238.75, "x"), RelativeScale(744.07, "x"), "left_arrow_button")
+        this.leftArrowBtn = this.add.image(RelativeScale(1238.75, "x"), RelativeScale(744.07, "y"), "left_arrow_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
-        this.rightArrowBtn = this.add.image(RelativeScale(1580.07, "x"), RelativeScale(867.88, "x"), "right_arrow_button")
+        this.rightArrowBtn = this.add.image(RelativeScale(1580.07, "x"), RelativeScale(867.88, "y"), "right_arrow_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
-        this.enterBtn = this.add.image(RelativeScale(1810.0, "x"), RelativeScale(1000.0, "x"), "enter_button")
+        this.enterBtn = this.add.image(RelativeScale(1810.0, "x"), RelativeScale(1000.0, "y"), "enter_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2);
         this.enterText;
+        this.skinsImages = [
+            this.add.image(RelativeScale(1400.0, "x"), RelativeScale(816.0, "y"), "berserker_skins").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2).setVisible(false),
+            this.add.image(RelativeScale(1400.0, "x"), RelativeScale(816.0, "y"), "wizard_skins").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2).setVisible(false),
+            this.add.image(RelativeScale(1400.0, "x"), RelativeScale(816.0, "y"), "bard_skins").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2).setVisible(false),
+            this.add.image(RelativeScale(1400.0, "x"), RelativeScale(816.0, "y"), "rogue_skins").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2).setVisible(false)
+            ];
 
         // Personajes
         this.availableChars = [[{ char: "berserker", purchased: false, available: true }, { char: "wizard", purchased: false, available: true },
@@ -347,6 +353,7 @@ class Scene_Select_Character extends Phaser.Scene {
             this.berserkerBtn.setFrame(1);
             this.berserkerBtn.setAlpha(1);
             this.skinsSkills.setAlpha(0.7);
+            this.skinsImages[0].setVisible(true);
 
             // Opciones de selección
             this.input.keyboard.on("keydown-"+"ESC", function (event) {
@@ -535,6 +542,10 @@ class Scene_Select_Character extends Phaser.Scene {
                     alpha: 0.7,
                     duration: 250,
                 });
+                this.skinsImages[0].setVisible(false);
+                this.skinsImages[1].setVisible(false);
+                this.skinsImages[2].setVisible(false);
+                this.skinsImages[3].setVisible(false);
                 break;
             case 0:
                 switch (this.characterSelectedCol) {
@@ -559,6 +570,10 @@ class Scene_Select_Character extends Phaser.Scene {
                             alpha: 1,
                             duration: 250,
                         });
+                        this.skinsImages[0].setVisible(true);
+                        this.skinsImages[1].setVisible(false);
+                        this.skinsImages[2].setVisible(false);
+                        this.skinsImages[3].setVisible(false);
                         break;
                     case 1:
                         // Wizard
@@ -581,6 +596,10 @@ class Scene_Select_Character extends Phaser.Scene {
                             alpha: 1,
                             duration: 250,
                         });
+                        this.skinsImages[0].setVisible(false);
+                        this.skinsImages[1].setVisible(true);
+                        this.skinsImages[2].setVisible(false);
+                        this.skinsImages[3].setVisible(false);
                         break;
                     case 2:
                         // Bard
@@ -603,6 +622,10 @@ class Scene_Select_Character extends Phaser.Scene {
                             alpha: 1,
                             duration: 250,
                         });
+                        this.skinsImages[0].setVisible(false);
+                        this.skinsImages[1].setVisible(false);
+                        this.skinsImages[2].setVisible(true);
+                        this.skinsImages[3].setVisible(false);
                         break;
                 }// Fin switch(col)
                 break;
@@ -629,6 +652,10 @@ class Scene_Select_Character extends Phaser.Scene {
                             alpha: 1,
                             duration: 250,
                         });
+                        this.skinsImages[0].setVisible(false);
+                        this.skinsImages[1].setVisible(false);
+                        this.skinsImages[2].setVisible(false);
+                        this.skinsImages[3].setVisible(true);
                         break;
                     case 1:
                         // Blocked
@@ -651,6 +678,10 @@ class Scene_Select_Character extends Phaser.Scene {
                             alpha: 1,
                             duration: 250,
                         });
+                        this.skinsImages[0].setVisible(false);
+                        this.skinsImages[1].setVisible(false);
+                        this.skinsImages[2].setVisible(false);
+                        this.skinsImages[3].setVisible(false);
                         break;
                     case 2:
                         // Blocked
@@ -674,6 +705,10 @@ class Scene_Select_Character extends Phaser.Scene {
                             alpha: 1,
                             duration: 250,
                         });
+                        this.skinsImages[0].setVisible(false);
+                        this.skinsImages[1].setVisible(false);
+                        this.skinsImages[2].setVisible(false);
+                        this.skinsImages[3].setVisible(false);
                         break;
                 }// Fin switch(col)
                 break;
@@ -717,6 +752,7 @@ class Scene_Select_Character extends Phaser.Scene {
             // Comprobar si el usuario tiene la skin this.skinSelectedCol 
             if (game.mPlayer.availableSkins[game.mPlayer.characterSel.id].includes(this.skinSelectedCol)) {
                 // Guay
+                this.skinsImages[game.mPlayer.characterSel.id].setFrame(this.skinSelectedCol);
             } else {
                 // No tiene la skin --> ponerlo en gris o algo
             }

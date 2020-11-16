@@ -1,0 +1,30 @@
+12:29:10 - Server opened.
+12:29:25 - Conected user with session 7d1a4171-a499-1deb-8008-e911c0c83986.
+12:29:39 - Player connected: prueba2.
+12:30:31 - Player disconnected: prueba2.
+12:30:41 - Conected user with session 41be3747-380a-7abd-bac5-4a6a562f20fb.
+12:30:47 - Player connected: prueba2.
+12:32:18 - Player disconnected: prueba2.
+12:32:35 - Conected user with session 07655327-4510-e12d-2fe8-cd81dacf7f81.
+12:32:42 - Player connected: prueba2.
+12:34:10 - Users data saved.
+12:39:10 - Users data saved.
+12:39:50 - Player disconnected: prueba2.
+12:40:07 - Conected user with session 43b06cbf-2d1c-4ef1-01ae-d48d351b5905.
+12:40:44 - Player connected: prueba2.
+12:43:50 - Player disconnected: prueba2.
+12:43:57 - Conected user with session 5ffed17a-851d-00ec-a689-857cd7ae8b34.
+12:44:10 - Users data saved.
+12:44:12 - Player connected: prueba2.
+12:45:01 - Player disconnected: prueba2.
+12:45:07 - Conected user with session 065a2eab-0b7b-74a1-cbec-5b4ac78ff5c5.
+12:45:14 - Player connected: prueba2.
+12:45:32 - Player disconnected: prueba2.
+12:45:39 - Conected user with session 9f9959ae-d715-05d0-755d-4047fa82e23c.
+12:46:21 - Player connected: prueba2.
+12:46:39 - Player disconnected: prueba2.
+12:46:46 - Conected user with session 17738c73-cfcb-8622-6939-2afbe916a86f.
+12:46:50 - Player connected: prueba2.
+12:47:21 - Player disconnected: prueba2.
+12:47:27 - Conected user with session e387db28-602d-2926-cecb-8f6d5d3200d1.
+12:47:48 - Player connected: prueba2.
