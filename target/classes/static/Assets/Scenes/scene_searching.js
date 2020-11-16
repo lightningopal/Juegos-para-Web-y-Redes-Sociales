@@ -23,22 +23,22 @@ class Scene_Searching extends Phaser.Scene {
         switch (game.mPlayer.characterSel.type)
         {
             case "bard":
-                characterImage.setScale(RelativeScale(1.4, "x"));
+                characterImage.setScale(RelativeScale(1.4, "x"),RelativeScale(1.4, "y"));
                 characterImage.y = RelativeScale(500, "y");
                 break;
             case "wizard":
                 characterImage.x = RelativeScale(500, "x");
                 characterImage.y = RelativeScale(600, "y");
-                characterImage.setScale(RelativeScale(1.25, "x"));
+                characterImage.setScale(RelativeScale(1.25, "x"),RelativeScale(1.25, "y"));
                 characterImage.setFlip(true);
                 break;
             case "rogue":
-                characterImage.setScale(RelativeScale(1.5, "x"));
+                characterImage.setScale(RelativeScale(1.5, "x"),RelativeScale(1.5, "y"));
                 characterImage.setFlip(true);
                 characterImage.y = RelativeScale(740, "y");
                 break;
             case "berserker":
-                characterImage.setScale(RelativeScale(1.4, "x"));
+                characterImage.setScale(RelativeScale(1.4, "x"),RelativeScale(1.4, "y"));
                 break;
         }
 

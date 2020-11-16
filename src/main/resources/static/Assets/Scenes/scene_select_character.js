@@ -180,7 +180,7 @@ class Scene_Select_Character extends Phaser.Scene {
         this.confirmSkin = true;
 
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
-            this.enterText = this.add.image(RelativeScale(1650.0, "x"), RelativeScale(910.0, "x"), "continue_text_mobile")
+            this.enterText = this.add.image(RelativeScale(1650.0, "x"), RelativeScale(910.0, "y"), "continue_text_mobile")
                 .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
             this.texts.setAlpha(0);
             this.skinsSkills.setFrame(4);
@@ -344,7 +344,7 @@ class Scene_Select_Character extends Phaser.Scene {
             });
 
         } else if (game.global.DEVICE === "desktop") {
-            this.enterText = this.add.image(RelativeScale(1350.0, "x"), RelativeScale(1000.0, "x"), "continue_text_desktop")
+            this.enterText = this.add.image(RelativeScale(1350.0, "x"), RelativeScale(1000.0, "y"), "continue_text_desktop")
                 .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
             this.enterText.setAlpha(0);
             this.rightArrowBtn.setAlpha(0);

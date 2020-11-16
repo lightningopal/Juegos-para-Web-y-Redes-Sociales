@@ -24,7 +24,7 @@ class Scene_Select_Map extends Phaser.Scene {
         this.mapButton1 = this.add.image(RelativeScale(1415, "x"), RelativeScale(523, "y"), "map_button1").setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.mapButton1.setFrame(0);
 
-        this.enterBtn = this.add.image(RelativeScale(1810.0, "x"), RelativeScale(1000.0, "x"), "enter_button")
+        this.enterBtn = this.add.image(RelativeScale(1810.0, "x"), RelativeScale(1000.0, "y"), "enter_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2);
         this.enterText;
 
@@ -50,7 +50,7 @@ class Scene_Select_Map extends Phaser.Scene {
 
         // Mobile
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
-            this.enterText = this.add.image(RelativeScale(1650.0, "x"), RelativeScale(910.0, "x"), "continue_text_mobile")
+            this.enterText = this.add.image(RelativeScale(1650.0, "x"), RelativeScale(910.0, "y"), "continue_text_mobile")
                 .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
             that.mapButton0.setFrame(0);
 
@@ -113,7 +113,7 @@ class Scene_Select_Map extends Phaser.Scene {
             });
             // Desktop
         } else {
-            this.enterText = this.add.image(RelativeScale(1350.0, "x"), RelativeScale(1000.0, "x"), "continue_text_desktop")
+            this.enterText = this.add.image(RelativeScale(1350.0, "x"), RelativeScale(1000.0, "y"), "continue_text_desktop")
                 .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
             this.enterText.setVisible(false);
             this.backBtn.setFrame(0);
