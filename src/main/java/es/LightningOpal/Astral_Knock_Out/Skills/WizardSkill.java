@@ -36,7 +36,7 @@ public class WizardSkill extends Skill{
         super.activate();
         // Activar habilidad
         this.setPosX(caster.getPosX());
-        this.setPosY(caster.getPosY());
+        this.setPosY(caster.getPosY()-40);
         if (this.IsFlipped()){
             this.setVelX(-this.getMoveSpeed());
         }else{

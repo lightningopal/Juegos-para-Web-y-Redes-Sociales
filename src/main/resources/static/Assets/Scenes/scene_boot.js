@@ -474,7 +474,7 @@ class Scene_Boot extends Phaser.Scene {
         this.anims.create({
             key: 'bard_attack',
             frames: this.anims.generateFrameNumbers('bard_attack', { start: 0, end: 10 }),
-            frameRate: 12
+            frameRate: 11
         });
 
         // Creamos las animaciones del mago
@@ -512,7 +512,7 @@ class Scene_Boot extends Phaser.Scene {
         this.anims.create({
             key: 'berserker_attack',
             frames: this.anims.generateFrameNumbers('berserker_attack', { start: 0, end: 9 }),
-            frameRate: 12
+            frameRate: 20
         });
 
         // Creamos las animaciones de la Pícara

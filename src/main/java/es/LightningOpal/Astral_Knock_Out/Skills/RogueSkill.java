@@ -74,7 +74,7 @@ public class RogueSkill extends Skill{
     public void start(){
         super.activate();
         this.setPosX(caster.getPosX());
-        this.setPosY(caster.getPosY());
+        this.setPosY(caster.getPosY()+15);
         this.setVelY(0);
         if (this.IsFlipped()){
             this.setVelX(-this.getMoveSpeed());
