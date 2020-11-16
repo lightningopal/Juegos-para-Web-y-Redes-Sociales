@@ -1001,6 +1001,8 @@ class Scene_Boot extends Phaser.Scene {
         if (data.winner.userName == game.mPlayer.userName)
         {
             console.log("GANADOR!");
+            // Se reduce la barra de vida del enemigo a 0 HP
+            this.scene.get(game.global.actualScene).eHP.currentHP = 0;
             // Diferencia de puntos positiva
             game.mPlayer.pointsDifference = data.pointsDifference;
 
@@ -1019,6 +1021,8 @@ class Scene_Boot extends Phaser.Scene {
         else
         {
             console.log("Perdedor...");
+            // Se reduce mi barra de vida a 0 HP
+            this.scene.get(game.global.actualScene).myHP.currentHP = 0;
             // Diferencia de puntos negativa
             game.mPlayer.pointsDifference = -(data.pointsDifference);
 

@@ -27,18 +27,19 @@ class UserInterface{
         this.bar.clear();
 
         //  BG
-        this.bar.fillStyle(0xaaffaa);
-        this.bar.fillRect(this.x, this.y, RelativeScale(110, "x"), RelativeScale(16,"y"));
+        // this.bar.fillStyle(0xaaffaa);
+        this.bar.fillStyle(0xff55ff);
+        this.bar.fillRect(this.x, this.y, RelativeScale(110, "x"), RelativeScale(10,"y"));
 
         //  Health
 
         this.bar.fillStyle(0xffffff);
-        this.bar.fillRect(this.x + RelativeScale(5,"x"), this.y + RelativeScale(4,"y"), RelativeScale(100,"x"), RelativeScale(8,"y"));
+        this.bar.fillRect(this.x + RelativeScale(5,"x"), this.y + RelativeScale(2,"y"), RelativeScale(100,"x"), RelativeScale(6,"y"));
 
         this.bar.fillStyle(this.color);
         var d = Math.floor(this.currentHP / this.maxHP * 100);
 
-        this.bar.fillRect(this.x + RelativeScale(5,"x"), this.y + RelativeScale(4,"y"), RelativeScale(d, "x"), RelativeScale(8,"y"));
+        this.bar.fillRect(this.x + RelativeScale(5,"x"), this.y + RelativeScale(2,"y"), RelativeScale(d, "x"), RelativeScale(6,"y"));
     }
 
     Damage(value){

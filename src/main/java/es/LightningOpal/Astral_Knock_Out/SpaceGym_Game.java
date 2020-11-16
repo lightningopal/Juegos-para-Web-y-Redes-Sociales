@@ -187,10 +187,6 @@ public class SpaceGym_Game {
             for (PhysicsObject platform : platforms) {
                 dummy.collide(platform);
             }
-            if (dummy.IsOnFloor()){
-                dummy.setVelY(-50);
-                dummy.applyVelocity2Position();
-            }
 
             jsonDummy.put("posX", dummy.getPosX());
             jsonDummy.put("posY", dummy.getPosY());
