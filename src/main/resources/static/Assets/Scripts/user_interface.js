@@ -1,5 +1,5 @@
 class UserInterface{
-    constructor(scene, character, maxHP, offset){
+    constructor(scene, character, maxHP, offset, color){
         this.bar = new Phaser.GameObjects.Graphics(scene);
         this.bar.setDepth(5);
         this.scene = scene;
@@ -7,6 +7,7 @@ class UserInterface{
         this.maxHP = maxHP;
         this.currentHP = this.maxHP;
         this.offset = offset;
+        this.color = color;
 
         this.x = character.x - RelativeScale(55, "x");
         this.y = character.y - RelativeScale(offset, "y");
@@ -34,14 +35,7 @@ class UserInterface{
         this.bar.fillStyle(0xffffff);
         this.bar.fillRect(this.x + RelativeScale(5,"x"), this.y + RelativeScale(4,"y"), RelativeScale(100,"x"), RelativeScale(8,"y"));
 
-        if (this.currentHP < 30)
-        {
-            this.bar.fillStyle(0xff0000);
-        }
-        else
-        {
-            this.bar.fillStyle(0x00ff00);
-        }
+        this.bar.fillStyle(this.color);
         var d = Math.floor(this.currentHP / this.maxHP * 100);
 
         this.bar.fillRect(this.x + RelativeScale(5,"x"), this.y + RelativeScale(4,"y"), RelativeScale(d, "x"), RelativeScale(8,"y"));

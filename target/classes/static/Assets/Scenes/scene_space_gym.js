@@ -83,7 +83,7 @@ class Scene_Space_Gym extends Phaser.Scene {
         // Dummy de prácticas
         this.dummy = this.add.image(RelativeScale(1500, "x"), RelativeScale(940, "y"), "dummy")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.dummyBar = new UserInterface(this, this.dummy, 100, 80);
+        this.dummyBar = new UserInterface(this, this.dummy, 1000, 80, 0xff0000);
         this.dummy.userInterface = this.dummyBar;
         // Pool de habilidades
         /*Bardo*
@@ -154,7 +154,7 @@ class Scene_Space_Gym extends Phaser.Scene {
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "berserker")
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("berserker_idle");
-                this.myHP = new UserInterface(this, game.mPlayer.image, 100, 100);
+                this.myHP = new UserInterface(this, game.mPlayer.image, 1500, 100, 0x00ff00);
                 for (var i = 0; i < 3; i++) {
                     this.projectiles.push(this.add.image(0, 0, "berserker_projectile").
                         setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
@@ -165,7 +165,7 @@ class Scene_Space_Gym extends Phaser.Scene {
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "wizard")
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("wizard_idle");
-                this.myHP = new UserInterface(this, game.mPlayer.image, 100, 100);
+                this.myHP = new UserInterface(this, game.mPlayer.image, 1000, 100, 0x00ff00);
                 for (var i = 0; i < 9; i++) {
                     this.projectiles.push(this.add.image(0, 0, "wizard_projectile").
                         setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
@@ -176,7 +176,7 @@ class Scene_Space_Gym extends Phaser.Scene {
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("bard_idle");
-                this.myHP = new UserInterface(this, game.mPlayer.image, 100, 100);
+                this.myHP = new UserInterface(this, game.mPlayer.image, 1200, 100, 0x00ff00);
                 for (var i = 0; i < 3; i++) {
                     this.projectiles.push(this.add.image(0, 0, "bard_projectile").
                         setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
@@ -187,7 +187,7 @@ class Scene_Space_Gym extends Phaser.Scene {
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "rogue")
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("rogue_idle");
-                this.myHP = new UserInterface(this, game.mPlayer.image, 100, 75);
+                this.myHP = new UserInterface(this, game.mPlayer.image, 800, 75, 0x00ff00);
                 for (var i = 0; i < 9; i++) {
                     this.projectiles.push(this.add.image(0, 0, "rogue_projectile").
                         setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
@@ -198,7 +198,7 @@ class Scene_Space_Gym extends Phaser.Scene {
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
                     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
                 game.mPlayer.image.anims.play("bard_idle");
-                this.myHP = new UserInterface(this, game.mPlayer.image, 100, 50);
+                this.myHP = new UserInterface(this, game.mPlayer.image, 1200, 50, 0x00ff00);
                 for (var i = 0; i < 3; i++) {
                     this.projectiles.push(this.add.image(0, 0, "bard_projectile").
                         setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
