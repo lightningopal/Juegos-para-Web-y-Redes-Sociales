@@ -22,9 +22,7 @@
     -webkit-box-shadow: 1px 1px 25px 20px #4232d3;
     box-shadow: 1px 1px 25px 20px #4232d3;
     outline: 10px inset #6aa2e5;
-    height: 340px;
-    margin: 0px auto 0;
-    width: 370px;
+    width: 100%;
   }
 
   input[type="password"],
@@ -37,16 +35,14 @@
     box-shadow: 0 1px #fbafe3;
     box-sizing: border-box;
     color: #ffffff;
-    height: 50px;
-    margin: 26px 0 0 15px;
-    padding-left: 37px;
+    margin: 5% 5% 5% 5%;
+    padding-left: 2%; /* Separación del texto con respecto a la caja contenedora*/
     transition: box-shadow 0.3s;
-    width: 340px;
-    font-family: Arial, "Helvetica", sans-serif;
+    width:90%;
+    font-family: font_write, "Helvetica", sans-serif;
     font-size: 24px;
     -webkit-box-shadow: 1px 1px 10px 5px #F17DAC;
     box-shadow: 1px 1px 5px 2px #F17DAC;
-
 
   }
 
@@ -91,24 +87,16 @@
 
   input[type="submit"] {
 
-    width: 250px;
-    height: 60px;
+    width: 80%;
     display: block;
-
-    font-size: 28px;
+    font-size: 100%;
     font-weight: bold;
     color: #fff;
     text-transform: uppercase;
     text-align: center;
-    font-family: Arial;
+    font-family: font_write;
 
-    margin-top: -20px;
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    position: relative;
+    margin: 5% 10% 10% 10%;
 
     box-shadow: inset 0px 1px 0px 0px #fbafe3;
     background: linear-gradient(to bottom, #ff5bb0 5%, #ef027d 100%);
@@ -119,21 +107,17 @@
     cursor: pointer;
     text-shadow: 0px 1px 0px #c70067;
 
-    padding: 6px 24px;
     text-decoration: none;
 
     text-shadow: -2px 2px 2px #fbafe3;
 
     -webkit-box-shadow: 1px 1px 10px 5px #F17DAC;
     box-shadow: 1px 1px 10px 5px #F17DAC;
-
   }
 
   input[type="submit"]:active {
-
     background: linear-gradient(to bottom, #ef027d 5%, #ff5bb0 100%);
     background-color: #ef027d;
-
   }
 
   .feedbackText {
@@ -142,11 +126,10 @@
     text-align: center;
     display: block;
     position: relative;
-    margin-top: 90px;
+    margin-top: -5%;
+    padding-bottom: 2%;
   }
 </style>
-
-
 
 <div class="login" id="login">
   <input type="text" placeholder="Username" id="username" name="username" maxlength="14" max="14">
