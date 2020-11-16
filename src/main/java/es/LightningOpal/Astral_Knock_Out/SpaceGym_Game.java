@@ -67,25 +67,25 @@ public class SpaceGym_Game {
         switch (player.getPlayerType()) {
             case "berserker":
                 for (int i = 0; i < 3; i++) {
-                    projectiles.add(new BerserkerSkill(player, dummy, 1000, false, 30, 20)); // Target, duration, collidePlatforms, speed, damage
+                    projectiles.add(new BerserkerSkill(player, dummy, 1000, false, 30, 300)); // Target, duration, collidePlatforms, speed, damage
                 }
                 player.setBasicWeapon(new Weapon(projectiles, 1, 1000));
                 break;
             case "wizard":
                 for (int i = 0; i < 9; i++) {
-                    projectiles.add(new WizardSkill(player, dummy, 500, true, 30, 20, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
+                    projectiles.add(new WizardSkill(player, dummy, 500, true, 26, 100, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
                 player.setBasicWeapon(new Weapon(projectiles, 3, 400));
                 break;
             case "bard":
                 for (int i = 0; i < 3; i++) {
-                    projectiles.add(new BardSkill(player, dummy, 2500, false, 20, 20)); // Target, duration, collidePlatforms, speed, damage
+                    projectiles.add(new BardSkill(player, dummy, 2500, false, 18, 90)); // Target, duration, collidePlatforms, speed, damage
                 }
                 player.setBasicWeapon(new Weapon(projectiles, 1, 500));
                 break;
             case "rogue":
                 for (int i = 0; i < 9; i++) {
-                    projectiles.add(new RogueSkill(player, dummy, 550, true, 30, 20, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
+                    projectiles.add(new RogueSkill(player, dummy, 550, true, 30, 120, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
                 player.setBasicWeapon(new Weapon(projectiles, 3, 200));
                 break;
