@@ -61,7 +61,7 @@ public class SpaceGym_Game {
         dummy.setHalfHeight(42.0);
         dummy.setOffsetX(-7.0);
         dummy.setOffsetY(-1.0);
-        this.dummyHP = 100;
+        this.dummyHP = 1000;
 
         // Player Weapon
         switch (player.getPlayerType()) {
