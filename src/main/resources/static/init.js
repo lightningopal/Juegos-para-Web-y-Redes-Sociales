@@ -91,7 +91,7 @@ window.onload = function () {
     this.game.global = {
         DEVICE:         null,
         FPS:            60,
-        DEBUG_MODE:     true,
+        DEBUG_MODE:     false,
         DEBUG_PHONE:    false,
         WS_CONNECTION:  false,
         socket:         null,
