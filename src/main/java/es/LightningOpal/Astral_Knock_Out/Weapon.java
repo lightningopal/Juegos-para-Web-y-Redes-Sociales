@@ -8,6 +8,7 @@ import java.util.Queue;
 
 public class Weapon {
     private long attackRatio;
+    private long attackDelay;
     private boolean canAttack;
     private Timer coolDownTimer;
 
@@ -18,10 +19,11 @@ public class Weapon {
         this.canAttack = false;
     }
 
-    public Weapon(Queue<Skill> attacks, int groupSize, long attackRatio) {
+    public Weapon(Queue<Skill> attacks, int groupSize, long attackRatio, long attackDelay) {
         this.attacks = attacks;
         this.groupSize = groupSize;
         this.attackRatio = attackRatio;
+        this.attackDelay = attackDelay;
         this.coolDownTimer = new Timer();
         this.canAttack = true;
     }
@@ -32,6 +34,14 @@ public class Weapon {
 
     public void setAttackRatio(long attackRatio) {
         this.attackRatio = attackRatio;
+    }
+
+    public long getAttackDelay() {
+        return attackDelay;
+    }
+
+    public void setAttackDelay(long attackDelay) {
+        this.attackDelay = attackDelay;
     }
 
     public boolean CanAttack() {
@@ -61,13 +71,22 @@ public class Weapon {
                     coolDown();
                 }
             }, this.attackRatio);
-            for (int i = 0; i < this.groupSize; i++){
-                Skill attack = this.attacks.poll();
-                attack.activate();
-                this.attacks.add(attack);
-            }
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    spawnAttack();
+                }
+            }, this.attackDelay);
         }
         return attacks;
+    }
+
+    public void spawnAttack(){
+        for (int i = 0; i < this.groupSize; i++){
+            Skill attack = this.attacks.poll();
+            attack.activate();
+            this.attacks.add(attack);
+        }
     }
 
     public void coolDown() {

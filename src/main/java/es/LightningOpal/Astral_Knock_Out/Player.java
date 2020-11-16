@@ -96,7 +96,7 @@ public class Player extends PhysicsObject{
                 this.setMoveSpeed(3);
                 this.setMaxSpeed(26);
                 this.setGroundDrag(4);
-                this.setJumpForce(26);
+                this.setJumpForce(24);
                 this.setMaxHP(800);
                 this.basicWeapon = new Weapon();
                 break;
