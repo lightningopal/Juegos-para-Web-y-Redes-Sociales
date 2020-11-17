@@ -593,7 +593,6 @@ class Scene_Boot extends Phaser.Scene {
         this.input.on('pointerdown', function () {
             if (!isLoading /**/ && game.global.WS_CONNECTION/**/) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
-                game.global.hasLoadData = true;
                 this.scene.input.keyboard.removeAllKeys(true);
                 if (game.global.hasLoadData)
                 {
