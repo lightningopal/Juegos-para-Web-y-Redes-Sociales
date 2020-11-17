@@ -57,6 +57,7 @@ class Scene_Ranking extends Phaser.Scene {
             callback: that.scene.get("scene_boot").IdleMessage,
             loop: true
         });
+
         this.input.on('pointerup', function () {
             that.backBtn.setFrame(0);
         });
