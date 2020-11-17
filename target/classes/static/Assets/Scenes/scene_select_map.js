@@ -15,7 +15,7 @@ class Scene_Select_Map extends Phaser.Scene {
 
         this.add.image(RelativeScale(114.50, "x"), RelativeScale(112.0, "y"), "back_button_interface")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(5);
-        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
+        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(78.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(5);
 
         this.add.image(RelativeScale(957.50, "x"), RelativeScale(153.16, "y"), "select_map_text").setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
@@ -124,6 +124,8 @@ class Scene_Select_Map extends Phaser.Scene {
 
             // Desktop
         } else {
+            this.add.image(RelativeScale(62,"x"), RelativeScale(28.86,"y"), "escape_text")
+                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(5);
             this.enterText = this.add.image(RelativeScale(1350.0, "x"), RelativeScale(1000.0, "y"), "continue_text_desktop")
                 .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
             this.backBtn.setFrame(0);

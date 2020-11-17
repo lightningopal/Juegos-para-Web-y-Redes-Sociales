@@ -1,0 +1,35 @@
+17:26:26 - Server opened.
+17:26:28 - Conected user with session b5c4816c-2664-b106-e6ab-7e2de830fa49.
+17:26:32 - Player connected: ranking.
+17:26:39 - Player disconnected: ranking.
+17:26:52 - Conected user with session 1a64c0fa-03fd-7b9d-2531-10f2c70255ec.
+17:26:57 - Player connected: prueba2.
+17:26:59 - Conected user with session 8119e33a-646e-e584-83f8-e40fabffb7c7.
+17:27:05 - Searching Tournament Game: prueba2 [PlayerType: berserker, SecondarySkill: -1, Skin: 0, Level: 0, Points: 889].
+17:27:12 - Player connected: ranking.
+17:27:17 - Searching Tournament Game: ranking [PlayerType: bard, SecondarySkill: -1, Skin: 0, Level: 0, Points: 491].
+17:27:17 - Create Tournament Game: ranking - prueba2 - Level: 0, Room: 0.
+17:29:09 - End Tournament Game: prueba2 - ranking - Room: 0. Disconnection: false.
+17:29:40 - Player disconnected: prueba2.
+17:29:51 - Player disconnected: ranking.
+17:30:42 - Conected user with session c4f99437-09af-e933-f376-8242d75baa80.
+17:30:43 - Conected user with session 69f98934-3c4d-3fb1-31c3-e6d12be45eb6.
+17:30:52 - Player connected: prueba2.
+17:31:01 - Searching Tournament Game: prueba2 [PlayerType: berserker, SecondarySkill: -1, Skin: 0, Level: 0, Points: 938].
+17:31:19 - Player connected: ranking.
+17:31:21 - Searching Tournament Game: ranking [PlayerType: wizard, SecondarySkill: -1, Skin: 0, Level: 0, Points: 442].
+17:31:21 - Create Tournament Game: ranking - prueba2 - Level: 0, Room: 0.
+17:31:26 - Users data saved.
+17:31:52 - End Tournament Game: prueba2 - ranking - Room: 0. Disconnection: false.
+17:32:11 - Player disconnected: prueba2.
+17:32:22 - Player disconnected: ranking.
+17:32:45 - Conected user with session 6c4f1aaa-4994-ec53-2ac0-9fb0bae2d66e.
+17:32:50 - Player connected: prueba2.
+17:32:55 - Searching Tournament Game: prueba2 [PlayerType: bard, SecondarySkill: -1, Skin: 0, Level: 0, Points: 982].
+17:33:19 - Conected user with session 40c0eab9-2c15-0542-9b09-40d99938764d.
+17:33:29 - Player connected: ranking.
+17:33:34 - Searching Tournament Game: ranking [PlayerType: wizard, SecondarySkill: -1, Skin: 0, Level: 0, Points: 398].
+17:33:34 - Create Tournament Game: ranking - prueba2 - Level: 0, Room: 0.
+17:34:05 - End Tournament Game: ranking - prueba2 - Room: 0. Disconnection: false.
+17:34:28 - Player disconnected: ranking.
+17:34:31 - Player disconnected: prueba2.

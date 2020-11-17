@@ -8,6 +8,8 @@ class Scene_Select_Character extends Phaser.Scene {
         // Creación de imágenes
         this.background = this.add.image(0, 0, "main_menu_bg").setOrigin(0, 0)
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.add.image(RelativeScale(706.33,"x"), RelativeScale(277.72,"y"), "select_character_text")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.nebula = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_nebula")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.stars = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_stars")
@@ -107,7 +109,7 @@ class Scene_Select_Character extends Phaser.Scene {
 
         // Skins
 
-        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
+        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(78.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
 
         game.mPlayer.characterSel.id = -1;
@@ -376,6 +378,8 @@ class Scene_Select_Character extends Phaser.Scene {
         });
 
         if (game.global.DEVICE === "desktop") {
+            this.add.image(RelativeScale(62,"x"), RelativeScale(28.86,"y"), "escape_text")
+                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2);
             this.enterText = this.add.image(RelativeScale(1350.0, "x"), RelativeScale(1000.0, "y"), "continue_text_desktop")
                 .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
             // this.rightArrowBtn.setAlpha(0);

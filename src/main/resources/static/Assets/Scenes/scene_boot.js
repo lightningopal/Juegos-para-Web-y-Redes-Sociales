@@ -171,6 +171,7 @@ class Scene_Boot extends Phaser.Scene {
             this.load.image("stars", "./Assets/Images/BackGrounds/stars.png");
             this.load.spritesheet("log_in_button", "./Assets/Images/UI/log_in_button.png", { frameWidth: 709, frameHeight: 129 });
             this.load.spritesheet("sign_up_button", "./Assets/Images/UI/sign_up_button.png", { frameWidth: 700, frameHeight: 129 });
+            this.load.image("escape_text", "./Assets/Images/UI/escape_text.png");
 
             ///Escena de Main Menú///
             this.load.image("main_menu_bg", "./Assets/Images/BackGrounds/main_menu_bg.png");
@@ -202,6 +203,7 @@ class Scene_Boot extends Phaser.Scene {
             this.load.spritesheet("credits_images", "./Assets/Images/UI/credits_images.png", { frameWidth: 1919.50, frameHeight: 1080 });
 
             ///Escena de Selección de Personaje y Habilidad///
+            this.load.image("select_character_text", "./Assets/Images/UI/select_character_text.png");
             this.load.image("select_character_t_interface", "./Assets/Images/UI/select_character_t_interface.png");
             this.load.image("select_character_sg_interface", "./Assets/Images/UI/select_character_sg_interface.png");
             this.load.image("select_character_lines_interface", "./Assets/Images/UI/select_character_lines_interface.png");

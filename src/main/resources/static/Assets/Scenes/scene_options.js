@@ -21,7 +21,7 @@ class Scene_Options extends Phaser.Scene {
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.controlsBtn;
         this.controlsImage;
-        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
+        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(78.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.musicBtn.setFrame(1);
         // Opciones de selección
@@ -135,6 +135,8 @@ class Scene_Options extends Phaser.Scene {
             }
         });
         if (game.global.DEVICE === "desktop") { // Odenador
+            this.add.image(RelativeScale(62,"x"), RelativeScale(28.86,"y"), "escape_text")
+                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2);
             this.controlsBtn = this.add.image(RelativeScale(578.0, "x"), RelativeScale(579.50, "y"), "controls_button")
                 .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
             this.controlsImage = this.add.image(RelativeScale(962.50, "x"), RelativeScale(850.0, "y"), "controls_image")
