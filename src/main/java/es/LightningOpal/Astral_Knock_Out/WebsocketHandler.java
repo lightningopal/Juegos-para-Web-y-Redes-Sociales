@@ -6,6 +6,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -672,13 +673,26 @@ public class WebsocketHandler extends TextWebSocketHandler {
 	// Método afterConnectionClosed, que se ejecuta tras el cierre de una conexión
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
+		GamesManager.INSTANCE.tournamentGamesLock.lock();
+
 		// Obtiene el usuario de los atributos de sesión
 		User user = (User) session.getAttributes().get(USER_ATTRIBUTE);
 
-		// Check if user was ingame
+		// Obtiene los datos del jugador
 		Player disconnectedPlayer = user.getPlayer_selected();
 		int room = disconnectedPlayer.getRoom();
 
+		// Check if user was on queue
+		for (ConcurrentLinkedQueue<Player> queue : GamesManager.INSTANCE.searching_players) {
+			if (queue.contains(disconnectedPlayer))
+			{
+				queue.remove(disconnectedPlayer);
+				break;
+			}
+		}
+		GamesManager.INSTANCE.tournamentGamesLock.unlock();
+
+		// Check if user was ingame
 		if (GamesManager.INSTANCE.tournament_games.containsKey(disconnectedPlayer.getRoom())) {
 			if (GamesManager.INSTANCE.tournament_games.get(disconnectedPlayer.getRoom()).getPlayers()
 					.contains(disconnectedPlayer)) {
@@ -697,6 +711,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 				GamesManager.INSTANCE.finishTournamentGame(room, winner, disconnectedPlayer, true);
 			}
 		}
+
 
 		// Intenta escribir la información en el archivo de log
 		try {

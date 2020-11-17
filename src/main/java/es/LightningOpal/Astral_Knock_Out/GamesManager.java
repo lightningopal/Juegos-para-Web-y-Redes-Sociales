@@ -205,7 +205,7 @@ public class GamesManager {
 
             float eloDifference = (loser.getMMR() / winnerUser.getMMR()) * MMRDifference;
             float eloForWinner = winnerUser.getElo() + eloDifference;
-            float eloForLoser = loserUser.getElo() - eloDifference;
+            float eloForLoser = loserUser.getElo() - (eloDifference * 0.70f);
 
             // Si los puntos bajan de 0, igualar a 0
             eloForLoser = (eloForLoser < 0) ? 0 : eloForLoser;
@@ -261,14 +261,14 @@ public class GamesManager {
             // Winner Player
             winnerPlayer.put("userName", winner.getUserName());
             winnerPlayer.put("points", Math.round(eloForWinner));
-            winnerPlayer.put("previousPoints", winnerPreviousPoints);
+            winnerPlayer.put("previousPoints", Math.round(winnerPreviousPoints));
             winnerPlayer.put("newCoins", extraCoinsForWinner);
             winnerPlayer.put("currency", winnerCoins);
 
             // Loser Player
             loserPlayer.put("userName", loser.getUserName());
             loserPlayer.put("points", Math.round(eloForLoser));
-            winnerPlayer.put("previousPoints", loserPreviousPoints);
+            loserPlayer.put("previousPoints", Math.round(loserPreviousPoints));
             loserPlayer.put("newCoins", extraCoinsForLoser);
             loserPlayer.put("currency", loserCoins);
 
