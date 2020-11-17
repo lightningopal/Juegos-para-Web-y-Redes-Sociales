@@ -244,13 +244,14 @@ class Scene_Boot extends Phaser.Scene {
             this.load.image("searching_back_triangle", "./Assets/Images/UI/searching_back_triangle_connection_interface.png");
             this.load.image("searching_front_triangle", "./Assets/Images/UI/searching_front_triangle_connection_interface.png");
             this.load.spritesheet("searching_tips_text", "./Assets/Images/UI/tips_text.png", { frameWidth: 429, frameHeight: 242 });
+            this.load.image("searching_rotating_icon", "./Assets/Images/UI/loading.png");
 
             ///Splash-Arts personajes
             this.load.image("splashart_bard", "./Assets/Images/UI/splash_arts/bard_splashart.png");
             this.load.image("splashart_wizard", "./Assets/Images/UI/splash_arts/wizard_splashart.png");
             this.load.image("splashart_rogue", "./Assets/Images/UI/splash_arts/rogue_splashart.png");
             this.load.image("splashart_berserker", "./Assets/Images/UI/splash_arts/berserker_splashart.png");
-            ///Skings personajes
+            ///Skins personajes
             this.load.spritesheet("berserker_skins", "./Assets/Images/UI/berserker_skins.png", { frameWidth: 463, frameHeight: 213 });
             this.load.spritesheet("wizard_skins", "./Assets/Images/UI/wizard_skins.png", { frameWidth: 463, frameHeight: 213 });
             this.load.spritesheet("bard_skins", "./Assets/Images/UI/bard_skins.png", { frameWidth: 463, frameHeight: 213 });

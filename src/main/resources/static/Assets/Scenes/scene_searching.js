@@ -16,6 +16,9 @@ class Scene_Searching extends Phaser.Scene {
         this.add.image(game.config.width / 2, game.config.height / 2, "searching_back_triangle")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
+        this.rotatingIcon = this.add.image(RelativeScale(1778, "x"), RelativeScale(236, "y"), "searching_rotating_icon")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+
         // Personaje
         var characterImage = this.add.image(RelativeScale(480, "x"), RelativeScale(540, "y"), "splashart_" + game.mPlayer.characterSel.type)
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
@@ -130,10 +133,18 @@ class Scene_Searching extends Phaser.Scene {
             duration: 250000,
             repeat: -1
         });
+
         var tween = this.tweens.add({
             targets: that.stars,
             angle: 360,
             duration: 500000,
+            repeat: -1
+        });
+
+        var tween = this.tweens.add({
+            targets: that.rotatingIcon,
+            angle: 360,
+            duration: 5000,
             repeat: -1
         });
     } // Fin create
