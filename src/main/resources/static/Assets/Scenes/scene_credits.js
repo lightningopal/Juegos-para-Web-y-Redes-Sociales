@@ -25,6 +25,17 @@ class Scene_Credits extends Phaser.Scene {
 
         this.changeOptionSound = this.sound.add("change_button");
         this.pressOptionSound = this.sound.add("press_button");
+
+        if (game.options.currentSong != undefined){
+            if (game.options.currentSong.key != "winning_and_credits_music"){
+                game.options.currentSong.stop();
+                game.options.currentSong = this.sound.add("winning_and_credits_music");
+                game.options.currentSong.play({ volume: game.options.musicVol, loop: true});
+            }
+        }else {
+            game.options.currentSong = this.sound.add("winning_and_credits_music");
+            game.options.currentSong.play({ volume: game.options.musicVol, loop: true});
+        }
     } // Fin preload
 
     create() {

@@ -150,6 +150,9 @@ class Scene_Boot extends Phaser.Scene {
                             loadingText.setText('Connection failed, try again later');
                         }
                         else {
+                            if (game.options.currentSong != undefined){
+                                game.options.currentSong.stop();
+                            }
                             that.scene.get(game.global.actualScene).input.keyboard.removeAllKeys(true);
                             that.scene.get(game.global.actualScene).scene.start("scene_disconnected");
                         }
@@ -345,6 +348,17 @@ class Scene_Boot extends Phaser.Scene {
             this.load.audio("error_button", "./Assets/Sounds/SoundsFX/ErrorButton.mp3");
             this.load.audio("press_button", "./Assets/Sounds/SoundsFX/PressButton.mp3");
             this.load.audio("wind_effect", "./Assets/Sounds/SoundsFX/WindSFX.mp3");
+            this.load.audio("you_lose", "./Assets/Sounds/Music/you_lose_sfx.mp3");
+            this.load.audio("you_win", "./Assets/Sounds/Music/you_win_sfx.mp3");
+
+            /// Música ///
+            this.load.audio("practice_screen_music", "./Assets/Sounds/Music/Enrique Sanchez - Practice screen (original).ogg");
+            this.load.audio("map_1_music", "./Assets/Sounds/Music/map_1_music.mp3");
+            this.load.audio("map_2_music", "./Assets/Sounds/Music/map_2_music.mp3");
+            this.load.audio("lait_motiv", "./Assets/Sounds/Music/lait_motiv.mp3");
+            this.load.audio("versus_music", "./Assets/Sounds/Music/versus_music.mp3");
+            this.load.audio("winning_and_credits_music", "./Assets/Sounds/Music/winning_and_credits_music.mp3");
+            this.load.audio("losing_music", "./Assets/Sounds/Music/Enrique Sanchez - you lose (original).ogg");
 
             game.global.hasLoadData = true;
         }
@@ -454,6 +468,9 @@ class Scene_Boot extends Phaser.Scene {
                         loadingText.setText('Connection failed, try again later');
                     }
                     else {
+                        if (game.options.currentSong != undefined){
+                            game.options.currentSong.stop();
+                        }
                         that.scene.get(game.global.actualScene).input.keyboard.removeAllKeys(true);
                         that.scene.get(game.global.actualScene).scene.start("scene_disconnected");
                     }
@@ -709,6 +726,9 @@ class Scene_Boot extends Phaser.Scene {
     }
 
     JoinSpaceGym(data) {
+        game.options.currentSong.stop();
+        game.options.currentSong = this.sound.add("practice_screen_music");
+        game.options.currentSong.play({ volume: game.options.musicVol, loop: true });
         this.scene.get('scene_select_character').input.keyboard.removeAllKeys(true);
         this.scene.get('scene_select_character').scene.start("scene_space_gym");
         if (game.global.DEBUG_MODE) {
@@ -797,6 +817,10 @@ class Scene_Boot extends Phaser.Scene {
     }
 
     GameFound(data) {
+        if (game.options.currentSong != undefined){
+            game.options.currentSong.stop();
+        }
+        game.options.currentSong = this.sound.add("versus_music");
         // Aquí hay que superponer el versus, antes de empezar la escena hay que guardar los datos
         // Si es el jugador A, el enemigo e el B
         console.log(data);
@@ -823,6 +847,7 @@ class Scene_Boot extends Phaser.Scene {
         game.mPlayer.room = data.room;
 
         // Se cambia la escena
+        game.options.currentSong.play({ volume: game.options.musicVol });
         if (game.mPlayer.difficultySel == 0) {
             this.scene.get('scene_searching').scene.start("scene_level0");
         }
@@ -838,6 +863,14 @@ class Scene_Boot extends Phaser.Scene {
     StartTournamentGame(data) {
         this.scene.get(game.global.actualScene).StartGame();
 
+        if (game.mPlayer.difficultySel == 0) {
+            game.options.currentSong = this.sound.add("map_1_music");
+            game.options.currentSong.play({ volume: game.options.musicVol, loop: true });
+        }
+        else if (game.mPlayer.difficultySel == 1) {
+            game.options.currentSong = this.sound.add("map_2_music");
+            game.options.currentSong.play({ volume: game.options.musicVol, loop: true });
+        }
         if (game.global.DEBUG_MODE) {
             console.log("Comienza la partida");
         }
@@ -1073,6 +1106,7 @@ class Scene_Boot extends Phaser.Scene {
 
     ChangeToScore()
     {
+        game.options.currentSong.stop();
         this.scene.get(game.global.actualScene).scene.start("scene_score");
     }
 
