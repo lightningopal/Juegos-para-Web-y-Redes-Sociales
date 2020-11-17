@@ -31,6 +31,8 @@ class Scene_Intro extends Phaser.Scene {
 
         // Audio
         this.pressOptionSound = this.sound.add("press_button");
+        game.options.currentSong = this.sound.add("lait_motiv");
+        game.options.currentSong.play({volume: game.options.musicVol, loop: true});
 
     } // Fin preload
 
@@ -60,7 +62,7 @@ class Scene_Intro extends Phaser.Scene {
 
         // Móvil
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
-            this.enterText = this.add.image(RelativeScale(1350.0, "x"), RelativeScale(80.0, "y"), "continue_text_mobile")
+            this.enterText = this.add.image(RelativeScale(1350.0, "x"), RelativeScale(80.0, "y"), "tap_continue_text_mobile")
                 .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
         }
 
