@@ -367,8 +367,6 @@ class Scene_Boot extends Phaser.Scene {
             this.load.audio("versus_music", "./Assets/Sounds/Music/versus_music.mp3");
             this.load.audio("winning_and_credits_music", "./Assets/Sounds/Music/winning_and_credits_music.mp3");
             this.load.audio("losing_music", "./Assets/Sounds/Music/Enrique Sanchez - you lose (original).ogg");
-
-            game.global.hasLoadData = true;
         }
         else
         // If data has already been loaded
@@ -581,14 +579,31 @@ class Scene_Boot extends Phaser.Scene {
             if (!isLoading /**/ && game.global.WS_CONNECTION/**/) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 this.scene.input.keyboard.removeAllKeys(true);
-                this.scene.scene.start("scene_logo");
+                if (game.global.hasLoadData)
+                {
+                    this.scene.scene.start("scene_select_login");
+                }
+                else
+                {
+                    game.global.hasLoadData = true;
+                    this.scene.scene.start("scene_logo");
+                }
             }
         });
         this.input.on('pointerdown', function () {
             if (!isLoading /**/ && game.global.WS_CONNECTION/**/) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
+                game.global.hasLoadData = true;
                 this.scene.input.keyboard.removeAllKeys(true);
-                this.scene.scene.start("scene_logo");
+                if (game.global.hasLoadData)
+                {
+                    this.scene.scene.start("scene_select_login");
+                }
+                else
+                {
+                    game.global.hasLoadData = true;
+                    this.scene.scene.start("scene_logo");
+                }
             }
         });
     } // Fin create
