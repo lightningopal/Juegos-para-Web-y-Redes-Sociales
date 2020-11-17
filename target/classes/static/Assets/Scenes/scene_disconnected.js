@@ -42,6 +42,7 @@ class Scene_Disconnected extends Phaser.Scene {
         });
         this.retryButton.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
             that.pressOptionSound.play({ volume: game.options.SFXVol });
+            that.input.keyboard.removeAllKeys(true);
             that.scene.start("scene_boot");
 
             if (game.global.DEBUG_MODE) {

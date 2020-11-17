@@ -59,6 +59,7 @@ class Scene_Select_Login extends Phaser.Scene {
             if (that.optionSelected == 0) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.game.global.logInOption = that.optionSelected;
+                that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_account");
             }
             if (game.global.DEBUG_MODE) {
@@ -78,6 +79,7 @@ class Scene_Select_Login extends Phaser.Scene {
             if (that.optionSelected == 1) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.game.global.logInOption = that.optionSelected;
+                that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_account");
             }
             if (game.global.DEBUG_MODE) {

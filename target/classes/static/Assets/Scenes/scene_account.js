@@ -58,6 +58,7 @@ class Scene_Account extends Phaser.Scene {
         this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
             that.backBtn.setFrame(0);
             that.pressOptionSound.play({ volume: game.options.SFXVol });
+            that.input.keyboard.removeAllKeys(true);
             that.scene.start("scene_select_login");
             if (game.global.DEBUG_MODE) {
                 console.log("Back soltado");

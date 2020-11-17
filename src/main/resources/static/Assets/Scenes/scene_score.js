@@ -227,6 +227,7 @@ class Scene_Score extends Phaser.Scene {
         });
         this.yesBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
             that.pressOptionSound.play({ volume: game.options.SFXVol });
+            that.input.keyboard.removeAllKeys(true);
             that.scene.start("scene_searching");
             if (game.global.DEBUG_MODE) {
                 console.log("yes soltado");
@@ -242,6 +243,7 @@ class Scene_Score extends Phaser.Scene {
         });
         this.noBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
             that.pressOptionSound.play({ volume: game.options.SFXVol });
+            that.input.keyboard.removeAllKeys(true);
             that.scene.start("scene_main_menu");
             if (game.global.DEBUG_MODE) {
                 console.log("no soltado");

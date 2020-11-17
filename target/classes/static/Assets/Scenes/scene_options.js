@@ -72,6 +72,7 @@ class Scene_Options extends Phaser.Scene {
             if (that.optionSelected == 0) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.backBtn.setFrame(0);
+                that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_main_menu");
             }
             if (game.global.DEBUG_MODE) {
@@ -94,6 +95,7 @@ class Scene_Options extends Phaser.Scene {
             if (dragX <= RelativeScale(1633, "x") && dragX >= RelativeScale(962, "x")) {
                 that.musicBtn.x = dragX;
                 game.options.musicVol = (Unscale(dragX, "x") - 962) / 671;
+                game.global.socket.send(JSON.stringify({ event: "UPDATE_VOL", volType: "musicVol", value: game.options.musicVol }));
             }
             if (game.global.DEBUG_MODE) {
                 console.log("Music: " + game.options.musicVol);
@@ -121,6 +123,7 @@ class Scene_Options extends Phaser.Scene {
             if (dragX <= RelativeScale(1633, "x") && dragX >= RelativeScale(962, "x")) {
                 that.sfxBtn.x = dragX;
                 game.options.SFXVol = (Unscale(dragX, "x") - 962) / 671;
+                game.global.socket.send(JSON.stringify({ event: "UPDATE_VOL", volType: "sfxVol", value: game.options.SFXVol }));
             }
             if (game.global.DEBUG_MODE) {
                 console.log("SFX: " + game.options.SFXVol);
