@@ -27,8 +27,8 @@ window.onload = function () {
             createContainer: true
         },
         parent: 'game', // Create the game inside the <div id="game">
-        scene: [Scene_Logo,
-            Scene_Boot,
+        scene: [Scene_Boot,
+            Scene_Logo,
             Scene_Space_Gym,
             Scene_Main_Menu,
             Scene_Options,
@@ -63,8 +63,8 @@ window.onload = function () {
             createContainer: true
         },
         parent: 'game', // Create the game inside the <div id="game">
-        scene: [Scene_Logo,
-            Scene_Boot,
+        scene: [Scene_Boot,
+            Scene_Logo,
             Scene_Space_Gym,
             Scene_Main_Menu,
             Scene_Options,

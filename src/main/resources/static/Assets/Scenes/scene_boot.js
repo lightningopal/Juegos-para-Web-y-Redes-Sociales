@@ -165,6 +165,8 @@ class Scene_Boot extends Phaser.Scene {
             });
 
             // Carga de imágenes
+            ///Escena de Inicio de Empresa, Boot///
+            this.load.video("logo_video", "./Assets/Video/LogoAnimation.mp4");
 
             ///Escena de Inicio de Sesión///
             this.load.image("simple_bg", "./Assets/Images/BackGrounds/simple_bg.png");
@@ -556,14 +558,14 @@ class Scene_Boot extends Phaser.Scene {
             if (!isLoading /**/ && game.global.WS_CONNECTION/**/) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 this.scene.input.keyboard.removeAllKeys(true);
-                this.scene.scene.start("scene_select_login");
+                this.scene.scene.start("scene_logo");
             }
         });
         this.input.on('pointerdown', function () {
             if (!isLoading /**/ && game.global.WS_CONNECTION/**/) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 this.scene.input.keyboard.removeAllKeys(true);
-                this.scene.scene.start("scene_select_login");
+                this.scene.scene.start("scene_logo");
             }
         });
     } // Fin create

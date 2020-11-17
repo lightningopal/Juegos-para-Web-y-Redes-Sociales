@@ -30,7 +30,7 @@ public class GamesManager {
 
     /// Variables
     // Número de partidas de cada uno
-    public final int MAX_SPACEGYM_GAMES = 1;
+    public final int MAX_SPACEGYM_GAMES = 5;
     public final int MAX_TOURNAMENT_GAMES = 10;
     
     // Scheduler de las partidas "space gym"
