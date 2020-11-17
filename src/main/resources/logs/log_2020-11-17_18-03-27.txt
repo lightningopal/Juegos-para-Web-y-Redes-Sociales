@@ -1,0 +1,29 @@
+18:03:32 - Server opened.
+18:04:03 - Conected user with session b655163b-14ce-dd4b-e1b5-63e7fa8737fe.
+18:04:08 - Player connected: prueba2.
+18:04:12 - Searching Tournament Game: prueba2 [PlayerType: wizard, SecondarySkill: -1, Skin: 0, Level: 0, Points: 938].
+18:04:30 - Conected user with session 5c3b831b-3471-eaf2-13f7-9fe1b4c614bf.
+18:04:40 - Player connected: ranking.
+18:04:58 - Searching Tournament Game: ranking [PlayerType: berserker, SecondarySkill: -1, Skin: 0, Level: 0, Points: 442].
+18:04:59 - Create Tournament Game: ranking - prueba2 - Level: 0, Room: 0.
+18:05:52 - SERVER ERROR ON BROADCAST [Tournament, Room: 0]: [Ljava.lang.StackTraceElement;@170fb61d.
+18:05:52 - SERVER ERROR ON BROADCAST [Tournament, Room: 0]: [Ljava.lang.StackTraceElement;@19c85a8c.
+18:05:52 - SERVER ERROR ON BROADCAST [Tournament, Room: 0]: [Ljava.lang.StackTraceElement;@1df7dd6d.
+18:05:52 - SERVER ERROR ON BROADCAST [Tournament, Room: 0]: [Ljava.lang.StackTraceElement;@58f550b7.
+18:05:52 - SERVER ERROR ON BROADCAST [Tournament, Room: 0]: [Ljava.lang.StackTraceElement;@32a0baea.
+18:05:52 - End Tournament Game: ranking - prueba2 - Room: 0. Disconnection: true.
+18:05:52 - Player disconnected: prueba2.
+18:05:54 - Player disconnected: ranking.
+18:06:15 - Conected user with session e8c55cb3-90e9-8c67-d946-b645fbed22ce.
+18:06:33 - Player connected: prueba2.
+18:06:35 - Create Space Gym: prueba2.
+18:06:44 - Leave Space Gym: prueba2.
+18:06:46 - Searching Tournament Game: prueba2 [PlayerType: berserker, SecondarySkill: -1, Skin: 0, Level: 0, Points: 844].
+18:07:07 - Conected user with session e44d1a19-bc14-f69b-6ce2-2e45452a7e41.
+18:07:17 - Player connected: ranking.
+18:07:20 - Searching Tournament Game: ranking [PlayerType: bard, SecondarySkill: -1, Skin: 0, Level: 0, Points: 536].
+18:07:20 - Create Tournament Game: ranking - prueba2 - Level: 0, Room: 0.
+18:08:09 - End Tournament Game: prueba2 - ranking - Room: 0. Disconnection: false.
+18:08:14 - Player disconnected: ranking.
+18:08:17 - Player disconnected: prueba2.
+18:08:32 - Users data saved.

@@ -762,22 +762,27 @@ class Scene_Boot extends Phaser.Scene {
                 if (game.mPlayer.room === -1) { // Space_gym
                     this.scene.get("scene_space_gym").attacking = true;
                     game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_attack", true);
+                    this.scene.get("scene_space_gym").myAttackSound.play({ volume: game.options.SFXVol });
                 } else {
                     if (game.mPlayer.difficultySel === 0) { // Primer mapa
                         if (game.mPlayer.userName === data.player_name) { // Mi jugador lanza la habilidad
                             this.scene.get("scene_level0").myAttacking = true;
                             game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_attack", true);
+                            this.scene.get("scene_level0").myAttackSound.play({ volume: game.options.SFXVol });
                         } else { // El otro jugador lanza la habilidad
                             this.scene.get("scene_level0").eAttacking = true;
                             game.mEnemy.image.anims.play(game.mEnemy.characterSel.type + "_attack", true);
+                            this.scene.get("scene_level0").eAttackSound.play({ volume: game.options.SFXVol });
                         }
                     } else { // Segundo mapa
                         if (game.mPlayer.userName === data.player_name) { // Mi jugador lanza la habilidad
                             this.scene.get("scene_level1").myAttacking = true;
                             game.mPlayer.image.anims.play(game.mPlayer.characterSel.type + "_attack", true);
+                            this.scene.get("scene_level1").myAttackSound.play({ volume: game.options.SFXVol });
                         } else { // El otro jugador lanza la habilidad
                             this.scene.get("scene_level1").eAttacking = true;
                             game.mEnemy.image.anims.play(game.mEnemy.characterSel.type + "_attack", true);
+                            this.scene.get("scene_level1").eAttackSound.play({ volume: game.options.SFXVol });
                         }
                     }
                 }
@@ -1013,8 +1018,10 @@ class Scene_Boot extends Phaser.Scene {
     Damage(data){
         if (data.playerName === game.mPlayer.userName){ // Mi jugador ha sido dañado
             this.scene.get(game.global.actualScene).myHP.currentHP = data.hp;
+            this.scene.get(game.global.actualScene).eHitSound.play({ volume: game.options.SFXVol });
         }else{ // El enemigo ha sido dañado
             this.scene.get(game.global.actualScene).eHP.currentHP = data.hp;
+            this.scene.get(game.global.actualScene).myHitSound.play({ volume: game.options.SFXVol });
         }
     }
 
