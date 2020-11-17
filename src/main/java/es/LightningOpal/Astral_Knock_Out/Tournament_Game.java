@@ -82,25 +82,25 @@ public class Tournament_Game {
                 for (int i = 0; i < 3; i++) {
                     projectilesA.add(new BerserkerSkill(playerA, playerB, 1000, false, 30, 300)); // Target, duration, collidePlatforms, speed, damage
                 }
-                playerA.setBasicWeapon(new Weapon(projectilesA, 1, 500, 250));
+                playerA.setBasicWeapon(new Weapon(projectilesA, 1, 1000, 50));
                 break;
             case "wizard":
                 for (int i = 0; i < 9; i++) {
                     projectilesA.add(new WizardSkill(playerA, playerB, 500, true, 26, 100, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
-                playerA.setBasicWeapon(new Weapon(projectilesA, 3, 1000, 300));
+                playerA.setBasicWeapon(new Weapon(projectilesA, 3, 1000, 50));
                 break;
             case "bard":
                 for (int i = 0; i < 3; i++) {
                     projectilesA.add(new BardSkill(playerA, playerB, 2500, false, 18, 90)); // Target, duration, collidePlatforms, speed, damage
                 }
-                playerA.setBasicWeapon(new Weapon(projectilesA, 1, 1700, 800));
+                playerA.setBasicWeapon(new Weapon(projectilesA, 1, 1700, 500));
                 break;
             case "rogue":
                 for (int i = 0; i < 9; i++) {
                     projectilesA.add(new RogueSkill(playerA, playerB, 550, true, 30, 120, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
-                playerA.setBasicWeapon(new Weapon(projectilesA, 3, 800, 250));
+                playerA.setBasicWeapon(new Weapon(projectilesA, 3, 800, 25));
                 break;
             default:
                 break;
@@ -112,25 +112,25 @@ public class Tournament_Game {
                 for (int i = 0; i < 3; i++) {
                     projectilesB.add(new BerserkerSkill(playerB, playerA, 1000, false, 30, 300)); // Target, duration, collidePlatforms, speed, damage
                 }
-                playerB.setBasicWeapon(new Weapon(projectilesB, 1, 500, 250));
+                playerB.setBasicWeapon(new Weapon(projectilesB, 1, 1000, 50));
                 break;
             case "wizard":
                 for (int i = 0; i < 9; i++) {
                     projectilesB.add(new WizardSkill(playerB, playerA, 500, true, 26, 100, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
-                playerB.setBasicWeapon(new Weapon(projectilesB, 3, 1000, 300));
+                playerB.setBasicWeapon(new Weapon(projectilesB, 3, 1000, 50));
                 break;
             case "bard":
                 for (int i = 0; i < 3; i++) {
                     projectilesB.add(new BardSkill(playerB, playerA, 2500, false, 18, 90)); // Target, duration, collidePlatforms, speed, damage
                 }
-                playerB.setBasicWeapon(new Weapon(projectilesB, 1, 1700, 800));
+                playerB.setBasicWeapon(new Weapon(projectilesB, 1, 1700, 500));
                 break;
             case "rogue":
                 for (int i = 0; i < 9; i++) {
                     projectilesB.add(new RogueSkill(playerB, playerA, 550, true, 30, 120, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
-                playerB.setBasicWeapon(new Weapon(projectilesB, 3, 800, 250));
+                playerB.setBasicWeapon(new Weapon(projectilesB, 3, 800, 25));
                 break;
             default:
                 break;

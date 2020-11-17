@@ -1,1 +1,0 @@
-[Start: 2020-11-14_21-01-16 - End: 2020-11-14_21-01-37] - Winner: Thund3r[Id: 0, PlayerType: rogue, SecondarySkill: -1, Skin: 0, Points: 1770] - Loser: prueba5[Id: 9, PlayerType: bard, SecondarySkill: -1, Skin: 0, Points: 1000].

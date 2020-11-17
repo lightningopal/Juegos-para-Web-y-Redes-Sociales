@@ -106,7 +106,7 @@ public class UsersController {
 			thisUser.setSkins_available(skins_available);
 
 			userWritter.write(thisUser.getUserId() + ":" + thisUser.getUser_name() + ":" + characters_availableST + ":"
-					+ skins_availableST + ":" + thisUser.getElo() + ":" + thisUser.getWins() + ":" + thisUser.getLoses()
+					+ skins_availableST + ":" + thisUser.getElo() + ":" + thisUser.getMMR() + ":" + thisUser.getWins() + ":" + thisUser.getLoses()
 					+ ":" + thisUser.getCurrency() + ":" + thisUser.getMusicVol() + ":" + thisUser.getSfxVol() + "\n");
 
 			userWritter.close();
@@ -216,7 +216,7 @@ public class UsersController {
 		for (int i = 0; i < ranking.length - 1; i++)
 		{
 			// Reseteamos la variable que controla el elo máximo y el nombre del jugador
-			maxElo = 0;
+			maxElo = -1;
 			userName = "";
 
 			// En cada iteración comprobamos por cada usuario quien tiene más elo
@@ -329,7 +329,7 @@ public class UsersController {
 				skins_available += "]";	
 
 				userWritter.write(thisUser.getUserId() + ":" + thisUser.getUser_name() + ":" + characters_available + ":"
-					+ skins_available + ":" + thisUser.getElo() + ":" + thisUser.getWins() + ":" + thisUser.getLoses()
+					+ skins_available + ":" + thisUser.getElo() + ":" + thisUser.getMMR() + ":" + thisUser.getWins() + ":" + thisUser.getLoses()
 					+ ":" + thisUser.getCurrency() + ":" + thisUser.getMusicVol() + ":" + thisUser.getSfxVol() + "\n");
 			}
 			userWritter.close();
