@@ -73,7 +73,13 @@ class Scene_Score extends Phaser.Scene {
             this.winnerUserName = this.add.text(RelativeScale(1850, "x"), RelativeScale(820, "y"), game.mEnemy.userName, { fontFamily: 'font_Write' })
                 .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(1, 0.5).setDepth(6).setAngle(-22).setFontSize(Math.round(RelativeScale(104, "x")));
 
-            this.pointsDiff = this.add.text(RelativeScale(790, "x"), RelativeScale(120, "y"), game.mPlayer.pointsDifference + " pt", { fontFamily: 'font_Write' })
+            var minusPoints = game.mPlayer.pointsDifference;
+            if (game.mPlayer.points == 0)
+            {
+                minusPoints = -(game.mPlayer.previousPoints);
+            }
+
+            this.pointsDiff = this.add.text(RelativeScale(790, "x"), RelativeScale(120, "y"), Math.round(minusPoints) + " pt", { fontFamily: 'font_Write' })
                 .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(7).setFontSize(Math.round(RelativeScale(104, "x")));
 
             switch (game.mEnemy.characterSel.type) {

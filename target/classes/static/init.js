@@ -130,6 +130,7 @@ window.onload = function () {
         availableSkins: [[0],[0],[0],[0]],
         currency:       0,
         newCoins:       0,
+        previousPoints: 0,
         points:         0,
         pointsDifference:  0
     };
@@ -141,6 +142,7 @@ window.onload = function () {
         skinSel:        -1,
         skillSel:       -1,
         AorB:           undefined, // String
+        previousPoints: 0,
         points:         0,
         image:          undefined
     };

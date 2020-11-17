@@ -336,7 +336,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 						// Se asignan los atributos
 						user.setPlayer_selected(new Player(user.getUserId(), user.getSession(), user.getUser_name(),
-								playerType, Math.round(user.getElo()), secondarySkill, SpaceGym_Game.playerPosX, SpaceGym_Game.playerPosY));
+								playerType, Math.round(user.getElo()), user.getMMR(), secondarySkill, SpaceGym_Game.playerPosX, SpaceGym_Game.playerPosY));
 
 						// Se crea la partida de space gym
 						GamesManager.INSTANCE.startSpaceGym(user.getPlayer_selected());
@@ -400,7 +400,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 						// Se crea el jugador con los datos
 						thisPlayer = new Player(user.getUserId(), user.getSession(), user.getUser_name(), playerType,
-								Math.round(user.getElo()), secondarySkill, 0, 0);
+								Math.round(user.getElo()), user.getMMR(), secondarySkill, 0, 0);
 
 						// Se asignan los atributos
 						user.setPlayer_selected(thisPlayer);

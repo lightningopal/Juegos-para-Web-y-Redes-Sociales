@@ -1085,7 +1085,7 @@ class Scene_Boot extends Phaser.Scene {
             // Asignar resto de datos
             // Puntos
             game.mPlayer.points = data.winner.points;
-            //game.mEnemy.points = data.loser.points;   Creo que no hace falta
+            game.mPlayer.previousPoints = data.winner.previousPoints;
 
             // Monedas ganadas
             game.mPlayer.newCoins = data.winner.newCoins;
@@ -1105,7 +1105,7 @@ class Scene_Boot extends Phaser.Scene {
             // Asignar resto de datos
             // Puntos
             game.mPlayer.points = data.loser.points;
-            //game.mEnemy.points = data.winner.points;   Creo que no hace falta
+            game.mPlayer.previousPoints = data.loser.previousPoints;
 
             // Monedas ganadas
             game.mPlayer.newCoins = data.loser.newCoins;

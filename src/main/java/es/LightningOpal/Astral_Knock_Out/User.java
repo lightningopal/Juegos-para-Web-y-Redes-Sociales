@@ -18,6 +18,7 @@ public class User {
 	private boolean user_ready;
 	private ArrayList<Integer> characters_available;
 	private ArrayList<ArrayList<Integer>> skins_available;
+	private float mmr;
 	private float elo;
 	private int wins;
 	private int loses;
@@ -30,7 +31,8 @@ public class User {
 	public User() {
 		this.user_name = "";
 		this.player_selected = new Player();
-		this.elo = 1000;
+		this.elo = 0;
+		this.mmr = 1000;
 		this.currency = 0;
 		this.musicVol = 1.0f;
 		this.sfxVol = 1.0f;
@@ -38,13 +40,14 @@ public class User {
 
 	// Constructor de la clase para añadir a los datos desde los archivos
 	public User(int userId, String user_name, ArrayList<Integer> characters_available,
-	ArrayList<ArrayList<Integer>> skins_available, float elo, int wins, int loses,
+	ArrayList<ArrayList<Integer>> skins_available, float elo, float mmr, int wins, int loses,
 	int currency, float musicVol, float sfxVol) {
 		this.userId = userId;
 		this.user_name = user_name;
 		this.characters_available = characters_available;
 		this.skins_available = skins_available;
 		this.elo = elo;
+		this.mmr = mmr;
 		this.wins = wins;
 		this.loses = loses;
 		this.currency = currency;
@@ -140,6 +143,14 @@ public class User {
 	
 	public void setElo(float elo) {
 		this.elo = elo;
+	}
+
+	public float getMMR() {
+		return mmr;
+	}
+
+	public void setMMR(float mmr) {
+		this.mmr = mmr;
 	}
 
 	public int getWins() {

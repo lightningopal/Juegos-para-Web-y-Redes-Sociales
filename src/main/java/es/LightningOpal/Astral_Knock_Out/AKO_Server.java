@@ -108,10 +108,10 @@ public class AKO_Server implements WebSocketConfigurer {
 
 				// Se añade el usuario al mapa de datos de usuarios
 				User userToAdd = new User(Integer.parseInt(splitStringInfo[0]), splitStringInfo[1],
-				characters_available, skins_available,
-				Float.parseFloat(splitStringInfo[4]), Integer.parseInt(splitStringInfo[5]), 
-				Integer.parseInt(splitStringInfo[6]), Integer.parseInt(splitStringInfo[7]),
-				Float.parseFloat(splitStringInfo[8]), Float.parseFloat(splitStringInfo[9]));
+				characters_available, skins_available, Float.parseFloat(splitStringInfo[4]),
+				Float.parseFloat(splitStringInfo[5]), Integer.parseInt(splitStringInfo[6]), 
+				Integer.parseInt(splitStringInfo[7]), Integer.parseInt(splitStringInfo[8]),
+				Float.parseFloat(splitStringInfo[9]), Float.parseFloat(splitStringInfo[10]));
 
 				UsersController.allUsers.put(splitStringInfo[1], userToAdd);
 			}
