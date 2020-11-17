@@ -11,6 +11,7 @@ public class Player extends PhysicsObject{
     private String userName;
     private String playerType;
     private int points;
+    private float mmr;
     private int room;
     private int skin;
     private int skill;
@@ -39,12 +40,13 @@ public class Player extends PhysicsObject{
     }
 
     // Constructor de la clase por atributos
-    public Player(int id, WebSocketSession session, String userName, String type, int points, int skill, int x, int y/*, int mSpeed, int jForce, int hp*/){
+    public Player(int id, WebSocketSession session, String userName, String type, int points, float mmr, int skill, int x, int y/*, int mSpeed, int jForce, int hp*/){
         playerId = id;
         this.session = session;
         this.userName = userName;
         playerType = type;
         this.points = points;
+        this.mmr = mmr;
         this.skill = skill;
         this.setPosX(x);
         this.setPosY(y);
@@ -144,6 +146,9 @@ public class Player extends PhysicsObject{
 
     public int getPoints() { return points; }
     public void setPoints(int points) { this.points = points; }
+
+    public float getMMR() { return mmr; }
+    public void setMMR(float mmr) { this.mmr = mmr; }
 
     public int getRoom() { return room; }
     public void setRoom(int room) { this.room = room; }

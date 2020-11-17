@@ -194,12 +194,26 @@ public class GamesManager {
             winnerUser.setWins(winnerUser.getWins() + 1);
             loserUser.setLoses(loserUser.getLoses() + 1);
 
-            // Se calcula la diferencia de elo ganada
-            float eloDifference = (loserUser.getElo() * 0.1f);
+            // Se guardan los puntos actuales
+            int winnerPreviousPoints = Math.round(winnerUser.getElo());
+            int loserPreviousPoints = Math.round(loserUser.getElo());
+
+            // Se calcula la diferencia de elo y mmr ganada
+            float MMRDifference = (loserUser.getMMR() * 0.05f);
+            float MMRForWinner = winnerUser.getMMR() + MMRDifference;
+            float MMRForLoser = loserUser.getMMR() - MMRDifference;
+
+            float eloDifference = (loser.getMMR() / winnerUser.getMMR()) * MMRDifference;
             float eloForWinner = winnerUser.getElo() + eloDifference;
             float eloForLoser = loserUser.getElo() - eloDifference;
 
-            // Se asignan los nuevos elos en el servidor
+            // Si los puntos bajan de 0, igualar a 0
+            eloForLoser = (eloForLoser < 0) ? 0 : eloForLoser;
+
+            // Se asignan los nuevos elos y mmrs en el servidor
+            winnerUser.setMMR(MMRForWinner);
+            loserUser.setMMR(MMRForLoser);
+
             winnerUser.setElo(eloForWinner);
             loserUser.setElo(eloForLoser);
 
@@ -247,12 +261,14 @@ public class GamesManager {
             // Winner Player
             winnerPlayer.put("userName", winner.getUserName());
             winnerPlayer.put("points", Math.round(eloForWinner));
+            winnerPlayer.put("previousPoints", winnerPreviousPoints);
             winnerPlayer.put("newCoins", extraCoinsForWinner);
             winnerPlayer.put("currency", winnerCoins);
 
             // Loser Player
             loserPlayer.put("userName", loser.getUserName());
             loserPlayer.put("points", Math.round(eloForLoser));
+            winnerPlayer.put("previousPoints", loserPreviousPoints);
             loserPlayer.put("newCoins", extraCoinsForLoser);
             loserPlayer.put("currency", loserCoins);
 

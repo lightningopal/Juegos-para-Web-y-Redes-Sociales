@@ -106,7 +106,7 @@ public class UsersController {
 			thisUser.setSkins_available(skins_available);
 
 			userWritter.write(thisUser.getUserId() + ":" + thisUser.getUser_name() + ":" + characters_availableST + ":"
-					+ skins_availableST + ":" + thisUser.getElo() + ":" + thisUser.getWins() + ":" + thisUser.getLoses()
+					+ skins_availableST + ":" + thisUser.getElo() + ":" + thisUser.getMMR() + ":" + thisUser.getWins() + ":" + thisUser.getLoses()
 					+ ":" + thisUser.getCurrency() + ":" + thisUser.getMusicVol() + ":" + thisUser.getSfxVol() + "\n");
 
 			userWritter.close();
@@ -329,7 +329,7 @@ public class UsersController {
 				skins_available += "]";	
 
 				userWritter.write(thisUser.getUserId() + ":" + thisUser.getUser_name() + ":" + characters_available + ":"
-					+ skins_available + ":" + thisUser.getElo() + ":" + thisUser.getWins() + ":" + thisUser.getLoses()
+					+ skins_available + ":" + thisUser.getElo() + ":" + thisUser.getMMR() + ":" + thisUser.getWins() + ":" + thisUser.getLoses()
 					+ ":" + thisUser.getCurrency() + ":" + thisUser.getMusicVol() + ":" + thisUser.getSfxVol() + "\n");
 			}
 			userWritter.close();
