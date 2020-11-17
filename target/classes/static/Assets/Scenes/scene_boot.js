@@ -174,6 +174,12 @@ class Scene_Boot extends Phaser.Scene {
             this.load.spritesheet("log_in_button", "./Assets/Images/UI/log_in_button.png", { frameWidth: 709, frameHeight: 129 });
             this.load.spritesheet("sign_up_button", "./Assets/Images/UI/sign_up_button.png", { frameWidth: 700, frameHeight: 129 });
             this.load.image("escape_text", "./Assets/Images/UI/escape_text.png");
+            this.load.image("warning_text", "./Assets/Images/UI/warning_text.png");
+
+            ///Escena de Introducción///
+            this.load.image("intro1", "./Assets/Images/UI/Intro/context_image_1.png");
+            this.load.image("intro2", "./Assets/Images/UI/Intro/context_image_2.png");
+            this.load.image("intro3", "./Assets/Images/UI/Intro/context_image_3.png");
 
             ///Escena de Main Menú///
             this.load.image("main_menu_bg", "./Assets/Images/BackGrounds/main_menu_bg.png");
@@ -683,7 +689,7 @@ class Scene_Boot extends Phaser.Scene {
         game.mPlayer.points = data.points;
 
         // Cambia de escena a la escena del menú principal
-        this.scene.get('scene_account').scene.start("scene_main_menu");
+        this.scene.get('scene_account').scene.start("scene_intro");
 
         if (game.global.DEBUG_MODE) {
             console.log("Datos de opciones obtenidos");

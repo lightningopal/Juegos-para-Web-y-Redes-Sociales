@@ -1,8 +1,0 @@
-18:47:19 - Server opened.
-18:47:40 - Conected user with session 7d768be2-ef87-d8e7-1c5b-23f609bf881f.
-18:50:28 - Conected user with session cb1d6d03-a7bf-d110-efeb-83d7d8c59504.
-18:50:34 - Disconnected user with session cb1d6d03-a7bf-d110-efeb-83d7d8c59504.
-18:51:54 - Disconnected user with session 7d768be2-ef87-d8e7-1c5b-23f609bf881f.
-18:52:08 - Conected user with session 26065fbf-78ee-11d4-cf32-99537a2e7b58.
-18:52:19 - Users data saved.
-18:57:19 - Users data saved.

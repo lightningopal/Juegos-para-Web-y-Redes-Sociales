@@ -1,0 +1,6 @@
+19:20:19 - Server opened.
+19:20:57 - Conected user with session 828d2fb6-07b0-ef8d-3804-adb2c98d7aeb.
+19:21:49 - Disconnected user with session 828d2fb6-07b0-ef8d-3804-adb2c98d7aeb.
+19:21:57 - Conected user with session 2b641e81-c2a0-c1c3-df80-63f5062e5cf7.
+19:22:17 - Disconnected user with session 2b641e81-c2a0-c1c3-df80-63f5062e5cf7.
+19:22:25 - Conected user with session 4f3ed361-b187-6f69-3655-08bed512b227.

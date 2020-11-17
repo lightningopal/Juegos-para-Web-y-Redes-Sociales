@@ -19,6 +19,9 @@ class Scene_Select_Login extends Phaser.Scene {
         this.signUpBtn = this.add.image(RelativeScale(1440.0, "x"), RelativeScale(725.0, "y"), "sign_up_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
+        this.add.image(RelativeScale(960, "x"), RelativeScale(920.0, "y"), "warning_text")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+
         // Opciones de selección
         this.optionSelected; // 0 -> LogIn / 1 -> SignUp
 

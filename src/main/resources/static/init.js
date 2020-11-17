@@ -29,6 +29,7 @@ window.onload = function () {
         parent: 'game', // Create the game inside the <div id="game">
         scene: [Scene_Boot,
             Scene_Logo,
+            Scene_Intro,
             Scene_Space_Gym,
             Scene_Main_Menu,
             Scene_Options,
@@ -65,6 +66,7 @@ window.onload = function () {
         parent: 'game', // Create the game inside the <div id="game">
         scene: [Scene_Boot,
             Scene_Logo,
+            Scene_Intro,
             Scene_Space_Gym,
             Scene_Main_Menu,
             Scene_Options,

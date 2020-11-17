@@ -47,7 +47,7 @@ class Scene_Searching extends Phaser.Scene {
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
         // Tip random
-        var randomTip = Math.floor(Math.random() * 10);
+        var randomTip = Math.floor(Math.random() * 9);
         this.tipImage.setFrame(randomTip);
 
         // Back button
