@@ -12,15 +12,22 @@ class Scene_Credits extends Phaser.Scene {
             .setOrigin(0, 0);
         this.add.image(0, 0, "credits_dust").setOrigin(0, 0)
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.images = this.add.image(0, 0, "credits_images").setOrigin(0, 0)
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.images.setAlpha(0);
+        this.images = [
+            this.add.image(0, 0, "credits_image_1").setOrigin(0, 0)
+                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setAlpha(0),
+            this.add.image(0, 0, "credits_image_2").setOrigin(0, 0)
+                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setAlpha(0),
+            this.add.image(0, 0, "credits_image_3").setOrigin(0, 0)
+                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setAlpha(0)
+        ]
+
         this.add.image(RelativeScale(114.50, "x"), RelativeScale(112.0, "y"), "back_button_interface")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(78.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.backBtn.setFrame(1);
 
+        this.currentFrame = 0;
         this.currentImage = 0;
 
         this.changeOptionSound = this.sound.add("change_button");
@@ -79,7 +86,7 @@ class Scene_Credits extends Phaser.Scene {
             });
         }
 
-        this.ShowImage();
+        this.ShowImages();
     } // Fin create
 
     update() {
@@ -90,7 +97,7 @@ class Scene_Credits extends Phaser.Scene {
     FinalImage() {
         var that = this;
         var tween = this.tweens.add({
-            targets: that.images,
+            targets: that.images[that.currentImage],
             alpha: 1,
             duration: 2000,
             repeat: 0,
@@ -98,10 +105,10 @@ class Scene_Credits extends Phaser.Scene {
         });
     }
 
-    ShowImage() {
+    ShowImages(){
         var that = this;
         var tween = this.tweens.add({
-            targets: that.images,
+            targets: that.images[that.currentImage],
             alpha: 1,
             duration: 2000,
             repeat: 0,
@@ -109,15 +116,28 @@ class Scene_Credits extends Phaser.Scene {
             yoyo: true,
             hold: 1500,
             onComplete: function () {
-                that.currentImage++;
-                that.images.setFrame(that.currentImage);
-                if (that.currentImage <= 4) {
-                    that.ShowImage();
-                } else {
+                that.currentFrame++;
+                if (that.currentImage == 2 && that.currentFrame == 1) {
+                    that.images[that.currentImage].setFrame(that.currentFrame);
                     that.FinalImage();
+                } else if (that.currentFrame == 1){
+                    that.images[that.currentImage].setFrame(that.currentFrame);
+                    that.ShowImages();
+                } else {
+                    that.currentFrame = 0;
+                    that.ChangeImage();
                 }
             }
         });
+    }
+
+    ChangeImage(){
+        this.currentImage++;
+        if (this.currentImage <= 2){
+            this.ShowImages();
+        }else{
+            this.FinalImage();
+        }
     }
 
 }// Fin Scene_Credits
