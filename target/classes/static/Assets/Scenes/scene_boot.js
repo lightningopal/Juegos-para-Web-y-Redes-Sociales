@@ -165,8 +165,6 @@ class Scene_Boot extends Phaser.Scene {
             });
 
             // Carga de imágenes
-            ///Escena de Inicio de Empresa, Boot///
-
 
             ///Escena de Inicio de Sesión///
             this.load.image("simple_bg", "./Assets/Images/BackGrounds/simple_bg.png");
