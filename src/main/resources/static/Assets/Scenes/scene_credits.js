@@ -22,6 +22,9 @@ class Scene_Credits extends Phaser.Scene {
         this.backBtn.setFrame(1);
 
         this.currentImage = 0;
+        
+        this.changeOptionSound = this.sound.add("change_button");
+        this.pressOptionSound = this.sound.add("press_button");
     } // Fin preload
 
     create() {
@@ -50,6 +53,7 @@ class Scene_Credits extends Phaser.Scene {
             });
             this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
                 that.backBtn.setFrame(0);
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_main_menu");
                 if (game.global.DEBUG_MODE) {
@@ -58,10 +62,12 @@ class Scene_Credits extends Phaser.Scene {
             });
         }else if (game.global.DEVICE === "desktop"){
             this.input.keyboard.on("keydown-" + "ESC", function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_main_menu");
             });
             this.input.keyboard.on("keydown-" + "ENTER", function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_main_menu");
             });

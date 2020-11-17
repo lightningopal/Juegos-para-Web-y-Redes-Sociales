@@ -5,6 +5,15 @@ class Scene_Account extends Phaser.Scene {
     } // Fin constructor
 
     preload() {
+        /*
+        this.birds = this.sound.add("birds");
+        this.birds.play({
+            loop : true,
+            delay : 4.87,
+            volume: this.vol * 0.1
+        });
+        this.sound.pauseOnBlur = false;
+        */
         //Creación de imágenes
         this.background = this.add.image(0, 0, "simple_bg").setOrigin(0,0)
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
@@ -15,6 +24,10 @@ class Scene_Account extends Phaser.Scene {
         this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.backBtn.setFrame(1);
+
+        this.changeOptionSound = this.sound.add("change_button");
+        this.pressOptionSound = this.sound.add("press_button");
+        this.errorOptionSound = this.sound.add("error_button");
 
     } // Fin preload
 
@@ -38,12 +51,14 @@ class Scene_Account extends Phaser.Scene {
 
             this.backBtn.setInteractive().on('pointerdown', function(pointer,localX,localY,event){
                 that.backBtn.setFrame(1);
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
                 if (game.global.DEBUG_MODE){ 
                     console.log("Back pulsado");
                 }
             });
             this.backBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
                 that.backBtn.setFrame(0);
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.scene.start("scene_select_login");
                 if (game.global.DEBUG_MODE){ 
                     console.log("Back soltado");
@@ -51,6 +66,7 @@ class Scene_Account extends Phaser.Scene {
             });
         }else if(game.global.DEVICE === "desktop"){
             this.input.keyboard.on('keydown-'+'ESC', function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_select_login");
             });
@@ -77,6 +93,7 @@ class Scene_Account extends Phaser.Scene {
                         // Si el número de caracteres de la contraseña es correcto
                         if (inputPassword.value.length >= 4 && inputPassword.value.length <= 14)
                         {
+                            that.pressOptionSound.play({ volume: game.options.SFXVol });
                             // Turn off the click events
                             this.removeListener('click');
 
@@ -97,6 +114,7 @@ class Scene_Account extends Phaser.Scene {
                         // La contraseña tiene más o menos caracteres de los que debe
                         else
                         {
+                            that.errorOptionSound.play({ volume: game.options.SFXVol });
                             // Log In
                             if (that.game.global.logInOption == 0)
                             {
@@ -112,6 +130,7 @@ class Scene_Account extends Phaser.Scene {
                     // El nombre es demasiado largo
                     else
                     {
+                        that.errorOptionSound.play({ volume: game.options.SFXVol });
                         // Log In
                         if (that.game.global.logInOption == 0)
                         {
@@ -126,6 +145,7 @@ class Scene_Account extends Phaser.Scene {
                 }
                 else
                 {
+                    that.errorOptionSound.play({ volume: game.options.SFXVol });
                     //  Flash the prompt
                     this.scene.tweens.add({ targets: this, alpha: 0.1, duration: 200, ease: 'Power3', yoyo: true });
                 }

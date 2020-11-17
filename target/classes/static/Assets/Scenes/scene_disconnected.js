@@ -17,6 +17,9 @@ class Scene_Disconnected extends Phaser.Scene {
         .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.retryButton.setFrame(1);
 
+        this.changeOptionSound = this.sound.add("change_button");
+        this.pressOptionSound = this.sound.add("press_button");
+
     } // Fin preload
 
     create() {
@@ -45,6 +48,7 @@ class Scene_Disconnected extends Phaser.Scene {
                 }
             });
             this.retryButton.setInteractive().on('pointerup', function(pointer,localX,localY,event){
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.scene.start("scene_boot");
 
                 if (game.global.DEBUG_MODE){ 
@@ -54,6 +58,7 @@ class Scene_Disconnected extends Phaser.Scene {
             
         } else { // Ordenador
             this.input.keyboard.on('keydown-'+'ENTER', function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_boot");
             });

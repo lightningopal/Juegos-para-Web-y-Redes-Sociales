@@ -91,7 +91,7 @@ window.onload = function () {
     this.game.global = {
         DEVICE:         null,
         FPS:            60,
-        DEBUG_MODE:     false,
+        DEBUG_MODE:     true,
         DEBUG_PHONE:    false,
         WS_CONNECTION:  false,
         socket:         null,
@@ -105,6 +105,7 @@ window.onload = function () {
 
     this.game.options = {
         musicVol:       1.0,
+        currentSong:    undefined,
         SFXVol:         1.0,
         fullScreen:     false
     }

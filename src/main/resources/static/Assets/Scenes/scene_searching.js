@@ -67,12 +67,17 @@ class Scene_Searching extends Phaser.Scene {
         this.go_back_button.setFrame(1);
         this.go_back_button.setVisible(false);
 
+        this.pressOptionSound = this.sound.add("press_button");
+        game.options.currentSong = this.sound.add("wind_effect");
+
     } // Fin preload
 
     create() {
         // Set the scene
         var that = this;
         game.global.actualScene = "scene_searching";
+        // game.options.currentSong = "wind_effect";
+        game.options.currentSong.play({ volume: game.options.musicVol, loop: true });
 
         // Idle timer
         that.time.addEvent({
@@ -98,6 +103,8 @@ class Scene_Searching extends Phaser.Scene {
                 }
             });
             this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
+                that.windSound.stop();
                 that.backBtn.setFrame(0);
                 that.input.keyboard.removeAllKeys(true);
                 game.global.socket.send(JSON.stringify({ event: "CANCEL_QUEUE", level: game.mPlayer.difficultySel }));
@@ -109,7 +116,16 @@ class Scene_Searching extends Phaser.Scene {
         // Desktop
         else if (game.global.DEVICE === "desktop")
         {
+            this.backBtn.setFrame(1);
             this.input.keyboard.on("keydown-"+"ESC", function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
+                game.options.currentSong.stop();
+                that.input.keyboard.removeAllKeys(true);
+                game.global.socket.send(JSON.stringify({ event: "CANCEL_QUEUE", level: game.mPlayer.difficultySel }));
+            });
+            this.input.keyboard.on("keydown-"+"ENTER", function (event) {
+                game.options.currentSong.stop();
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.input.keyboard.removeAllKeys(true);
                 game.global.socket.send(JSON.stringify({ event: "CANCEL_QUEUE", level: game.mPlayer.difficultySel }));
             });

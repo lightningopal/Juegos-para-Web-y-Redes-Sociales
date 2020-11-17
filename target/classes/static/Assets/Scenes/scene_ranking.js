@@ -46,6 +46,7 @@ class Scene_Ranking extends Phaser.Scene {
         rankingWinsLosesTexts[10] = this.add.text(RelativeScale(1580, "x"), RelativeScale(795, "y"), winsLosesStringUser, { fontFamily: 'font_Write' }).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(Math.round(RelativeScale(64, "x")));
         rankingPointsTexts[10] = this.add.text(RelativeScale(1580, "x"), RelativeScale(900, "y"), game.global.ranking[10].points, { fontFamily: 'font_Write' }).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(Math.round(RelativeScale(64, "x")));
 
+        this.pressOptionSound = this.sound.add("press_button");
     } // Fin preload
 
     create() {
@@ -71,6 +72,7 @@ class Scene_Ranking extends Phaser.Scene {
                 }
             });
             this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.backBtn.setFrame(0);
                 that.scene.start("scene_main_menu");
                 if (game.global.DEBUG_MODE) {
@@ -82,11 +84,13 @@ class Scene_Ranking extends Phaser.Scene {
 
             // Opciones de selección
             this.input.keyboard.on('keydown-'+'ESC', function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_main_menu");
             });
 
             this.input.keyboard.on('keydown-'+'ENTER', function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_main_menu");
             });

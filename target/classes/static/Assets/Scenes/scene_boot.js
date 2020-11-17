@@ -331,6 +331,21 @@ class Scene_Boot extends Phaser.Scene {
             /// Plugin joystick ///
             this.load.plugin('rexvirtualjoystickplugin', './Assets/Plugins/rexvirtualjoystickplugin.min.js', true);
 
+            /// Efectos de Sonido ///
+            this.load.audio("bard_attack", "./Assets/Sounds/SoundsFX/BardAttack.mp3");
+            this.load.audio("bard_hit", "./Assets/Sounds/SoundsFX/BardHitFX.mp3");
+            this.load.audio("berserker_attack", "./Assets/Sounds/SoundsFX/BerserkerAttack.mp3");
+            this.load.audio("berserker_hit", "./Assets/Sounds/SoundsFX/BerserkerHitFX.mp3");
+            this.load.audio("wizard_attack", "./Assets/Sounds/SoundsFX/WizardAttack.mp3");
+            this.load.audio("wizard_hit", "./Assets/Sounds/SoundsFX/WizardHitFX.mp3");
+            this.load.audio("rogue_attack", "./Assets/Sounds/SoundsFX/RogueAttack.mp3");
+            // this.load.audio("rogue_hit", "./Assets/Sounds/SoundsFX/RogueHitFX.mp3");
+
+            this.load.audio("change_button", "./Assets/Sounds/SoundsFX/ChangeButtons.mp3");
+            this.load.audio("error_button", "./Assets/Sounds/SoundsFX/ErrorButton.mp3");
+            this.load.audio("press_button", "./Assets/Sounds/SoundsFX/PressButton.mp3");
+            this.load.audio("wind_effect", "./Assets/Sounds/SoundsFX/WindSFX.mp3");
+
             game.global.hasLoadData = true;
         }
         else
@@ -451,10 +466,13 @@ class Scene_Boot extends Phaser.Scene {
                 }
             }
         }
+        this.pressOptionSound;
 
     } // Fin preload
 
     create() {
+        var that = this;
+        this.pressOptionSound = this.sound.add("press_button");
         // Set the scene
         game.global.actualScene = "scene_boot";
 
@@ -538,6 +556,7 @@ class Scene_Boot extends Phaser.Scene {
             case "desktop":
                 this.input.keyboard.on('keydown-' + "ENTER", function () {
                     if (!isLoading /**/ && game.global.WS_CONNECTION/**/) {
+                        that.pressOptionSound.play({ volume: game.options.SFXVol });
                         this.scene.input.keyboard.removeAllKeys(true);
                         this.scene.scene.start("scene_select_login");
                     }
@@ -546,6 +565,7 @@ class Scene_Boot extends Phaser.Scene {
             case "mobile":
                 this.input.on('pointerdown', function () {
                     if (!isLoading /**/ && game.global.WS_CONNECTION/**/) {
+                        that.pressOptionSound.play({ volume: game.options.SFXVol });
                         this.scene.scene.start("scene_select_login");
                     }
                 });
@@ -553,7 +573,6 @@ class Scene_Boot extends Phaser.Scene {
             default:
                 break;
         }
-
     } // Fin create
 
     update() {

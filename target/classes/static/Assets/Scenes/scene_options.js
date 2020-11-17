@@ -26,6 +26,9 @@ class Scene_Options extends Phaser.Scene {
         this.musicBtn.setFrame(1);
         // Opciones de selección
         this.optionSelected;
+
+        this.changeOptionSound = this.sound.add("change_button");
+        this.pressOptionSound = this.sound.add("press_button");
     }// Fin preload
 
     create() {
@@ -74,8 +77,9 @@ class Scene_Options extends Phaser.Scene {
             });
             this.backBtn.setInteractive().on('pointerup', function(pointer,localX,localY,event){
                 if (that.optionSelected == 0){
+                    that.pressOptionSound.play({ volume: game.options.SFXVol });
                     that.backBtn.setFrame(0);
-                that.scene.start("scene_main_menu");
+                    that.scene.start("scene_main_menu");
                 }
                 if (game.global.DEBUG_MODE){ 
                     console.log("Back soltado");
@@ -83,6 +87,7 @@ class Scene_Options extends Phaser.Scene {
             });
 
             this.musicBtn.setInteractive({draggable: true}).on('pointerdown', function(pointer,localX,localY,event){
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
                 that.optionSelected = 1;
                 that.backBtn.setFrame(0);
                 that.musicBtn.setFrame(1);
@@ -94,10 +99,10 @@ class Scene_Options extends Phaser.Scene {
             this.musicBtn.setInteractive({draggable: true}).on('drag', function(pointer,dragX,dragY){
                 if (dragX <= RelativeScale(1633,"x") && dragX >= RelativeScale(962,"x")){
                     that.musicBtn.x = dragX;
-                    game.global.musicVol = (Unscale(dragX,"x")-962) / 671;
+                    game.options.musicVol = (Unscale(dragX,"x")-962) / 671;
                 }
                 if (game.global.DEBUG_MODE){ 
-                    console.log("Music: "+game.global.musicVol);
+                    console.log("Music: "+game.options.musicVol);
                 }
             });
             this.musicBtn.setInteractive({draggable: true}).on('pointerup', function(pointer,localX,localY,event){
@@ -108,6 +113,7 @@ class Scene_Options extends Phaser.Scene {
             });
 
             this.sfxBtn.setInteractive({draggable: true}).on('pointerdown', function(pointer,localX,localY,event){
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
                 that.optionSelected = 2;
                 that.backBtn.setFrame(0);
                 that.musicBtn.setFrame(0);
@@ -119,10 +125,10 @@ class Scene_Options extends Phaser.Scene {
             this.sfxBtn.setInteractive({draggable: true}).on('drag', function(pointer,dragX,dragY){
                 if (dragX <= RelativeScale(1633,"x") && dragX >= RelativeScale(962,"x")){
                     that.sfxBtn.x = dragX;
-                    game.global.SFXVol = (Unscale(dragX,"x")-962) / 671;
+                    game.options.SFXVol = (Unscale(dragX,"x")-962) / 671;
                 }
                 if (game.global.DEBUG_MODE){ 
-                    console.log("SFX: "+game.global.SFXVol);
+                    console.log("SFX: "+game.options.SFXVol);
                 }
             });
             this.sfxBtn.setInteractive({draggable: true}).on('pointerup', function(pointer,localX,localY,event){
@@ -139,17 +145,20 @@ class Scene_Options extends Phaser.Scene {
             this.controlsImage.setAlpha(0);
             // Teclas de selección
             this.input.keyboard.on("keydown-"+"ESC", function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_main_menu");
             });
             this.input.keyboard.on("keydown-"+"ENTER", function (event) {
                 if (that.optionSelected == 0) {
+                    that.pressOptionSound.play({ volume: game.options.SFXVol });
                     that.input.keyboard.removeAllKeys(true);
                     that.scene.start("scene_main_menu");
                 }
             });
 
             this.input.keyboard.on("keydown-"+"W", function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
                 if (that.optionSelected == 0) {
                     that.optionSelected = 3;
                 } else {
@@ -161,6 +170,7 @@ class Scene_Options extends Phaser.Scene {
                 that.CheckOption();
             });
             this.input.keyboard.on("keydown-"+"S", function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
                 that.optionSelected = (that.optionSelected + 1) % 4;
                 if (game.global.DEBUG_MODE) {
                     console.log(that.optionSelected);

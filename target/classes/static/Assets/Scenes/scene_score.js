@@ -124,6 +124,9 @@ class Scene_Score extends Phaser.Scene {
 
         // Controles
         this.optionSelected;
+
+        this.changeOptionSound = this.sound.add("change_button");
+        this.pressOptionSound = this.sound.add("press_button");
     }// Fin preload
 
     create() {
@@ -224,6 +227,7 @@ class Scene_Score extends Phaser.Scene {
                 }
             });
             this.yesBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.scene.start("scene_searching");
                 if (game.global.DEBUG_MODE) {
                     console.log("yes soltado");
@@ -238,6 +242,7 @@ class Scene_Score extends Phaser.Scene {
                 }
             });
             this.noBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.scene.start("scene_main_menu");
                 if (game.global.DEBUG_MODE) {
                     console.log("no soltado");
@@ -246,6 +251,7 @@ class Scene_Score extends Phaser.Scene {
 
         } else if (game.global.DEVICE === "desktop") {
             this.input.keyboard.on("keydown-" + "D", function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
                 that.optionSelected = (that.optionSelected + 1) % 2;
                 that.CheckOption();
                 if (game.global.DEBUG_MODE) {
@@ -253,6 +259,7 @@ class Scene_Score extends Phaser.Scene {
                 }
             });
             this.input.keyboard.on("keydown-" + "A", function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
                 that.optionSelected = (that.optionSelected + 1) % 2;
                 that.CheckOption();
                 if (game.global.DEBUG_MODE) {
@@ -261,6 +268,7 @@ class Scene_Score extends Phaser.Scene {
             });
 
             this.input.keyboard.on("keydown-" + "ENTER", function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 // Play again
                 if (that.optionSelected == 0) {
                     that.input.keyboard.removeAllKeys(true);

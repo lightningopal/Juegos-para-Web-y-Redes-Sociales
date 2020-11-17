@@ -138,6 +138,10 @@ class Scene_Select_Character extends Phaser.Scene {
         this.selectingSkill;
         this.selectingMap;
         this.errorMessage;
+
+        this.changeOptionSound = this.sound.add("change_button");
+        this.pressOptionSound = this.sound.add("press_button");
+        this.errorOptionSound = this.sound.add("error_button");
     }// Fin preload
 
     create() {
@@ -199,6 +203,7 @@ class Scene_Select_Character extends Phaser.Scene {
                 }
             });
             this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.backBtn.setFrame(0);
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_main_menu");
@@ -275,11 +280,13 @@ class Scene_Select_Character extends Phaser.Scene {
                         game.mPlayer.skinSel = that.skinSelectedCol;
                         that.selectingSkin = false;
                         that.confirmingSkin = true;
+                        that.changeOptionSound.play({ volume: game.options.SFXVol });
                         if (game.global.DEBUG_MODE) {
                             console.log("Skin seleccionada: " + game.mPlayer.skinSel);
                         }
                     } else {
                         // Hay que comprar la skin
+                        that.errorOptionSound.play({ volume: game.options.SFXVol });
                         if (game.global.DEBUG_MODE) {
                             console.log("Debes comprar la skin");
                         }
@@ -302,11 +309,13 @@ class Scene_Select_Character extends Phaser.Scene {
                         game.mPlayer.skinSel = that.skinSelectedCol;
                         that.selectingSkin = false;
                         that.confirmingSkin = true;
+                        that.changeOptionSound.play({ volume: game.options.SFXVol });
                         if (game.global.DEBUG_MODE) {
                             console.log("Skin seleccionada: " + game.mPlayer.skinSel);
                         }
                     } else {
                         // Hay que comprar la skin
+                        that.errorOptionSound.play({ volume: game.options.SFXVol });
                         if (game.global.DEBUG_MODE) {
                             console.log("Debes comprar la skin");
                         }
@@ -314,8 +323,9 @@ class Scene_Select_Character extends Phaser.Scene {
                 }
             });
 
-            this.enterBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+            this.enterBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
                 if (game.mPlayer.characterSel.id != -1) {
+                    that.pressOptionSound.play({ volume: game.options.SFXVol });
                     if (game.mPlayer.isVersus) {
                         // Selección de Skill/Mapa
                         that.scene.start("scene_select_map");
@@ -335,6 +345,7 @@ class Scene_Select_Character extends Phaser.Scene {
                 }
             });
             this.go_back_button.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.go_back_button.setFrame(0);
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_main_menu");
@@ -357,6 +368,7 @@ class Scene_Select_Character extends Phaser.Scene {
 
             // Opciones de selección
             this.input.keyboard.on("keydown-"+"ESC", function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 if (that.selectingCharacter) { // Seleccionando personaje
                     that.input.keyboard.removeAllKeys(true);
                     that.scene.start("scene_main_menu");
@@ -384,6 +396,7 @@ class Scene_Select_Character extends Phaser.Scene {
             });
 
             this.input.keyboard.on("keydown-"+"S", function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
                 if (that.selectingCharacter) { // Seleccionando personaje
                     that.characterSelectedRow = (that.characterSelectedRow + 1) % 2;
                     that.CheckCharacter();
@@ -408,6 +421,7 @@ class Scene_Select_Character extends Phaser.Scene {
                 }
             });
             this.input.keyboard.on("keydown-"+"W", function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
                 if (that.selectingCharacter) { // Seleccionando personaje
                     if (that.characterSelectedRow == -1) {
                         that.characterSelectedRow = 1;
@@ -439,6 +453,7 @@ class Scene_Select_Character extends Phaser.Scene {
             });
 
             this.input.keyboard.on("keydown-"+"D", function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
                 if (that.selectingCharacter) { // Seleccionando personaje
                     if (that.characterSelectedRow != -1) {
                         that.characterSelectedCol = (that.characterSelectedCol + 1) % 3;
@@ -458,6 +473,7 @@ class Scene_Select_Character extends Phaser.Scene {
                 }
             });
             this.input.keyboard.on("keydown-"+"A", function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
                 if (that.selectingCharacter) { // Seleccionando personaje
                     if (that.characterSelectedRow != -1) {
                         if (that.characterSelectedCol === 0) {
@@ -491,6 +507,7 @@ class Scene_Select_Character extends Phaser.Scene {
                 } else if (that.selectingSkin) { // Seleccionando skin
                     that.SelectSkin();
                 } else if (that.confirmingSkin) {
+                    that.pressOptionSound.play({ volume: game.options.SFXVol });
                     if (that.confirmSkin) {
                         if (game.mPlayer.isVersus) {
                             // Selección de Skill/Mapa
@@ -514,6 +531,7 @@ class Scene_Select_Character extends Phaser.Scene {
                     }
                 } else if (that.errorMessage)
                 {
+                    that.pressOptionSound.play({ volume: game.options.SFXVol });
                     that.scene.start("scene_main_menu");
                 }
             });
@@ -718,6 +736,7 @@ class Scene_Select_Character extends Phaser.Scene {
     // Selecciona el personaje si está disponible
     SelectCharacter() {
         if (this.characterSelectedRow == -1) {
+            this.pressOptionSound.play({ volume: game.options.SFXVol });
             this.input.keyboard.removeAllKeys(true);
             this.scene.start("scene_main_menu");
         } else if (this.availableChars[this.characterSelectedRow][this.characterSelectedCol].available) { // Si está disponible
@@ -729,15 +748,18 @@ class Scene_Select_Character extends Phaser.Scene {
                 this.leftArrowBtn.setAlpha(1);
                 this.rightArrowBtn.setAlpha(1);
                 this.selectingSkin = true;
+                this.pressOptionSound.play({ volume: game.options.SFXVol });
                 if (game.global.DEBUG_MODE) {
                     console.log("Personaje seleccionado: " + game.mPlayer.characterSel.type);
                 }
             } else {
+                this.errorOptionSound.play({ volume: game.options.SFXVol });
                 if (game.global.DEBUG_MODE) {
                     console.log("Debes comprar el personaje");
                 }
             }
         } else {
+            this.errorOptionSound.play({ volume: game.options.SFXVol });
             if (game.global.DEBUG_MODE) {
                 console.log("Personaje no disponible");
             }
@@ -761,6 +783,7 @@ class Scene_Select_Character extends Phaser.Scene {
 
     SelectSkin() {
         if (this.skinSelectedRow == -1) {
+            this.pressOptionSound.play({ volume: game.options.SFXVol });
             this.selectingSkin = false;
             this.skinsSkills.setAlpha(0.7);
             this.leftArrowBtn.setAlpha(0);
@@ -773,6 +796,7 @@ class Scene_Select_Character extends Phaser.Scene {
         } else {
             if (game.mPlayer.availableSkins[game.mPlayer.characterSel.id].includes(this.skinSelectedCol)) {
                 // Se puede seleccionar
+                this.pressOptionSound.play({ volume: game.options.SFXVol });
                 game.mPlayer.skinSel = this.skinSelectedCol;
                 this.selectingSkin = false;
                 this.leftArrowBtn.setAlpha(0);
@@ -785,6 +809,7 @@ class Scene_Select_Character extends Phaser.Scene {
                 }
             } else {
                 // Hay que comprar la skin
+                this.errorOptionSound.play({ volume: game.options.SFXVol });
                 if (game.global.DEBUG_MODE) {
                     console.log("Debes comprar la skin");
                 }

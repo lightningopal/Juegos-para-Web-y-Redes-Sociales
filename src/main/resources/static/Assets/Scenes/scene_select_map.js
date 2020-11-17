@@ -34,6 +34,10 @@ class Scene_Select_Map extends Phaser.Scene {
         this.optionSelected = 0; // 0 -> Mapa 0 / 1 -> Mapa 1
         this.alreadySelected = false;
 
+        this.changeOptionSound = this.sound.add("change_button");
+        this.pressOptionSound = this.sound.add("press_button");
+        this.errorOptionSound = this.sound.add("error_button");
+
     } // Fin preload
 
     create() {
@@ -68,6 +72,7 @@ class Scene_Select_Map extends Phaser.Scene {
                 }
             });
             this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.backBtn.setFrame(0);
                 that.scene.start("scene_select_character");
                 if (game.global.DEBUG_MODE) {
@@ -76,6 +81,7 @@ class Scene_Select_Map extends Phaser.Scene {
             });
             // Primer mapa
             this.mapButton0.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.mapButton0.setFrame(1);
                 that.mapButton1.setFrame(0);
                 game.mPlayer.difficultySel = 0;
@@ -92,6 +98,7 @@ class Scene_Select_Map extends Phaser.Scene {
             });
             // Segundo mapa
             this.mapButton1.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.mapButton0.setFrame(0);
                 that.mapButton1.setFrame(1);
                 game.mPlayer.difficultySel = 1;
@@ -108,6 +115,7 @@ class Scene_Select_Map extends Phaser.Scene {
             });
             this.enterBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
                 if (game.mPlayer.difficultySel == 0 || game.mPlayer.difficultySel == 1){
+                    that.pressOptionSound.play({ volume: game.options.SFXVol });
                     that.scene.start("scene_searching");
                 }
             });
@@ -121,6 +129,7 @@ class Scene_Select_Map extends Phaser.Scene {
 
             // Opciones de selección
             this.input.keyboard.on('keydown-' + 'A', function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
                 if (!that.return && !that.alreadySelected) {
                     that.optionSelected = (that.optionSelected + 1) % 2;
                     that.CheckOption();
@@ -130,6 +139,7 @@ class Scene_Select_Map extends Phaser.Scene {
                 }
             });
             this.input.keyboard.on('keydown-' + 'D', function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
                 if (!that.return && !that.alreadySelected) {
                     that.optionSelected = (that.optionSelected + 1) % 2;
                     that.CheckOption();
@@ -139,15 +149,18 @@ class Scene_Select_Map extends Phaser.Scene {
                 }
             });
             this.input.keyboard.on('keydown-'+'W', function(event){
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
                 that.return = !that.return;
                 that.CheckOption();
             });
             this.input.keyboard.on('keydown-'+'S', function(event){
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
                 that.return = false;
                 that.CheckOption();
             });
 
             this.input.keyboard.on('keydown-' + 'ESC', function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 if (!that.alreadySelected){
                     that.input.keyboard.removeAllKeys(true);
                     that.scene.start("scene_select_character");
@@ -159,6 +172,7 @@ class Scene_Select_Map extends Phaser.Scene {
             });
 
             this.input.keyboard.on('keydown-' + 'ENTER', function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 if (!that.return){
                     if (!that.alreadySelected) {
                         that.enterText.setVisible(true);
