@@ -1105,6 +1105,7 @@ class Scene_Boot extends Phaser.Scene {
             // Puntos
             game.mPlayer.points = data.loser.points;
             game.mPlayer.previousPoints = data.loser.previousPoints;
+            console.log(data.loser.previousPoints);
 
             // Monedas ganadas
             game.mPlayer.newCoins = data.loser.newCoins;

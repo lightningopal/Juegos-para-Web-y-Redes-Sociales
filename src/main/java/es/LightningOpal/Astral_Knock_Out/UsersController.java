@@ -216,7 +216,7 @@ public class UsersController {
 		for (int i = 0; i < ranking.length - 1; i++)
 		{
 			// Reseteamos la variable que controla el elo máximo y el nombre del jugador
-			maxElo = 0;
+			maxElo = -1;
 			userName = "";
 
 			// En cada iteración comprobamos por cada usuario quien tiene más elo
