@@ -587,7 +587,7 @@ class Scene_Boot extends Phaser.Scene {
                 else
                 {
                     game.global.hasLoadData = true;
-                    this.scene.scene.start("scene_select_login");
+                    this.scene.scene.start("scene_logo");
                 }
             }
         });
