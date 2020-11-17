@@ -8,45 +8,44 @@ class Scene_Searching extends Phaser.Scene {
         //Creación de imágenes
         this.background = this.add.image(0, 0, "main_menu_bg").setOrigin(0, 0)
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.nebula = this.add.image(game.config.width/2, game.config.height/2, "main_menu_nebula")
+        this.nebula = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_nebula")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.stars = this.add.image(game.config.width/2, game.config.height/2, "main_menu_stars")
+        this.stars = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_stars")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
-        this.add.image(game.config.width/2, game.config.height/2, "searching_back_triangle")
+        this.add.image(game.config.width / 2, game.config.height / 2, "searching_back_triangle")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
         // Personaje
-        var characterImage = this.add.image(RelativeScale(480,"x"), RelativeScale(540,"y"), "splashart_" + game.mPlayer.characterSel.type)
+        var characterImage = this.add.image(RelativeScale(480, "x"), RelativeScale(540, "y"), "splashart_" + game.mPlayer.characterSel.type)
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
-        switch (game.mPlayer.characterSel.type)
-        {
+        switch (game.mPlayer.characterSel.type) {
             case "bard":
-                characterImage.setScale(RelativeScale(1.4, "x"),RelativeScale(1.4, "y"));
+                characterImage.setScale(RelativeScale(1.4, "x"), RelativeScale(1.4, "y"));
                 characterImage.y = RelativeScale(500, "y");
                 break;
             case "wizard":
                 characterImage.x = RelativeScale(500, "x");
                 characterImage.y = RelativeScale(600, "y");
-                characterImage.setScale(RelativeScale(1.25, "x"),RelativeScale(1.25, "y"));
+                characterImage.setScale(RelativeScale(1.25, "x"), RelativeScale(1.25, "y"));
                 characterImage.setFlip(true);
                 break;
             case "rogue":
-                characterImage.setScale(RelativeScale(1.5, "x"),RelativeScale(1.5, "y"));
+                characterImage.setScale(RelativeScale(1.5, "x"), RelativeScale(1.5, "y"));
                 characterImage.setFlip(true);
                 characterImage.y = RelativeScale(740, "y");
                 break;
             case "berserker":
-                characterImage.setScale(RelativeScale(1.4, "x"),RelativeScale(1.4, "y"));
+                characterImage.setScale(RelativeScale(1.4, "x"), RelativeScale(1.4, "y"));
                 break;
         }
 
-        this.add.image(game.config.width/2, game.config.height/2, "searching_front_triangle")
+        this.add.image(game.config.width / 2, game.config.height / 2, "searching_front_triangle")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.tipImage = this.add.image(RelativeScale(1600.91,"x"), RelativeScale(881.41,"y"), "searching_tips_text")
+        this.tipImage = this.add.image(RelativeScale(1600.91, "x"), RelativeScale(881.41, "y"), "searching_tips_text")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-            
+
         // Tip random
         var randomTip = Math.floor(Math.random() * 10);
         this.tipImage.setFrame(randomTip);
@@ -58,7 +57,7 @@ class Scene_Searching extends Phaser.Scene {
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(31);
 
         // Error message
-        this.error_bg = this.add.image(0,0, "error_bg").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(41);
+        this.error_bg = this.add.image(0, 0, "error_bg").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(41);
         this.no_matches_text = this.add.image(RelativeScale(960, "x"), RelativeScale(404.5, "Y"), "no_matches_text").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(42);
         this.go_back_button = this.add.image(RelativeScale(960, "x"), RelativeScale(763, "Y"), "go_back_button").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(43);
 
@@ -89,43 +88,33 @@ class Scene_Searching extends Phaser.Scene {
         // Search game
         game.global.socket.send(JSON.stringify({ event: "SEARCHING_GAME", playerType: game.mPlayer.characterSel.type, skill: game.mPlayer.skillSel, level: game.mPlayer.difficultySel }));
 
-        // Móvil
-        if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
-            this.input.on('pointerup', function () {
-                that.backBtn.setFrame(0);
-            });
+        this.input.on('pointerup', function () {
+            that.backBtn.setFrame(0);
+        });
 
-            // Botón de volver
-            this.backBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-                that.backBtn.setFrame(1);
-                if (game.global.DEBUG_MODE) {
-                    console.log("Back pulsado");
-                }
-            });
-            this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-                that.pressOptionSound.play({ volume: game.options.SFXVol });
-                that.windSound.stop();
-                that.backBtn.setFrame(0);
-                that.input.keyboard.removeAllKeys(true);
-                game.global.socket.send(JSON.stringify({ event: "CANCEL_QUEUE", level: game.mPlayer.difficultySel }));
-                if (game.global.DEBUG_MODE) {
-                    console.log("Back soltado");
-                }
-            });
-        }
+        // Botón de volver
+        this.backBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+            that.backBtn.setFrame(1);
+            if (game.global.DEBUG_MODE) {
+                console.log("Back pulsado");
+            }
+        });
+        this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            that.pressOptionSound.play({ volume: game.options.SFXVol });
+            game.options.currentSong.stop();
+            that.backBtn.setFrame(0);
+            that.input.keyboard.removeAllKeys(true);
+            game.global.socket.send(JSON.stringify({ event: "CANCEL_QUEUE", level: game.mPlayer.difficultySel }));
+            if (game.global.DEBUG_MODE) {
+                console.log("Back soltado");
+            }
+        });
         // Desktop
-        else if (game.global.DEVICE === "desktop")
-        {
+        if (game.global.DEVICE === "desktop") {
             this.backBtn.setFrame(1);
-            this.input.keyboard.on("keydown-"+"ESC", function (event) {
+            this.input.keyboard.on("keydown-" + "ESC", function (event) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 game.options.currentSong.stop();
-                that.input.keyboard.removeAllKeys(true);
-                game.global.socket.send(JSON.stringify({ event: "CANCEL_QUEUE", level: game.mPlayer.difficultySel }));
-            });
-            this.input.keyboard.on("keydown-"+"ENTER", function (event) {
-                game.options.currentSong.stop();
-                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.input.keyboard.removeAllKeys(true);
                 game.global.socket.send(JSON.stringify({ event: "CANCEL_QUEUE", level: game.mPlayer.difficultySel }));
             });
@@ -150,8 +139,7 @@ class Scene_Searching extends Phaser.Scene {
         this.stars.tilePositionY += RelativeScale(0.4, "y");
     } // Fin update
 
-    FullError()
-    {
+    FullError() {
         that.input.keyboard.removeAllKeys(true);
         this.error_bg.setVisible(true);
         this.no_matches_text.setVisible(true);

@@ -273,53 +273,7 @@ class Scene_Space_Gym extends Phaser.Scene {
                 that.mobileKeys.joyStick.y = RelativeScale(900, "y");
             });
 
-            this.backBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-                that.backBtn.setFrame(1);
-                if (game.global.DEBUG_MODE) {
-                    console.log("Back pulsado");
-                }
-            });
-            this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-                that.backBtn.setFrame(0);
-                if (!that.paused) {
-                    that.backBtn.disableInteractive();
-                    that.msgImg.setAlpha(1);
-                    that.pauseText.setAlpha(1);
-                    that.yesBtn.setAlpha(1);
-                    that.yesBtn.setFrame(0);
-                    that.noBtn.setAlpha(1);
-                    that.noBtn.setFrame(0);
-                }
-                that.paused = !that.paused;
-                that.movingLeft = false;
-                that.movingRight = false;
-                if (game.global.DEBUG_MODE) {
-                    console.log("Back soltado");
-                }
-            });
-
-            this.yesBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-                that.yesBtn.setFrame(1);
-                that.noBtn.setFrame(0);
-            });
-            this.yesBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-                game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
-                that.scene.start("scene_main_menu");
-            });
-
-            this.noBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-                that.yesBtn.setFrame(0);
-                that.noBtn.setFrame(1);
-            });
-            this.noBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-                that.backBtn.setInteractive();
-                that.paused = false;
-                that.msgImg.setAlpha(0);
-                that.pauseText.setAlpha(0);
-                that.yesBtn.setAlpha(0);
-                that.noBtn.setAlpha(0);
-                that.noBtn.setFrame(0)
-            });
+            
 
         } else if (game.global.DEVICE === "desktop") {
             this.input.keyboard.on("keydown-" + "A", function (event) {
@@ -430,6 +384,56 @@ class Scene_Space_Gym extends Phaser.Scene {
                 }
             });
         }// Fin DEVICE == desktop
+
+        this.backBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+            that.backBtn.setFrame(1);
+            if (game.global.DEBUG_MODE) {
+                console.log("Back pulsado");
+            }
+        });
+        this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            that.backBtn.setFrame(0);
+            if (!that.paused) {
+                that.backBtn.disableInteractive();
+                that.msgImg.setAlpha(1);
+                that.pauseText.setAlpha(1);
+                that.yesBtn.setAlpha(1);
+                that.yesBtn.setFrame(0);
+                that.noBtn.setAlpha(1);
+                that.noBtn.setFrame(0);
+            }
+            that.paused = !that.paused;
+            that.movingLeft = false;
+            that.movingRight = false;
+            if (game.global.DEBUG_MODE) {
+                console.log("Back soltado");
+            }
+        });
+
+        this.yesBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+            that.returnToMenu = true;
+            that.yesBtn.setFrame(1);
+            that.noBtn.setFrame(0);
+        });
+        this.yesBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
+            that.scene.start("scene_main_menu");
+        });
+
+        this.noBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+            that.returnToMenu = false;
+            that.yesBtn.setFrame(0);
+            that.noBtn.setFrame(1);
+        });
+        this.noBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            that.backBtn.setInteractive();
+            that.paused = false;
+            that.msgImg.setAlpha(0);
+            that.pauseText.setAlpha(0);
+            that.yesBtn.setAlpha(0);
+            that.noBtn.setAlpha(0);
+            that.noBtn.setFrame(0)
+        });
 
         game.mPlayer.image.on("animationcomplete", function (anim) {
             if (anim.key === game.mPlayer.characterSel.type + "_attack") {

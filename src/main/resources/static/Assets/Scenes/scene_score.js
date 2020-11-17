@@ -212,44 +212,43 @@ class Scene_Score extends Phaser.Scene {
         this.yesBtn.setVisible(true);
         this.noBtn.setVisible(true);
 
-        if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
 
-            this.input.on('pointerup', function () {
-                that.yesBtn.setFrame(0);
-                that.noBtn.setFrame(0);
-            });
+        this.input.on('pointerup', function () {
+            that.yesBtn.setFrame(0);
+            that.noBtn.setFrame(0);
+        });
 
-            this.yesBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-                that.yesBtn.setFrame(1);
-                that.noBtn.setFrame(0);
-                if (game.global.DEBUG_MODE) {
-                    console.log("yes pulsado");
-                }
-            });
-            this.yesBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-                that.pressOptionSound.play({ volume: game.options.SFXVol });
-                that.scene.start("scene_searching");
-                if (game.global.DEBUG_MODE) {
-                    console.log("yes soltado");
-                }
-            });
+        this.yesBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+            that.yesBtn.setFrame(1);
+            that.noBtn.setFrame(0);
+            if (game.global.DEBUG_MODE) {
+                console.log("yes pulsado");
+            }
+        });
+        this.yesBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            that.pressOptionSound.play({ volume: game.options.SFXVol });
+            that.scene.start("scene_searching");
+            if (game.global.DEBUG_MODE) {
+                console.log("yes soltado");
+            }
+        });
 
-            this.noBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-                that.yesBtn.setFrame(0);
-                that.noBtn.setFrame(1);
-                if (game.global.DEBUG_MODE) {
-                    console.log("no pulsado");
-                }
-            });
-            this.noBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-                that.pressOptionSound.play({ volume: game.options.SFXVol });
-                that.scene.start("scene_main_menu");
-                if (game.global.DEBUG_MODE) {
-                    console.log("no soltado");
-                }
-            });
+        this.noBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+            that.yesBtn.setFrame(0);
+            that.noBtn.setFrame(1);
+            if (game.global.DEBUG_MODE) {
+                console.log("no pulsado");
+            }
+        });
+        this.noBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            that.pressOptionSound.play({ volume: game.options.SFXVol });
+            that.scene.start("scene_main_menu");
+            if (game.global.DEBUG_MODE) {
+                console.log("no soltado");
+            }
+        });
 
-        } else if (game.global.DEVICE === "desktop") {
+        if (game.global.DEVICE === "desktop") {
             this.input.keyboard.on("keydown-" + "D", function (event) {
                 that.changeOptionSound.play({ volume: game.options.SFXVol });
                 that.optionSelected = (that.optionSelected + 1) % 2;

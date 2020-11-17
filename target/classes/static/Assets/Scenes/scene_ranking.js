@@ -6,10 +6,10 @@ class Scene_Ranking extends Phaser.Scene {
 
     preload() {
         //Creación de imágenes
-        this.background = this.add.image(0, 0, "simple_bg").setOrigin(0,0)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.stars = this.add.tileSprite(0, 0, RelativeScale(1920,"x"),RelativeScale(1080,"y"), "stars")
-        .setOrigin(0,0);
+        this.background = this.add.image(0, 0, "simple_bg").setOrigin(0, 0)
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.stars = this.add.tileSprite(0, 0, RelativeScale(1920, "x"), RelativeScale(1080, "y"), "stars")
+            .setOrigin(0, 0);
 
         this.add.image(0, 0, "ranking_interface").setOrigin(0, 0)
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
@@ -23,18 +23,15 @@ class Scene_Ranking extends Phaser.Scene {
         var rankingWinsLosesTexts = [];
         var rankingPointsTexts = [];
 
-        for (var i = 0; i < game.global.ranking.length - 1; i++)
-        {
-            if (game.global.ranking[i].userName != "")
-            {
+        for (var i = 0; i < game.global.ranking.length - 1; i++) {
+            if (game.global.ranking[i].userName != "") {
                 var winsLosesString = game.global.ranking[i].winsCount + " / " + game.global.ranking[i].losesCount;
 
                 rankingNameTexts[i] = this.add.text(RelativeScale(240, "x"), RelativeScale(398 + (67 * i), "y"), game.global.ranking[i].userName, { fontFamily: 'font_Write' }).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(Math.round(RelativeScale(64, "x")));
                 rankingWinsLosesTexts[i] = this.add.text(RelativeScale(660, "x"), RelativeScale(398 + (67 * i), "y"), winsLosesString, { fontFamily: 'font_Write' }).setOrigin(0.5, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(Math.round(RelativeScale(64, "x")));
                 rankingPointsTexts[i] = this.add.text(RelativeScale(940, "x"), RelativeScale(398 + (67 * i), "y"), game.global.ranking[i].points, { fontFamily: 'font_Write' }).setOrigin(0.5, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setFontSize(Math.round(RelativeScale(64, "x")));
             }
-            else
-            {
+            else {
                 break;
             }
         }
@@ -60,36 +57,28 @@ class Scene_Ranking extends Phaser.Scene {
             callback: that.scene.get("scene_boot").IdleMessage,
             loop: true
         });
-
-        if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
-            this.input.on('pointerup', function () {
-                that.backBtn.setFrame(0);
-            });
-            this.backBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-                that.backBtn.setFrame(1);
-                if (game.global.DEBUG_MODE) {
-                    console.log("Back pulsado");
-                }
-            });
-            this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-                that.pressOptionSound.play({ volume: game.options.SFXVol });
-                that.backBtn.setFrame(0);
-                that.scene.start("scene_main_menu");
-                if (game.global.DEBUG_MODE) {
-                    console.log("Back soltado");
-                }
-            });
-        } else {
+        this.input.on('pointerup', function () {
+            that.backBtn.setFrame(0);
+        });
+        this.backBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+            that.backBtn.setFrame(1);
+            if (game.global.DEBUG_MODE) {
+                console.log("Back pulsado");
+            }
+        });
+        this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            that.pressOptionSound.play({ volume: game.options.SFXVol });
+            that.backBtn.setFrame(0);
+            that.scene.start("scene_main_menu");
+            if (game.global.DEBUG_MODE) {
+                console.log("Back soltado");
+            }
+        });
+        if (game.global.DEVICE === "desktop") {
             this.backBtn.setFrame(1);
 
             // Opciones de selección
-            this.input.keyboard.on('keydown-'+'ESC', function (event) {
-                that.pressOptionSound.play({ volume: game.options.SFXVol });
-                that.input.keyboard.removeAllKeys(true);
-                that.scene.start("scene_main_menu");
-            });
-
-            this.input.keyboard.on('keydown-'+'ENTER', function (event) {
+            this.input.keyboard.on('keydown-' + 'ESC', function (event) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_main_menu");

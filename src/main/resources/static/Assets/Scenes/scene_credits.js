@@ -22,7 +22,7 @@ class Scene_Credits extends Phaser.Scene {
         this.backBtn.setFrame(1);
 
         this.currentImage = 0;
-        
+
         this.changeOptionSound = this.sound.add("change_button");
         this.pressOptionSound = this.sound.add("press_button");
     } // Fin preload
@@ -39,34 +39,27 @@ class Scene_Credits extends Phaser.Scene {
             loop: true
         });
 
-        if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
+        this.input.on('pointerup', function () {
             that.backBtn.setFrame(0);
-            this.input.on('pointerup', function () {
-                that.backBtn.setFrame(0);
-            });
-            // Botón de volver
-            this.backBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-                that.backBtn.setFrame(1);
-                if (game.global.DEBUG_MODE) {
-                    console.log("Back pulsado");
-                }
-            });
-            this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-                that.backBtn.setFrame(0);
-                that.pressOptionSound.play({ volume: game.options.SFXVol });
-                that.input.keyboard.removeAllKeys(true);
-                that.scene.start("scene_main_menu");
-                if (game.global.DEBUG_MODE) {
-                    console.log("Back soltado");
-                }
-            });
-        }else if (game.global.DEVICE === "desktop"){
+        });
+        // Botón de volver
+        this.backBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+            that.backBtn.setFrame(1);
+            if (game.global.DEBUG_MODE) {
+                console.log("Back pulsado");
+            }
+        });
+        this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            that.backBtn.setFrame(0);
+            that.pressOptionSound.play({ volume: game.options.SFXVol });
+            that.input.keyboard.removeAllKeys(true);
+            that.scene.start("scene_main_menu");
+            if (game.global.DEBUG_MODE) {
+                console.log("Back soltado");
+            }
+        });
+        if (game.global.DEVICE === "desktop") {
             this.input.keyboard.on("keydown-" + "ESC", function (event) {
-                that.pressOptionSound.play({ volume: game.options.SFXVol });
-                that.input.keyboard.removeAllKeys(true);
-                that.scene.start("scene_main_menu");
-            });
-            this.input.keyboard.on("keydown-" + "ENTER", function (event) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_main_menu");
@@ -107,7 +100,7 @@ class Scene_Credits extends Phaser.Scene {
                 that.images.setFrame(that.currentImage);
                 if (that.currentImage <= 4) {
                     that.ShowImage();
-                }else{
+                } else {
                     that.FinalImage();
                 }
             }

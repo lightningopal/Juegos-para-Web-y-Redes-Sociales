@@ -52,78 +52,78 @@ class Scene_Select_Map extends Phaser.Scene {
             loop: true
         });
 
+        this.input.on('pointerup', function () {
+            that.return = false;
+            that.backBtn.setFrame(0);
+        });
+        // Botón atrás
+        this.backBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+            // that.backBtn.setFrame(1);
+            that.return = true;
+            that.CheckOption();
+            if (game.global.DEBUG_MODE) {
+                console.log("Back pulsado");
+            }
+        });
+        this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            that.pressOptionSound.play({ volume: game.options.SFXVol });
+            that.backBtn.setFrame(0);
+            that.scene.start("scene_select_character");
+            if (game.global.DEBUG_MODE) {
+                console.log("Back soltado");
+            }
+        });
+        // Primer mapa
+        this.mapButton0.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+            that.pressOptionSound.play({ volume: game.options.SFXVol });
+            that.mapButton0.setFrame(1);
+            that.mapButton1.setFrame(0);
+            game.mPlayer.difficultySel = 0;
+            if (game.global.DEBUG_MODE) {
+                console.log("Mapa 1 pulsado");
+            }
+        });
+        this.mapButton0.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            // that.mapButton0.setFrame(0);
+            // that.scene.start("scene_searching");
+            if (game.global.DEBUG_MODE) {
+                console.log("Mapa 1 soltado");
+            }
+        });
+        // Segundo mapa
+        this.mapButton1.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+            that.pressOptionSound.play({ volume: game.options.SFXVol });
+            that.mapButton0.setFrame(0);
+            that.mapButton1.setFrame(1);
+            game.mPlayer.difficultySel = 1;
+            if (game.global.DEBUG_MODE) {
+                console.log("Mapa 2 pulsado");
+            }
+        });
+        this.mapButton1.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            // that.mapButton1.setFrame(0);
+            // that.scene.start("scene_searching");
+            if (game.global.DEBUG_MODE) {
+                console.log("Mapa 2 soltado");
+            }
+        });
+        this.enterBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            if (game.mPlayer.difficultySel == 0 || game.mPlayer.difficultySel == 1){
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
+                that.scene.start("scene_searching");
+            }
+        });
+
         // Mobile
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
             this.enterText = this.add.image(RelativeScale(1650.0, "x"), RelativeScale(910.0, "y"), "continue_text_mobile")
                 .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
             that.mapButton0.setFrame(0);
 
-            this.input.on('pointerup', function () {
-                that.return = false;
-                that.backBtn.setFrame(0);
-            });
-            // Botón atrás
-            this.backBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-                // that.backBtn.setFrame(1);
-                that.return = true;
-                that.CheckOption();
-                if (game.global.DEBUG_MODE) {
-                    console.log("Back pulsado");
-                }
-            });
-            this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-                that.pressOptionSound.play({ volume: game.options.SFXVol });
-                that.backBtn.setFrame(0);
-                that.scene.start("scene_select_character");
-                if (game.global.DEBUG_MODE) {
-                    console.log("Back soltado");
-                }
-            });
-            // Primer mapa
-            this.mapButton0.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-                that.pressOptionSound.play({ volume: game.options.SFXVol });
-                that.mapButton0.setFrame(1);
-                that.mapButton1.setFrame(0);
-                game.mPlayer.difficultySel = 0;
-                if (game.global.DEBUG_MODE) {
-                    console.log("Mapa 1 pulsado");
-                }
-            });
-            this.mapButton0.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-                // that.mapButton0.setFrame(0);
-                // that.scene.start("scene_searching");
-                if (game.global.DEBUG_MODE) {
-                    console.log("Mapa 1 soltado");
-                }
-            });
-            // Segundo mapa
-            this.mapButton1.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-                that.pressOptionSound.play({ volume: game.options.SFXVol });
-                that.mapButton0.setFrame(0);
-                that.mapButton1.setFrame(1);
-                game.mPlayer.difficultySel = 1;
-                if (game.global.DEBUG_MODE) {
-                    console.log("Mapa 2 pulsado");
-                }
-            });
-            this.mapButton1.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-                // that.mapButton1.setFrame(0);
-                // that.scene.start("scene_searching");
-                if (game.global.DEBUG_MODE) {
-                    console.log("Mapa 2 soltado");
-                }
-            });
-            this.enterBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-                if (game.mPlayer.difficultySel == 0 || game.mPlayer.difficultySel == 1){
-                    that.pressOptionSound.play({ volume: game.options.SFXVol });
-                    that.scene.start("scene_searching");
-                }
-            });
             // Desktop
         } else {
             this.enterText = this.add.image(RelativeScale(1350.0, "x"), RelativeScale(1000.0, "y"), "continue_text_desktop")
                 .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
-            this.enterText.setVisible(false);
             this.backBtn.setFrame(0);
             game.mPlayer.difficultySel = 0;
 
@@ -165,7 +165,6 @@ class Scene_Select_Map extends Phaser.Scene {
                     that.input.keyboard.removeAllKeys(true);
                     that.scene.start("scene_select_character");
                 }else{
-                    that.enterText.setVisible(false);
                     that.alreadySelected = false;
                 }
                 

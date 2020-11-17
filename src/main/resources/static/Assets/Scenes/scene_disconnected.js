@@ -10,11 +10,11 @@ class Scene_Disconnected extends Phaser.Scene {
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.stars = this.add.tileSprite(0, 0, RelativeScale(1920, "x"), RelativeScale(1080, "y"), "stars")
             .setOrigin(0, 0);
-        this.add.image(RelativeScale(966,"x"), RelativeScale(480.3,"y"), "disconnected_text")
+        this.add.image(RelativeScale(966, "x"), RelativeScale(480.3, "y"), "disconnected_text")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
-        this.retryButton = this.add.image(RelativeScale(960.5,"x"), RelativeScale(709.5,"y"), "retry_button")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.retryButton = this.add.image(RelativeScale(960.5, "x"), RelativeScale(709.5, "y"), "retry_button")
+            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.retryButton.setFrame(1);
 
         this.changeOptionSound = this.sound.add("change_button");
@@ -34,30 +34,23 @@ class Scene_Disconnected extends Phaser.Scene {
             loop: true
         });
 
-        if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) { // Móvil
-            this.retryButton.setFrame(0);
+        this.retryButton.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+            that.retryButton.setFrame(1);
+            if (game.global.DEBUG_MODE) {
+                console.log("Retry pulsado");
+            }
+        });
+        this.retryButton.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            that.pressOptionSound.play({ volume: game.options.SFXVol });
+            that.scene.start("scene_boot");
 
-            this.input.on('pointerup', function () {
-                that.retryButton.setFrame(0);
-            });
+            if (game.global.DEBUG_MODE) {
+                console.log("Vuelve a intentarlo");
+            }
+        });
 
-            this.retryButton.setInteractive().on('pointerdown', function(pointer,localX,localY,event){
-                that.retryButton.setFrame(1);
-                if (game.global.DEBUG_MODE){ 
-                    console.log("Retry pulsado");
-                }
-            });
-            this.retryButton.setInteractive().on('pointerup', function(pointer,localX,localY,event){
-                that.pressOptionSound.play({ volume: game.options.SFXVol });
-                that.scene.start("scene_boot");
-
-                if (game.global.DEBUG_MODE){ 
-                    console.log("Vuelve a intentarlo");
-                }
-            });
-            
-        } else { // Ordenador
-            this.input.keyboard.on('keydown-'+'ENTER', function (event) {
+        if (game.global.DEVICE === "desktop") { // Ordenador
+            this.input.keyboard.on('keydown-' + 'ENTER', function (event) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_boot");

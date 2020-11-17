@@ -1,0 +1,26 @@
+12:33:20 - Server opened.
+12:34:08 - Conected user with session cf6444d3-683c-c48b-52cf-7e0c169cfccc.
+12:34:14 - Player connected: prueba2.
+12:34:38 - Player disconnected: prueba2.
+12:34:51 - Conected user with session 05003370-aa94-5f21-4645-76ec5bcb8ce0.
+12:35:36 - Player connected: prueba2.
+12:38:20 - Users data saved.
+12:38:37 - Player disconnected: prueba2.
+12:38:45 - Conected user with session ed864b5c-d392-a5b0-a00f-0cdcc86b9fb0.
+12:38:51 - Player connected: prueba2.
+12:40:16 - Player disconnected: prueba2.
+12:40:27 - Conected user with session b120ab37-01a5-1c2e-206f-803bb94ae210.
+12:40:32 - Disconnected user with session b120ab37-01a5-1c2e-206f-803bb94ae210.
+12:40:42 - Conected user with session 7c5f6302-7f1b-4d3e-b87f-39eb02c9f66e.
+12:41:43 - Disconnected user with session 7c5f6302-7f1b-4d3e-b87f-39eb02c9f66e.
+12:41:59 - Conected user with session 2da9149a-6c75-8108-5f32-afab34b2cfd3.
+12:42:04 - Player connected: prueba2.
+12:42:07 - Create Space Gym: prueba2.
+12:43:20 - Users data saved.
+12:43:25 - Player disconnected: prueba2.
+12:43:25 - Leave Space Gym: prueba2.
+12:43:25 - SERVER ERROR ON BROADCAST [SpaceGym, Player: prueba2]: [Ljava.lang.StackTraceElement;@3ff2e2c3.
+12:43:33 - Conected user with session 48f7f908-9a53-2cfa-2690-3c8a1ec47e69.
+12:43:38 - Player connected: prueba2.
+12:43:40 - Create Space Gym: prueba2.
+12:43:52 - Leave Space Gym: prueba2.

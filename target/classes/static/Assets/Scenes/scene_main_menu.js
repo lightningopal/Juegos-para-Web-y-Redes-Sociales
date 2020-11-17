@@ -65,11 +65,9 @@ class Scene_Main_Menu extends Phaser.Scene {
 
         this.optionSelectedRow = 0;
         this.optionSelectedCol = 1;
-        if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE){
-            this.tournamentBtn.setFrame(0);
             this.input.on('pointerup', function () {
-                that.optionSelectedRow = -1;
-                that.optionSelectedCol = -1;
+                that.optionSelectedRow = 0;
+                that.optionSelectedCol = 1;
                 that.tournamentBtn.setFrame(0);
                 that.gymBtn.setFrame(0);
                 that.rankingBtn.setFrame(0);
@@ -193,7 +191,7 @@ class Scene_Main_Menu extends Phaser.Scene {
                     console.log("credits soltado");
                 }
             });
-        }else{// Ordenador
+        if (game.global.DEVICE === "desktop"){// Ordenador
             // Opciones de selección
             this.input.keyboard.on('keydown-'+'D', function (event) {
                 that.changeOptionSound.play({ volume: game.options.SFXVol });
