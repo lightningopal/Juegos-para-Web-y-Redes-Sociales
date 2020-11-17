@@ -69,25 +69,25 @@ public class SpaceGym_Game {
                 for (int i = 0; i < 3; i++) {
                     projectiles.add(new BerserkerSkill(player, dummy, 1000, false, 30, 300)); // Target, duration, collidePlatforms, speed, damage
                 }
-                player.setBasicWeapon(new Weapon(projectiles, 1, 500, 250));
+                player.setBasicWeapon(new Weapon(projectiles, 1, 1000, 50));
                 break;
             case "wizard":
                 for (int i = 0; i < 9; i++) {
                     projectiles.add(new WizardSkill(player, dummy, 500, true, 26, 100, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
-                player.setBasicWeapon(new Weapon(projectiles, 3, 1000, 300));
+                player.setBasicWeapon(new Weapon(projectiles, 3, 1000, 50));
                 break;
             case "bard":
                 for (int i = 0; i < 3; i++) {
                     projectiles.add(new BardSkill(player, dummy, 2500, false, 18, 90)); // Target, duration, collidePlatforms, speed, damage
                 }
-                player.setBasicWeapon(new Weapon(projectiles, 1, 1700, 800));
+                player.setBasicWeapon(new Weapon(projectiles, 1, 1700, 500));
                 break;
             case "rogue":
                 for (int i = 0; i < 9; i++) {
                     projectiles.add(new RogueSkill(player, dummy, 550, true, 30, 120, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
-                player.setBasicWeapon(new Weapon(projectiles, 3, 800, 250));
+                player.setBasicWeapon(new Weapon(projectiles, 3, 800, 25));
                 break;
             default:
                 break;
@@ -201,7 +201,7 @@ public class SpaceGym_Game {
                         skill.setActive(false);
                         this.dummyHP = skill.impact(this.dummyHP);
                         if (this.dummyHP <= 0){
-                            this.dummyHP = 100;
+                            this.dummyHP = 1000;
                         }
                     }
                     if (skill.collidesWithPlatforms()){

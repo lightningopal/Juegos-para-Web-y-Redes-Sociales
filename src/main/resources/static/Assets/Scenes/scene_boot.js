@@ -183,6 +183,7 @@ class Scene_Boot extends Phaser.Scene {
             this.load.image("intro1", "./Assets/Images/UI/Intro/context_image_1.png");
             this.load.image("intro2", "./Assets/Images/UI/Intro/context_image_2.png");
             this.load.image("intro3", "./Assets/Images/UI/Intro/context_image_3.png");
+            this.load.image("tap_continue_text_mobile", "./Assets/Images/UI/tap_continue_text_mobile.png");
 
             ///Escena de Main Menú///
             this.load.image("main_menu_bg", "./Assets/Images/BackGrounds/main_menu_bg.png");
@@ -350,7 +351,7 @@ class Scene_Boot extends Phaser.Scene {
             this.load.audio("wizard_attack", "./Assets/Sounds/SoundsFX/WizardAttack.mp3");
             this.load.audio("wizard_hit", "./Assets/Sounds/SoundsFX/WizardHitFX.mp3");
             this.load.audio("rogue_attack", "./Assets/Sounds/SoundsFX/RogueAttack.mp3");
-            // this.load.audio("rogue_hit", "./Assets/Sounds/SoundsFX/RogueHitFX.mp3");
+            this.load.audio("rogue_hit", "./Assets/Sounds/SoundsFX/RogueHitFX.mp3");
 
             this.load.audio("change_button", "./Assets/Sounds/SoundsFX/ChangeButtons.mp3");
             this.load.audio("error_button", "./Assets/Sounds/SoundsFX/ErrorButton.mp3");
@@ -515,7 +516,7 @@ class Scene_Boot extends Phaser.Scene {
         this.anims.create({
             key: 'bard_attack',
             frames: this.anims.generateFrameNumbers('bard_attack', { start: 0, end: 10 }),
-            frameRate: 11
+            frameRate: 16
         });
 
         // Creamos las animaciones del mago
@@ -534,7 +535,7 @@ class Scene_Boot extends Phaser.Scene {
         this.anims.create({
             key: 'wizard_attack',
             frames: this.anims.generateFrameNumbers('wizard_attack', { start: 0, end: 10 }),
-            frameRate: 12
+            frameRate: 44
         });
 
         // Creamos las animaciones del berserker
@@ -553,7 +554,7 @@ class Scene_Boot extends Phaser.Scene {
         this.anims.create({
             key: 'berserker_attack',
             frames: this.anims.generateFrameNumbers('berserker_attack', { start: 0, end: 9 }),
-            frameRate: 20
+            frameRate: 40
         });
 
         // Creamos las animaciones de la Pícara
@@ -572,7 +573,7 @@ class Scene_Boot extends Phaser.Scene {
         this.anims.create({
             key: 'rogue_attack',
             frames: this.anims.generateFrameNumbers('rogue_attack', { start: 0, end: 5 }),
-            frameRate: 12
+            frameRate: 36
         });
         
         this.input.keyboard.on('keydown-' + "ENTER", function () {
@@ -586,7 +587,7 @@ class Scene_Boot extends Phaser.Scene {
                 else
                 {
                     game.global.hasLoadData = true;
-                    this.scene.scene.start("scene_logo");
+                    this.scene.scene.start("scene_select_login");
                 }
             }
         });
