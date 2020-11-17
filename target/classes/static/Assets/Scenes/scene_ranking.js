@@ -14,7 +14,7 @@ class Scene_Ranking extends Phaser.Scene {
         this.add.image(0, 0, "ranking_interface").setOrigin(0, 0)
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
-        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
+        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(78.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
 
         // Textos
@@ -75,6 +75,8 @@ class Scene_Ranking extends Phaser.Scene {
             }
         });
         if (game.global.DEVICE === "desktop") {
+            this.add.image(RelativeScale(62,"x"), RelativeScale(28.86,"y"), "escape_text")
+                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2);
             this.backBtn.setFrame(1);
 
             // Opciones de selección

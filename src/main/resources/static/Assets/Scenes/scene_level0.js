@@ -31,7 +31,7 @@ class Scene_Level0 extends Phaser.Scene {
 
         this.add.image(RelativeScale(114.50, "x"), RelativeScale(112.0, "y"), "back_button_interface")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(5);
-        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
+        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(78.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(5);
 
         this.msgImg = this.add.image(RelativeScale(0.0, "x"), RelativeScale(0.0, "y"), "msg_bg").setOrigin(0, 0)
@@ -425,6 +425,8 @@ class Scene_Level0 extends Phaser.Scene {
 
             
         }else if (game.global.DEVICE === "desktop") {
+            this.add.image(RelativeScale(62,"x"), RelativeScale(28.86,"y"), "escape_text")
+                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(5);
             this.input.keyboard.on("keydown-" + "A", function (event) {
                 if (!that.gamePaused){
                     that.myMovingRight = false;
@@ -862,7 +864,7 @@ class Scene_Level0 extends Phaser.Scene {
 
         var tween = this.tweens.add({
             targets: that.knock_out_text,
-            scale: (RelativeScale(1, "x"), RelativeScale(1, "y")),
+            scale: (RelativeScale(1.5, "x"), RelativeScale(1.5, "y")),
             duration: 400,
             repeat: 0,
         });

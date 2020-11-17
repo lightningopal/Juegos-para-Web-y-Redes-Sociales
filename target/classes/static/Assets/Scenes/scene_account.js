@@ -21,7 +21,7 @@ class Scene_Account extends Phaser.Scene {
             .setOrigin(0, 0);
         this.add.image(RelativeScale(114.50, "x"), RelativeScale(112.0, "y"), "back_button_interface")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(63.5, "y"), "back_button")
+        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(78.5, "y"), "back_button")
             .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
         this.backBtn.setFrame(1);
 
@@ -64,6 +64,8 @@ class Scene_Account extends Phaser.Scene {
             }
         });
         if (game.global.DEVICE === "desktop") {
+            this.add.image(RelativeScale(62,"x"), RelativeScale(28.86,"y"), "escape_text")
+                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2);
             this.input.keyboard.on('keydown-' + 'ESC', function (event) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.input.keyboard.removeAllKeys(true);
