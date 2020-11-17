@@ -367,7 +367,7 @@ class Scene_Boot extends Phaser.Scene {
             this.load.audio("lait_motiv", "./Assets/Sounds/Music/lait_motiv.mp3");
             this.load.audio("versus_music", "./Assets/Sounds/Music/versus_music.mp3");
             this.load.audio("winning_and_credits_music", "./Assets/Sounds/Music/winning_and_credits_music.mp3");
-            this.load.audio("losing_music", "./Assets/Sounds/Music/Enrique Sanchez - you lose (original).ogg");
+            this.load.audio("lose_music", "./Assets/Sounds/Music/Enrique Sanchez - you lose (original).ogg");
         }
         else
         // If data has already been loaded
@@ -1069,11 +1069,12 @@ class Scene_Boot extends Phaser.Scene {
 
     FinishTournamentGame(data) {
         var that = this;
+        var myWin = data.winner.userName == game.mPlayer.userName;
         // Aquí hay que actualizar los datos (tienen que ser globales)
 
         // Se guardan los resultados de la partida
         // El jugador es el ganador
-        if (data.winner.userName == game.mPlayer.userName)
+        if (myWin)
         {
             console.log("GANADOR!");
             // Se reduce la barra de vida del enemigo a 0 HP
@@ -1119,7 +1120,7 @@ class Scene_Boot extends Phaser.Scene {
         // Se cambia de escena cuando toque
         this.scene.get(game.global.actualScene).time.addEvent({
             delay: 2000,
-            callback: () => (that.ChangeToScore())
+            callback: () => (that.ChangeToScore(myWin))
         });
 
         if (game.global.DEBUG_MODE) {
@@ -1127,9 +1128,21 @@ class Scene_Boot extends Phaser.Scene {
         }
     }
 
-    ChangeToScore()
+    ChangeToScore(win)
     {
+        var endFX;
         game.options.currentSong.stop();
+        if (win){
+            endFX = this.sound.add("you_win");
+            game.options.currentSong = this.sound.add("winning_and_credits_music");
+            endFX.play({ volume: game.options.SFXVol });
+            game.options.currentSong.play({ volume: game.options.musicVol, loop: true, delay: 5 });
+        }else{
+            endFX = this.sound.add("you_lose");
+            game.options.currentSong = this.sound.add("lose_music");
+            endFX.play({ volume: game.options.SFXVol });
+            game.options.currentSong.play({ volume: game.options.musicVol, loop: true, delay: 5 });
+        }
         this.scene.get(game.global.actualScene).scene.start("scene_score");
     }
 

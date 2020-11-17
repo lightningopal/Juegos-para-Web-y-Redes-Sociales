@@ -179,7 +179,7 @@ class Scene_Score extends Phaser.Scene {
             },
             onComplete: function () {
                 that.time.addEvent({
-                    delay: 2000,
+                    delay: 4000,
                     callback: () => (that.PlayAgainScreen())
                 });
             }
