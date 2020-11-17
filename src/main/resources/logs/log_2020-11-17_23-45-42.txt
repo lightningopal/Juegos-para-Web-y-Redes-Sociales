@@ -1,0 +1,13 @@
+23:45:45 - Server opened.
+23:46:04 - Conected user with session 1375c0df-b45f-1a5c-648d-a7efe1b1d8b4.
+23:46:16 - Player connected: ranking.
+23:46:18 - Create Space Gym: ranking.
+23:47:25 - Leave Space Gym: ranking.
+23:47:30 - Searching Tournament Game: ranking [PlayerType: wizard, SecondarySkill: -1, Skin: 0, Level: 0, Points: 0].
+23:48:26 - Conected user with session a81cb87f-f7b7-11c9-6e63-dc8d1fd5d72b.
+23:48:49 - Player connected: Kratser.
+23:48:53 - Searching Tournament Game: Kratser [PlayerType: rogue, SecondarySkill: -1, Skin: 0, Level: 0, Points: 249].
+23:48:53 - Create Tournament Game: Kratser - ranking - Level: 0, Room: 0.
+23:50:26 - End Tournament Game: ranking - Kratser - Room: 0. Disconnection: false.
+23:50:37 - Player disconnected: ranking.
+23:50:41 - Player disconnected: Kratser.

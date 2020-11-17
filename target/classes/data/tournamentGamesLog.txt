@@ -19,3 +19,4 @@
 [Start: 2020-11-17_23-15-43 - End: 2020-11-17_23-17-06] - Winner: Kratser[Id: 1, PlayerType: berserker, SecondarySkill: -1, Skin: 0, Points: 155] - Loser: ranking[Id: 3, PlayerType: wizard, SecondarySkill: -1, Skin: 0, Points: 6].
 [Start: 2020-11-17_23-18-11 - End: 2020-11-17_23-18-59] - Winner: Kratser[Id: 1, PlayerType: berserker, SecondarySkill: -1, Skin: 0, Points: 191] - Loser: ranking[Id: 3, PlayerType: wizard, SecondarySkill: -1, Skin: 0, Points: 0].
 [Start: 2020-11-17_23-19-28 - End: 2020-11-17_23-20-19] - Winner: Kratser[Id: 1, PlayerType: bard, SecondarySkill: -1, Skin: 0, Points: 222] - Loser: ranking[Id: 3, PlayerType: rogue, SecondarySkill: -1, Skin: 0, Points: 0].
+[Start: 2020-11-17_23-48-53 - End: 2020-11-17_23-50-26] - Winner: ranking[Id: 3, PlayerType: wizard, SecondarySkill: -1, Skin: 0, Points: 0] - Loser: Kratser[Id: 1, PlayerType: rogue, SecondarySkill: -1, Skin: 0, Points: 249].
