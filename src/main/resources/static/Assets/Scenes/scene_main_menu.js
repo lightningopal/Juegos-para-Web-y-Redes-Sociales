@@ -36,6 +36,17 @@ class Scene_Main_Menu extends Phaser.Scene {
         this.changeOptionSound = this.sound.add("change_button");
         this.pressOptionSound = this.sound.add("press_button");
         this.errorOptionSound = this.sound.add("error_button");
+
+        if (game.options.currentSong != undefined){
+            if (game.options.currentSong.key != "lait_motiv"){
+                game.options.currentSong.stop();
+                game.options.currentSong = this.sound.add("lait_motiv");
+                game.options.currentSong.play({ volume: game.options.musicVol, loop: true });
+            }
+        }else{
+            game.options.currentSong = this.sound.add("lait_motiv");
+            game.options.currentSong.play({ volume: game.options.musicVol, loop: true });
+        }
     } // Fin preload
 
     create() {

@@ -67,6 +67,9 @@ class Scene_Searching extends Phaser.Scene {
         this.go_back_button.setVisible(false);
 
         this.pressOptionSound = this.sound.add("press_button");
+        if (game.options.currentSong != undefined){
+            game.options.currentSong.stop();
+        }
         game.options.currentSong = this.sound.add("wind_effect");
 
     } // Fin preload
@@ -75,7 +78,6 @@ class Scene_Searching extends Phaser.Scene {
         // Set the scene
         var that = this;
         game.global.actualScene = "scene_searching";
-        // game.options.currentSong = "wind_effect";
         game.options.currentSong.play({ volume: game.options.musicVol, loop: true });
 
         // Idle timer

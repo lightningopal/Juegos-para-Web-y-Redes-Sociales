@@ -95,6 +95,7 @@ class Scene_Options extends Phaser.Scene {
             if (dragX <= RelativeScale(1633, "x") && dragX >= RelativeScale(962, "x")) {
                 that.musicBtn.x = dragX;
                 game.options.musicVol = (Unscale(dragX, "x") - 962) / 671;
+                game.options.currentSong.volume = game.options.musicVol;
                 game.global.socket.send(JSON.stringify({ event: "UPDATE_VOL", volType: "musicVol", value: game.options.musicVol }));
             }
             if (game.global.DEBUG_MODE) {
@@ -192,6 +193,7 @@ class Scene_Options extends Phaser.Scene {
             this.input.keyboard.on("keydown-" + "D", function (event) {
                 if (that.optionSelected == 1) { // Música
                     game.options.musicVol = Phaser.Math.Clamp(game.options.musicVol + 0.1, 0, 1);
+                    game.options.currentSong.volume = game.options.musicVol;
                     game.global.socket.send(JSON.stringify({ event: "UPDATE_VOL", volType: "musicVol", value: game.options.musicVol }));
                     that.musicBtn.x = RelativeScale((game.options.musicVol * 671) + 962, "x");
                     if (game.global.DEBUG_MODE) {
@@ -209,6 +211,7 @@ class Scene_Options extends Phaser.Scene {
             this.input.keyboard.on("keydown-" + "A", function (event) {
                 if (that.optionSelected == 1) { // Música
                     game.options.musicVol = Phaser.Math.Clamp(game.options.musicVol - 0.1, 0, 1);
+                    game.options.currentSong.volume = game.options.musicVol;
                     game.global.socket.send(JSON.stringify({ event: "UPDATE_VOL", volType: "musicVol", value: game.options.musicVol }));
                     that.musicBtn.x = RelativeScale((game.options.musicVol * 671) + 962, "x");
                     if (game.global.DEBUG_MODE) {
