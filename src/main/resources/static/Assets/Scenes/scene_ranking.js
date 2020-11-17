@@ -69,6 +69,7 @@ class Scene_Ranking extends Phaser.Scene {
         this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
             that.pressOptionSound.play({ volume: game.options.SFXVol });
             that.backBtn.setFrame(0);
+            that.input.keyboard.removeAllKeys(true);
             that.scene.start("scene_main_menu");
             if (game.global.DEBUG_MODE) {
                 console.log("Back soltado");

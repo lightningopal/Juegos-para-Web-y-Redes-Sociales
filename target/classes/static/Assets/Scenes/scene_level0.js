@@ -505,8 +505,8 @@ class Scene_Level0 extends Phaser.Scene {
                 if (that.gamePaused) {
                     if (that.returnToMenu) {
                         // Volver al menú
-                        game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
                         that.input.keyboard.removeAllKeys(true);
+                        game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
                         that.scene.start("scene_main_menu");
                     } else {
                         that.gamePaused = false;
@@ -552,6 +552,7 @@ class Scene_Level0 extends Phaser.Scene {
             that.noBtn.setFrame(0);
         });
         this.yesBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            that.input.keyboard.removeAllKeys(true);
             game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
             that.scene.start("scene_main_menu");
         });

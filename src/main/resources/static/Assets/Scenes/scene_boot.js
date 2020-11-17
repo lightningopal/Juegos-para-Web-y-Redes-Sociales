@@ -549,35 +549,21 @@ class Scene_Boot extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('rogue_attack', { start: 0, end: 5 }),
             frameRate: 12
         });
-
-        switch (game.global.DEVICE) {
-            case "desktop":
-                this.input.keyboard.on('keydown-' + "ENTER", function () {
-                    if (!isLoading /**/ && game.global.WS_CONNECTION/**/) {
-                        that.pressOptionSound.play({ volume: game.options.SFXVol });
-                        this.scene.input.keyboard.removeAllKeys(true);
-                        this.scene.scene.start("scene_select_login");
-                    }
-                });
-                this.input.on('pointerdown', function () {
-                    if (!isLoading /**/ && game.global.WS_CONNECTION/**/) {
-                        that.pressOptionSound.play({ volume: game.options.SFXVol });
-                        this.scene.input.keyboard.removeAllKeys(true);
-                        this.scene.scene.start("scene_select_login");
-                    }
-                });
-                break;
-            case "mobile":
-                this.input.on('pointerdown', function () {
-                    if (!isLoading /**/ && game.global.WS_CONNECTION/**/) {
-                        that.pressOptionSound.play({ volume: game.options.SFXVol });
-                        this.scene.scene.start("scene_select_login");
-                    }
-                });
-                break;
-            default:
-                break;
-        }
+        
+        this.input.keyboard.on('keydown-' + "ENTER", function () {
+            if (!isLoading /**/ && game.global.WS_CONNECTION/**/) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
+                this.scene.input.keyboard.removeAllKeys(true);
+                this.scene.scene.start("scene_select_login");
+            }
+        });
+        this.input.on('pointerdown', function () {
+            if (!isLoading /**/ && game.global.WS_CONNECTION/**/) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
+                this.scene.input.keyboard.removeAllKeys(true);
+                this.scene.scene.start("scene_select_login");
+            }
+        });
     } // Fin create
 
     update() {

@@ -92,6 +92,7 @@ class Scene_Main_Menu extends Phaser.Scene {
                     that.pressOptionSound.play({ volume: game.options.SFXVol });
                     game.mPlayer.isVersus = true;
                     that.tournamentBtn.setFrame(0);
+                    that.input.keyboard.removeAllKeys(true);
                     that.scene.start("scene_select_character");
                 }
                 if (game.global.DEBUG_MODE){ 
@@ -116,6 +117,7 @@ class Scene_Main_Menu extends Phaser.Scene {
                     that.pressOptionSound.play({ volume: game.options.SFXVol });
                     game.mPlayer.isVersus = false;
                     that.gymBtn.setFrame(0);
+                    that.input.keyboard.removeAllKeys(true);
                     that.scene.start("scene_select_character");
                 }
                 if (game.global.DEBUG_MODE){ 
@@ -139,6 +141,7 @@ class Scene_Main_Menu extends Phaser.Scene {
                 if (that.optionSelectedRow == 2 && that.optionSelectedCol == 1){
                     that.pressOptionSound.play({ volume: game.options.SFXVol });
                     that.rankingBtn.setFrame(0);
+                    that.input.keyboard.removeAllKeys(true);
                     game.global.socket.send(JSON.stringify({ event: "REQUEST_RANKING" }));
                 }
                 if (game.global.DEBUG_MODE){ 
@@ -162,6 +165,7 @@ class Scene_Main_Menu extends Phaser.Scene {
                 if (that.optionSelectedRow == -1 && that.optionSelectedCol == 0){
                     that.pressOptionSound.play({ volume: game.options.SFXVol });
                     that.optionsBtn.setFrame(0);
+                    that.input.keyboard.removeAllKeys(true);
                     that.scene.start("scene_options");
                 }
                 if (game.global.DEBUG_MODE){ 
@@ -185,7 +189,8 @@ class Scene_Main_Menu extends Phaser.Scene {
                 if (that.optionSelectedRow == -1 && that.optionSelectedCol == 2){
                     that.pressOptionSound.play({ volume: game.options.SFXVol });
                     that.creditsBtn.setFrame(0);
-                that.scene.start("scene_credits");
+                    that.input.keyboard.removeAllKeys(true);
+                    that.scene.start("scene_credits");
                 }
                 if (game.global.DEBUG_MODE){ 
                     console.log("credits soltado");

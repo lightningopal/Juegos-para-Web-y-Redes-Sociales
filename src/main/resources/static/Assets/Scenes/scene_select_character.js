@@ -346,9 +346,11 @@ class Scene_Select_Character extends Phaser.Scene {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 if (game.mPlayer.isVersus) {
                     // Selección de Skill/Mapa
+                    that.input.keyboard.removeAllKeys(true);
                     that.scene.start("scene_select_map");
                 } else {
                     // Selección de Skill -> SpaceGym
+                    that.input.keyboard.removeAllKeys(true);
                     game.global.socket.send(JSON.stringify({ event: "CREATE_SPACE_GYM", playerType: game.mPlayer.characterSel.type, skill: game.mPlayer.skillSel }));
                     // that.input.keyboard.removeAllKeys(true);
                     // that.scene.start("scene_space_gym");
@@ -357,7 +359,8 @@ class Scene_Select_Character extends Phaser.Scene {
         });
 
         this.go_back_button.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-            that.backgo_back_buttonBtn.setFrame(1);
+            that.input.keyboard.removeAllKeys(true);
+            that.go_back_buttonBtn.setFrame(1);
             if (game.global.DEBUG_MODE) {
                 console.log("Go Back pulsado");
             }
@@ -551,11 +554,11 @@ class Scene_Select_Character extends Phaser.Scene {
                     }else{
                         if (game.mPlayer.isVersus) {
                             // Selección de Skill/Mapa
+                            that.input.keyboard.removeAllKeys(true);
                             that.scene.start("scene_select_map");
                         } else {
                             // debería pasar a seleccionar habilidad
-                            that.confirmingSkin = false;
-                            that.confirmSkin = false;
+                            that.selectingCharacter = false;
                             game.global.socket.send(JSON.stringify({ event: "CREATE_SPACE_GYM", playerType: game.mPlayer.characterSel.type, skill: game.mPlayer.skillSel }));
                         }
                     }
@@ -581,6 +584,7 @@ class Scene_Select_Character extends Phaser.Scene {
                     // }
                 } else if (that.errorMessage) {
                     that.pressOptionSound.play({ volume: game.options.SFXVol });
+                    that.input.keyboard.removeAllKeys(true);
                     that.scene.start("scene_main_menu");
                 }
             });
@@ -797,6 +801,11 @@ class Scene_Select_Character extends Phaser.Scene {
             this.scene.start("scene_main_menu");
         } else if (this.availableChars[this.characterSelectedRow][this.characterSelectedCol].available) { // Si está disponible
             if (this.availableChars[this.characterSelectedRow][this.characterSelectedCol].purchased) { // Si lo tiene comprado
+                // Si no es el mismo que ya tenía, reproduce sonido
+                if (game.mPlayer.characterSel.type != this.availableChars[this.characterSelectedRow][this.characterSelectedCol].char)
+                {
+                    this.pressOptionSound.play({ volume: game.options.SFXVol });
+                }
                 game.mPlayer.characterSel.type = this.availableChars[this.characterSelectedRow][this.characterSelectedCol].char;
                 game.mPlayer.characterSel.id = this.characterSelectedCol + (this.characterSelectedRow * 3);
                 this.selectingCharacter = false;
@@ -805,7 +814,6 @@ class Scene_Select_Character extends Phaser.Scene {
                 // this.rightArrowBtn.setAlpha(1);
                 // this.selectingSkin = true;
                 this.enterBtn.setAlpha(1);
-                this.pressOptionSound.play({ volume: game.options.SFXVol });
                 if (game.global.DEBUG_MODE) {
                     console.log("Personaje seleccionado: " + game.mPlayer.characterSel.type);
                 }
