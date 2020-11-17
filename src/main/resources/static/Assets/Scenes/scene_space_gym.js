@@ -260,6 +260,27 @@ class Scene_Space_Gym extends Phaser.Scene {
                     that.movingLeft = false;
                 }
             });
+            this.input.keyboard.on("keydown-" + "LEFT", function (event) {
+                if (!that.paused) {
+                    that.movingRight = false;
+                    that.movingLeft = true;
+                } else {
+                    that.changeOptionSound.play({ volume: game.options.SFXVol });
+                    that.returnToMenu = !that.returnToMenu;
+                    if (that.returnToMenu) {
+                        that.yesBtn.setFrame(1);
+                        that.noBtn.setFrame(0);
+                    } else {
+                        that.yesBtn.setFrame(0);
+                        that.noBtn.setFrame(1);
+                    }
+                }
+            });
+            this.input.keyboard.on("keyup-" + "LEFT", function (event) {
+                if (!that.paused) {
+                    that.movingLeft = false;
+                }
+            });
 
             this.input.keyboard.on("keydown-" + "D", function (event) {
                 if (!that.paused) {
@@ -282,14 +303,50 @@ class Scene_Space_Gym extends Phaser.Scene {
                     that.movingRight = false;
                 }
             });
+            this.input.keyboard.on("keydown-" + "RIGHT", function (event) {
+                if (!that.paused) {
+                    that.movingRight = true;
+                    that.movingLeft = false;
+                } else {
+                    that.changeOptionSound.play({ volume: game.options.SFXVol });
+                    that.returnToMenu = !that.returnToMenu;
+                    if (that.returnToMenu) {
+                        that.yesBtn.setFrame(1);
+                        that.noBtn.setFrame(0);
+                    } else {
+                        that.yesBtn.setFrame(0);
+                        that.noBtn.setFrame(1);
+                    }
+                }
+            });
+            this.input.keyboard.on("keyup-" + "RIGHT", function (event) {
+                if (!that.paused) {
+                    that.movingRight = false;
+                }
+            });
 
             this.input.keyboard.on("keydown-" + "W", function (event) {
                 if (!that.paused) {
                     that.Jump();
                 }
             });
+            this.input.keyboard.on("keydown-" + "UP", function (event) {
+                if (!that.paused) {
+                    that.Jump();
+                }
+            });
+            this.input.keyboard.on("keydown-" + "SPACE", function (event) {
+                if (!that.paused) {
+                    that.Jump();
+                }
+            });
 
             this.input.keyboard.on("keydown-" + "S", function (event) {
+                if (!that.paused) {
+                    that.Fall();
+                }
+            });
+            this.input.keyboard.on("keydown-" + "DOWN", function (event) {
                 if (!that.paused) {
                     that.Fall();
                 }
@@ -301,15 +358,32 @@ class Scene_Space_Gym extends Phaser.Scene {
                         that.BasicAttack();
                     }
                 }
+                else
+                {
+                    that.pressOptionSound.play({ volume: game.options.SFXVol });
+                    if (that.returnToMenu) {
+                        // Volver al menú
+                        game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
+                        that.input.keyboard.removeAllKeys(true);
+                        that.scene.start("scene_main_menu");
+                    } else {
+                        that.paused = false;
+                        that.returnToMenu = false;
+                        that.msgImg.setAlpha(0);
+                        that.pauseText.setAlpha(0);
+                        that.yesBtn.setAlpha(0);
+                        that.noBtn.setAlpha(0);
+                    }
+                }
             });
 
-            this.input.keyboard.on("keydown-" + "P", function (event) {
+            /*this.input.keyboard.on("keydown-" + "P", function (event) {
                 if (!that.paused) {
                     if (!that.attacking) {
                         that.SpecialAttack();
                     }
                 }
-            });
+            });*/
 
             this.input.keyboard.on("keydown-" + "ESC", function (event) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });

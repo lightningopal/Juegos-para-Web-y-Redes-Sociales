@@ -220,7 +220,6 @@ class Scene_Score extends Phaser.Scene {
         this.yesBtn.setVisible(true);
         this.noBtn.setVisible(true);
 
-
         this.input.on('pointerup', function () {
             that.yesBtn.setFrame(0);
             that.noBtn.setFrame(0);
@@ -267,7 +266,24 @@ class Scene_Score extends Phaser.Scene {
                     console.log(that.optionSelected);
                 }
             });
+            this.input.keyboard.on("keydown-" + "RIGHT", function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
+                that.optionSelected = (that.optionSelected + 1) % 2;
+                that.CheckOption();
+                if (game.global.DEBUG_MODE) {
+                    console.log(that.optionSelected);
+                }
+            });
+
             this.input.keyboard.on("keydown-" + "A", function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
+                that.optionSelected = (that.optionSelected + 1) % 2;
+                that.CheckOption();
+                if (game.global.DEBUG_MODE) {
+                    console.log(that.optionSelected);
+                }
+            });
+            this.input.keyboard.on("keydown-" + "LEFT", function (event) {
                 that.changeOptionSound.play({ volume: game.options.SFXVol });
                 that.optionSelected = (that.optionSelected + 1) % 2;
                 that.CheckOption();
@@ -277,6 +293,18 @@ class Scene_Score extends Phaser.Scene {
             });
 
             this.input.keyboard.on("keydown-" + "ENTER", function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
+                // Play again
+                if (that.optionSelected == 0) {
+                    that.input.keyboard.removeAllKeys(true);
+                    that.scene.start("scene_searching");
+                    // Go to the main menu 
+                } else {
+                    that.input.keyboard.removeAllKeys(true);
+                    that.scene.start("scene_main_menu");
+                }
+            });
+            this.input.keyboard.on("keydown-" + 'O', function (event) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 // Play again
                 if (that.optionSelected == 0) {

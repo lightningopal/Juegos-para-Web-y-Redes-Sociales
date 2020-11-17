@@ -146,6 +146,17 @@ class Scene_Select_Map extends Phaser.Scene {
                     }
                 }
             });
+            this.input.keyboard.on('keydown-' + 'LEFT', function (event) {
+                if (!that.return && !that.alreadySelected) {
+                    that.changeOptionSound.play({ volume: game.options.SFXVol });
+                    that.optionSelected = (that.optionSelected + 1) % 2;
+                    that.CheckOption();
+                    if (game.global.DEBUG_MODE) {
+                        console.log(that.optionSelected);
+                    }
+                }
+            });
+
             this.input.keyboard.on('keydown-' + 'D', function (event) {
                 if (!that.return && !that.alreadySelected) {
                     that.changeOptionSound.play({ volume: game.options.SFXVol });
@@ -156,12 +167,34 @@ class Scene_Select_Map extends Phaser.Scene {
                     }
                 }
             });
+            this.input.keyboard.on('keydown-' + 'RIGHT', function (event) {
+                if (!that.return && !that.alreadySelected) {
+                    that.changeOptionSound.play({ volume: game.options.SFXVol });
+                    that.optionSelected = (that.optionSelected + 1) % 2;
+                    that.CheckOption();
+                    if (game.global.DEBUG_MODE) {
+                        console.log(that.optionSelected);
+                    }
+                }
+            });
+
             this.input.keyboard.on('keydown-'+'W', function(event){
                 that.changeOptionSound.play({ volume: game.options.SFXVol });
                 that.return = !that.return;
                 that.CheckOption();
             });
+            this.input.keyboard.on('keydown-'+'UP', function(event){
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
+                that.return = !that.return;
+                that.CheckOption();
+            });
+
             this.input.keyboard.on('keydown-'+'S', function(event){
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
+                that.return = false;
+                that.CheckOption();
+            });
+            this.input.keyboard.on('keydown-'+'DOWN', function(event){
                 that.changeOptionSound.play({ volume: game.options.SFXVol });
                 that.return = false;
                 that.CheckOption();
@@ -179,6 +212,26 @@ class Scene_Select_Map extends Phaser.Scene {
             });
 
             this.input.keyboard.on('keydown-' + 'ENTER', function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
+                if (!that.return){
+                    if (!that.alreadySelected) {
+                        that.enterText.setVisible(true);
+                        that.alreadySelected = true;
+                    }else {
+                        that.input.keyboard.removeAllKeys(true);
+                        game.mPlayer.difficultySel = that.optionSelected;
+                        that.scene.start("scene_searching");
+                    }
+                }else{
+                    if (!that.alreadySelected){
+                        that.input.keyboard.removeAllKeys(true);
+                        that.scene.start("scene_select_character");
+                    }else{
+                        that.alreadySelected = false;
+                    }
+                }
+            });
+            this.input.keyboard.on('keydown-' + 'O', function (event) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 if (!that.return){
                     if (!that.alreadySelected) {

@@ -485,6 +485,26 @@ class Scene_Level1 extends Phaser.Scene {
                 that.myMovingLeft = false;
             });
 
+            this.input.keyboard.on("keydown-" + "LEFT", function (event) {
+                if (!that.gamePaused){
+                    that.myMovingRight = false;
+                    that.myMovingLeft = true;
+                }else{
+                    that.changeOptionSound.play({ volume: game.options.SFXVol });
+                    that.returnToMenu = !that.returnToMenu;
+                    if (that.returnToMenu) {
+                        that.yesBtn.setFrame(1);
+                        that.noBtn.setFrame(0);
+                    } else {
+                        that.yesBtn.setFrame(0);
+                        that.noBtn.setFrame(1);
+                    }
+                }
+            });
+            this.input.keyboard.on("keyup-" + "LEFT", function (event) {
+                that.myMovingLeft = false;
+            });
+
             this.input.keyboard.on("keydown-" + "D", function (event) {
                 if (!that.gamePaused){
                     that.myMovingRight = true;
@@ -505,21 +525,70 @@ class Scene_Level1 extends Phaser.Scene {
                 that.myMovingRight = false;
             });
 
+            this.input.keyboard.on("keydown-" + "RIGHT", function (event) {
+                if (!that.gamePaused){
+                    that.myMovingRight = true;
+                    that.myMovingLeft = false;
+                }else{
+                    that.changeOptionSound.play({ volume: game.options.SFXVol });
+                    that.returnToMenu = !that.returnToMenu;
+                    if (that.returnToMenu) {
+                        that.yesBtn.setFrame(1);
+                        that.noBtn.setFrame(0);
+                    } else {
+                        that.yesBtn.setFrame(0);
+                        that.noBtn.setFrame(1);
+                    }
+                }
+            });
+            this.input.keyboard.on("keyup-" + "RIGHT", function (event) {
+                that.myMovingRight = false;
+            });
+
             this.input.keyboard.on("keydown-" + "W", function (event) {
+                that.Jump();
+            });
+            this.input.keyboard.on("keydown-" + "UP", function (event) {
+                that.Jump();
+            });
+            this.input.keyboard.on("keydown-" + "SPACE", function (event) {
                 that.Jump();
             });
 
             this.input.keyboard.on("keydown-" + "S", function (event) {
                 that.Fall();
             });
+            this.input.keyboard.on("keydown-" + "DOWN", function (event) {
+                that.Fall();
+            });
 
             this.input.keyboard.on("keydown-" + "O", function (event) {
-                that.BasicAttack();
+                if (!that.gamePaused)
+                {
+                    that.BasicAttack();
+                }
+                else
+                {
+                    that.pressOptionSound.play({ volume: game.options.SFXVol });
+                    if (that.returnToMenu) {
+                        // Volver al menú
+                        that.input.keyboard.removeAllKeys(true);
+                        game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
+                        that.scene.start("scene_main_menu");
+                    } else {
+                        that.gamePaused = false;
+                        that.returnToMenu = false;
+                        that.msgImg.setAlpha(0);
+                        that.pauseText.setAlpha(0);
+                        that.yesBtn.setAlpha(0);
+                        that.noBtn.setAlpha(0);
+                    }
+                }
             });
 
-            this.input.keyboard.on("keydown-" + "P", function (event) {
+            /*this.input.keyboard.on("keydown-" + "P", function (event) {
                 that.SpecialAttack();
-            });
+            });*/
 
             this.input.keyboard.on("keydown-" + "ESC", function (event) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });

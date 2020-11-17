@@ -217,7 +217,28 @@ class Scene_Main_Menu extends Phaser.Scene {
                 }
                 that.CheckOption();
             });
+            this.input.keyboard.on('keydown-'+'RIGHT', function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
+                that.optionSelectedCol = (that.optionSelectedCol + 1) % 3;
+                if (game.global.DEBUG_MODE){ 
+                    console.log("COL: "+that.optionSelectedCol);
+                }
+                that.CheckOption();
+            });
+
             this.input.keyboard.on('keydown-'+'A', function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
+                if (that.optionSelectedCol >= 1){
+                    that.optionSelectedCol = (that.optionSelectedCol - 1) % 3;
+                }else{
+                    that.optionSelectedCol = 2
+                }
+                if (game.global.DEBUG_MODE){ 
+                    console.log("COL: "+that.optionSelectedCol);
+                }
+                that.CheckOption();
+            });
+            this.input.keyboard.on('keydown-'+'LEFT', function (event) {
                 that.changeOptionSound.play({ volume: game.options.SFXVol });
                 if (that.optionSelectedCol >= 1){
                     that.optionSelectedCol = (that.optionSelectedCol - 1) % 3;
@@ -244,7 +265,32 @@ class Scene_Main_Menu extends Phaser.Scene {
                     that.CheckOption();
                 }
             });
+            this.input.keyboard.on('keydown-'+'UP', function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
+                if (that.optionSelectedCol == 1){
+                    if (that.optionSelectedRow >= 1){
+                        that.optionSelectedRow = (that.optionSelectedRow - 1);
+                    }else{
+                        that.optionSelectedRow = 2;
+                    }
+                    if (game.global.DEBUG_MODE){ 
+                        console.log("ROW: "+that.optionSelectedRow);
+                    }
+                    that.CheckOption();
+                }
+            });
+
             this.input.keyboard.on('keydown-'+'S', function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
+                if (that.optionSelectedCol == 1){
+                    that.optionSelectedRow = (that.optionSelectedRow + 1) % 3;
+                    if (game.global.DEBUG_MODE){ 
+                        console.log("ROW: "+that.optionSelectedRow);
+                    }
+                    that.CheckOption();
+                }
+            });
+            this.input.keyboard.on('keydown-'+'DOWN', function (event) {
                 that.changeOptionSound.play({ volume: game.options.SFXVol });
                 if (that.optionSelectedCol == 1){
                     that.optionSelectedRow = (that.optionSelectedRow + 1) % 3;
@@ -256,6 +302,40 @@ class Scene_Main_Menu extends Phaser.Scene {
             });
             
             this.input.keyboard.on('keydown-'+'ENTER', function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
+                switch(that.optionSelectedCol){
+                    case 0:
+                        // Options
+                        that.input.keyboard.removeAllKeys(true);
+                        that.scene.start("scene_options");
+                        break;
+                    case 1:
+                        if (that.optionSelectedRow == 0){
+                            // Tournament
+                            game.mPlayer.isVersus = true;
+                            that.input.keyboard.removeAllKeys(true);
+                            that.scene.start("scene_select_character");
+                        }else if (that.optionSelectedRow == 1){
+                            // Space Gym
+                            game.mPlayer.isVersus = false;
+                            that.input.keyboard.removeAllKeys(true);
+                            that.scene.start("scene_select_character");
+                        }else {
+                            // Ranking
+                            that.input.keyboard.removeAllKeys(true);
+                            game.global.socket.send(JSON.stringify({ event: "REQUEST_RANKING" }));
+                        }
+                        break;
+                    case 2:
+                        // Credits
+                        that.input.keyboard.removeAllKeys(true);
+                        that.scene.start("scene_credits");
+                        break;
+                    default:
+                        break;
+                }
+            });
+            this.input.keyboard.on('keydown-'+'O', function (event) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 switch(that.optionSelectedCol){
                     case 0:

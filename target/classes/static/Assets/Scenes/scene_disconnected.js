@@ -56,6 +56,11 @@ class Scene_Disconnected extends Phaser.Scene {
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_boot");
             });
+            this.input.keyboard.on('keydown-' + 'O', function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
+                that.input.keyboard.removeAllKeys(true);
+                that.scene.start("scene_boot");
+            });
         }// Fin if Mobile
     } // Fin create
 

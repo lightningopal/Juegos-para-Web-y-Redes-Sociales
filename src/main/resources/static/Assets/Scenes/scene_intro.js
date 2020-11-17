@@ -83,6 +83,11 @@ class Scene_Intro extends Phaser.Scene {
                 that.input.keyboard.removeAllKeys(true);
                 that.scene.start("scene_main_menu");
             });
+            this.input.keyboard.on('keydown-'+'O', function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
+                that.input.keyboard.removeAllKeys(true);
+                that.scene.start("scene_main_menu");
+            });
         }
 
     } // Fin create
