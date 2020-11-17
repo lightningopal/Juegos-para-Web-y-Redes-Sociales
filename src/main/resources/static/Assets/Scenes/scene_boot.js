@@ -212,7 +212,10 @@ class Scene_Boot extends Phaser.Scene {
 
             ///Escena de Créditos///
             this.load.image("credits_dust", "./Assets/Images/UI/credits_dust.png");
-            this.load.spritesheet("credits_images", "./Assets/Images/UI/credits_images.png", { frameWidth: 1919.50, frameHeight: 1080 });
+            this.load.spritesheet("credits_image_1", "./Assets/Images/UI/credits_image_1.png", { frameWidth: 1919.50, frameHeight: 1080 });
+            this.load.spritesheet("credits_image_2", "./Assets/Images/UI/credits_image_2.png", { frameWidth: 1920.0, frameHeight: 1080 });
+            this.load.spritesheet("credits_image_3", "./Assets/Images/UI/credits_image_3.png", { frameWidth: 1920.0, frameHeight: 1080 });
+
 
             ///Escena de Selección de Personaje y Habilidad///
             this.load.image("select_character_text", "./Assets/Images/UI/select_character_text.png");
@@ -1058,12 +1061,21 @@ class Scene_Boot extends Phaser.Scene {
     }
 
     Damage(data){
+        var that = this;
         if (data.playerName === game.mPlayer.userName){ // Mi jugador ha sido dañado
             this.scene.get(game.global.actualScene).myHP.currentHP = data.hp;
             this.scene.get(game.global.actualScene).eHitSound.play({ volume: game.options.SFXVol });
+            game.mPlayer.image.tint = 0xff5555;
+            setTimeout(function () {
+                game.mPlayer.image.clearTint();
+            }, 200);
         }else{ // El enemigo ha sido dañado
             this.scene.get(game.global.actualScene).eHP.currentHP = data.hp;
             this.scene.get(game.global.actualScene).myHitSound.play({ volume: game.options.SFXVol });
+            game.mEnemy.image.tint = 0xff5555;
+            setTimeout(function () {
+                game.mEnemy.image.clearTint();
+            }, 200);
         }
     }
 
