@@ -100,6 +100,15 @@ class Scene_Select_Login extends Phaser.Scene {
                     console.log(that.optionSelected);
                 }
             });
+            this.input.keyboard.on('keydown-' + 'LEFT', function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
+                that.optionSelected = (that.optionSelected + 1) % 2;
+                that.CheckOption();
+                if (game.global.DEBUG_MODE) {
+                    console.log(that.optionSelected);
+                }
+            });
+
             this.input.keyboard.on('keydown-' + 'D', function (event) {
                 that.changeOptionSound.play({ volume: game.options.SFXVol });
                 that.optionSelected = (that.optionSelected + 1) % 2;
@@ -108,7 +117,22 @@ class Scene_Select_Login extends Phaser.Scene {
                     console.log(that.optionSelected);
                 }
             });
+            this.input.keyboard.on('keydown-' + 'RIGHT', function (event) {
+                that.changeOptionSound.play({ volume: game.options.SFXVol });
+                that.optionSelected = (that.optionSelected + 1) % 2;
+                that.CheckOption();
+                if (game.global.DEBUG_MODE) {
+                    console.log(that.optionSelected);
+                }
+            });
+
             this.input.keyboard.on('keydown-' + 'ENTER', function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
+                that.input.keyboard.removeAllKeys(true);
+                that.game.global.logInOption = that.optionSelected;
+                that.scene.start("scene_account");
+            });
+            this.input.keyboard.on('keydown-' + 'O', function (event) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.input.keyboard.removeAllKeys(true);
                 that.game.global.logInOption = that.optionSelected;

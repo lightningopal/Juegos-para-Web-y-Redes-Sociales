@@ -43,8 +43,6 @@ class Scene_Account extends Phaser.Scene {
             loop: true
         });
 
-
-
         this.input.on('pointerup', function () {
             that.backBtn.setFrame(0);
         });
