@@ -4,12 +4,6 @@ class Scene_Logo extends Phaser.Scene {
         super({ key: "scene_logo" });
     } // Fin constructor
 
-    preload() {
-        ///Escena de Inicio de Empresa, Boot///
-        this.load.video("logo_video", "./Assets/Video/LogoAnimation.mp4");
-
-    } // Fin preload
-
     create() {
         // Set the scene
         var that = this;
@@ -20,7 +14,7 @@ class Scene_Logo extends Phaser.Scene {
         video.play();
 
         video.on('complete', function(video){
-            that.scene.start("scene_boot");
+            that.scene.start("scene_select_login");
         });
 
     } // Fin create
