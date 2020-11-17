@@ -65,6 +65,11 @@ class Scene_Level1 extends Phaser.Scene {
         this.returnToMenu;
         this.gamePaused;
         this.gameStopped;
+
+        // Efectos de sonido
+        this.changeOptionSound = this.sound.add("change_button");
+        this.pressOptionSound = this.sound.add("press_button");
+
         // Variables encargadas del control del jugador
         this.myMovingLeft;
         this.myMovingRight;
@@ -72,6 +77,8 @@ class Scene_Level1 extends Phaser.Scene {
         this.myAttacking;
         this.myProjectiles = [];
         this.myHP;
+        this.myAttackSound;
+        this.myHitSound;
 
         // Variables encargadas del control del enemigo
         this.eMovingLeft;
@@ -79,6 +86,8 @@ class Scene_Level1 extends Phaser.Scene {
         this.eAttacking;
         this.eProjectiles = [];
         this.eHP;
+        this.eAttackSound;
+        this.eHitSound;
 
         /// Versus
         // Background
@@ -254,6 +263,8 @@ class Scene_Level1 extends Phaser.Scene {
                         setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
                     this.myProjectiles[0].setVisible(false);
                 }
+                this.myAttackSound = this.sound.add("berserker_attack");
+                this.myHitSound = this.sound.add("berserker_hit");
                 break;
             case "wizard":
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "wizard")
@@ -265,6 +276,8 @@ class Scene_Level1 extends Phaser.Scene {
                         setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
                     this.myProjectiles[0].setVisible(false);
                 }
+                this.myAttackSound = this.sound.add("wizard_attack");
+                this.myHitSound = this.sound.add("wizard_hit");
                 break;
             case "bard":
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
@@ -276,6 +289,8 @@ class Scene_Level1 extends Phaser.Scene {
                         setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
                     this.myProjectiles[0].setVisible(false);
                 }
+                this.myAttackSound = this.sound.add("bard_attack");
+                this.myHitSound = this.sound.add("bard_hit");
                 break;
             case "rogue":
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "rogue")
@@ -287,6 +302,8 @@ class Scene_Level1 extends Phaser.Scene {
                         setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
                     this.myProjectiles[0].setVisible(false);
                 }
+                this.myAttackSound = this.sound.add("rogue_attack");
+                this.myHitSound = this.sound.add("rogue_hit");
                 break;
             default:
                 game.mPlayer.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
@@ -298,6 +315,8 @@ class Scene_Level1 extends Phaser.Scene {
                         setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
                     this.myProjectiles[0].setVisible(false);
                 }
+                this.myAttackSound = this.sound.add("bard_attack");
+                this.myHitSound = this.sound.add("bard_hit");
                 break;
         }
         game.mPlayer.image.body.setSize(0, 0);
@@ -318,6 +337,8 @@ class Scene_Level1 extends Phaser.Scene {
                         setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
                     this.eProjectiles[0].setVisible(false);
                 }
+                this.eAttackSound = this.sound.add("berserker_attack");
+                this.eHitSound = this.sound.add("berserker_hit");
                 break;
             case "wizard":
                 game.mEnemy.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "wizard")
@@ -329,6 +350,8 @@ class Scene_Level1 extends Phaser.Scene {
                         setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
                     this.eProjectiles[0].setVisible(false);
                 }
+                this.eAttackSound = this.sound.add("wizard_attack");
+                this.eHitSound = this.sound.add("wizard_hit");
                 break;
             case "bard":
                 game.mEnemy.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
@@ -340,6 +363,8 @@ class Scene_Level1 extends Phaser.Scene {
                         setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
                     this.eProjectiles[0].setVisible(false);
                 }
+                this.eAttackSound = this.sound.add("bard_attack");
+                this.eHitSound = this.sound.add("bard_hit");
                 break;
             case "rogue":
                 game.mEnemy.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "rogue")
@@ -351,6 +376,8 @@ class Scene_Level1 extends Phaser.Scene {
                         setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
                     this.eProjectiles[0].setVisible(false);
                 }
+                this.eAttackSound = this.sound.add("rogue_attack");
+                this.eHitSound = this.sound.add("rogue_hit");
                 break;
             default:
                 game.mEnemy.image = this.physics.add.sprite(RelativeScale(250, "x"), RelativeScale(850, "y"), "bard")
@@ -362,6 +389,8 @@ class Scene_Level1 extends Phaser.Scene {
                         setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(6));
                     this.eProjectiles[0].setVisible(false);
                 }
+                this.eAttackSound = this.sound.add("bard_attack");
+                this.eHitSound = this.sound.add("bard_hit");
                 break;
         }
         game.mEnemy.image.body.setSize(0, 0);
@@ -441,6 +470,7 @@ class Scene_Level1 extends Phaser.Scene {
                     that.myMovingRight = false;
                     that.myMovingLeft = true;
                 }else{
+                    that.changeOptionSound.play({ volume: game.options.SFXVol });
                     that.returnToMenu = !that.returnToMenu;
                     if (that.returnToMenu) {
                         that.yesBtn.setFrame(1);
@@ -460,6 +490,7 @@ class Scene_Level1 extends Phaser.Scene {
                     that.myMovingRight = true;
                     that.myMovingLeft = false;
                 }else{
+                    that.changeOptionSound.play({ volume: game.options.SFXVol });
                     that.returnToMenu = !that.returnToMenu;
                     if (that.returnToMenu) {
                         that.yesBtn.setFrame(1);
@@ -491,6 +522,7 @@ class Scene_Level1 extends Phaser.Scene {
             });
 
             this.input.keyboard.on("keydown-" + "ESC", function (event) {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
                 if (!that.gamePaused && !that.gameStopped) {
                     that.msgImg.setAlpha(1);
                     that.pauseText.setAlpha(1);
@@ -503,6 +535,7 @@ class Scene_Level1 extends Phaser.Scene {
                     that.pauseText.setAlpha(0);
                     that.yesBtn.setAlpha(0);
                     that.noBtn.setAlpha(0);
+                    that.backBtn.setInteractive();
                 }
                 if (!that.gameStopped){
                     that.gamePaused = !that.gamePaused;
@@ -514,6 +547,7 @@ class Scene_Level1 extends Phaser.Scene {
 
             this.input.keyboard.on("keydown-" + "ENTER", function (event) {
                 if (that.gamePaused) {
+                    that.pressOptionSound.play({ volume: game.options.SFXVol });
                     if (that.returnToMenu) {
                         // Volver al menú
                         that.input.keyboard.removeAllKeys(true);
@@ -538,6 +572,7 @@ class Scene_Level1 extends Phaser.Scene {
             }
         });
         this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            that.pressOptionSound.play({ volume: game.options.SFXVol });
             that.backBtn.setFrame(0);
             if (!that.gamePaused) {
                 that.backBtn.disableInteractive();
@@ -562,6 +597,7 @@ class Scene_Level1 extends Phaser.Scene {
             that.noBtn.setFrame(0);
         });
         this.yesBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            that.pressOptionSound.play({ volume: game.options.SFXVol });
             that.input.keyboard.removeAllKeys(true);
             game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
             that.scene.start("scene_main_menu");
@@ -573,6 +609,7 @@ class Scene_Level1 extends Phaser.Scene {
             that.noBtn.setFrame(1);
         });
         this.noBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            that.pressOptionSound.play({ volume: game.options.SFXVol });
             that.backBtn.setInteractive();
             that.gamePaused = false;
             that.msgImg.setAlpha(0);
