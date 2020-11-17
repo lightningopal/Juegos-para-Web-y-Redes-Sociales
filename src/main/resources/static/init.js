@@ -13,7 +13,7 @@ window.onload = function () {
 
     this.configDesktop = {
         type: Phaser.AUTO,
-        backgroundColor: "#2a0678",
+        backgroundColor: "#000000",
         width: window.screen.width / 1.3,//800, //1920
         height: window.screen.height / 1.3,//450, //1080
         physics: {
@@ -27,7 +27,8 @@ window.onload = function () {
             createContainer: true
         },
         parent: 'game', // Create the game inside the <div id="game">
-        scene: [Scene_Boot,
+        scene: [Scene_Logo,
+            Scene_Boot,
             Scene_Space_Gym,
             Scene_Main_Menu,
             Scene_Options,
@@ -48,7 +49,7 @@ window.onload = function () {
     // Config test mobile
     this.configMobile = {
         type: Phaser.AUTO,
-        backgroundColor: "#2a0678",
+        backgroundColor: "#000000",
         width: window.screen.width,
         height: window.screen.height,
         physics: {
@@ -62,7 +63,8 @@ window.onload = function () {
             createContainer: true
         },
         parent: 'game', // Create the game inside the <div id="game">
-        scene: [Scene_Boot,
+        scene: [Scene_Logo,
+            Scene_Boot,
             Scene_Space_Gym,
             Scene_Main_Menu,
             Scene_Options,
