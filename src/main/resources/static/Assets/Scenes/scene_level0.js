@@ -229,7 +229,7 @@ class Scene_Level0 extends Phaser.Scene {
 
         // Idle timer
         that.time.addEvent({
-            delay: 10000,
+            delay: 2000,
             callback: that.scene.get("scene_boot").IdleMessage,
             loop: true
         });
@@ -564,7 +564,8 @@ class Scene_Level0 extends Phaser.Scene {
                         // Volver al menú
                         that.input.keyboard.removeAllKeys(true);
                         game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
-                        that.scene.start("scene_main_menu");
+                        that.scene.get("scene_boot").FadeTransition("scene_main_menu");
+                        //that.scene.start("scene_main_menu");
                     } else {
                         that.gamePaused = false;
                         that.returnToMenu = false;
@@ -611,7 +612,8 @@ class Scene_Level0 extends Phaser.Scene {
                         // Volver al menú
                         that.input.keyboard.removeAllKeys(true);
                         game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
-                        that.scene.start("scene_main_menu");
+                        that.scene.get("scene_boot").FadeTransition("scene_main_menu");
+                        //that.scene.start("scene_main_menu");
                     } else {
                         that.gamePaused = false;
                         that.returnToMenu = false;
@@ -660,7 +662,8 @@ class Scene_Level0 extends Phaser.Scene {
             that.pressOptionSound.play({ volume: game.options.SFXVol });
             that.input.keyboard.removeAllKeys(true);
             game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
-            that.scene.start("scene_main_menu");
+            that.scene.get("scene_boot").FadeTransition("scene_main_menu");
+            //that.scene.start("scene_main_menu");
         });
 
         this.noBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {

@@ -24,13 +24,6 @@ class Scene_Disconnected extends Phaser.Scene {
         var that = this;
         game.global.actualScene = "scene_disconnected";
 
-        // Idle timer
-        that.time.addEvent({
-            delay: 10000,
-            callback: that.scene.get("scene_boot").IdleMessage,
-            loop: true
-        });
-
         this.retryButton.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
             that.retryButton.setFrame(1);
             if (game.global.DEBUG_MODE) {

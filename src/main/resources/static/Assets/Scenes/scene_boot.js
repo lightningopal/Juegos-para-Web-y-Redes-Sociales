@@ -702,7 +702,6 @@ class Scene_Boot extends Phaser.Scene {
     }
 
     // PROTOCOLO DE MENSAJES
-
     JoinMsg(data) {
         //game.mPlayer.id = data.id;
         if (game.global.DEBUG_MODE) {
@@ -744,7 +743,7 @@ class Scene_Boot extends Phaser.Scene {
         game.mPlayer.currency = data.currency;
         game.mPlayer.points = data.points;
 
-        // Cambia de escena a la escena del menú principal
+        // Cambia de escena a la escena de la intro
         this.scene.get('scene_account').scene.start("scene_intro");
 
         if (game.global.DEBUG_MODE) {
@@ -777,7 +776,8 @@ class Scene_Boot extends Phaser.Scene {
         game.options.currentSong = this.sound.add("practice_screen_music");
         game.options.currentSong.play({ volume: game.options.musicVol, loop: true });
         this.scene.get('scene_select_character').input.keyboard.removeAllKeys(true);
-        this.scene.get('scene_select_character').scene.start("scene_space_gym");
+        this.FadeTransition("scene_space_gym");
+        //this.scene.get('scene_select_character').scene.start("scene_space_gym");
         if (game.global.DEBUG_MODE) {
             console.log("creado el space gym");
         }
@@ -785,27 +785,30 @@ class Scene_Boot extends Phaser.Scene {
 
     UpdateSpaceGym(data) {
         // Player
-        game.mPlayer.image.x = data.player.posX;
-        game.mPlayer.image.y = data.player.posY;
-        game.mPlayer.image.flipX = data.player.flipped;
-        if (data.player.onFloor) {
-            this.scene.get('scene_space_gym').falling = false;
-        }
-        this.scene.get('scene_space_gym').canBasicAttack = data.player.canBasicAttack;
-        this.scene.get('scene_space_gym').canSpecialAttack = data.player.canSpecialAttack;
+        if (game.global.actualScene == "scene_space_gym")
+        {
+            game.mPlayer.image.x = data.player.posX;
+            game.mPlayer.image.y = data.player.posY;
+            game.mPlayer.image.flipX = data.player.flipped;
+            if (data.player.onFloor) {
+                this.scene.get('scene_space_gym').falling = false;
+            }
+            this.scene.get('scene_space_gym').canBasicAttack = data.player.canBasicAttack;
+            this.scene.get('scene_space_gym').canSpecialAttack = data.player.canSpecialAttack;
 
-        // Dummy
-        this.scene.get('scene_space_gym').dummy.x = data.dummy.posX;
-        this.scene.get('scene_space_gym').dummy.y = data.dummy.posY;
-        this.scene.get('scene_space_gym').dummy.userInterface.currentHP = data.dummy.hp;
+            // Dummy
+            this.scene.get('scene_space_gym').dummy.x = data.dummy.posX;
+            this.scene.get('scene_space_gym').dummy.y = data.dummy.posY;
+            this.scene.get('scene_space_gym').dummy.userInterface.currentHP = data.dummy.hp;
 
-        // Proyectiles
-        for (var i = 0; i < data.projectiles.length; i++) {
-            this.scene.get('scene_space_gym').projectiles[i].setVisible(data.projectiles[i].isActive);
-            this.scene.get('scene_space_gym').projectiles[i].x = data.projectiles[i].posX;
-            this.scene.get('scene_space_gym').projectiles[i].y = data.projectiles[i].posY;
-            this.scene.get('scene_space_gym').projectiles[i].setAngle(data.projectiles[i].facingAngle);
-            this.scene.get('scene_space_gym').projectiles[i].flipX = data.projectiles[i].flipX;
+            // Proyectiles
+            for (var i = 0; i < data.projectiles.length; i++) {
+                this.scene.get('scene_space_gym').projectiles[i].setVisible(data.projectiles[i].isActive);
+                this.scene.get('scene_space_gym').projectiles[i].x = data.projectiles[i].posX;
+                this.scene.get('scene_space_gym').projectiles[i].y = data.projectiles[i].posY;
+                this.scene.get('scene_space_gym').projectiles[i].setAngle(data.projectiles[i].facingAngle);
+                this.scene.get('scene_space_gym').projectiles[i].flipX = data.projectiles[i].flipX;
+            }
         }
     }
 
@@ -1177,7 +1180,8 @@ class Scene_Boot extends Phaser.Scene {
             endFX.play({ volume: game.options.SFXVol });
             game.options.currentSong.play({ volume: game.options.musicVol, loop: true, delay: 5 });
         }
-        this.scene.get(game.global.actualScene).scene.start("scene_score");
+        this.FadeTransition("scene_score");
+        //this.scene.get(game.global.actualScene).scene.start("scene_score");
     }
 
     CanceledQueue()
@@ -1198,5 +1202,22 @@ class Scene_Boot extends Phaser.Scene {
     UsersConnectedText(data)
     {
         this.scene.get(game.global.actualScene).SetConnectedUsersText(data.value);
+    }
+
+    FadeTransition(newScene)
+    {
+        var that = this;
+        // Cambia de escena a la nueva
+        this.cam = this.scene.get(game.global.actualScene).cameras.main;
+        this.cam.fadeOut(300);
+        this.scene.get(game.global.actualScene).time.addEvent({
+            delay: 300,
+            callback: () => (that.ChangeToScene(newScene))
+        });
+    }
+
+    ChangeToScene(newScene)
+    {
+        this.scene.get(game.global.actualScene).scene.start(newScene);
     }
 }
