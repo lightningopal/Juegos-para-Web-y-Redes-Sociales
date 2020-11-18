@@ -36,10 +36,10 @@ public class Tournament_Game {
 
 	public final double GRAVITY = 1.0;
 
-	public static int playerAPosX = 500;
-    public static int playerAPosY = 0;
-    public static int playerBPosX = 1500;
-    public static int playerBPosY = 940;
+	public static int playerAPosX = 150;
+    public static int playerAPosY = 150;
+    public static int playerBPosX = 1740;
+    public static int playerBPosY = 150;
 
 	ObjectMapper mapper = new ObjectMapper();
     private ScheduledFuture<?> future;
@@ -139,10 +139,10 @@ public class Tournament_Game {
 		// Dependiendo del nivel, situaremos distintas plataformas
 		if (level == 0)
 		{
-            playerAPosX = 500;
-            playerAPosY = 0;
-            playerBPosX = 1500;
-            playerBPosY = 940;
+            // playerAPosX = 500;
+            // playerAPosY = 0;
+            // playerBPosX = 1500;
+            // playerBPosY = 940;
 			//Plataformas
 			platforms.add(new PhysicsObject(true, 960.0, 1038.0, 960.0, 33.0, 0.0, 9.0)); // floor
 			platforms.add(new PhysicsObject(true, 1527.50, 747.50, 187.50, 37.50, 0.0, -41.0)); // base_big_plat_2
@@ -347,6 +347,7 @@ public class Tournament_Game {
                 if (skill.isActive()) {
                     // Calcular posición
                     skill.calculatePhysics();
+                    skill.setPosY(skill.getPosY()+2);
                     if (skill.intersect(skill.getTarget())) {
                         skill.setActive(false);
                         double hp = skill.impact(); // Se lanza un mensaje a ambos jugadores
@@ -385,6 +386,7 @@ public class Tournament_Game {
                 if (skill.isActive()) {
                     // Calcular posición
                     skill.calculatePhysics();
+                    skill.setPosY(skill.getPosY()+2);
                     if (skill.intersect(skill.getTarget())) {
                         skill.setActive(false);
                         double hp = skill.impact(); // Se lanza un mensaje a ambos jugadores

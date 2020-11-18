@@ -31,9 +31,9 @@ public class SpaceGym_Game {
 
     public final double GRAVITY = 1.0;
 
-    public final static int playerPosX = 500;
-    public final static int playerPosY = 0;
-    public final static int dummyPosX = 1500;
+    public final static int playerPosX = 150;
+    public final static int playerPosY = 150;
+    public final static int dummyPosX = 1400;
     public final static int dummyPosY = 940;
 
     ObjectMapper mapper = new ObjectMapper();
