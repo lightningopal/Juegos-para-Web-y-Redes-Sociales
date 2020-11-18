@@ -101,8 +101,8 @@ class Scene_Boot extends Phaser.Scene {
 
                 // WEBSOCKETS
                 try {
-                    game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
-                    //game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
+                    //game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
+                    game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
                 }
                 catch (error) {
                     if (game.global.DEBUG_MODE) {
@@ -434,8 +434,8 @@ class Scene_Boot extends Phaser.Scene {
 
             // WEBSOCKETS
             try {
-                game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
-                //game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
+                //game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
+                game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
             }
             catch (error) {
                 if (game.global.DEBUG_MODE) {
@@ -773,12 +773,11 @@ class Scene_Boot extends Phaser.Scene {
     }
 
     JoinSpaceGym(data) {
+        this.scene.get('scene_select_character').input.keyboard.removeAllKeys(true);
         game.options.currentSong.stop();
         game.options.currentSong = this.sound.add("practice_screen_music");
         game.options.currentSong.play({ volume: game.options.musicVol, loop: true });
-        this.scene.get('scene_select_character').input.keyboard.removeAllKeys(true);
-        this.FadeTransition("scene_space_gym");
-        //this.scene.get('scene_select_character').scene.start("scene_space_gym");
+        this.scene.get('scene_select_character').scene.start("scene_space_gym");
         if (game.global.DEBUG_MODE) {
             console.log("creado el space gym");
         }
@@ -1114,7 +1113,7 @@ class Scene_Boot extends Phaser.Scene {
             // Se reduce la barra de vida del enemigo a 0 HP
             this.scene.get(game.global.actualScene).eHP.currentHP = 0;
             // Diferencia de puntos positiva
-            game.mPlayer.pointsDifference = data.pointsDifference;
+            game.mPlayer.pointsDifference = data.pointsDifference + 20;
 
             // Asignar resto de datos
             // Puntos
