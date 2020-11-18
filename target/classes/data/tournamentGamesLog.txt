@@ -20,3 +20,6 @@
 [Start: 2020-11-17_23-18-11 - End: 2020-11-17_23-18-59] - Winner: Kratser[Id: 1, PlayerType: berserker, SecondarySkill: -1, Skin: 0, Points: 191] - Loser: ranking[Id: 3, PlayerType: wizard, SecondarySkill: -1, Skin: 0, Points: 0].
 [Start: 2020-11-17_23-19-28 - End: 2020-11-17_23-20-19] - Winner: Kratser[Id: 1, PlayerType: bard, SecondarySkill: -1, Skin: 0, Points: 222] - Loser: ranking[Id: 3, PlayerType: rogue, SecondarySkill: -1, Skin: 0, Points: 0].
 [Start: 2020-11-17_23-48-53 - End: 2020-11-17_23-50-26] - Winner: ranking[Id: 3, PlayerType: wizard, SecondarySkill: -1, Skin: 0, Points: 0] - Loser: Kratser[Id: 1, PlayerType: rogue, SecondarySkill: -1, Skin: 0, Points: 249].
+[Start: 2020-11-18_08-18-01 - End: 2020-11-18_08-18-46] - Winner: ranking[Id: 3, PlayerType: rogue, SecondarySkill: -1, Skin: 0, Points: 0] - Loser: Thund3r[Id: 0, PlayerType: berserker, SecondarySkill: -1, Skin: 0, Points: 21].
+[Start: 2020-11-18_08-43-46 - End: 2020-11-18_08-44-29] - Winner: Thund3r[Id: 0, PlayerType: berserker, SecondarySkill: -1, Skin: 0, Points: 0] - Loser: ranking[Id: 3, PlayerType: rogue, SecondarySkill: -1, Skin: 0, Points: 66].
+[Start: 2020-11-18_08-45-01 - End: 2020-11-18_08-45-45] - Winner: Thund3r[Id: 0, PlayerType: berserker, SecondarySkill: -1, Skin: 0, Points: 33] - Loser: prueba2[Id: 4, PlayerType: wizard, SecondarySkill: -1, Skin: 0, Points: 0].

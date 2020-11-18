@@ -425,6 +425,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						if (GamesManager.INSTANCE.searching_players.get(level).size() > 0) {
 							// Obtenemos la información del rival
 							Player rival = GamesManager.INSTANCE.searching_players.get(level).remove();
+							System.out.println("Tamaño cola (after remove) nivel " + level + ": " + GamesManager.INSTANCE.searching_players.get(level).size());
 
 							// Se crea la partida
 							room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
@@ -494,6 +495,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 						else {
 							// Añade al jugador a la cola
 							GamesManager.INSTANCE.searching_players.get(level).add(thisPlayer);
+							System.out.println("Tamaño cola (after add) nivel " + level + ": " + GamesManager.INSTANCE.searching_players.get(level).size());
 							GamesManager.INSTANCE.tournamentGamesLock.unlock();
 
 							if (DEBUG_MODE) {
@@ -683,7 +685,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 		int room = disconnectedPlayer.getRoom();
 
 		// Check if user was on queue
-		for (ConcurrentLinkedQueue<Player> queue : GamesManager.INSTANCE.searching_players) {
+		for (ConcurrentLinkedQueue<Player> queue : GamesManager.INSTANCE.searching_players.values()) {
 			if (queue.contains(disconnectedPlayer))
 			{
 				queue.remove(disconnectedPlayer);

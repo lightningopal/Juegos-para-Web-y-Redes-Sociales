@@ -542,6 +542,9 @@ class Scene_Level0 extends Phaser.Scene {
             this.input.keyboard.on("keydown-" + "UP", function (event) {
                 that.Jump();
             });
+            this.input.keyboard.on("keydown-" + "SPACE", function (event) {
+                that.Jump();
+            });
 
             this.input.keyboard.on("keydown-" + "S", function (event) {
                 that.Fall();
