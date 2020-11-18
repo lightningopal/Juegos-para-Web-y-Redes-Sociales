@@ -249,7 +249,7 @@ class Scene_Level0 extends Phaser.Scene {
                 game.mPlayer.image = this.physics.add.sprite(250, 850, "berserker")
                     ;
                 game.mPlayer.image.anims.play("berserker_idle");
-                this.myHP = new UserInterface(this, game.mPlayer.image, 1500, 100, 0x00ff00);
+                this.myHP = new UserInterface(this, game.mPlayer.image, 1800, 100, 0x00ff00);
                 for (var i = 0; i < 3; i++) {
                     this.myProjectiles.push(this.add.image(0, 0, "berserker_projectile").
                         setScale(1, 1).setDepth(6));
@@ -323,7 +323,7 @@ class Scene_Level0 extends Phaser.Scene {
                 game.mEnemy.image = this.physics.add.sprite(250, 850, "berserker")
                     ;
                 game.mEnemy.image.anims.play("berserker_idle");
-                this.eHP = new UserInterface(this, game.mEnemy.image, 1500, 100, 0xff0000);
+                this.eHP = new UserInterface(this, game.mEnemy.image, 1800, 100, 0xff0000);
                 for (var i = 0; i < 3; i++) {
                     this.eProjectiles.push(this.add.image(0, 0, "berserker_projectile").
                         setScale(1, 1).setDepth(6));
