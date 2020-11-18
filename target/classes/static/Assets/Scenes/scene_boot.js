@@ -101,8 +101,8 @@ class Scene_Boot extends Phaser.Scene {
 
                 // WEBSOCKETS
                 try {
-                    // game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
-                    game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
+                    game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
+                    //game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
                 }
                 catch (error) {
                     if (game.global.DEBUG_MODE) {
@@ -134,7 +134,7 @@ class Scene_Boot extends Phaser.Scene {
                     finally {
                         game.global.WS_CONNECTION = true;
                         that.time.addEvent({
-                            delay: 10000,
+                            delay: 2000,
                             callback: that.IdleMessage,
                             loop: true
                         });
@@ -269,7 +269,8 @@ class Scene_Boot extends Phaser.Scene {
             this.load.spritesheet("go_back_button", "./Assets/Images/UI/go_back_button.png", { frameWidth: 825, frameHeight: 134 });
 
             ///Versus
-            this.load.image("versus_bg", "./Assets/Images/UI/versus_circles_interface.png");
+            this.load.image("versus_left_circle", "./Assets/Images/UI/circle_left_versus_interface_.png");
+            this.load.image("versus_right_circle", "./Assets/Images/UI/circle_right_versus_interface_.png");
             this.load.image("versus_vs", "./Assets/Images/UI/versus_vs_interface.png");
             this.load.image("versus_fight", "./Assets/Images/UI/fight_text.png");
             this.load.image("versus_knock_out", "./Assets/Images/UI/knock_out_text.png");
@@ -433,8 +434,8 @@ class Scene_Boot extends Phaser.Scene {
 
             // WEBSOCKETS
             try {
-                // game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
-                game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
+                game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
+                //game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
             }
             catch (error) {
                 if (game.global.DEBUG_MODE) {
@@ -873,7 +874,6 @@ class Scene_Boot extends Phaser.Scene {
         game.options.currentSong = this.sound.add("versus_music");
         // Aquí hay que superponer el versus, antes de empezar la escena hay que guardar los datos
         // Si es el jugador A, el enemigo e el B
-        console.log(data);
         if (data.players[0].userName == game.mPlayer.userName) {
             game.mEnemy.AorB = "B";
             game.mEnemy.id = data.players[1].playerId;
@@ -1002,7 +1002,6 @@ class Scene_Boot extends Phaser.Scene {
                 }
             }
         } else { // Nivel 1
-            console.log(data);
             level = this.scene.get('scene_level1');
             level.bg.tilePositionY = data.backgroundPos;
             level.bgDetails.tilePositionY = data.stagePos;
@@ -1112,7 +1111,6 @@ class Scene_Boot extends Phaser.Scene {
         // El jugador es el ganador
         if (myWin)
         {
-            console.log("GANADOR!");
             // Se reduce la barra de vida del enemigo a 0 HP
             this.scene.get(game.global.actualScene).eHP.currentHP = 0;
             // Diferencia de puntos positiva
@@ -1132,7 +1130,6 @@ class Scene_Boot extends Phaser.Scene {
         // El jugador es el perdedor
         else
         {
-            console.log("Perdedor...");
             // Se reduce mi barra de vida a 0 HP
             this.scene.get(game.global.actualScene).myHP.currentHP = 0;
             // Diferencia de puntos negativa
@@ -1142,7 +1139,6 @@ class Scene_Boot extends Phaser.Scene {
             // Puntos
             game.mPlayer.points = data.loser.points;
             game.mPlayer.previousPoints = data.loser.previousPoints;
-            console.log(data.loser.previousPoints);
 
             // Monedas ganadas
             game.mPlayer.newCoins = data.loser.newCoins;

@@ -35,6 +35,9 @@ class Scene_Select_Map extends Phaser.Scene {
         this.pressOptionSound = this.sound.add("press_button");
         this.errorOptionSound = this.sound.add("error_button");
 
+        // Waiting for queue
+        this.waitingForQueue = false;
+
     } // Fin preload
 
     create() {
@@ -63,9 +66,9 @@ class Scene_Select_Map extends Phaser.Scene {
             }
         });
         this.backBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+            that.input.keyboard.removeAllKeys(true);
             that.pressOptionSound.play({ volume: game.options.SFXVol });
             that.backBtn.setFrame(0);
-            that.input.keyboard.removeAllKeys(true);
             that.scene.start("scene_select_character");
             if (game.global.DEBUG_MODE) {
                 console.log("Back soltado");
@@ -111,9 +114,13 @@ class Scene_Select_Map extends Phaser.Scene {
         });
         this.enterBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
             if (game.mPlayer.difficultySel == 0 || game.mPlayer.difficultySel == 1){
-                that.pressOptionSound.play({ volume: game.options.SFXVol });
-                that.input.keyboard.removeAllKeys(true);
-                that.scene.start("scene_searching");
+                if (that.waitingForQueue == false)
+                {
+                    that.input.keyboard.removeAllKeys(true);
+                    that.pressOptionSound.play({ volume: game.options.SFXVol });
+                    that.waitingForQueue = true;
+                    that.scene.start("scene_searching");
+                }
             }
         });
 
@@ -215,9 +222,13 @@ class Scene_Select_Map extends Phaser.Scene {
                         that.enterText.setVisible(true);
                         that.alreadySelected = true;
                     }else {
-                        that.input.keyboard.removeAllKeys(true);
-                        game.mPlayer.difficultySel = that.optionSelected;
-                        that.scene.start("scene_searching");
+                        if (that.waitingForQueue == false)
+                        {
+                            that.input.keyboard.removeAllKeys(true);
+                            that.waitingForQueue = true;
+                            game.mPlayer.difficultySel = that.optionSelected;
+                            that.scene.start("scene_searching");
+                        }
                     }
                 }else{
                     if (!that.alreadySelected){
@@ -235,9 +246,13 @@ class Scene_Select_Map extends Phaser.Scene {
                         that.enterText.setVisible(true);
                         that.alreadySelected = true;
                     }else {
-                        that.input.keyboard.removeAllKeys(true);
-                        game.mPlayer.difficultySel = that.optionSelected;
-                        that.scene.start("scene_searching");
+                        if (that.waitingForQueue == false)
+                        {
+                            that.input.keyboard.removeAllKeys(true);
+                            that.waitingForQueue = true;
+                            game.mPlayer.difficultySel = that.optionSelected;
+                            that.scene.start("scene_searching");
+                        }
                     }
                 }else{
                     if (!that.alreadySelected){

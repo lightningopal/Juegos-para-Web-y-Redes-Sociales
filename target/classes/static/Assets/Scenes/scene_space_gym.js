@@ -489,7 +489,9 @@ class Scene_Space_Gym extends Phaser.Scene {
 
         game.mPlayer.image.on("animationcomplete", function (anim) {
             if (anim.key === game.mPlayer.characterSel.type + "_attack") {
-                console.log("Fin de animación");
+                if (game.global.DEBUG_MODE) {
+                    console.log("Fin de animación");
+                }
                 that.attacking = false;
                 // Enviar mensaje de ataque
                 // game.global.socket.send(JSON.stringify({event: ""}));
