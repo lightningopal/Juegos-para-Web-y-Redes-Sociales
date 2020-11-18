@@ -1,9 +1,0 @@
-21:03:26 - Server opened.
-21:03:50 - Conected user with session 53edf305-40c5-9ec6-9977-fa2d3bdf9818.
-21:04:16 - Player connected: prueba2.
-21:04:21 - Searching Tournament Game: prueba2 [PlayerType: berserker, SecondarySkill: -1, Skin: 0, Level: 0, Points: 876].
-21:04:36 - Conected user with session 03e60504-0653-823c-f66b-96fa85e8df7f.
-21:06:22 - Player connected: ranking.
-21:06:30 - Searching Tournament Game: ranking [PlayerType: bard, SecondarySkill: -1, Skin: 0, Level: 0, Points: 416].
-21:06:30 - Create Tournament Game: ranking - prueba2 - Level: 0, Room: 0.
-21:08:26 - Users data saved.
