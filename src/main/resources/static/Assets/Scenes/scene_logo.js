@@ -17,7 +17,7 @@ class Scene_Logo extends Phaser.Scene {
             video.setPaused(false);
         },this);
 
-        var video = this.add.video(0, 0, "logo_video").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        var video = this.add.video(0, 0, "logo_video").setOrigin(0, 0);
 
         video.play();
 

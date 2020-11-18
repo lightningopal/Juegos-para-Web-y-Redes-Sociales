@@ -14,8 +14,16 @@ window.onload = function () {
     this.configDesktop = {
         type: Phaser.AUTO,
         backgroundColor: "#000000",
-        width: window.screen.width,//800, //1920
-        height: window.screen.height,//450, //1080
+        //width: window.screen.width / 1.3,//800, //1920
+        //height: window.screen.height / 1.3,//450, //1080
+        scale: {
+            mode: Phaser.Scale.FIT,
+            //parent: 'phaser-example',
+            //autoCenter: Phaser.Scale.CENTER_BOTH,
+            width: 1920,
+            height: 1080,
+            autoRound: true
+        },
         physics: {
             default: 'arcade',
             arcade: {
@@ -51,8 +59,16 @@ window.onload = function () {
     this.configMobile = {
         type: Phaser.AUTO,
         backgroundColor: "#000000",
-        width: window.screen.width,
-        height: window.screen.height,
+        //width: window.screen.width,
+        //height: window.screen.height,
+        scale: {
+            mode: Phaser.Scale.FIT,
+            //parent: 'phaser-example',
+            autoCenter: Phaser.Scale.CENTER_BOTH,
+            width: 1920,
+            height: 1080,
+            autoRound: true
+        },
         physics: {
             default: 'arcade',
             arcade: {

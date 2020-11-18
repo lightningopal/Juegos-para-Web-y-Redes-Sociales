@@ -28,14 +28,14 @@ class Scene_Boot extends Phaser.Scene {
         game.global.actualScene = "scene_boot";
 
         // Background
-        this.add.image(0, 0, "simple_bg").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.tilesprite = this.add.tileSprite(0, 0, RelativeScale(1920, "x"), RelativeScale(1080, "y"), "stars").setOrigin(0, 0);
+        this.add.image(0, 0, "simple_bg").setOrigin(0, 0);
+        this.tilesprite = this.add.tileSprite(0, 0, 1920, 1080, "stars").setOrigin(0, 0);
 
         if (!game.global.hasLoadData) {
             /// Barra de carga ///
             let loadingBar = this.add.graphics({
                 lineStyle: {
-                    width: 5,
+                    width: 10,
                     // color: 0x996600
                     color: 0xe952c4
                 },
@@ -47,10 +47,10 @@ class Scene_Boot extends Phaser.Scene {
 
             let loadingText = this.make.text({
                 x: this.game.renderer.width / 2,
-                y: this.game.renderer.height / 2 - 30,
+                y: this.game.renderer.height / 2 - 60,
                 text: 'Please wait...',
                 style: {
-                    font: '24px font_Write',
+                    font: '48px font_Write',
                     fill: '#ffffff'
                 }
             });
@@ -58,10 +58,10 @@ class Scene_Boot extends Phaser.Scene {
 
             let percentText = this.make.text({
                 x: this.game.renderer.width / 2,
-                y: this.game.renderer.height / 2 + 20,
+                y: this.game.renderer.height / 2 + 40,
                 text: '0%',
                 style: {
-                    font: '20px font_Write',
+                    font: '40px font_Write',
                     fill: '#e952c4'
                 }
             });
@@ -69,10 +69,10 @@ class Scene_Boot extends Phaser.Scene {
 
             let assetText = this.make.text({
                 x: this.game.renderer.width / 2,
-                y: this.game.renderer.height / 2 + 70,
+                y: this.game.renderer.height / 2 + 140,
                 text: '',
                 style: {
-                    font: '24px font_Write',
+                    font: '48px font_Write',
                     fill: '#ffffff'
                 }
             });
@@ -85,11 +85,11 @@ class Scene_Boot extends Phaser.Scene {
                 loadingBar.fillRect(this.game.renderer.width / 2 - this.game.renderer.width / 8,
                     this.game.renderer.height / 2,
                     this.game.renderer.width * percent / 4,
-                    40);
+                    80);
                 loadingBar.strokeRect(this.game.renderer.width / 2 - this.game.renderer.width / 8,
                     this.game.renderer.height / 2,
                     this.game.renderer.width / 4,
-                    40);
+                    80);
             })
 
             this.load.on('fileprogress', (file) => {
@@ -379,7 +379,7 @@ class Scene_Boot extends Phaser.Scene {
             /// Barra de carga ///
             let loadingBar = this.add.graphics({
                 lineStyle: {
-                    width: 5,
+                    width: 10,
                     // color: 0x996600
                     color: 0xe952c4
                 },
@@ -392,18 +392,18 @@ class Scene_Boot extends Phaser.Scene {
             loadingBar.fillRect(this.game.renderer.width / 2 - this.game.renderer.width / 8,
                 this.game.renderer.height / 2,
                 this.game.renderer.width / 4,
-                40);
+                80);
             loadingBar.strokeRect(this.game.renderer.width / 2 - this.game.renderer.width / 8,
                 this.game.renderer.height / 2,
                 this.game.renderer.width / 4,
-                40);
+                80);
 
             let loadingText = this.make.text({
                 x: this.game.renderer.width / 2,
-                y: this.game.renderer.height / 2 - 30,
+                y: this.game.renderer.height / 2 - 60,
                 text: 'Connecting to server...',
                 style: {
-                    font: '24px font_Write',
+                    font: '48px font_Write',
                     fill: '#ffffff'
                 }
             });
@@ -411,10 +411,10 @@ class Scene_Boot extends Phaser.Scene {
 
             let percentText = this.make.text({
                 x: this.game.renderer.width / 2,
-                y: this.game.renderer.height / 2 + 20,
+                y: this.game.renderer.height / 2 + 40,
                 text: '100%',
                 style: {
-                    font: '20px font_Write',
+                    font: '40px font_Write',
                     fill: '#e952c4'
                 }
             });
@@ -422,10 +422,10 @@ class Scene_Boot extends Phaser.Scene {
 
             let assetText = this.make.text({
                 x: this.game.renderer.width / 2,
-                y: this.game.renderer.height / 2 + 70,
+                y: this.game.renderer.height / 2 + 140,
                 text: 'Load complete.',
                 style: {
-                    font: '24px font_Write',
+                    font: '48px font_Write',
                     fill: '#ffffff'
                 }
             });
@@ -689,6 +689,9 @@ class Scene_Boot extends Phaser.Scene {
                 case "GAMES_FULL":
                     this.scene.get('scene_boot').GamesFull();
                     break;
+                case "NUMBER_OF_USERS":
+                    this.scene.get('scene_boot').UsersConnectedText(data);
+                    break;
                 default:
                     if (game.global.DEBUG_MODE) {
                         console.log("Tipo de mensaje no controlado");
@@ -782,8 +785,8 @@ class Scene_Boot extends Phaser.Scene {
 
     UpdateSpaceGym(data) {
         // Player
-        game.mPlayer.image.x = RelativeScale(data.player.posX, "x");
-        game.mPlayer.image.y = RelativeScale(data.player.posY, "y");
+        game.mPlayer.image.x = data.player.posX;
+        game.mPlayer.image.y = data.player.posY;
         game.mPlayer.image.flipX = data.player.flipped;
         if (data.player.onFloor) {
             this.scene.get('scene_space_gym').falling = false;
@@ -792,15 +795,15 @@ class Scene_Boot extends Phaser.Scene {
         this.scene.get('scene_space_gym').canSpecialAttack = data.player.canSpecialAttack;
 
         // Dummy
-        this.scene.get('scene_space_gym').dummy.x = RelativeScale(data.dummy.posX, "x");
-        this.scene.get('scene_space_gym').dummy.y = RelativeScale(data.dummy.posY, "y");
+        this.scene.get('scene_space_gym').dummy.x = data.dummy.posX;
+        this.scene.get('scene_space_gym').dummy.y = data.dummy.posY;
         this.scene.get('scene_space_gym').dummy.userInterface.currentHP = data.dummy.hp;
 
         // Proyectiles
         for (var i = 0; i < data.projectiles.length; i++) {
             this.scene.get('scene_space_gym').projectiles[i].setVisible(data.projectiles[i].isActive);
-            this.scene.get('scene_space_gym').projectiles[i].x = RelativeScale(data.projectiles[i].posX, "x");
-            this.scene.get('scene_space_gym').projectiles[i].y = RelativeScale(data.projectiles[i].posY, "y");
+            this.scene.get('scene_space_gym').projectiles[i].x = data.projectiles[i].posX;
+            this.scene.get('scene_space_gym').projectiles[i].y = data.projectiles[i].posY;
             this.scene.get('scene_space_gym').projectiles[i].setAngle(data.projectiles[i].facingAngle);
             this.scene.get('scene_space_gym').projectiles[i].flipX = data.projectiles[i].flipX;
         }
@@ -926,8 +929,8 @@ class Scene_Boot extends Phaser.Scene {
             level = this.scene.get('scene_level0');
             if (game.mEnemy.AorB === 'A') { // Mi jugador es el B
                 // Mi jugador
-                game.mPlayer.image.x = RelativeScale(data.playerB.posX, "x");
-                game.mPlayer.image.y = RelativeScale(data.playerB.posY, "y");
+                game.mPlayer.image.x = data.playerB.posX;
+                game.mPlayer.image.y = data.playerB.posY;
                 game.mPlayer.image.flipX = data.playerB.flipped;
                 if (data.playerB.onFloor) {
                     level.falling = false;
@@ -938,15 +941,15 @@ class Scene_Boot extends Phaser.Scene {
                 // Proyectiles
                 for (var i = 0; i < data.projectilesB.length; i++) {
                     level.myProjectiles[i].setVisible(data.projectilesB[i].isActive);
-                    level.myProjectiles[i].x = RelativeScale(data.projectilesB[i].posX, "x");
-                    level.myProjectiles[i].y = RelativeScale(data.projectilesB[i].posY, "y");
+                    level.myProjectiles[i].x = data.projectilesB[i].posX;
+                    level.myProjectiles[i].y = data.projectilesB[i].posY;
                     level.myProjectiles[i].setAngle(data.projectilesB[i].facingAngle);
                     level.myProjectiles[i].flipX = data.projectilesB[i].flipX;
                 }
 
                 // Jugador enemigo
-                game.mEnemy.image.x = RelativeScale(data.playerA.posX, "x");
-                game.mEnemy.image.y = RelativeScale(data.playerA.posY, "y");
+                game.mEnemy.image.x = data.playerA.posX;
+                game.mEnemy.image.y = data.playerA.posY;
                 level.eMovingLeft = data.playerA.movingLeft;
                 level.eMovingRight = data.playerA.movingRight;
                 game.mEnemy.image.flipX = data.playerA.flipped;
@@ -954,15 +957,15 @@ class Scene_Boot extends Phaser.Scene {
                 // Proyectiles
                 for (var i = 0; i < data.projectilesA.length; i++) {
                     level.eProjectiles[i].setVisible(data.projectilesA[i].isActive);
-                    level.eProjectiles[i].x = RelativeScale(data.projectilesA[i].posX, "x");
-                    level.eProjectiles[i].y = RelativeScale(data.projectilesA[i].posY, "y");
+                    level.eProjectiles[i].x = data.projectilesA[i].posX;
+                    level.eProjectiles[i].y = data.projectilesA[i].posY;
                     level.eProjectiles[i].setAngle(data.projectilesA[i].facingAngle);
                     level.eProjectiles[i].flipX = data.projectilesA[i].flipX;
                 }
             } else { // Mi jugador es el A
                 // Mi jugador
-                game.mPlayer.image.x = RelativeScale(data.playerA.posX, "x");
-                game.mPlayer.image.y = RelativeScale(data.playerA.posY, "y");
+                game.mPlayer.image.x = data.playerA.posX;
+                game.mPlayer.image.y = data.playerA.posY;
                 game.mPlayer.image.flipX = data.playerA.flipped;
                 if (data.playerA.onFloor) {
                     level.falling = false;
@@ -973,15 +976,15 @@ class Scene_Boot extends Phaser.Scene {
                 // Proyectiles
                 for (var i = 0; i < data.projectilesA.length; i++) {
                     level.myProjectiles[i].setVisible(data.projectilesA[i].isActive);
-                    level.myProjectiles[i].x = RelativeScale(data.projectilesA[i].posX, "x");
-                    level.myProjectiles[i].y = RelativeScale(data.projectilesA[i].posY, "y");
+                    level.myProjectiles[i].x = data.projectilesA[i].posX;
+                    level.myProjectiles[i].y = data.projectilesA[i].posY;
                     level.myProjectiles[i].setAngle(data.projectilesA[i].facingAngle);
                     level.myProjectiles[i].flipX = data.projectilesA[i].flipX;
                 }
 
                 // Jugador enemigo
-                game.mEnemy.image.x = RelativeScale(data.playerB.posX, "x");
-                game.mEnemy.image.y = RelativeScale(data.playerB.posY, "y");
+                game.mEnemy.image.x = data.playerB.posX;
+                game.mEnemy.image.y = data.playerB.posY;
                 level.eMovingLeft = data.playerB.movingLeft;
                 level.eMovingRight = data.playerB.movingRight;
                 game.mEnemy.image.flipX = data.playerB.flipped;
@@ -989,8 +992,8 @@ class Scene_Boot extends Phaser.Scene {
                 // Proyectiles
                 for (var i = 0; i < data.projectilesB.length; i++) {
                     level.eProjectiles[i].setVisible(data.projectilesB[i].isActive);
-                    level.eProjectiles[i].x = RelativeScale(data.projectilesB[i].posX, "x");
-                    level.eProjectiles[i].y = RelativeScale(data.projectilesB[i].posY, "y");
+                    level.eProjectiles[i].x = data.projectilesB[i].posX;
+                    level.eProjectiles[i].y = data.projectilesB[i].posY;
                     level.eProjectiles[i].setAngle(data.projectilesB[i].facingAngle);
                     level.eProjectiles[i].flipX = data.projectilesB[i].flipX;
                 }
@@ -1006,8 +1009,8 @@ class Scene_Boot extends Phaser.Scene {
 
             if (game.mEnemy.AorB === 'A') { // Mi jugador es el B
                 // Mi jugador
-                game.mPlayer.image.x = RelativeScale(data.playerB.posX, "x");
-                game.mPlayer.image.y = RelativeScale(data.playerB.posY, "y");
+                game.mPlayer.image.x = data.playerB.posX;
+                game.mPlayer.image.y = data.playerB.posY;
                 game.mPlayer.image.flipX = data.playerB.flipped;
                 if (data.playerB.onFloor) {
                     level.falling = false;
@@ -1018,15 +1021,15 @@ class Scene_Boot extends Phaser.Scene {
                 // Proyectiles
                 for (var i = 0; i < data.projectilesB.length; i++) {
                     level.myProjectiles[i].setVisible(data.projectilesB[i].isActive);
-                    level.myProjectiles[i].x = RelativeScale(data.projectilesB[i].posX, "x");
-                    level.myProjectiles[i].y = RelativeScale(data.projectilesB[i].posY, "y");
+                    level.myProjectiles[i].x = data.projectilesB[i].posX;
+                    level.myProjectiles[i].y = data.projectilesB[i].posY;
                     level.myProjectiles[i].setAngle(data.projectilesB[i].facingAngle);
                     level.myProjectiles[i].flipX = data.projectilesB[i].flipX;
                 }
 
                 // Jugador enemigo
-                game.mEnemy.image.x = RelativeScale(data.playerA.posX, "x");
-                game.mEnemy.image.y = RelativeScale(data.playerA.posY, "y");
+                game.mEnemy.image.x = data.playerA.posX;
+                game.mEnemy.image.y = data.playerA.posY;
                 level.eMovingLeft = data.playerA.movingLeft;
                 level.eMovingRight = data.playerA.movingRight;
                 game.mEnemy.image.flipX = data.playerA.flipped;
@@ -1034,15 +1037,15 @@ class Scene_Boot extends Phaser.Scene {
                 // Proyectiles
                 for (var i = 0; i < data.projectilesA.length; i++) {
                     level.eProjectiles[i].setVisible(data.projectilesA[i].isActive);
-                    level.eProjectiles[i].x = RelativeScale(data.projectilesA[i].posX, "x");
-                    level.eProjectiles[i].y = RelativeScale(data.projectilesA[i].posY, "y");
+                    level.eProjectiles[i].x = data.projectilesA[i].posX;
+                    level.eProjectiles[i].y = data.projectilesA[i].posY;
                     level.eProjectiles[i].setAngle(data.projectilesA[i].facingAngle);
                     level.eProjectiles[i].flipX = data.projectilesA[i].flipX;
                 }
             } else { // Mi jugador es el A
                 // Mi jugador
-                game.mPlayer.image.x = RelativeScale(data.playerA.posX, "x");
-                game.mPlayer.image.y = RelativeScale(data.playerA.posY, "y");
+                game.mPlayer.image.x = data.playerA.posX;
+                game.mPlayer.image.y = data.playerA.posY;
                 game.mPlayer.image.flipX = data.playerA.flipped;
                 if (data.playerA.onFloor) {
                     level.falling = false;
@@ -1053,15 +1056,15 @@ class Scene_Boot extends Phaser.Scene {
                 // Proyectiles
                 for (var i = 0; i < data.projectilesA.length; i++) {
                     level.myProjectiles[i].setVisible(data.projectilesA[i].isActive);
-                    level.myProjectiles[i].x = RelativeScale(data.projectilesA[i].posX, "x");
-                    level.myProjectiles[i].y = RelativeScale(data.projectilesA[i].posY, "y");
+                    level.myProjectiles[i].x = data.projectilesA[i].posX;
+                    level.myProjectiles[i].y = data.projectilesA[i].posY;
                     level.myProjectiles[i].setAngle(data.projectilesA[i].facingAngle);
                     level.myProjectiles[i].flipX = data.projectilesA[i].flipX;
                 }
 
                 // Jugador enemigo
-                game.mEnemy.image.x = RelativeScale(data.playerB.posX, "x");
-                game.mEnemy.image.y = RelativeScale(data.playerB.posY, "y");
+                game.mEnemy.image.x = data.playerB.posX;
+                game.mEnemy.image.y = data.playerB.posY;
                 level.eMovingLeft = data.playerB.movingLeft;
                 level.eMovingRight = data.playerB.movingRight;
                 game.mEnemy.image.flipX = data.playerB.flipped;
@@ -1069,8 +1072,8 @@ class Scene_Boot extends Phaser.Scene {
                 // Proyectiles
                 for (var i = 0; i < data.projectilesB.length; i++) {
                     level.eProjectiles[i].setVisible(data.projectilesB[i].isActive);
-                    level.eProjectiles[i].x = RelativeScale(data.projectilesB[i].posX, "x");
-                    level.eProjectiles[i].y = RelativeScale(data.projectilesB[i].posY, "y");
+                    level.eProjectiles[i].x = data.projectilesB[i].posX;
+                    level.eProjectiles[i].y = data.projectilesB[i].posY;
                     level.eProjectiles[i].setAngle(data.projectilesB[i].facingAngle);
                     level.eProjectiles[i].flipX = data.projectilesB[i].flipX;
                 }
@@ -1190,5 +1193,10 @@ class Scene_Boot extends Phaser.Scene {
     IdleMessage()
     {
         game.global.socket.send(JSON.stringify({ event: "IDLE_MESSAGE" }));
+    }
+
+    UsersConnectedText(data)
+    {
+        this.scene.get(game.global.actualScene).SetConnectedUsersText(data.value);
     }
 }

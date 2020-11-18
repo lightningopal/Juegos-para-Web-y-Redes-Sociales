@@ -5,16 +5,13 @@ class Scene_Score extends Phaser.Scene {
 
     preload() {
         //Creación de imágenes
-        this.background = this.add.image(0, 0, "main_menu_bg").setOrigin(0, 0)
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.nebula = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_nebula")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.stars = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_stars")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.background = this.add.image(0, 0, "main_menu_bg").setOrigin(0, 0);
+        this.nebula = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_nebula");
+        this.stars = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_stars");
 
         // Interfaz
         this.add.image(0, 0, "score_interface").setOrigin(0, 0)
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(5);
+            .setDepth(5);
 
         // Ganador y perdedor
         this.loserCharacter;
@@ -25,18 +22,18 @@ class Scene_Score extends Phaser.Scene {
 
         // Si la diferencia de puntos es positiva, el ganador es este jugador
         if (game.mPlayer.pointsDifference > 0) {
-            this.loserCharacter = this.add.image(RelativeScale(300, "x"), RelativeScale(700, "y"), "splashart_" + game.mEnemy.characterSel.type)
-                .setScale(RelativeScale(0.8, "x"), RelativeScale(0.8, "y")).setDepth(4);
-            this.loserUserName = this.add.text(RelativeScale(60, "x"), RelativeScale(920, "y"), game.mEnemy.userName, { fontFamily: 'font_Write' })
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(6).setAngle(22).setFontSize(Math.round(RelativeScale(104, "x")));
+            this.loserCharacter = this.add.image(300, 700, "splashart_" + game.mEnemy.characterSel.type)
+                .setScale(0.8, 0.8).setDepth(4);
+            this.loserUserName = this.add.text(60, 920, game.mEnemy.userName, { fontFamily: 'font_Write' })
+                .setOrigin(0, 0.5).setDepth(6).setAngle(22).setFontSize(52);
 
-            this.winnerCharacter = this.add.image(RelativeScale(1320, "x"), RelativeScale(580, "y"), "splashart_" + game.mPlayer.characterSel.type)
-                .setScale(RelativeScale(1.1, "x"), RelativeScale(1.1, "y")).setDepth(4);
-            this.winnerUserName = this.add.text(RelativeScale(1850, "x"), RelativeScale(820, "y"), game.mPlayer.userName, { fontFamily: 'font_Write' })
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(1, 0.5).setDepth(6).setAngle(-22).setFontSize(Math.round(RelativeScale(104, "x")));
+            this.winnerCharacter = this.add.image(1320, 580, "splashart_" + game.mPlayer.characterSel.type)
+                .setScale(1.1, 1.1).setDepth(4);
+            this.winnerUserName = this.add.text(1850, 820, game.mPlayer.userName, { fontFamily: 'font_Write' })
+                .setOrigin(1, 0.5).setDepth(6).setAngle(-22).setFontSize(52);
 
-            this.pointsDiff = this.add.text(RelativeScale(790, "x"), RelativeScale(120, "y"), "+" + game.mPlayer.pointsDifference + " pt", { fontFamily: 'font_Write' })
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(7).setFontSize(Math.round(RelativeScale(104, "x")));
+            this.pointsDiff = this.add.text(790, 120, "+" + game.mPlayer.pointsDifference + " pt", { fontFamily: 'font_Write' })
+                .setOrigin(0, 0.5).setDepth(7).setFontSize(52);
 
             // Jugador
             switch (game.mPlayer.characterSel.type) {
@@ -44,7 +41,7 @@ class Scene_Score extends Phaser.Scene {
                     this.winnerCharacter.setFlip(true);
                     break;
                 case "berserker":
-                    this.winnerCharacter.x = RelativeScale(1380, "x");
+                    this.winnerCharacter.x = 1380;
                     this.winnerCharacter.setFlip(true);
                     break;
             }
@@ -57,39 +54,45 @@ class Scene_Score extends Phaser.Scene {
                     this.loserCharacter.setFlip(true);
                     break;
                 case "bard":
-                    this.loserCharacter.y = RelativeScale(660, "y");
+                    this.loserCharacter.y = 660;
                     break;
             }
         }
         // Si es negativa, es el rival
         else {
-            this.loserCharacter = this.add.image(RelativeScale(300, "x"), RelativeScale(700, "y"), "splashart_" + game.mPlayer.characterSel.type)
-                .setScale(RelativeScale(0.8, "x"), RelativeScale(0.8, "y")).setDepth(4);
-            this.loserUserName = this.add.text(RelativeScale(60, "x"), RelativeScale(920, "y"), game.mPlayer.userName, { fontFamily: 'font_Write' })
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(6).setAngle(22).setFontSize(Math.round(RelativeScale(104, "x")));
+            this.loserCharacter = this.add.image(300, 700, "splashart_" + game.mPlayer.characterSel.type)
+                .setScale(0.8, 0.8).setDepth(4);
+            this.loserUserName = this.add.text(60, 920, game.mPlayer.userName, { fontFamily: 'font_Write' })
+                .setOrigin(0, 0.5).setDepth(6).setAngle(22).setFontSize(52);
 
-            this.winnerCharacter = this.add.image(RelativeScale(1320, "x"), RelativeScale(580, "y"), "splashart_" + game.mEnemy.characterSel.type)
-                .setScale(RelativeScale(1.1, "x"), RelativeScale(1.1, "y")).setDepth(4);
-            this.winnerUserName = this.add.text(RelativeScale(1850, "x"), RelativeScale(820, "y"), game.mEnemy.userName, { fontFamily: 'font_Write' })
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(1, 0.5).setDepth(6).setAngle(-22).setFontSize(Math.round(RelativeScale(104, "x")));
+            this.winnerCharacter = this.add.image(1320, 580, "splashart_" + game.mEnemy.characterSel.type)
+                .setScale(1.1, 1.1).setDepth(4);
+            this.winnerUserName = this.add.text(1850, 820, game.mEnemy.userName, { fontFamily: 'font_Write' })
+                .setOrigin(1, 0.5).setDepth(6).setAngle(-22).setFontSize(52);
 
-            this.minusPoints = (game.mPlayer.pointsDifference * 0.7);
+            this.minusPoints = Math.round(game.mPlayer.pointsDifference * 0.7);
             if (game.mPlayer.points == 0)
             {
                 this.minusPoints = -(game.mPlayer.previousPoints);
             }
 
+            this.auxMinusString = "";
+            if (this.minusPoints == 0)
+            {
+                this.auxMinusString = "-";
+            }
+
             console.log(this.minusPoints);
 
-            this.pointsDiff = this.add.text(RelativeScale(790, "x"), RelativeScale(120, "y"), this.minusPoints + " pt", { fontFamily: 'font_Write' })
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(7).setFontSize(Math.round(RelativeScale(104, "x")));
+            this.pointsDiff = this.add.text(790, 120, this.auxMinusString + this.minusPoints + " pt", { fontFamily: 'font_Write' })
+                .setOrigin(0, 0.5).setDepth(7).setFontSize(52);
 
             switch (game.mEnemy.characterSel.type) {
                 case "bard":
                     this.winnerCharacter.setFlip(true);
                     break;
                 case "berserker":
-                    this.winnerCharacter.x = RelativeScale(1380, "x");
+                    this.winnerCharacter.x = 1380;
                     this.winnerCharacter.setFlip(true);
                     break;
             }
@@ -102,32 +105,32 @@ class Scene_Score extends Phaser.Scene {
                     this.loserCharacter.setFlip(true);
                     break;
                 case "bard":
-                    this.loserCharacter.y = RelativeScale(660, "y");
+                    this.loserCharacter.y = 660;
                     break;
             }
 
         }
 
-        this.newCoins = this.add.text(RelativeScale(790, "x"), RelativeScale(200, "y"), "+" + game.mPlayer.newCoins, { fontFamily: 'font_Write' })
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setDepth(7).setFontSize(Math.round(RelativeScale(104, "x")));
+        this.newCoins = this.add.text(790, 200, "+" + game.mPlayer.newCoins, { fontFamily: 'font_Write' })
+            .setOrigin(0, 0.5).setDepth(7).setFontSize(52);
 
-        var userNameText = this.add.text(RelativeScale(160, "x"), RelativeScale(165, "y"), game.mPlayer.userName, { fontFamily: 'font_Write' })
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(0, 0.5).setFontSize(Math.round(RelativeScale(96, "x"))).setDepth(8); // Alineado a la izquierda
-        var userCurrencyText = this.add.text(RelativeScale(620, "x"), RelativeScale(165, "y"), game.mPlayer.currency, { fontFamily: 'font_Write' })
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setOrigin(1, 0.5).setFontSize(Math.round(RelativeScale(96, "x"))).setDepth(8); // Alineado a la derecha
+        var userNameText = this.add.text(160, 166, game.mPlayer.userName, { fontFamily: 'font_Write' })
+            .setOrigin(0, 0.5).setFontSize(48).setDepth(8); // Alineado a la izquierda
+        var userCurrencyText = this.add.text(620, 166, game.mPlayer.currency, { fontFamily: 'font_Write' })
+            .setOrigin(1, 0.5).setFontSize(48).setDepth(8); // Alineado a la derecha
 
         this.msg_bg = this.add.image(0, 0, "message_bg").setOrigin(0, 0)
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(20);
+            .setDepth(20);
         this.msg_bg.setVisible(false);
-        this.play_again_text = this.add.image(RelativeScale(960, "x"), RelativeScale(310, "y"), "play_again_text")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(22);
+        this.play_again_text = this.add.image(960, 310, "play_again_text")
+            .setDepth(22);
         this.play_again_text.setVisible(false);
-        this.yesBtn = this.add.image(RelativeScale(587.0, "x"), RelativeScale(616.0, "y"), "yes!!_button")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(22);
+        this.yesBtn = this.add.image(587.0, 616.0, "yes!!_button")
+            .setDepth(22);
         this.yesBtn.setFrame(1);
         this.yesBtn.setVisible(false);
-        this.noBtn = this.add.image(RelativeScale(1325.50, "x"), RelativeScale(616.0, "y"), "no..._button")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(22);
+        this.noBtn = this.add.image(1325.50, 616.0, "no..._button")
+            .setDepth(22);
         this.noBtn.setVisible(false);
 
         // Controles

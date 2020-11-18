@@ -1,6 +1,5 @@
 package es.LightningOpal.Astral_Knock_Out;
 
-import java.util.ArrayList;
 /// Imports
 import java.util.Map;
 import java.util.Random;
@@ -57,7 +56,7 @@ public class GamesManager {
     public Map<Integer, Lock> startGame_locks = new ConcurrentHashMap<>();
 
     // Colas que guarda los jugadores que están buscando partida
-    public ArrayList<ConcurrentLinkedQueue<Player>> searching_players = new ArrayList<>();
+    public Map<Integer, ConcurrentLinkedQueue<Player>> searching_players = new ConcurrentHashMap<>();
 
     // Cerrojo que impide tocar a la vez las partidas de "tournament"
     public Lock tournamentGamesLock = new ReentrantLock();
@@ -73,9 +72,9 @@ public class GamesManager {
     // Constructor vacio de la clase
     private GamesManager() {
         ConcurrentLinkedQueue<Player> searchingLevel0 = new ConcurrentLinkedQueue<>();
-        searching_players.add(searchingLevel0);
+        searching_players.put(0, searchingLevel0);
         ConcurrentLinkedQueue<Player> searchingLevel1 = new ConcurrentLinkedQueue<>();
-        searching_players.add(searchingLevel1);
+        searching_players.put(1, searchingLevel1);
     }
 
     /// Métodos
@@ -261,14 +260,14 @@ public class GamesManager {
             // Winner Player
             winnerPlayer.put("userName", winner.getUserName());
             winnerPlayer.put("points", Math.round(eloForWinner));
-            winnerPlayer.put("previousPoints", Math.round(winnerPreviousPoints));
+            winnerPlayer.put("previousPoints", winnerPreviousPoints);
             winnerPlayer.put("newCoins", extraCoinsForWinner);
             winnerPlayer.put("currency", winnerCoins);
 
             // Loser Player
             loserPlayer.put("userName", loser.getUserName());
             loserPlayer.put("points", Math.round(eloForLoser));
-            loserPlayer.put("previousPoints", Math.round(loserPreviousPoints));
+            loserPlayer.put("previousPoints", loserPreviousPoints);
             loserPlayer.put("newCoins", extraCoinsForLoser);
             loserPlayer.put("currency", loserCoins);
 

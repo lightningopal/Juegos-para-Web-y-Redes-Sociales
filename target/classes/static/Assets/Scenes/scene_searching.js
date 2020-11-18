@@ -6,63 +6,57 @@ class Scene_Searching extends Phaser.Scene {
 
     preload() {
         //Creación de imágenes
-        this.background = this.add.image(0, 0, "main_menu_bg").setOrigin(0, 0)
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.nebula = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_nebula")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.stars = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_stars")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.background = this.add.image(0, 0, "main_menu_bg").setOrigin(0, 0);
+        this.nebula = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_nebula");
+        this.stars = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_stars");
 
-        this.add.image(game.config.width / 2, game.config.height / 2, "searching_back_triangle")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.add.image(game.config.width / 2, game.config.height / 2, "searching_back_triangle");
 
-        this.rotatingIcon = this.add.image(RelativeScale(1778, "x"), RelativeScale(236, "y"), "searching_rotating_icon")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.rotatingIcon = this.add.image(1778, 236, "searching_rotating_icon");
 
         // Personaje
-        var characterImage = this.add.image(RelativeScale(480, "x"), RelativeScale(540, "y"), "splashart_" + game.mPlayer.characterSel.type)
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        var characterImage = this.add.image(480, 540, "splashart_" + game.mPlayer.characterSel.type);
 
         switch (game.mPlayer.characterSel.type) {
             case "bard":
-                characterImage.setScale(RelativeScale(1.4, "x"), RelativeScale(1.4, "y"));
-                characterImage.y = RelativeScale(500, "y");
+                characterImage.setScale(1.4, 1.4);
+                characterImage.y = 500;
                 break;
             case "wizard":
-                characterImage.x = RelativeScale(500, "x");
-                characterImage.y = RelativeScale(600, "y");
-                characterImage.setScale(RelativeScale(1.25, "x"), RelativeScale(1.25, "y"));
+                characterImage.x = 500;
+                characterImage.y = 600;
+                characterImage.setScale(1.25, 1.25);
                 characterImage.setFlip(true);
                 break;
             case "rogue":
-                characterImage.setScale(RelativeScale(1.5, "x"), RelativeScale(1.5, "y"));
+                characterImage.setScale(1.5, 1.5);
                 characterImage.setFlip(true);
-                characterImage.y = RelativeScale(740, "y");
+                characterImage.y = 740;
                 break;
             case "berserker":
-                characterImage.setScale(RelativeScale(1.4, "x"), RelativeScale(1.4, "y"));
+                characterImage.setScale(1.4, 1.4);
                 break;
         }
 
-        this.add.image(game.config.width / 2, game.config.height / 2, "searching_front_triangle")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.tipImage = this.add.image(RelativeScale(1600.91, "x"), RelativeScale(881.41, "y"), "searching_tips_text")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.add.image(game.config.width / 2, game.config.height / 2, "searching_front_triangle");
+        this.tipImage = this.add.image(1600.91, 881.41, "searching_tips_text");
+
+        this.connectedUsersText;
 
         // Tip random
         var randomTip = Math.floor(Math.random() * 9);
         this.tipImage.setFrame(randomTip);
 
         // Back button
-        this.add.image(RelativeScale(114.50, "x"), RelativeScale(112.0, "y"), "back_button_interface")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(30);
-        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(78.5, "y"), "back_button")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(31);
+        this.add.image(114.50, 112.0, "back_button_interface")
+            .setDepth(30);
+        this.backBtn = this.add.image(66.0, 78.5, "back_button")
+            .setDepth(31);
 
         // Error message
-        this.error_bg = this.add.image(0, 0, "error_bg").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(41);
-        this.no_matches_text = this.add.image(RelativeScale(960, "x"), RelativeScale(404.5, "Y"), "no_matches_text").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(42);
-        this.go_back_button = this.add.image(RelativeScale(960, "x"), RelativeScale(763, "Y"), "go_back_button").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(43);
+        this.error_bg = this.add.image(0, 0, "error_bg").setOrigin(0, 0).setDepth(41);
+        this.no_matches_text = this.add.image(960, 404.5, "no_matches_text").setDepth(42);
+        this.go_back_button = this.add.image(960, 763, "go_back_button").setDepth(43);
 
         this.error_bg.setVisible(false);
         this.no_matches_text.setVisible(false);
@@ -116,8 +110,8 @@ class Scene_Searching extends Phaser.Scene {
         });
         // Desktop
         if (game.global.DEVICE === "desktop") {
-            this.add.image(RelativeScale(62,"x"), RelativeScale(28.86,"y"), "escape_text")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(32);
+            this.add.image(62, 28.86, "escape_text")
+                .setDepth(32);
             this.backBtn.setFrame(1);
             this.input.keyboard.on("keydown-" + "ESC", function (event) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
@@ -150,15 +144,21 @@ class Scene_Searching extends Phaser.Scene {
     } // Fin create
 
     update() {
-        this.stars.tilePositionX += RelativeScale(0.2, "x");
-        this.stars.tilePositionY += RelativeScale(0.4, "y");
+        this.stars.tilePositionX += 0.2;
+        this.stars.tilePositionY += 0.4;
     } // Fin update
 
     FullError() {
-        that.input.keyboard.removeAllKeys(true);
+        this.input.keyboard.removeAllKeys(true);
         this.error_bg.setVisible(true);
         this.no_matches_text.setVisible(true);
         this.go_back_button.setVisible(true);
         this.errorMessage = true;
+    }
+
+    SetConnectedUsersText(value)
+    {
+        this.connectedUsersText = this.add.text(1430, 1030, "Users connected: " + value, { fontFamily: 'font_Write' })
+        .setOrigin(0, 0.5).setDepth(7).setFontSize(36);
     }
 }

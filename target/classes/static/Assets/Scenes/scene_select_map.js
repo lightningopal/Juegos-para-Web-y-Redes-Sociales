@@ -6,26 +6,23 @@ class Scene_Select_Map extends Phaser.Scene {
 
     preload() {
         //Creación de imágenes
-        this.background = this.add.image(0, 0, "main_menu_bg").setOrigin(0, 0)
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.nebula = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_nebula")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.stars = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_stars")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.background = this.add.image(0, 0, "main_menu_bg").setOrigin(0, 0);
+        this.nebula = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_nebula");
+        this.stars = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_stars");
 
-        this.add.image(RelativeScale(114.50, "x"), RelativeScale(112.0, "y"), "back_button_interface")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(5);
-        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(78.5, "y"), "back_button")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(5);
+        this.add.image(114.50, 112.0, "back_button_interface")
+            .setDepth(5);
+        this.backBtn = this.add.image(66.0, 78.5, "back_button")
+            .setDepth(5);
 
-        this.add.image(RelativeScale(957.50, "x"), RelativeScale(153.16, "y"), "select_map_text").setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.mapButton0 = this.add.image(RelativeScale(467.5, "x"), RelativeScale(530.5, "y"), "map_button0").setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.add.image(957.50, 153.16, "select_map_text");
+        this.mapButton0 = this.add.image(467.5, 530.5, "map_button0");
         this.mapButton0.setFrame(1);
-        this.mapButton1 = this.add.image(RelativeScale(1415, "x"), RelativeScale(523, "y"), "map_button1").setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.mapButton1 = this.add.image(1415, 523, "map_button1");
         this.mapButton1.setFrame(0);
 
-        this.enterBtn = this.add.image(RelativeScale(1810.0, "x"), RelativeScale(1000.0, "y"), "enter_button")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2);
+        this.enterBtn = this.add.image(1810.0, 1000.0, "enter_button")
+            .setDepth(2);
         this.enterText;
 
         // Opciones de selección
@@ -122,16 +119,16 @@ class Scene_Select_Map extends Phaser.Scene {
 
         // Mobile
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
-            this.enterText = this.add.image(RelativeScale(1650.0, "x"), RelativeScale(910.0, "y"), "continue_text_mobile")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+            this.enterText = this.add.image(1650.0, 910.0, "continue_text_mobile")
+                .setDepth(1);
             that.mapButton0.setFrame(0);
 
             // Desktop
         } else {
-            this.add.image(RelativeScale(62,"x"), RelativeScale(28.86,"y"), "escape_text")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(5);
-            this.enterText = this.add.image(RelativeScale(1350.0, "x"), RelativeScale(1000.0, "y"), "continue_text_desktop")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+            this.add.image(62, 28.86, "escape_text")
+                .setDepth(5);
+            this.enterText = this.add.image(1350.0, 1000.0, "continue_text_desktop")
+                .setDepth(1);
             this.backBtn.setFrame(0);
             game.mPlayer.difficultySel = 0;
 

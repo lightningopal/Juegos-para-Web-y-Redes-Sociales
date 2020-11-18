@@ -370,4 +370,9 @@ public class UsersController {
 			e.printStackTrace();
 		}
 	}
+
+	public static int getConnectedUsers()
+	{
+		return connectedUsers.size();
+	}
 }
