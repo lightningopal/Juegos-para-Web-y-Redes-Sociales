@@ -67,13 +67,13 @@ public class SpaceGym_Game {
         switch (player.getPlayerType()) {
             case "berserker":
                 for (int i = 0; i < 3; i++) {
-                    projectiles.add(new BerserkerSkill(player, dummy, 1000, false, 30, 250)); // Target, duration, collidePlatforms, speed, damage
+                    projectiles.add(new BerserkerSkill(player, dummy, 1000, false, 36, 250)); // Target, duration, collidePlatforms, speed, damage
                 }
                 player.setBasicWeapon(new Weapon(projectiles, 1, 1000, 50));
                 break;
             case "wizard":
                 for (int i = 0; i < 9; i++) {
-                    projectiles.add(new WizardSkill(player, dummy, 500, true, 26, 150, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
+                    projectiles.add(new WizardSkill(player, dummy, 500, true, 28, 150, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
                 player.setBasicWeapon(new Weapon(projectiles, 3, 1000, 50));
                 break;
