@@ -31,9 +31,9 @@ public class SpaceGym_Game {
 
     public final double GRAVITY = 1.0;
 
-    public final static int playerPosX = 150;
-    public final static int playerPosY = 150;
-    public final static int dummyPosX = 1400;
+    public final static int playerPosX = 100;
+    public final static int playerPosY = 300;
+    public final static int dummyPosX = 1200;
     public final static int dummyPosY = 940;
 
     ObjectMapper mapper = new ObjectMapper();
@@ -53,6 +53,8 @@ public class SpaceGym_Game {
         User thisUser = (User) player.getSession().getAttributes().get("USER");
         userName = thisUser.getUser_name();
 
+        // player.setPosX(playerPosX);
+        // player.setPosY(playerPosY);
         // Dummy
         this.dummy = new Player(/*false, dummyPosX, dummyPosY, 23.0, 42.0, -7.0, -1.0*/);
         dummy.setPosX(dummyPosX);

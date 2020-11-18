@@ -108,7 +108,9 @@ public class GamesManager {
         // Obtiene la partida que hay que parar
         SpaceGym_Game gameToStop = spaceGym_games.get(thisPlayer);
         // Para el game loop de esa partida
-        gameToStop.stopGameLoop();
+        if (gameToStop != null){
+            gameToStop.stopGameLoop();
+        }
         // Elimina la partida del mapa de partidas
         spaceGym_games.remove(thisPlayer);
         spaceGymGamesLock.unlock();
