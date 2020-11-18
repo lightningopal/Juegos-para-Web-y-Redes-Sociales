@@ -14,8 +14,8 @@ window.onload = function () {
     this.configDesktop = {
         type: Phaser.AUTO,
         backgroundColor: "#000000",
-        width: window.screen.width / 1.3,//800, //1920
-        height: window.screen.height / 1.3,//450, //1080
+        width: window.screen.width,//800, //1920
+        height: window.screen.height,//450, //1080
         physics: {
             default: 'arcade',
             arcade: {
@@ -95,7 +95,7 @@ window.onload = function () {
     this.game.global = {
         DEVICE:         null,
         FPS:            60,
-        DEBUG_MODE:     true,
+        DEBUG_MODE:     false,
         DEBUG_PHONE:    false,
         WS_CONNECTION:  false,
         socket:         null,
