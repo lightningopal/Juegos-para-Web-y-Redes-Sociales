@@ -101,8 +101,8 @@ class Scene_Boot extends Phaser.Scene {
 
                 // WEBSOCKETS
                 try {
-                    // game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
-                    game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
+                    game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
+                    //game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
                 }
                 catch (error) {
                     if (game.global.DEBUG_MODE) {
@@ -134,7 +134,7 @@ class Scene_Boot extends Phaser.Scene {
                     finally {
                         game.global.WS_CONNECTION = true;
                         that.time.addEvent({
-                            delay: 10000,
+                            delay: 2000,
                             callback: that.IdleMessage,
                             loop: true
                         });
@@ -269,7 +269,8 @@ class Scene_Boot extends Phaser.Scene {
             this.load.spritesheet("go_back_button", "./Assets/Images/UI/go_back_button.png", { frameWidth: 825, frameHeight: 134 });
 
             ///Versus
-            this.load.image("versus_bg", "./Assets/Images/UI/versus_circles_interface.png");
+            this.load.image("versus_left_circle", "./Assets/Images/UI/circle_left_versus_interface_.png");
+            this.load.image("versus_right_circle", "./Assets/Images/UI/circle_right_versus_interface_.png");
             this.load.image("versus_vs", "./Assets/Images/UI/versus_vs_interface.png");
             this.load.image("versus_fight", "./Assets/Images/UI/fight_text.png");
             this.load.image("versus_knock_out", "./Assets/Images/UI/knock_out_text.png");
@@ -433,8 +434,8 @@ class Scene_Boot extends Phaser.Scene {
 
             // WEBSOCKETS
             try {
-                // game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
-                game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
+                game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
+                //game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
             }
             catch (error) {
                 if (game.global.DEBUG_MODE) {
@@ -702,7 +703,6 @@ class Scene_Boot extends Phaser.Scene {
     }
 
     // PROTOCOLO DE MENSAJES
-
     JoinMsg(data) {
         //game.mPlayer.id = data.id;
         if (game.global.DEBUG_MODE) {
@@ -744,7 +744,7 @@ class Scene_Boot extends Phaser.Scene {
         game.mPlayer.currency = data.currency;
         game.mPlayer.points = data.points;
 
-        // Cambia de escena a la escena del menú principal
+        // Cambia de escena a la escena de la intro
         this.scene.get('scene_account').scene.start("scene_intro");
 
         if (game.global.DEBUG_MODE) {
@@ -777,7 +777,8 @@ class Scene_Boot extends Phaser.Scene {
         game.options.currentSong = this.sound.add("practice_screen_music");
         game.options.currentSong.play({ volume: game.options.musicVol, loop: true });
         this.scene.get('scene_select_character').input.keyboard.removeAllKeys(true);
-        this.scene.get('scene_select_character').scene.start("scene_space_gym");
+        this.FadeTransition("scene_space_gym");
+        //this.scene.get('scene_select_character').scene.start("scene_space_gym");
         if (game.global.DEBUG_MODE) {
             console.log("creado el space gym");
         }
@@ -785,27 +786,30 @@ class Scene_Boot extends Phaser.Scene {
 
     UpdateSpaceGym(data) {
         // Player
-        game.mPlayer.image.x = data.player.posX;
-        game.mPlayer.image.y = data.player.posY;
-        game.mPlayer.image.flipX = data.player.flipped;
-        if (data.player.onFloor) {
-            this.scene.get('scene_space_gym').falling = false;
-        }
-        this.scene.get('scene_space_gym').canBasicAttack = data.player.canBasicAttack;
-        this.scene.get('scene_space_gym').canSpecialAttack = data.player.canSpecialAttack;
+        if (game.global.actualScene == "scene_space_gym")
+        {
+            game.mPlayer.image.x = data.player.posX;
+            game.mPlayer.image.y = data.player.posY;
+            game.mPlayer.image.flipX = data.player.flipped;
+            if (data.player.onFloor) {
+                this.scene.get('scene_space_gym').falling = false;
+            }
+            this.scene.get('scene_space_gym').canBasicAttack = data.player.canBasicAttack;
+            this.scene.get('scene_space_gym').canSpecialAttack = data.player.canSpecialAttack;
 
-        // Dummy
-        this.scene.get('scene_space_gym').dummy.x = data.dummy.posX;
-        this.scene.get('scene_space_gym').dummy.y = data.dummy.posY;
-        this.scene.get('scene_space_gym').dummy.userInterface.currentHP = data.dummy.hp;
+            // Dummy
+            this.scene.get('scene_space_gym').dummy.x = data.dummy.posX;
+            this.scene.get('scene_space_gym').dummy.y = data.dummy.posY;
+            this.scene.get('scene_space_gym').dummy.userInterface.currentHP = data.dummy.hp;
 
-        // Proyectiles
-        for (var i = 0; i < data.projectiles.length; i++) {
-            this.scene.get('scene_space_gym').projectiles[i].setVisible(data.projectiles[i].isActive);
-            this.scene.get('scene_space_gym').projectiles[i].x = data.projectiles[i].posX;
-            this.scene.get('scene_space_gym').projectiles[i].y = data.projectiles[i].posY;
-            this.scene.get('scene_space_gym').projectiles[i].setAngle(data.projectiles[i].facingAngle);
-            this.scene.get('scene_space_gym').projectiles[i].flipX = data.projectiles[i].flipX;
+            // Proyectiles
+            for (var i = 0; i < data.projectiles.length; i++) {
+                this.scene.get('scene_space_gym').projectiles[i].setVisible(data.projectiles[i].isActive);
+                this.scene.get('scene_space_gym').projectiles[i].x = data.projectiles[i].posX;
+                this.scene.get('scene_space_gym').projectiles[i].y = data.projectiles[i].posY;
+                this.scene.get('scene_space_gym').projectiles[i].setAngle(data.projectiles[i].facingAngle);
+                this.scene.get('scene_space_gym').projectiles[i].flipX = data.projectiles[i].flipX;
+            }
         }
     }
 
@@ -870,7 +874,6 @@ class Scene_Boot extends Phaser.Scene {
         game.options.currentSong = this.sound.add("versus_music");
         // Aquí hay que superponer el versus, antes de empezar la escena hay que guardar los datos
         // Si es el jugador A, el enemigo e el B
-        console.log(data);
         if (data.players[0].userName == game.mPlayer.userName) {
             game.mEnemy.AorB = "B";
             game.mEnemy.id = data.players[1].playerId;
@@ -999,7 +1002,6 @@ class Scene_Boot extends Phaser.Scene {
                 }
             }
         } else { // Nivel 1
-            console.log(data);
             level = this.scene.get('scene_level1');
             level.bg.tilePositionY = data.backgroundPos;
             level.bgDetails.tilePositionY = data.stagePos;
@@ -1109,7 +1111,6 @@ class Scene_Boot extends Phaser.Scene {
         // El jugador es el ganador
         if (myWin)
         {
-            console.log("GANADOR!");
             // Se reduce la barra de vida del enemigo a 0 HP
             this.scene.get(game.global.actualScene).eHP.currentHP = 0;
             // Diferencia de puntos positiva
@@ -1129,7 +1130,6 @@ class Scene_Boot extends Phaser.Scene {
         // El jugador es el perdedor
         else
         {
-            console.log("Perdedor...");
             // Se reduce mi barra de vida a 0 HP
             this.scene.get(game.global.actualScene).myHP.currentHP = 0;
             // Diferencia de puntos negativa
@@ -1139,7 +1139,6 @@ class Scene_Boot extends Phaser.Scene {
             // Puntos
             game.mPlayer.points = data.loser.points;
             game.mPlayer.previousPoints = data.loser.previousPoints;
-            console.log(data.loser.previousPoints);
 
             // Monedas ganadas
             game.mPlayer.newCoins = data.loser.newCoins;
@@ -1177,7 +1176,8 @@ class Scene_Boot extends Phaser.Scene {
             endFX.play({ volume: game.options.SFXVol });
             game.options.currentSong.play({ volume: game.options.musicVol, loop: true, delay: 5 });
         }
-        this.scene.get(game.global.actualScene).scene.start("scene_score");
+        this.FadeTransition("scene_score");
+        //this.scene.get(game.global.actualScene).scene.start("scene_score");
     }
 
     CanceledQueue()
@@ -1198,5 +1198,22 @@ class Scene_Boot extends Phaser.Scene {
     UsersConnectedText(data)
     {
         this.scene.get(game.global.actualScene).SetConnectedUsersText(data.value);
+    }
+
+    FadeTransition(newScene)
+    {
+        var that = this;
+        // Cambia de escena a la nueva
+        this.cam = this.scene.get(game.global.actualScene).cameras.main;
+        this.cam.fadeOut(300);
+        this.scene.get(game.global.actualScene).time.addEvent({
+            delay: 300,
+            callback: () => (that.ChangeToScene(newScene))
+        });
+    }
+
+    ChangeToScene(newScene)
+    {
+        this.scene.get(game.global.actualScene).scene.start(newScene);
     }
 }

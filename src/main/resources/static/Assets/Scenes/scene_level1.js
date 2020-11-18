@@ -94,7 +94,8 @@ class Scene_Level1 extends Phaser.Scene {
         this.versus_main_bg = this.add.image(0, 0, "simple_bg").setOrigin(0, 0).setDepth(10);
         this.versus_stars = this.add.tileSprite(0, 0, 1920, 1080, "stars").setOrigin(0, 0).setDepth(11);
 
-        this.versus_bg = this.add.image(0, 0, "versus_bg").setOrigin(0, 0).setDepth(12);
+        this.versus_left_circle = this.add.image(0, 0, "versus_left_circle").setOrigin(0, 0).setDepth(12);
+        this.versus_right_circle = this.add.image(0, 0, "versus_right_circle").setOrigin(0, 0).setDepth(12);
         this.versus_vs = this.add.image(931.5, 539, "versus_vs").setDepth(14);
 
         if (game.mEnemy.AorB == "B") {
@@ -237,7 +238,7 @@ class Scene_Level1 extends Phaser.Scene {
 
         // Idle timer
         that.time.addEvent({
-            delay: 10000,
+            delay: 2000,
             callback: that.scene.get("scene_boot").IdleMessage,
             loop: true
         });
@@ -573,7 +574,8 @@ class Scene_Level1 extends Phaser.Scene {
                         // Volver al menú
                         that.input.keyboard.removeAllKeys(true);
                         game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
-                        that.scene.start("scene_main_menu");
+                        that.scene.get("scene_boot").FadeTransition("scene_main_menu");
+                        //that.scene.start("scene_main_menu");
                     } else {
                         that.gamePaused = false;
                         that.returnToMenu = false;
@@ -620,7 +622,8 @@ class Scene_Level1 extends Phaser.Scene {
                         // Volver al menú
                         that.input.keyboard.removeAllKeys(true);
                         game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
-                        that.scene.start("scene_main_menu");
+                        that.scene.get("scene_boot").FadeTransition("scene_main_menu");
+                        //that.scene.start("scene_main_menu");
                     } else {
                         that.gamePaused = false;
                         that.returnToMenu = false;
@@ -668,7 +671,8 @@ class Scene_Level1 extends Phaser.Scene {
             that.pressOptionSound.play({ volume: game.options.SFXVol });
             that.input.keyboard.removeAllKeys(true);
             game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
-            that.scene.start("scene_main_menu");
+            that.scene.get("scene_boot").FadeTransition("scene_main_menu");
+            //that.scene.start("scene_main_menu");
         });
 
         this.noBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
@@ -689,7 +693,9 @@ class Scene_Level1 extends Phaser.Scene {
 
         game.mPlayer.image.on("animationcomplete", function (anim) {
             if (anim.key === game.mPlayer.characterSel.type + "_attack") {
-                console.log("Fin de animación");
+                if (game.global.DEBUG_MODE) {
+                    console.log("Fin de animación");
+                }
                 that.myAttacking = false;
                 // Enviar mensaje de ataque
                 // game.global.socket.send(JSON.stringify({event: ""}));
@@ -698,7 +704,9 @@ class Scene_Level1 extends Phaser.Scene {
 
         game.mEnemy.image.on("animationcomplete", function (anim) {
             if (anim.key === game.mEnemy.characterSel.type + "_attack") {
-                console.log("Fin de animación");
+                if (game.global.DEBUG_MODE) {
+                    console.log("Fin de animación");
+                }
                 that.eAttacking = false;
                 // Enviar mensaje de ataque
                 // game.global.socket.send(JSON.stringify({event: ""}));
@@ -847,35 +855,59 @@ class Scene_Level1 extends Phaser.Scene {
     StartGame() {
         var that = this;
 
-        console.log("Se llama a esconder el versus");
         this.gameStopped = false;
         this.versus_main_bg.setVisible(false);
         this.versus_stars.setVisible(false);
-        this.versus_bg.setVisible(false);
-        this.versus_vs.setVisible(false);
-        this.versus_usernameA.setVisible(false);
-        this.versus_usernameB.setVisible(false);
-        this.versus_characterA.setVisible(false);
-        this.versus_characterB.setVisible(false);
-        this.versus_pointsA.setVisible(false);
-        this.versus_pointsB.setVisible(false);
-
-        this.fight_text.setVisible(true);
 
         var tween = this.tweens.add({
-            targets: that.fight_text,
-            scale: (1, 1),
-            duration: 500,
-            repeat: 0,
-        });
-
-        var tween = this.tweens.add({
-            targets: that.fight_text,
+            targets: that.versus_vs,
             alpha: 0,
-            delay: 500,
-            duration: 1000,
+            duration: 300,
+            repeat: 0,
+            onComplete: function () {
+                that.fight_text.setVisible(true);
+                var tween = that.tweens.add({
+                    targets: that.fight_text,
+                    scale: (1, 1),
+                    duration: 500,
+                    repeat: 0,
+                });
+        
+                var tween = that.tweens.add({
+                    targets: that.fight_text,
+                    alpha: 0,
+                    delay: 500,
+                    duration: 1000,
+                    repeat: 0,
+                });
+            }
+        });
+
+        var tween = this.tweens.add({
+            targets: [ that.versus_left_circle, that.versus_usernameA, that.versus_characterA, that.versus_pointsA ],
+            x: -1000,
+            y: -1000,
+            duration: 300,
             repeat: 0,
         });
+
+        var tween = this.tweens.add({
+            targets: that.versus_right_circle,
+            x: 2220,
+            y: 1380,
+            duration: 300,
+            repeat: 0,
+        });
+
+        var tween = this.tweens.add({
+            targets: [ that.versus_right_circle, that.versus_usernameB, that.versus_characterB, that.versus_pointsB ],
+            x: 2220,
+            y: 1380,
+            duration: 300,
+            repeat: 0,
+        });
+
+    
     }
 
     FinishGame(wasDisconnection)

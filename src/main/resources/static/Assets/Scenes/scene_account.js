@@ -35,7 +35,7 @@ class Scene_Account extends Phaser.Scene {
 
         // Idle timer
         that.time.addEvent({
-            delay: 10000,
+            delay: 2000,
             callback: that.scene.get("scene_boot").IdleMessage,
             loop: true
         });

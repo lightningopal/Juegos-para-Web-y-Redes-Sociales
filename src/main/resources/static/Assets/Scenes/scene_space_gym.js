@@ -79,9 +79,13 @@ class Scene_Space_Gym extends Phaser.Scene {
         var that = this;
         game.global.actualScene = "scene_space_gym";
 
+        // Fade in
+        this.cam = this.cameras.main;
+        this.cam.fadeIn(300);
+
         // Idle timer
         that.time.addEvent({
-            delay: 10000,
+            delay: 2000,
             callback: that.scene.get("scene_boot").IdleMessage,
             loop: true
         });
@@ -364,7 +368,8 @@ class Scene_Space_Gym extends Phaser.Scene {
                         // Volver al menú
                         game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
                         that.input.keyboard.removeAllKeys(true);
-                        that.scene.start("scene_main_menu");
+                        that.scene.get("scene_boot").FadeTransition("scene_main_menu");
+                        //that.scene.start("scene_main_menu");
                     } else {
                         that.paused = false;
                         that.returnToMenu = false;
@@ -413,7 +418,8 @@ class Scene_Space_Gym extends Phaser.Scene {
                         // Volver al menú
                         game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
                         that.input.keyboard.removeAllKeys(true);
-                        that.scene.start("scene_main_menu");
+                        that.scene.get("scene_boot").FadeTransition("scene_main_menu");
+                        //that.scene.start("scene_main_menu");
                     } else {
                         that.paused = false;
                         that.returnToMenu = false;
@@ -461,7 +467,8 @@ class Scene_Space_Gym extends Phaser.Scene {
             that.pressOptionSound.play({ volume: game.options.SFXVol });
             game.global.socket.send(JSON.stringify({ event: "LEAVE_GAME", room: game.mPlayer.room }));
             that.input.keyboard.removeAllKeys(true);
-            that.scene.start("scene_main_menu");
+            that.scene.get("scene_boot").FadeTransition("scene_main_menu");
+            //that.scene.start("scene_main_menu");
         });
 
         this.noBtn.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
@@ -482,7 +489,9 @@ class Scene_Space_Gym extends Phaser.Scene {
 
         game.mPlayer.image.on("animationcomplete", function (anim) {
             if (anim.key === game.mPlayer.characterSel.type + "_attack") {
-                console.log("Fin de animación");
+                if (game.global.DEBUG_MODE) {
+                    console.log("Fin de animación");
+                }
                 that.attacking = false;
                 // Enviar mensaje de ataque
                 // game.global.socket.send(JSON.stringify({event: ""}));

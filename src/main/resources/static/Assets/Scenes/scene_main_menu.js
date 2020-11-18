@@ -54,9 +54,13 @@ class Scene_Main_Menu extends Phaser.Scene {
         var that = this;
         game.global.actualScene = "scene_main_menu";
 
+        // Fade in
+        this.cam = this.cameras.main;
+        this.cam.fadeIn(300);
+
         // Idle timer
         that.time.addEvent({
-            delay: 10000,
+            delay: 2000,
             callback: that.scene.get("scene_boot").IdleMessage,
             loop: true
         });
@@ -104,7 +108,8 @@ class Scene_Main_Menu extends Phaser.Scene {
                     game.mPlayer.isVersus = true;
                     that.tournamentBtn.setFrame(0);
                     that.input.keyboard.removeAllKeys(true);
-                    that.scene.start("scene_select_character");
+                    that.scene.get("scene_boot").FadeTransition("scene_select_character");
+                    //that.scene.start("scene_select_character");
                 }
                 if (game.global.DEBUG_MODE){ 
                     console.log("tournament soltado");
@@ -129,7 +134,8 @@ class Scene_Main_Menu extends Phaser.Scene {
                     game.mPlayer.isVersus = false;
                     that.gymBtn.setFrame(0);
                     that.input.keyboard.removeAllKeys(true);
-                    that.scene.start("scene_select_character");
+                    that.scene.get("scene_boot").FadeTransition("scene_select_character");
+                    //that.scene.start("scene_select_character");
                 }
                 if (game.global.DEBUG_MODE){ 
                     console.log("gym soltado");
@@ -314,12 +320,14 @@ class Scene_Main_Menu extends Phaser.Scene {
                             // Tournament
                             game.mPlayer.isVersus = true;
                             that.input.keyboard.removeAllKeys(true);
-                            that.scene.start("scene_select_character");
+                            that.scene.get("scene_boot").FadeTransition("scene_select_character");
+                            //that.scene.start("scene_select_character");
                         }else if (that.optionSelectedRow == 1){
                             // Space Gym
                             game.mPlayer.isVersus = false;
                             that.input.keyboard.removeAllKeys(true);
-                            that.scene.start("scene_select_character");
+                            that.scene.get("scene_boot").FadeTransition("scene_select_character");
+                            //that.scene.start("scene_select_character");
                         }else {
                             // Ranking
                             that.input.keyboard.removeAllKeys(true);
@@ -348,12 +356,14 @@ class Scene_Main_Menu extends Phaser.Scene {
                             // Tournament
                             game.mPlayer.isVersus = true;
                             that.input.keyboard.removeAllKeys(true);
-                            that.scene.start("scene_select_character");
+                            that.scene.get("scene_boot").FadeTransition("scene_select_character");
+                            //that.scene.start("scene_select_character");
                         }else if (that.optionSelectedRow == 1){
                             // Space Gym
                             game.mPlayer.isVersus = false;
                             that.input.keyboard.removeAllKeys(true);
-                            that.scene.start("scene_select_character");
+                            that.scene.get("scene_boot").FadeTransition("scene_select_character");
+                            //that.scene.start("scene_select_character");
                         }else {
                             // Ranking
                             that.input.keyboard.removeAllKeys(true);

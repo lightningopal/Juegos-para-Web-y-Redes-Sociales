@@ -38,6 +38,17 @@ class Scene_Intro extends Phaser.Scene {
         thisScene = this;
         game.global.actualScene = "scene_intro";
 
+        // Fade in
+        this.cam = this.cameras.main;
+        this.cam.fadeIn(300);
+
+        // Idle timer
+        that.time.addEvent({
+            delay: 2000,
+            callback: that.scene.get("scene_boot").IdleMessage,
+            loop: true
+        });
+
         // Timer for intro 1-2
         that.time.addEvent({
             delay: 10000,
@@ -131,6 +142,12 @@ class Scene_Intro extends Phaser.Scene {
     {
         var that = thisScene;
         that.input.keyboard.removeAllKeys(true);
-        that.scene.start("scene_main_menu");
+        // Cambia de escena a la nueva
+        that.scene.get("scene_boot").FadeTransition("scene_main_menu");
+    }
+
+    ChangeToScene(newScene)
+    {
+        this.scene.get(game.global.actualScene).scene.start(newScene);
     }
 }

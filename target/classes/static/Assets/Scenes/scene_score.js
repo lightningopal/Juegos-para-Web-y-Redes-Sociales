@@ -82,8 +82,6 @@ class Scene_Score extends Phaser.Scene {
                 this.auxMinusString = "-";
             }
 
-            console.log(this.minusPoints);
-
             this.pointsDiff = this.add.text(790, 120, this.auxMinusString + this.minusPoints + " pt", { fontFamily: 'font_Write' })
                 .setOrigin(0, 0.5).setDepth(7).setFontSize(52);
 
@@ -148,7 +146,7 @@ class Scene_Score extends Phaser.Scene {
 
         // Idle timer
         that.time.addEvent({
-            delay: 10000,
+            delay: 2000,
             callback: that.scene.get("scene_boot").IdleMessage,
             loop: true
         });

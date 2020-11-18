@@ -146,9 +146,13 @@ class Scene_Select_Character extends Phaser.Scene {
         var that = this;
         game.global.actualScene = "scene_select_character";
 
+        // Fade in
+        this.cam = this.cameras.main;
+        this.cam.fadeIn(300);
+
         // Idle timer
         that.time.addEvent({
-            delay: 10000,
+            delay: 2000,
             callback: that.scene.get("scene_boot").IdleMessage,
             loop: true
         });
