@@ -80,13 +80,13 @@ public class Tournament_Game {
         switch (playerA.getPlayerType()) {
             case "berserker":
                 for (int i = 0; i < 3; i++) {
-                    projectilesA.add(new BerserkerSkill(playerA, playerB, 1000, false, 30, 250)); // Target, duration, collidePlatforms, speed, damage
+                    projectilesA.add(new BerserkerSkill(playerA, playerB, 1000, false, 36, 250)); // Target, duration, collidePlatforms, speed, damage
                 }
                 playerA.setBasicWeapon(new Weapon(projectilesA, 1, 1000, 50));
                 break;
             case "wizard":
                 for (int i = 0; i < 9; i++) {
-                    projectilesA.add(new WizardSkill(playerA, playerB, 500, true, 26, 150, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
+                    projectilesA.add(new WizardSkill(playerA, playerB, 500, true, 28, 150, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
                 playerA.setBasicWeapon(new Weapon(projectilesA, 3, 1000, 50));
                 break;
@@ -110,13 +110,13 @@ public class Tournament_Game {
         switch (playerB.getPlayerType()) {
             case "berserker":
                 for (int i = 0; i < 3; i++) {
-                    projectilesB.add(new BerserkerSkill(playerB, playerA, 1000, false, 30, 250)); // Target, duration, collidePlatforms, speed, damage
+                    projectilesB.add(new BerserkerSkill(playerB, playerA, 1000, false, 36, 250)); // Target, duration, collidePlatforms, speed, damage
                 }
                 playerB.setBasicWeapon(new Weapon(projectilesB, 1, 1000, 50));
                 break;
             case "wizard":
                 for (int i = 0; i < 9; i++) {
-                    projectilesB.add(new WizardSkill(playerB, playerA, 500, true, 26, 150, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
+                    projectilesB.add(new WizardSkill(playerB, playerA, 500, true, 28, 150, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
                 playerB.setBasicWeapon(new Weapon(projectilesB, 3, 1000, 50));
                 break;
