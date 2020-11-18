@@ -237,12 +237,6 @@ public class PhysicsObject {
 
 	// Handle collision
 	public boolean intersect(PhysicsObject other) {
-		/*
-		int maxRadiusToCollide = this.collisionFactor + other.getCollisionFactor();
-		double x = this.posX - other.getPosX();
-		double y = this.posY - other.getPosY();
-		return (maxRadiusToCollide > (Math.pow(x, 2) + Math.pow(y, 2)));
-		*/
 		// A.hW + b.hW >= /(a.X+a.offX) - (b.X+b.offX)/
 		boolean iX = (this.halfWidth + other.getHalfWidth()) >=
 			(Math.abs((this.posX+this.offsetX) - (other.getPosX()+other.getOffsetX())));
@@ -265,7 +259,7 @@ public class PhysicsObject {
 		double colWidth = minDistanceX - distanceX;
 		double colHeight = minDistanceY - distanceY;
 
-		if (colWidth >= 0 && colHeight >= 0){
+		if (colWidth > 0 && colHeight > 0){
 			collides = true;
 			if (colHeight >= colWidth){ // Se prioriza el ancho
 				if ((this.posX-this.velX) >= other.getPosX()){ // Se encuentra a la derecha del objeto

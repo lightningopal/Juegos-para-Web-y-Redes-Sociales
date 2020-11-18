@@ -1,0 +1,21 @@
+19:28:41 - Server opened.
+19:28:57 - Conected user with session f6349b10-d668-a453-97c0-2ef5d37072e7.
+19:29:51 - Player connected: Thund3r.
+19:31:35 - Player disconnected: Thund3r.
+19:31:50 - Conected user with session 3c4efd60-3701-28d2-b73a-010517f8e0ad.
+19:32:04 - Player connected: Thund3r.
+19:32:11 - Searching Tournament Game: Thund3r [PlayerType: berserker, SecondarySkill: -1, Skin: 0, Level: 0, Points: 0].
+19:32:14 - Searching Tournament Game: Thund3r [PlayerType: berserker, SecondarySkill: -1, Skin: 0, Level: 0, Points: 0].
+19:32:18 - Searching Tournament Game: Thund3r [PlayerType: berserker, SecondarySkill: -1, Skin: 0, Level: 0, Points: 0].
+19:32:23 - Searching Tournament Game: Thund3r [PlayerType: berserker, SecondarySkill: -1, Skin: 0, Level: 1, Points: 0].
+19:33:11 - Conected user with session 9c42f875-b7e8-f085-ba76-55b8a51280e8.
+19:33:41 - Users data saved.
+19:33:51 - Player connected: ranking.
+19:33:54 - Searching Tournament Game: ranking [PlayerType: wizard, SecondarySkill: -1, Skin: 0, Level: 1, Points: 0].
+19:33:59 - Searching Tournament Game: Thund3r [PlayerType: berserker, SecondarySkill: -1, Skin: 0, Level: 1, Points: 0].
+19:33:59 - Create Tournament Game: Thund3r - ranking - Level: 1, Room: 0.
+19:34:46 - End Tournament Game: Thund3r - ranking - Room: 0. Disconnection: false.
+19:35:12 - Searching Tournament Game: Thund3r [PlayerType: bard, SecondarySkill: -1, Skin: 0, Level: 1, Points: 50].
+19:35:15 - Searching Tournament Game: Thund3r [PlayerType: berserker, SecondarySkill: -1, Skin: 0, Level: 0, Points: 50].
+19:35:21 - Player disconnected: ranking.
+19:35:22 - Player disconnected: Thund3r.

@@ -31,9 +31,9 @@ public class SpaceGym_Game {
 
     public final double GRAVITY = 1.0;
 
-    public final static int playerPosX = 500;
-    public final static int playerPosY = 0;
-    public final static int dummyPosX = 1500;
+    public final static int playerPosX = 100;
+    public final static int playerPosY = 300;
+    public final static int dummyPosX = 1200;
     public final static int dummyPosY = 940;
 
     ObjectMapper mapper = new ObjectMapper();
@@ -170,8 +170,10 @@ public class SpaceGym_Game {
             // Controlar límites de la pantalla
             if (player.getPosX() - player.getHalfWidth() < 0){
                 player.setPosX(player.getHalfWidth());
+                player.setVelX(0);
             }else if (player.getPosX() + player.getHalfWidth() > 1920){
                 player.setPosX(1920 - player.getHalfWidth());
+                player.setVelX(0);
             }
             // Guarda los datos en el ObjectNode 'jsonPlayer'
             jsonPlayer.put("posX", player.getPosX());
