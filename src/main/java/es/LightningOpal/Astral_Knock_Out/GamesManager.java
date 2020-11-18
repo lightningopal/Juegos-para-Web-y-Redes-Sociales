@@ -205,7 +205,7 @@ public class GamesManager {
             float MMRForLoser = loserUser.getMMR() - MMRDifference;
 
             float eloDifference = (loser.getMMR() / winnerUser.getMMR()) * MMRDifference;
-            float eloForWinner = winnerUser.getElo() + eloDifference;
+            float eloForWinner = winnerUser.getElo() + eloDifference + 20;
             float eloForLoser = loserUser.getElo() - (eloDifference * 0.70f);
 
             // Si los puntos bajan de 0, igualar a 0
@@ -324,6 +324,9 @@ public class GamesManager {
                 tournament_games.remove(room);
                 startGame_counters.remove(room);
                 startGame_locks.remove(room);
+                // Se establece la room de los jugadores a -1
+                winner.setRoom(-1);
+                loser.setRoom(-1);
                 tournamentGamesLock.unlock();
 
             } catch (Exception e) {

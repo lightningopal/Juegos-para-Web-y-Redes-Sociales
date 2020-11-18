@@ -394,125 +394,139 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					// Si hay partidas disponibles
 					if (GamesManager.INSTANCE.tournament_games.size() < GamesManager.INSTANCE.MAX_TOURNAMENT_GAMES)
 					{
-						// Se obtienen los atributos elegidos
-						playerType = node.get("playerType").asText();
-						secondarySkill = node.get("skill").asInt();
-						level = node.get("level").asInt();
-
-						// Se crea el jugador con los datos
-						thisPlayer = new Player(user.getUserId(), user.getSession(), user.getUser_name(), playerType,
-								Math.round(user.getElo()), user.getMMR(), secondarySkill, 0, 0);
-
-						// Se asignan los atributos
-						user.setPlayer_selected(thisPlayer);
-
-						// Intenta escribir la información en el archivo de log
-						try {
-							AKO_Server.logLock.lock();
-							AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
-							String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-							AKO_Server.logWriter.write(time + " - Searching Tournament Game: " + thisPlayer.getUserName() + 
-							" [PlayerType: " + playerType + ", SecondarySkill: " + secondarySkill + ", Skin: " + thisPlayer.getSkin() +
-							", Level: " + level + ", Points: " + thisPlayer.getPoints() + "]" + ".\n");
-							AKO_Server.logWriter.close();
-							AKO_Server.logLock.unlock();
-						} catch (Exception e) {
-							// Si falla, se muestra el error
-							e.printStackTrace();
+						// Si el jugador ya está en partida, no haremos nada
+						// Check if user was ingame
+						Player ingamePlayer = user.getPlayer_selected();
+						boolean currentlyInGame = false;
+						if (GamesManager.INSTANCE.tournament_games.containsKey(ingamePlayer.getRoom())) {
+							if (GamesManager.INSTANCE.tournament_games.get(ingamePlayer.getRoom()).getPlayers()
+									.contains(ingamePlayer)) {
+										currentlyInGame = true;
+							}
 						}
 
-						// Si el jugador ya está en la cola, no haremos nada
-						if (!GamesManager.INSTANCE.searching_players.get(level).contains(thisPlayer))
+						if (!currentlyInGame)
 						{
-							// Si hay jugadores en cola para ese nivel, se empareja contra el primero
-							if (GamesManager.INSTANCE.searching_players.get(level).size() > 0) {
-								// Obtenemos la información del rival
-								Player rival = GamesManager.INSTANCE.searching_players.get(level).remove();
-								System.out.println("Tamaño cola (after remove) nivel " + level + ": " + GamesManager.INSTANCE.searching_players.get(level).size());
+							// Se obtienen los atributos elegidos
+							playerType = node.get("playerType").asText();
+							secondarySkill = node.get("skill").asInt();
+							level = node.get("level").asInt();
 
-								// Se crea la partida
-								room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
+							// Se crea el jugador con los datos
+							thisPlayer = new Player(user.getUserId(), user.getSession(), user.getUser_name(), playerType,
+									Math.round(user.getElo()), user.getMMR(), secondarySkill, 0, 0);
 
-								GamesManager.INSTANCE.tournamentGamesLock.unlock();
+							// Se asignan los atributos
+							user.setPlayer_selected(thisPlayer);
 
-								// Intenta escribir la información en el archivo de log
-								try {
-									AKO_Server.logLock.lock();
-									AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
-									String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-									AKO_Server.logWriter.write(time + " - Create Tournament Game: " + thisPlayer.getUserName() +
-									" - " + rival.getUserName() + " - Level: " + level + ", Room: " + room + ".\n");
-									AKO_Server.logWriter.close();
-									AKO_Server.logLock.unlock();
-								} catch (Exception e) {
-									// Si falla, se muestra el error
-									e.printStackTrace();
-								}
-
-								// Creamos un ArrayNode 'players' para guardar la información de ambos jugadores
-								ArrayNode players = mapper.createArrayNode();
-
-								// Guardar la información del jugador A
-								ObjectNode playerA = mapper.createObjectNode();
-
-								playerA.put("playerId", thisPlayer.getPlayerId());
-								playerA.put("userName", thisPlayer.getUserName());
-								playerA.put("playerType", thisPlayer.getPlayerType());
-								playerA.put("skin", thisPlayer.getSkin());
-								playerA.put("skill", thisPlayer.getSkill());
-								playerA.put("points", thisPlayer.getPoints());
-
-								players.addPOJO(playerA);
-
-								// Guardar la información del jugador B
-								ObjectNode playerB = mapper.createObjectNode();
-
-								playerB.put("playerId", rival.getPlayerId());
-								playerB.put("userName", rival.getUserName());
-								playerB.put("playerType", rival.getPlayerType());
-								playerB.put("skin", rival.getSkin());
-								playerB.put("skill", rival.getSkill());
-								playerB.put("points", rival.getPoints());
-
-								players.addPOJO(playerB);
-
-								// Asignar evento, sala y jugadores en el ObjectNode 'msg'
-								msg.put("event", "GAME_FOUND");
-								msg.put("room", room);
-								msg.putPOJO("players", players);
-
-								// Enviar el mensaje a ambos usuarios
-								synchronized (thisPlayer.getSession()) {
-									thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
-								}
-								synchronized (rival.getSession()) {
-									rival.getSession().sendMessage(new TextMessage(msg.toString()));
-								}
-
-								if (DEBUG_MODE) {
-									System.out.println(
-											"Partida creada: " + thisPlayer.getUserName() + " - " + rival.getUserName());
-								}
+							// Intenta escribir la información en el archivo de log
+							try {
+								AKO_Server.logLock.lock();
+								AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+								String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+								AKO_Server.logWriter.write(time + " - Searching Tournament Game: " + thisPlayer.getUserName() + 
+								" [PlayerType: " + playerType + ", SecondarySkill: " + secondarySkill + ", Skin: " + thisPlayer.getSkin() +
+								", Level: " + level + ", Points: " + thisPlayer.getPoints() + "]" + ".\n");
+								AKO_Server.logWriter.close();
+								AKO_Server.logLock.unlock();
+							} catch (Exception e) {
+								// Si falla, se muestra el error
+								e.printStackTrace();
 							}
-							// Si no, añadimos al jugador a la cola
-							else {
-								// Añade al jugador a la cola
-								GamesManager.INSTANCE.searching_players.get(level).add(thisPlayer);
-								System.out.println("Tamaño cola (after add) nivel " + level + ": " + GamesManager.INSTANCE.searching_players.get(level).size());
-								GamesManager.INSTANCE.tournamentGamesLock.unlock();
 
-								// Asignar evento, sala y jugadores en el ObjectNode 'msg'
-								msg.put("event", "NUMBER_OF_USERS");
-								msg.put("value", UsersController.getConnectedUsers());
+							// Si el jugador ya está en la cola, no haremos nada
+							if (!GamesManager.INSTANCE.searching_players.get(level).contains(thisPlayer))
+							{
+								// Si hay jugadores en cola para ese nivel, se empareja contra el primero
+								if (GamesManager.INSTANCE.searching_players.get(level).size() > 0) {
+									// Obtenemos la información del rival
+									Player rival = GamesManager.INSTANCE.searching_players.get(level).remove();
+									System.out.println("Tamaño cola (after remove) nivel " + level + ": " + GamesManager.INSTANCE.searching_players.get(level).size());
 
-								// Enviar el mensaje a ambos usuarios
-								synchronized (thisPlayer.getSession()) {
-									thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
+									// Se crea la partida
+									room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
+
+									GamesManager.INSTANCE.tournamentGamesLock.unlock();
+
+									// Intenta escribir la información en el archivo de log
+									try {
+										AKO_Server.logLock.lock();
+										AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+										String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+										AKO_Server.logWriter.write(time + " - Create Tournament Game: " + thisPlayer.getUserName() +
+										" - " + rival.getUserName() + " - Level: " + level + ", Room: " + room + ".\n");
+										AKO_Server.logWriter.close();
+										AKO_Server.logLock.unlock();
+									} catch (Exception e) {
+										// Si falla, se muestra el error
+										e.printStackTrace();
+									}
+
+									// Creamos un ArrayNode 'players' para guardar la información de ambos jugadores
+									ArrayNode players = mapper.createArrayNode();
+
+									// Guardar la información del jugador A
+									ObjectNode playerA = mapper.createObjectNode();
+
+									playerA.put("playerId", thisPlayer.getPlayerId());
+									playerA.put("userName", thisPlayer.getUserName());
+									playerA.put("playerType", thisPlayer.getPlayerType());
+									playerA.put("skin", thisPlayer.getSkin());
+									playerA.put("skill", thisPlayer.getSkill());
+									playerA.put("points", thisPlayer.getPoints());
+
+									players.addPOJO(playerA);
+
+									// Guardar la información del jugador B
+									ObjectNode playerB = mapper.createObjectNode();
+
+									playerB.put("playerId", rival.getPlayerId());
+									playerB.put("userName", rival.getUserName());
+									playerB.put("playerType", rival.getPlayerType());
+									playerB.put("skin", rival.getSkin());
+									playerB.put("skill", rival.getSkill());
+									playerB.put("points", rival.getPoints());
+
+									players.addPOJO(playerB);
+
+									// Asignar evento, sala y jugadores en el ObjectNode 'msg'
+									msg.put("event", "GAME_FOUND");
+									msg.put("room", room);
+									msg.putPOJO("players", players);
+
+									// Enviar el mensaje a ambos usuarios
+									synchronized (thisPlayer.getSession()) {
+										thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
+									}
+									synchronized (rival.getSession()) {
+										rival.getSession().sendMessage(new TextMessage(msg.toString()));
+									}
+
+									if (DEBUG_MODE) {
+										System.out.println(
+												"Partida creada: " + thisPlayer.getUserName() + " - " + rival.getUserName());
+									}
 								}
+								// Si no, añadimos al jugador a la cola
+								else {
+									// Añade al jugador a la cola
+									GamesManager.INSTANCE.searching_players.get(level).add(thisPlayer);
+									System.out.println("Tamaño cola (after add) nivel " + level + ": " + GamesManager.INSTANCE.searching_players.get(level).size());
+									GamesManager.INSTANCE.tournamentGamesLock.unlock();
 
-								if (DEBUG_MODE) {
-									name = user.getUser_name();
-									System.out.println("Buscando partida: " + name);
+									// Asignar evento, sala y jugadores en el ObjectNode 'msg'
+									msg.put("event", "NUMBER_OF_USERS");
+									msg.put("value", UsersController.getConnectedUsers());
+
+									// Enviar el mensaje a ambos usuarios
+									synchronized (thisPlayer.getSession()) {
+										thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
+									}
+
+									if (DEBUG_MODE) {
+										name = user.getUser_name();
+										System.out.println("Buscando partida: " + name);
+									}
 								}
 							}
 						}
