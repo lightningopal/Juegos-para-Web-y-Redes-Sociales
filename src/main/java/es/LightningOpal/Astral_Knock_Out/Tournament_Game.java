@@ -298,8 +298,10 @@ public class Tournament_Game {
             // Controlar límites de la pantalla
             if (playerA.getPosX() - playerA.getHalfWidth() < 0){
                 playerA.setPosX(playerA.getHalfWidth());
+                playerA.setVelX(0);
             }else if (playerA.getPosX() + playerA.getHalfWidth() > 1920){
                 playerA.setPosX(1920 - playerA.getHalfWidth());
+                playerA.setVelX(0);
             }
             if (playerA.getPosY() - playerA.getHalfHeight() >= 1180){
                 // El jugador se ha caído del mapa y pierde la partida
@@ -325,8 +327,10 @@ public class Tournament_Game {
             // Controlar límites de la pantalla
             if (playerB.getPosX() - playerB.getHalfWidth() < 0){
                 playerB.setPosX(playerB.getHalfWidth());
+                playerB.setVelX(0);
             }else if (playerB.getPosX() + playerB.getHalfWidth() > 1920){
                 playerB.setPosX(1920 - playerB.getHalfWidth());
+                playerB.setVelX(0);
             }
             if (playerB.getPosY() - playerB.getHalfHeight() >= 1180){
                 // El jugador se ha caído del mapa y pierde la partida

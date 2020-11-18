@@ -53,8 +53,6 @@ public class SpaceGym_Game {
         User thisUser = (User) player.getSession().getAttributes().get("USER");
         userName = thisUser.getUser_name();
 
-        // player.setPosX(playerPosX);
-        // player.setPosY(playerPosY);
         // Dummy
         this.dummy = new Player(/*false, dummyPosX, dummyPosY, 23.0, 42.0, -7.0, -1.0*/);
         dummy.setPosX(dummyPosX);
@@ -172,8 +170,10 @@ public class SpaceGym_Game {
             // Controlar límites de la pantalla
             if (player.getPosX() - player.getHalfWidth() < 0){
                 player.setPosX(player.getHalfWidth());
+                player.setVelX(0);
             }else if (player.getPosX() + player.getHalfWidth() > 1920){
                 player.setPosX(1920 - player.getHalfWidth());
+                player.setVelX(0);
             }
             // Guarda los datos en el ObjectNode 'jsonPlayer'
             jsonPlayer.put("posX", player.getPosX());
