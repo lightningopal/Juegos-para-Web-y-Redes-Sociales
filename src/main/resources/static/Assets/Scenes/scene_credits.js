@@ -6,25 +6,18 @@ class Scene_Credits extends Phaser.Scene {
 
     preload() {
         //Creación de imágenes
-        this.background = this.add.image(0, 0, "simple_bg").setOrigin(0, 0)
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.stars = this.add.tileSprite(0, 0, RelativeScale(1920, "x"), RelativeScale(1080, "y"), "stars")
+        this.background = this.add.image(0, 0, "simple_bg").setOrigin(0, 0);
+        this.stars = this.add.tileSprite(0, 0, 1920, 1080, "stars")
             .setOrigin(0, 0);
-        this.add.image(0, 0, "credits_dust").setOrigin(0, 0)
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.add.image(0, 0, "credits_dust").setOrigin(0, 0);
         this.images = [
-            this.add.image(0, 0, "credits_image_1").setOrigin(0, 0)
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setAlpha(0),
-            this.add.image(0, 0, "credits_image_2").setOrigin(0, 0)
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setAlpha(0),
-            this.add.image(0, 0, "credits_image_3").setOrigin(0, 0)
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setAlpha(0)
+            this.add.image(0, 0, "credits_image_1").setOrigin(0, 0).setAlpha(0),
+            this.add.image(0, 0, "credits_image_2").setOrigin(0, 0).setAlpha(0),
+            this.add.image(0, 0, "credits_image_3").setOrigin(0, 0).setAlpha(0)
         ]
 
-        this.add.image(RelativeScale(114.50, "x"), RelativeScale(112.0, "y"), "back_button_interface")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(78.5, "y"), "back_button")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.add.image(114.50, 112.0, "back_button_interface");
+        this.backBtn = this.add.image(66.0, 78.5, "back_button");
         this.backBtn.setFrame(1);
 
         this.currentFrame = 0;
@@ -77,8 +70,7 @@ class Scene_Credits extends Phaser.Scene {
             }
         });
         if (game.global.DEVICE === "desktop") {
-            this.add.image(RelativeScale(62,"x"), RelativeScale(28.86,"y"), "escape_text")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2);
+            this.add.image(62, 28.86, "escape_text").setDepth(2);
             this.input.keyboard.on("keydown-" + "ESC", function (event) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 that.input.keyboard.removeAllKeys(true);
@@ -90,8 +82,8 @@ class Scene_Credits extends Phaser.Scene {
     } // Fin create
 
     update() {
-        this.stars.tilePositionX += RelativeScale(0.2, "x");
-        this.stars.tilePositionY += RelativeScale(0.4, "y");
+        this.stars.tilePositionX += 0.2;
+        this.stars.tilePositionY += 0.4;
     } // Fin update
 
     FinalImage() {

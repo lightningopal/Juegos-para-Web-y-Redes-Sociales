@@ -498,6 +498,15 @@ public class WebsocketHandler extends TextWebSocketHandler {
 							System.out.println("Tamaño cola (after add) nivel " + level + ": " + GamesManager.INSTANCE.searching_players.get(level).size());
 							GamesManager.INSTANCE.tournamentGamesLock.unlock();
 
+							// Asignar evento, sala y jugadores en el ObjectNode 'msg'
+							msg.put("event", "NUMBER_OF_USERS");
+							msg.put("value", UsersController.getConnectedUsers());
+
+							// Enviar el mensaje a ambos usuarios
+							synchronized (thisPlayer.getSession()) {
+								thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
+							}
+
 							if (DEBUG_MODE) {
 								name = user.getUser_name();
 								System.out.println("Buscando partida: " + name);

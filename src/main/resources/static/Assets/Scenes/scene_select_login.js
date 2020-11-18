@@ -6,21 +6,16 @@ class Scene_Select_Login extends Phaser.Scene {
 
     preload() {
         //Creación de imágenes
-        this.background = this.add.image(0, 0, "simple_bg").setOrigin(0, 0)
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.stars = this.add.tileSprite(0, 0, RelativeScale(1920, "x"), RelativeScale(1080, "y"), "stars")
+        this.background = this.add.image(0, 0, "simple_bg").setOrigin(0, 0);
+        this.stars = this.add.tileSprite(0, 0, 1920, 1080, "stars")
             .setOrigin(0, 0);
-        this.add.image(RelativeScale(943.50, "x"), RelativeScale(332.0, "y"), "main_menu_logo")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.add.image(943.50, 332.0, "main_menu_logo");
 
-        this.logInBtn = this.add.image(RelativeScale(480.16, "x"), RelativeScale(725.0, "y"), "log_in_button")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.logInBtn = this.add.image(480.16, 725.0, "log_in_button");
         this.logInBtn.setFrame(1);
-        this.signUpBtn = this.add.image(RelativeScale(1440.0, "x"), RelativeScale(725.0, "y"), "sign_up_button")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.signUpBtn = this.add.image(1440.0, 725.0, "sign_up_button");
 
-        this.add.image(RelativeScale(960, "x"), RelativeScale(920.0, "y"), "warning_text")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.add.image(960, 920.0, "warning_text");
 
         // Opciones de selección
         this.optionSelected; // 0 -> LogIn / 1 -> SignUp
@@ -142,8 +137,8 @@ class Scene_Select_Login extends Phaser.Scene {
     } // Fin create
 
     update() {
-        this.stars.tilePositionX += RelativeScale(0.2, "x");
-        this.stars.tilePositionY += RelativeScale(0.4, "y");
+        this.stars.tilePositionX += 0.2;
+        this.stars.tilePositionY += 0.4;
     } // Fin update
 
     CheckOption() {

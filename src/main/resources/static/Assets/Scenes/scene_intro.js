@@ -10,24 +10,20 @@ class Scene_Intro extends Phaser.Scene {
         thisScene = this;
 
         // Background
-        this.simple_bg = this.add.image(0, 0, "simple_bg").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.stars = this.add.image(0, 0, "stars").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.add.image(0, 0, "credits_dust").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.simple_bg = this.add.image(0, 0, "simple_bg").setOrigin(0, 0);
+        this.stars = this.add.image(0, 0, "stars").setOrigin(0, 0);
+        this.add.image(0, 0, "credits_dust").setOrigin(0, 0);
 
         // Intro images
-        this.intro_image1 = this.add.image(0, 0, "intro1").setOrigin(0, 0)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+        this.intro_image1 = this.add.image(0, 0, "intro1").setOrigin(0, 0).setDepth(1);
 
-        this.intro_image2 = this.add.image(0, 0, "intro2").setOrigin(0, 0)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setAlpha(0).setDepth(1);
+        this.intro_image2 = this.add.image(0, 0, "intro2").setOrigin(0, 0).setAlpha(0).setDepth(1);
 
-        this.intro_image3 = this.add.image(0, 0, "intro3").setOrigin(0, 0)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setAlpha(0).setDepth(1);
+        this.intro_image3 = this.add.image(0, 0, "intro3").setOrigin(0, 0).setAlpha(0).setDepth(1);
 
         // Skip intro
         this.enterText;
-        this.enterBtn = this.add.image(RelativeScale(1810.0, "x"), RelativeScale(80.0, "y"), "enter_button")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2);
+        this.enterBtn = this.add.image(1810.0, 80.0, "enter_button").setDepth(2);
 
         // Audio
         this.pressOptionSound = this.sound.add("press_button");
@@ -62,8 +58,7 @@ class Scene_Intro extends Phaser.Scene {
 
         // Móvil
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
-            this.enterText = this.add.image(RelativeScale(1350.0, "x"), RelativeScale(80.0, "y"), "tap_continue_text_mobile")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+            this.enterText = this.add.image(1350.0, 80.0, "tap_continue_text_mobile").setDepth(1);
         }
 
         // Ratón y táctil
@@ -75,8 +70,8 @@ class Scene_Intro extends Phaser.Scene {
 
         // Escritorio
         if (game.global.DEVICE === "desktop") {
-            this.enterText = this.add.image(RelativeScale(1350.0, "x"), RelativeScale(80.0, "y"), "continue_text_desktop")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+            this.enterText = this.add.image(1350.0, 80.0, "continue_text_desktop")
+                .setDepth(1);
 
             this.input.keyboard.on('keydown-'+'ENTER', function (event) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });

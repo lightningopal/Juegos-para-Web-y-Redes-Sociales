@@ -1,0 +1,22 @@
+12:01:08 - Server opened.
+12:01:33 - Conected user with session 43e6a2cc-7d11-1e63-b075-4ccac26b0a74.
+12:01:57 - Disconnected user with session 43e6a2cc-7d11-1e63-b075-4ccac26b0a74.
+12:02:17 - Conected user with session c9e3b969-d68e-1f1b-0ffc-d79f4605e6ee.
+12:04:09 - Disconnected user with session c9e3b969-d68e-1f1b-0ffc-d79f4605e6ee.
+12:04:24 - Conected user with session 2724aa21-9946-feb3-adfc-bfb2a76cfe21.
+12:05:40 - Disconnected user with session 2724aa21-9946-feb3-adfc-bfb2a76cfe21.
+12:05:53 - Conected user with session c65d58cd-7193-e282-29d3-949727022f6f.
+12:06:08 - Users data saved.
+12:07:10 - Player connected: Thund3r.
+12:07:14 - Searching Tournament Game: Thund3r [PlayerType: berserker, SecondarySkill: -1, Skin: 0, Level: 0, Points: 174].
+12:08:31 - Player disconnected: Thund3r.
+12:08:44 - Conected user with session 81c7cb57-08f3-b80f-4d15-aa943779db4c.
+12:08:58 - Player connected: Thund3r.
+12:09:04 - Searching Tournament Game: Thund3r [PlayerType: berserker, SecondarySkill: -1, Skin: 0, Level: 0, Points: 174].
+12:09:16 - Player disconnected: Thund3r.
+12:09:38 - Conected user with session ac43bc8b-bcee-0f75-b65f-94704d528b16.
+12:10:30 - Player connected: Thund3r.
+12:10:40 - Searching Tournament Game: Thund3r [PlayerType: berserker, SecondarySkill: -1, Skin: 0, Level: 0, Points: 174].
+12:10:50 - Searching Tournament Game: Thund3r [PlayerType: berserker, SecondarySkill: -1, Skin: 0, Level: 0, Points: 174].
+12:10:54 - Searching Tournament Game: Thund3r [PlayerType: berserker, SecondarySkill: -1, Skin: 0, Level: 0, Points: 174].
+12:11:05 - Player disconnected: Thund3r.

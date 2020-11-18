@@ -6,39 +6,34 @@ class Scene_Select_Character extends Phaser.Scene {
 
     preload() {
         // Creación de imágenes
-        this.background = this.add.image(0, 0, "main_menu_bg").setOrigin(0, 0)
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.add.image(RelativeScale(706.33,"x"), RelativeScale(277.72,"y"), "select_character_text")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.nebula = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_nebula")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.stars = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_stars")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.background = this.add.image(0, 0, "main_menu_bg").setOrigin(0, 0);
+        this.add.image(706.33, 277.72, "select_character_text");
+        this.nebula = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_nebula");
+        this.stars = this.add.image(game.config.width / 2, game.config.height / 2, "main_menu_stars");
         if (game.mPlayer.isVersus) {
             this.add.image(0, 0, "select_character_t_interface").setOrigin(0, 0)
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+                .setDepth(1);
         } else {
             this.add.image(0, 0, "select_character_sg_interface").setOrigin(0, 0)
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+                .setDepth(1);
         }
-        this.add.image(RelativeScale(498.0, "x"), RelativeScale(665.0, "y"), "select_character_lines_interface")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.texts = this.add.image(RelativeScale(1425.02, "x"), RelativeScale(410.0, "y"), "description_text")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
-        this.skinsSkills = this.add.image(RelativeScale(1476.17, "x"), RelativeScale(777.88, "y"), "skins_skills")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
-        // this.leftArrowBtn = this.add.image(RelativeScale(1238.75, "x"), RelativeScale(744.07, "y"), "left_arrow_button")
-        //     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
-        // this.rightArrowBtn = this.add.image(RelativeScale(1580.07, "x"), RelativeScale(867.88, "y"), "right_arrow_button")
-        //     .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
-        this.enterBtn = this.add.image(RelativeScale(1810.0, "x"), RelativeScale(1000.0, "y"), "enter_button")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2);
+        this.add.image(498.0, 665.0, "select_character_lines_interface");
+        this.texts = this.add.image(1425.02, 410.0, "description_text")
+            .setDepth(1);
+        this.skinsSkills = this.add.image(1476.17, 777.88, "skins_skills")
+            .setDepth(1);
+        // this.leftArrowBtn = this.add.image(1238.75, 744.07, "left_arrow_button")
+        //     .setDepth(1);
+        // this.rightArrowBtn = this.add.image(1580.07, 867.88, "right_arrow_button")
+        //     .setDepth(1);
+        this.enterBtn = this.add.image(1810.0, 1000.0, "enter_button")
+            .setDepth(2);
         this.enterText;
         this.skinsImages = [
-            this.add.image(RelativeScale(1400.0, "x"), RelativeScale(816.0, "y"), "berserker_skins").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2).setVisible(false),
-            this.add.image(RelativeScale(1400.0, "x"), RelativeScale(816.0, "y"), "wizard_skins").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2).setVisible(false),
-            this.add.image(RelativeScale(1400.0, "x"), RelativeScale(816.0, "y"), "bard_skins").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2).setVisible(false),
-            this.add.image(RelativeScale(1400.0, "x"), RelativeScale(816.0, "y"), "rogue_skins").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2).setVisible(false)
+            this.add.image(1400.0, 816.0, "berserker_skins").setDepth(2).setVisible(false),
+            this.add.image(1400.0, 816.0, "wizard_skins").setDepth(2).setVisible(false),
+            this.add.image(1400.0, 816.0, "bard_skins").setDepth(2).setVisible(false),
+            this.add.image(1400.0, 816.0, "rogue_skins").setDepth(2).setVisible(false)
         ];
 
         // Personajes
@@ -48,69 +43,68 @@ class Scene_Select_Character extends Phaser.Scene {
 
         for (var i = 0; i < game.mPlayer.availableChar.length; i++) {
             if (game.mPlayer.availableChar[i] == 0) { // Si tiene disponible el berserker
-                this.berserkerBtn = this.add.image(RelativeScale(60.50, "x"), RelativeScale(420.0, "y"), "berserker_button")
-                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                this.berserkerBtn = this.add.image(60.50, 420.0, "berserker_button")
+                    ;
                 this.availableChars[0][0].purchased = true;
                 this.berserkerBtn.setAlpha(0.7);
                 break;
             } else if (i == game.mPlayer.availableChar.length - 1) { // Si no
-                this.berserkerBtn = this.add.image(RelativeScale(67.50, "x"), RelativeScale(420.0, "y"), "purchase_button")
-                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                this.berserkerBtn = this.add.image(67.50, 420.0, "purchase_button")
+                    ;
                 this.berserkerBtn.setAlpha(0.7);
             }
         }
 
         for (var i = 0; i < game.mPlayer.availableChar.length; i++) {
             if (game.mPlayer.availableChar[i] == 1) { // Si tiene disponible el mago
-                this.wizardBtn = this.add.image(RelativeScale(441.0, "x"), RelativeScale(557.0, "y"), "wizard_button")
-                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                this.wizardBtn = this.add.image(441.0, 557.0, "wizard_button")
+                    ;
                 this.availableChars[0][1].purchased = true;
                 this.wizardBtn.setAlpha(0.7);
                 break;
             } else if (i == game.mPlayer.availableChar.length - 1) { // Si no
-                this.wizardBtn = this.add.image(RelativeScale(441.0, "x"), RelativeScale(557.0, "y"), "purchase_button")
-                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                this.wizardBtn = this.add.image(441.0, 557.0, "purchase_button")
+                    ;
                 this.wizardBtn.setAlpha(0.7);
             }
         }
 
         for (var i = 0; i < game.mPlayer.availableChar.length; i++) {
             if (game.mPlayer.availableChar[i] == 2) { // Si tiene disponible el bardo
-                this.bardBtn = this.add.image(RelativeScale(825.50, "x"), RelativeScale(694.0, "y"), "bard_button")
-                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                this.bardBtn = this.add.image(825.50, 694.0, "bard_button")
+                    ;
                 this.availableChars[0][2].purchased = true;
                 this.bardBtn.setAlpha(0.7);
                 break;
             } else if (i == game.mPlayer.availableChar.length - 1) { // Si no
-                this.bardBtn = this.add.image(RelativeScale(825.50, "x"), RelativeScale(694.0, "y"), "purchase_button")
-                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                this.bardBtn = this.add.image(825.50, 694.0, "purchase_button")
+                    ;
                 this.bardBtn.setAlpha(0.7);
             }
         }
 
         for (var i = 0; i < game.mPlayer.availableChar.length; i++) {
             if (game.mPlayer.availableChar[i] == 3) { // Si tiene disponible el bardo
-                this.rogueBtn = this.add.image(RelativeScale(59.0, "x"), RelativeScale(694.0, "y"), "rogue_button")
-                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                this.rogueBtn = this.add.image(59.0, 694.0, "rogue_button")
+                    ;
                 this.availableChars[1][0].purchased = true;
                 this.rogueBtn.setAlpha(0.7);
                 break;
             } else if (i == game.mPlayer.availableChar.length - 1) { // Si no
-                this.rogueBtn = this.add.image(RelativeScale(59.0, "x"), RelativeScale(694.0, "y"), "purchase_button")
-                    .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+                this.rogueBtn = this.add.image(59.0, 694.0, "purchase_button")
+                    ;
                 this.rogueBtn.setAlpha(0.7);
             }
         }
 
         // Personaje bloqueado
-        this.blockedBtn = this.add.image(RelativeScale(445.0, "x"), RelativeScale(898.50, "y"), "blocked_button")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.blockedBtn = this.add.image(445.0, 898.50, "blocked_button");
         this.blockedBtn.setAlpha(0.7);
 
         // Skins
 
-        this.backBtn = this.add.image(RelativeScale(66.0, "x"), RelativeScale(78.5, "y"), "back_button")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+        this.backBtn = this.add.image(66.0, 78.5, "back_button")
+            .setDepth(1);
 
         game.mPlayer.characterSel.id = -1;
         game.mPlayer.characterSel.type = undefined;
@@ -118,9 +112,9 @@ class Scene_Select_Character extends Phaser.Scene {
         game.mPlayer.skillSel = -1;
 
         // Error message
-        this.error_bg = this.add.image(0, 0, "error_bg").setOrigin(0, 0).setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(21);
-        this.no_matches_text = this.add.image(RelativeScale(960, "x"), RelativeScale(404.5, "Y"), "no_matches_text").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(22);
-        this.go_back_button = this.add.image(RelativeScale(960, "x"), RelativeScale(763, "Y"), "go_back_button").setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(23);
+        this.error_bg = this.add.image(0, 0, "error_bg").setOrigin(0, 0).setDepth(21);
+        this.no_matches_text = this.add.image(960, 404.5, "no_matches_text").setDepth(22);
+        this.go_back_button = this.add.image(960, 763, "go_back_button").setDepth(23);
 
         this.error_bg.setVisible(false);
         this.no_matches_text.setVisible(false);
@@ -188,8 +182,8 @@ class Scene_Select_Character extends Phaser.Scene {
         // this.confirmSkin = true;
 
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
-            this.enterText = this.add.image(RelativeScale(1650.0, "x"), RelativeScale(910.0, "y"), "continue_text_mobile")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+            this.enterText = this.add.image(1650.0, 910.0, "continue_text_mobile")
+                .setDepth(1);
             this.texts.setAlpha(0);
             this.skinsSkills.setFrame(4);
             // this.leftArrowBtn.setFrame(1);
@@ -378,10 +372,10 @@ class Scene_Select_Character extends Phaser.Scene {
         });
 
         if (game.global.DEVICE === "desktop") {
-            this.add.image(RelativeScale(62,"x"), RelativeScale(28.86,"y"), "escape_text")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(2);
-            this.enterText = this.add.image(RelativeScale(1350.0, "x"), RelativeScale(1000.0, "y"), "continue_text_desktop")
-                .setScale(RelativeScale(1, "x"), RelativeScale(1, "y")).setDepth(1);
+            this.add.image(62, 28.86, "escape_text")
+                .setDepth(2);
+            this.enterText = this.add.image(1350.0, 1000.0, "continue_text_desktop")
+                .setDepth(1);
             // this.rightArrowBtn.setAlpha(0);
             // this.leftArrowBtn.setAlpha(0);
             this.enterBtn.setAlpha(0);

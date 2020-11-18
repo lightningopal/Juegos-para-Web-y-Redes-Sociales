@@ -6,15 +6,12 @@ class Scene_Disconnected extends Phaser.Scene {
 
     preload() {
         //Creación de imágenes
-        this.background = this.add.image(0, 0, "simple_bg").setOrigin(0, 0)
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.stars = this.add.tileSprite(0, 0, RelativeScale(1920, "x"), RelativeScale(1080, "y"), "stars")
+        this.background = this.add.image(0, 0, "simple_bg").setOrigin(0, 0);
+        this.stars = this.add.tileSprite(0, 0, 1920, 1080, "stars")
             .setOrigin(0, 0);
-        this.add.image(RelativeScale(966, "x"), RelativeScale(480.3, "y"), "disconnected_text")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.add.image(966, 480.3, "disconnected_text");
 
-        this.retryButton = this.add.image(RelativeScale(960.5, "x"), RelativeScale(709.5, "y"), "retry_button")
-            .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.retryButton = this.add.image(960.5, 709.5, "retry_button");
         this.retryButton.setFrame(1);
 
         this.changeOptionSound = this.sound.add("change_button");
@@ -65,7 +62,7 @@ class Scene_Disconnected extends Phaser.Scene {
     } // Fin create
 
     update() {
-        this.stars.tilePositionX += RelativeScale(0.2, "x");
-        this.stars.tilePositionY += RelativeScale(0.4, "y");
+        this.stars.tilePositionX += 0.2;
+        this.stars.tilePositionY += 0.4;
     } // Fin update
 }

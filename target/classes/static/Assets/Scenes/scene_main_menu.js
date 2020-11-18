@@ -8,27 +8,27 @@ class Scene_Main_Menu extends Phaser.Scene {
         var that = this;
         // Creación de imágenes
         this.background = this.add.image(0, 0, "main_menu_bg").setOrigin(0,0)
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        ;
         this.nebula = this.add.image(game.config.width/2, game.config.height/2, "main_menu_nebula")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        ;
         this.stars = this.add.image(game.config.width/2, game.config.height/2, "main_menu_stars")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.add.image(RelativeScale(960.0,"x"), RelativeScale(658.50,"y"), "main_menu_interface")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.add.image(RelativeScale(943.50,"x"), RelativeScale(332.0,"y"), "main_menu_logo")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        ;
+        this.add.image(960.0, 658.50, "main_menu_interface")
+        ;
+        this.add.image(943.50, 332.0, "main_menu_logo")
+        ;
         
-        this.tournamentBtn = this.add.image(RelativeScale(959.5,"x"), RelativeScale(634.50,"y"), "tournament_button")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.tournamentBtn = this.add.image(959.5, 634.50, "tournament_button")
+        ;
         this.tournamentBtn.setFrame(1);
-        this.gymBtn = this.add.image(RelativeScale(960.0,"x"), RelativeScale(796.50,"y"), "gym_button")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.rankingBtn = this.add.image(RelativeScale(960.0,"x"), RelativeScale(982.70,"y"), "ranking_button")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.creditsBtn = this.add.image(RelativeScale(1801.0,"x"), RelativeScale(887.70,"y"), "credits_button")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
-        this.optionsBtn = this.add.image(RelativeScale(138.50,"x"), RelativeScale(889.0,"y"), "options_button")
-        .setScale(RelativeScale(1, "x"), RelativeScale(1, "y"));
+        this.gymBtn = this.add.image(960.0, 796.50, "gym_button")
+        ;
+        this.rankingBtn = this.add.image(960.0, 982.70, "ranking_button")
+        ;
+        this.creditsBtn = this.add.image(1801.0, 887.70, "credits_button")
+        ;
+        this.optionsBtn = this.add.image(138.50, 889.0, "options_button")
+        ;
         // Opciones de selección
         this.optionSelectedRow;
         this.optionSelectedCol;
