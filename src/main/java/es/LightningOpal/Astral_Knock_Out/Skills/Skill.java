@@ -1,7 +1,6 @@
 package es.LightningOpal.Astral_Knock_Out.Skills;
 
 import es.LightningOpal.Astral_Knock_Out.*;
-import java.util.Timer;
 
 public class Skill extends PhysicsObject{
     protected Player caster;

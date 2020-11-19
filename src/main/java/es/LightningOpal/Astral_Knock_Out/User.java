@@ -34,8 +34,8 @@ public class User {
 		this.elo = 0;
 		this.mmr = 1000;
 		this.currency = 0;
-		this.musicVol = 1.0f;
-		this.sfxVol = 1.0f;
+		this.musicVol = 0.6f;
+		this.sfxVol = 0.6f;
 	}
 
 	// Constructor de la clase para añadir a los datos desde los archivos

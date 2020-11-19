@@ -38,7 +38,7 @@ public class SpaceGym_Game {
 
     ObjectMapper mapper = new ObjectMapper();
     private ScheduledFuture<?> future;
-    private Player player;
+    private User user;
     private Player dummy;
     private double dummyHP;
     private String userName;
@@ -48,10 +48,9 @@ public class SpaceGym_Game {
 
     /// Métodos
     // Constructor de la clase que recibe el jugador de la partida y lo guarda
-    public SpaceGym_Game(Player player_) {
-        player = player_;
-        User thisUser = (User) player.getSession().getAttributes().get("USER");
-        userName = thisUser.getUser_name();
+    public SpaceGym_Game(User user_) {
+        user = user_;
+        userName = user.getUser_name();
 
         // Dummy
         this.dummy = new Player(/*false, dummyPosX, dummyPosY, 23.0, 42.0, -7.0, -1.0*/);
@@ -64,30 +63,30 @@ public class SpaceGym_Game {
         this.dummyHP = 1000;
 
         // Player Weapon
-        switch (player.getPlayerType()) {
+        switch (user.getPlayer_selected().getPlayerType()) {
             case "berserker":
                 for (int i = 0; i < 3; i++) {
-                    projectiles.add(new BerserkerSkill(player, dummy, 1000, false, 36, 250)); // Target, duration, collidePlatforms, speed, damage
+                    projectiles.add(new BerserkerSkill(user.getPlayer_selected(), dummy, 1000, false, 36, 250)); // Target, duration, collidePlatforms, speed, damage
                 }
-                player.setBasicWeapon(new Weapon(projectiles, 1, 1000, 50));
+                user.getPlayer_selected().setBasicWeapon(new Weapon(projectiles, 1, 1000, 50));
                 break;
             case "wizard":
                 for (int i = 0; i < 9; i++) {
-                    projectiles.add(new WizardSkill(player, dummy, 500, true, 28, 150, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
+                    projectiles.add(new WizardSkill(user.getPlayer_selected(), dummy, 500, true, 28, 150, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
-                player.setBasicWeapon(new Weapon(projectiles, 3, 1000, 50));
+                user.getPlayer_selected().setBasicWeapon(new Weapon(projectiles, 3, 1000, 50));
                 break;
             case "bard":
                 for (int i = 0; i < 3; i++) {
-                    projectiles.add(new BardSkill(player, dummy, 2500, false, 18, 90)); // Target, duration, collidePlatforms, speed, damage
+                    projectiles.add(new BardSkill(user.getPlayer_selected(), dummy, 2500, false, 18, 90)); // Target, duration, collidePlatforms, speed, damage
                 }
-                player.setBasicWeapon(new Weapon(projectiles, 1, 1700, 500));
+                user.getPlayer_selected().setBasicWeapon(new Weapon(projectiles, 1, 1700, 500));
                 break;
             case "rogue":
                 for (int i = 0; i < 9; i++) {
-                    projectiles.add(new RogueSkill(player, dummy, -1, true, 30, 120, i % 3)); // Caster, Target, duration, collidePlatforms, speed, damage, id
+                    projectiles.add(new RogueSkill(user.getPlayer_selected(), dummy, -1, true, 30, 120, i % 3)); // Caster, Target, duration, collidePlatforms, speed, damage, id
                 }
-                player.setBasicWeapon(new Weapon(projectiles, 3, 800, 25));
+                user.getPlayer_selected().setBasicWeapon(new Weapon(projectiles, 3, 800, 25));
                 break;
             default:
                 break;
@@ -124,12 +123,12 @@ public class SpaceGym_Game {
     public void broadcast(String message) {
         try {
             // Intenta enviar al jugador el mensaje
-            synchronized(player.getSession()){
-                player.getSession().sendMessage(new TextMessage(message.toString()));
+            synchronized(user.getSession()) {
+                user.getSession().sendMessage(new TextMessage(message.toString()));
             }
         } catch (Throwable ex) {
             //ex.printStackTrace(System.err);
-            GamesManager.INSTANCE.stopSpaceGym(player);
+            GamesManager.INSTANCE.stopSpaceGym(user);
             System.out.println("No se ha podido enviar mensaje al jugador " + userName + ".");
 
             // Intenta escribir la información del error en el archivo de log
@@ -137,7 +136,7 @@ public class SpaceGym_Game {
 				AKO_Server.logLock.lock();
 				AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
 				String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-				AKO_Server.logWriter.write(time + " - SERVER ERROR ON BROADCAST [SpaceGym, Player: " + player.getUserName() + "]: " + ex.getStackTrace() + ".\n");
+				AKO_Server.logWriter.write(time + " - SERVER ERROR ON BROADCAST [SpaceGym, Player: " + user.getPlayer_selected().getUserName() + "]: " + ex.getStackTrace() + ".\n");
                 AKO_Server.logWriter.close();
                 AKO_Server.logLock.unlock();
 			} catch (Exception e2) {
@@ -160,25 +159,25 @@ public class SpaceGym_Game {
         try {
             // Intenta calcular las físicas del jugador y enviarle los datos
             // Calcula las fisicas
-            player.incVelocity(0, GRAVITY); // Gravedad
-            player.calculatePhysics();
-            player.SetOnFloor(false);
+            user.getPlayer_selected().incVelocity(0, GRAVITY); // Gravedad
+            user.getPlayer_selected().calculatePhysics();
+            user.getPlayer_selected().SetOnFloor(false);
             for (PhysicsObject platform : platforms) {
-                player.collide(platform);
+                user.getPlayer_selected().collide(platform);
             }
             // Controlar límites de la pantalla
-            if (player.getPosX() - player.getHalfWidth() < 0){
-                player.setPosX(player.getHalfWidth());
-                player.setVelX(0);
-            }else if (player.getPosX() + player.getHalfWidth() > 1920){
-                player.setPosX(1920 - player.getHalfWidth());
-                player.setVelX(0);
+            if (user.getPlayer_selected().getPosX() - user.getPlayer_selected().getHalfWidth() < 0){
+                user.getPlayer_selected().setPosX(user.getPlayer_selected().getHalfWidth());
+                user.getPlayer_selected().setVelX(0);
+            }else if (user.getPlayer_selected().getPosX() + user.getPlayer_selected().getHalfWidth() > 1920){
+                user.getPlayer_selected().setPosX(1920 - user.getPlayer_selected().getHalfWidth());
+                user.getPlayer_selected().setVelX(0);
             }
             // Guarda los datos en el ObjectNode 'jsonPlayer'
-            jsonPlayer.put("posX", player.getPosX());
-            jsonPlayer.put("posY", player.getPosY());
-            jsonPlayer.put("flipped", player.IsFlipped());
-            jsonPlayer.put("onFloor", player.IsOnFloor());
+            jsonPlayer.put("posX", user.getPlayer_selected().getPosX());
+            jsonPlayer.put("posY", user.getPlayer_selected().getPosY());
+            jsonPlayer.put("flipped", user.getPlayer_selected().IsFlipped());
+            jsonPlayer.put("onFloor", user.getPlayer_selected().IsOnFloor());
 
             dummy.incVelocity(0, GRAVITY); // Gravedad
             dummy.calculateMovement();
@@ -243,7 +242,7 @@ public class SpaceGym_Game {
 				AKO_Server.logLock.lock();
 				AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
 				String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-				AKO_Server.logWriter.write(time + " - SERVER ERROR ON TICK [SpaceGym, Player: " + player.getUserName() + "]: " + ex.getStackTrace() + ".\n");
+				AKO_Server.logWriter.write(time + " - SERVER ERROR ON TICK [SpaceGym, Player: " + user.getUser_name() + "]: " + ex.getStackTrace() + ".\n");
                 AKO_Server.logWriter.close();
                 AKO_Server.logLock.unlock();
 			} catch (Exception e2) {
