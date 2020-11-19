@@ -216,8 +216,18 @@ public class Tournament_Game {
         this.gameStarted = false;
         if (future != null) {
             threadLock.lock();
-            future.cancel(false);
-            threadLock.unlock();
+            try
+            {
+                future.cancel(false);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            finally
+            {
+                threadLock.unlock();
+            } 
             System.out.println("SE HA CERRADO EL FUTURE DE LA PARTIDA DE LOS JUGADORES " + players + ".");
         }
 	}

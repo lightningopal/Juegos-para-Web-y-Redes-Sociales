@@ -242,6 +242,9 @@ public class GamesManager {
             winnerUser.setCurrency(winnerCoins);
             loserUser.setCurrency(loserCoins);
 
+            System.out.println("End Tournament Game: " + winner.getUserName() + " - " + loser.getUserName() +
+            " - Room: " + room + ". Disconnection: " + wasDisconnection);
+
             // Intenta escribir la información en el archivo de log
             try {
                 AKO_Server.logLock.lock();
