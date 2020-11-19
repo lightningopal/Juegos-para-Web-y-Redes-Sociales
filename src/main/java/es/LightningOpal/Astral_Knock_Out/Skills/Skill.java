@@ -11,7 +11,7 @@ public class Skill extends PhysicsObject{
     protected boolean collidePlatforms;
     protected double facingAngle;
 
-    protected Timer stopTimer;
+    // protected Timer stopTimer;
 
     public Skill(Player caster, Player target, long duration, double hW, double hH, boolean collidePlatforms){
         this.caster = caster;
@@ -23,7 +23,7 @@ public class Skill extends PhysicsObject{
         this.setHalfWidth(hW);
         this.setHalfHeight(hH);
 
-        stopTimer = new Timer();
+        // stopTimer = new Timer();
     }
 
     public Player getCaster() {
@@ -74,6 +74,8 @@ public class Skill extends PhysicsObject{
     }
 
     public void disable(){
+        this.isActive = false;
+        this.setPosX(-500);
         // Implementado el control en los hijos
     }
 

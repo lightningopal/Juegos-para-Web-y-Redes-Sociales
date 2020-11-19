@@ -98,7 +98,7 @@ public class Tournament_Game {
                 break;
             case "rogue":
                 for (int i = 0; i < 9; i++) {
-                    projectilesA.add(new RogueSkill(playerA, playerB, 550, true, 30, 120, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
+                    projectilesA.add(new RogueSkill(playerA, playerB, -1, true, 30, 120, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
                 playerA.setBasicWeapon(new Weapon(projectilesA, 3, 800, 25));
                 break;
@@ -128,7 +128,7 @@ public class Tournament_Game {
                 break;
             case "rogue":
                 for (int i = 0; i < 9; i++) {
-                    projectilesB.add(new RogueSkill(playerB, playerA, 550, true, 30, 120, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
+                    projectilesB.add(new RogueSkill(playerB, playerA, -1, true, 30, 120, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
                 }
                 playerB.setBasicWeapon(new Weapon(projectilesB, 3, 800, 25));
                 break;
@@ -387,7 +387,6 @@ public class Tournament_Game {
                         skill.setPosY(skill.getPosY()+2);
                     }
                     if (skill.intersect(skill.getTarget())) {
-                        skill.setActive(false);
                         double hp = skill.impact(); // Se lanza un mensaje a ambos jugadores
                         if (hp <= 0.0){
                             // Acabar partida
@@ -428,7 +427,6 @@ public class Tournament_Game {
                         skill.setPosY(skill.getPosY()+2);
                     }
                     if (skill.intersect(skill.getTarget())) {
-                        skill.setActive(false);
                         double hp = skill.impact(); // Se lanza un mensaje a ambos jugadores
                         if (hp <= 0.0){
                             // Acabar partida

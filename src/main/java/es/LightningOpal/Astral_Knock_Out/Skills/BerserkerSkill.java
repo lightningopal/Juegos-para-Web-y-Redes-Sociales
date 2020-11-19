@@ -2,14 +2,10 @@ package es.LightningOpal.Astral_Knock_Out.Skills;
 
 import es.LightningOpal.Astral_Knock_Out.*;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class BerserkerSkill extends Skill{
 
     private double damage;
 
-    private long elapsedTime;
     private long startTime;
 
     public BerserkerSkill(Player caster, Player target, long duration, boolean collidePlaforms, double speed, double damage){
@@ -31,33 +27,20 @@ public class BerserkerSkill extends Skill{
         // Activar habilidad
         this.setPosX(caster.getPosX());
         this.setPosY(caster.getPosY());
-        this.isActive = true;
-        stopTimer.cancel();
-        stopTimer.purge();
-        stopTimer = new Timer();
-        stopTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                disable();
-            }
-        }, duration);
         startTime = System.currentTimeMillis();
+        this.isActive = true;
     }
 
     @Override
     public void disable() {
         super.disable();
-        this.isActive = false;
-        this.elapsedTime = 0;
         this.startTime = 0;
     }
 
     @Override
     public double impact() {
         super.impact();
-        this.isActive = false;
-        this.elapsedTime = 0;
-        this.startTime = 0;
+        disable();
         // Causa daño al enemigo
         return target.damage(this.damage);
     }
@@ -65,17 +48,14 @@ public class BerserkerSkill extends Skill{
     @Override
     public double impact(double hp) {
         super.impact();
-        this.isActive = false;
-        this.elapsedTime = 0;
-        this.startTime = 0;
+        disable();
         // Causar daño
         return hp - this.damage;
     }
 
     @Override
     public void calculatePhysics(){
-        elapsedTime = System.currentTimeMillis() - startTime;
-        double remainingTime = duration - elapsedTime;
+        double remainingTime = duration - (System.currentTimeMillis() - startTime);
         if (this.IsFlipped()){
             this.setVelX(-this.getMoveSpeed() * (remainingTime / duration) * (remainingTime / duration));
         }else{

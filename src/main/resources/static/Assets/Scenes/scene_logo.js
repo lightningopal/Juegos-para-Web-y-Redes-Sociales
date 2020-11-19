@@ -9,6 +9,8 @@ class Scene_Logo extends Phaser.Scene {
         var that = this;
         game.global.actualScene = "scene_logo";
 
+        var video = this.add.video(0, 0, "logo_video").setOrigin(0, 0);
+        
         this.game.events.on('hidden',function(){
             video.setPaused(true);
         },this);
@@ -16,8 +18,6 @@ class Scene_Logo extends Phaser.Scene {
         this.game.events.on('visible',function(){
             video.setPaused(false);
         },this);
-
-        var video = this.add.video(0, 0, "logo_video").setOrigin(0, 0);
 
         video.play();
 

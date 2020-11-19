@@ -1,14 +1,11 @@
 package es.LightningOpal.Astral_Knock_Out.Skills;
 
 import es.LightningOpal.Astral_Knock_Out.*;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class BardSkill extends Skill {
 
     private double damage;
 
-    private long elapsedTime;
     private long startTime;
 
     public BardSkill(Player caster, Player target, long duration, boolean collidePlaforms, double speed, double damage) {
@@ -30,33 +27,20 @@ public class BardSkill extends Skill {
         // Activar habilidad
         this.setPosX(caster.getPosX());
         this.setPosY(caster.getPosY() - 50);
-        this.isActive = true;
-        stopTimer.cancel();
-        stopTimer.purge();
-        stopTimer = new Timer();
-        stopTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                disable();
-            }
-        }, duration);
         startTime = System.currentTimeMillis();
+        this.isActive = true;
     }
 
     @Override
     public void disable() {
         super.disable();
-        this.isActive = false;
-        this.elapsedTime = 0;
         this.startTime = 0;
     }
 
     @Override
     public double impact() {
         super.impact();
-        this.isActive = false;
-        this.elapsedTime = 0;
-        this.startTime = 0;
+        disable();
         // Causa daño al enemigo
         return target.damage(this.damage);
     }
@@ -64,9 +48,7 @@ public class BardSkill extends Skill {
     @Override
     public double impact(double hp) {
         super.impact();
-        this.isActive = false;
-        this.elapsedTime = 0;
-        this.startTime = 0;
+        disable();
         // Causa daño al enemigo
         return hp - this.damage;
         
@@ -74,8 +56,11 @@ public class BardSkill extends Skill {
 
     @Override
     public void calculatePhysics() {
-        elapsedTime = System.currentTimeMillis() - startTime;
-        double remainingTime = duration - elapsedTime;
+        double remainingTime = duration - (System.currentTimeMillis() - startTime);
+        if (remainingTime <= 0){
+            disable();
+            return;
+        }
         double directionX = (target.getPosX()+target.getVelX()) - this.getPosX();
         double directionY = (target.getPosY()+target.getVelY()) - this.getPosY();
         double module = Math.sqrt(Math.pow(directionX, 2) + Math.pow(directionY, 2));

@@ -150,7 +150,7 @@ class Scene_Boot extends Phaser.Scene {
                             loadingText.setText('Connection failed, try again later');
                         }
                         else {
-                            if (game.options.currentSong != undefined){
+                            if (game.options.currentSong != undefined) {
                                 game.options.currentSong.stop();
                             }
                             that.scene.get(game.global.actualScene).input.keyboard.removeAllKeys(true);
@@ -480,7 +480,7 @@ class Scene_Boot extends Phaser.Scene {
                         loadingText.setText('Connection failed, try again later');
                     }
                     else {
-                        if (game.options.currentSong != undefined){
+                        if (game.options.currentSong != undefined) {
                             game.options.currentSong.stop();
                         }
                         that.scene.get(game.global.actualScene).input.keyboard.removeAllKeys(true);
@@ -580,20 +580,14 @@ class Scene_Boot extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('rogue_attack', { start: 0, end: 5 }),
             frameRate: 36
         });
-        
+
         this.input.keyboard.on('keydown-' + "ENTER", function () {
             if (!isLoading /**/ && game.global.WS_CONNECTION/**/) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 this.scene.input.keyboard.removeAllKeys(true);
-                if (game.global.hasLoadData)
-                {
-                    this.scene.scene.start("scene_select_login");
-                }
-                else
-                {
-                    game.global.hasLoadData = true;
-                    this.scene.scene.start("scene_logo");
-                }
+                game.global.hasLoadData = true;
+                this.scene.scene.start("scene_logo");
+
             }
         });
 
@@ -601,15 +595,8 @@ class Scene_Boot extends Phaser.Scene {
             if (!isLoading /**/ && game.global.WS_CONNECTION/**/) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 this.scene.input.keyboard.removeAllKeys(true);
-                if (game.global.hasLoadData)
-                {
-                    this.scene.scene.start("scene_select_login");
-                }
-                else
-                {
-                    game.global.hasLoadData = true;
-                    this.scene.scene.start("scene_logo");
-                }
+                game.global.hasLoadData = true;
+                this.scene.scene.start("scene_logo");
             }
         });
 
@@ -617,15 +604,8 @@ class Scene_Boot extends Phaser.Scene {
             if (!isLoading /**/ && game.global.WS_CONNECTION/**/) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 this.scene.input.keyboard.removeAllKeys(true);
-                if (game.global.hasLoadData)
-                {
-                    this.scene.scene.start("scene_select_login");
-                }
-                else
-                {
-                    game.global.hasLoadData = true;
-                    this.scene.scene.start("scene_logo");
-                }
+                game.global.hasLoadData = true;
+                this.scene.scene.start("scene_logo");
             }
         });
     } // Fin create
@@ -785,8 +765,7 @@ class Scene_Boot extends Phaser.Scene {
 
     UpdateSpaceGym(data) {
         // Player
-        if (game.global.actualScene == "scene_space_gym")
-        {
+        if (game.global.actualScene == "scene_space_gym") {
             game.mPlayer.image.x = data.player.posX;
             game.mPlayer.image.y = data.player.posY;
             game.mPlayer.image.flipX = data.player.flipped;
@@ -865,7 +844,7 @@ class Scene_Boot extends Phaser.Scene {
     }
 
     GameFound(data) {
-        if (game.options.currentSong != undefined){
+        if (game.options.currentSong != undefined) {
             game.options.currentSong.stop();
         }
         game.options.currentSong = this.sound.add("versus_music");
@@ -1072,16 +1051,16 @@ class Scene_Boot extends Phaser.Scene {
         }
     }
 
-    Damage(data){
+    Damage(data) {
         var that = this;
-        if (data.playerName === game.mPlayer.userName){ // Mi jugador ha sido dañado
+        if (data.playerName === game.mPlayer.userName) { // Mi jugador ha sido dañado
             this.scene.get(game.global.actualScene).myHP.currentHP = data.hp;
             this.scene.get(game.global.actualScene).eHitSound.play({ volume: game.options.SFXVol });
             game.mPlayer.image.tint = 0xff5555;
             setTimeout(function () {
                 game.mPlayer.image.clearTint();
             }, 200);
-        }else{ // El enemigo ha sido dañado
+        } else { // El enemigo ha sido dañado
             this.scene.get(game.global.actualScene).eHP.currentHP = data.hp;
             this.scene.get(game.global.actualScene).myHitSound.play({ volume: game.options.SFXVol });
             game.mEnemy.image.tint = 0xff5555;
@@ -1098,8 +1077,7 @@ class Scene_Boot extends Phaser.Scene {
 
         // Se guardan los resultados de la partida
         // El jugador es el ganador
-        if (myWin)
-        {
+        if (myWin) {
             // Se reduce la barra de vida del enemigo a 0 HP
             this.scene.get(game.global.actualScene).eHP.currentHP = 0;
             // Diferencia de puntos positiva
@@ -1117,8 +1095,7 @@ class Scene_Boot extends Phaser.Scene {
             game.mPlayer.currency = data.winner.currency;
         }
         // El jugador es el perdedor
-        else
-        {
+        else {
             // Se reduce mi barra de vida a 0 HP
             this.scene.get(game.global.actualScene).myHP.currentHP = 0;
             // Diferencia de puntos negativa
@@ -1150,16 +1127,15 @@ class Scene_Boot extends Phaser.Scene {
         }
     }
 
-    ChangeToScore(win)
-    {
+    ChangeToScore(win) {
         var endFX;
         game.options.currentSong.stop();
-        if (win){
+        if (win) {
             endFX = this.sound.add("you_win");
             game.options.currentSong = this.sound.add("winning_and_credits_music");
             endFX.play({ volume: game.options.SFXVol });
             game.options.currentSong.play({ volume: game.options.musicVol, loop: true, delay: 5 });
-        }else{
+        } else {
             endFX = this.sound.add("you_lose");
             game.options.currentSong = this.sound.add("lose_music");
             endFX.play({ volume: game.options.SFXVol });
@@ -1169,28 +1145,23 @@ class Scene_Boot extends Phaser.Scene {
         //this.scene.get(game.global.actualScene).scene.start("scene_score");
     }
 
-    CanceledQueue()
-    {
+    CanceledQueue() {
         this.scene.get(game.global.actualScene).scene.start("scene_main_menu");
     }
 
-    GamesFull()
-    {
+    GamesFull() {
         this.scene.get(game.global.actualScene).FullError();
     }
 
-    IdleMessage()
-    {
+    IdleMessage() {
         game.global.socket.send(JSON.stringify({ event: "IDLE_MESSAGE" }));
     }
 
-    UsersConnectedText(data)
-    {
+    UsersConnectedText(data) {
         this.scene.get(game.global.actualScene).SetConnectedUsersText(data.value);
     }
 
-    FadeTransition(newScene)
-    {
+    FadeTransition(newScene) {
         var that = this;
         // Cambia de escena a la nueva
         this.cam = this.scene.get(game.global.actualScene).cameras.main;
@@ -1201,8 +1172,7 @@ class Scene_Boot extends Phaser.Scene {
         });
     }
 
-    ChangeToScene(newScene)
-    {
+    ChangeToScene(newScene) {
         this.scene.get(game.global.actualScene).scene.start(newScene);
     }
 }

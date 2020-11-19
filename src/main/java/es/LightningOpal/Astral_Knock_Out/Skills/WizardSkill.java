@@ -10,7 +10,6 @@ public class WizardSkill extends Skill{
     private double damage;
     private int id;
 
-    private long elapsedTime;
     private long startTime;
 
     public WizardSkill(Player caster, Player target, long duration, boolean collidePlaforms, double speed, double damage, int id){
@@ -66,34 +65,20 @@ public class WizardSkill extends Skill{
             default:
             break;
         }
-
-        this.isActive = true;
-        stopTimer.cancel();
-        stopTimer.purge();
-        stopTimer = new Timer();
-        stopTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                disable();
-            }
-        }, duration);
         this.startTime = System.currentTimeMillis();
+        this.isActive = true;
     }
 
     @Override
     public void disable() {
         super.disable();
-        this.isActive = false;
-        this.elapsedTime = 0;
         this.startTime = 0;
     }
 
     @Override
     public double impact() {
         super.impact();
-        this.isActive = false;
-        this.elapsedTime = 0;
-        this.startTime = 0;
+        disable();
         // Causa daño al enemigo
         return target.damage(this.damage);
     }
@@ -101,17 +86,14 @@ public class WizardSkill extends Skill{
     @Override
     public double impact(double hp) {
         super.impact();
-        this.isActive = false;
-        this.elapsedTime = 0;
-        this.startTime = 0;
+        disable();
         // Causar daño
         return hp - this.damage;
     }
 
     @Override
     public void calculatePhysics(){
-        elapsedTime = System.currentTimeMillis() - startTime;
-        double remainingTime = duration - elapsedTime;
+        double remainingTime = duration - (System.currentTimeMillis() - startTime);
         remainingTime = remainingTime / duration; // Va de 1 a 0
         if (this.id == 1){
             if (this.IsFlipped()){
