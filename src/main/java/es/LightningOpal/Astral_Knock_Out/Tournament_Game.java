@@ -345,8 +345,6 @@ public class Tournament_Game {
             jsonPlayerA.put("movingLeft", playerA.isMovingLeft());
             jsonPlayerA.put("flipped", playerA.IsFlipped());
             jsonPlayerA.put("onFloor", playerA.IsOnFloor());
-            jsonPlayerA.put("canBasicAttack", playerA.getBasicWeapon().CanAttack());
-			jsonPlayerA.put("canSpecialAttack", playerA.getSpecialWeapon().CanAttack());
 			
             // Player B
             if (level == 1){
@@ -378,8 +376,6 @@ public class Tournament_Game {
             jsonPlayerB.put("movingLeft", playerB.isMovingLeft());
             jsonPlayerB.put("flipped", playerB.IsFlipped());
             jsonPlayerB.put("onFloor", playerB.IsOnFloor());
-            jsonPlayerB.put("canBasicAttack", playerB.getBasicWeapon().CanAttack());
-			jsonPlayerB.put("canSpecialAttack", playerB.getSpecialWeapon().CanAttack());
 			
 			// Proyectiles A
 			for (Skill skill : projectilesA) {

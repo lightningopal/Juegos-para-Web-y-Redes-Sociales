@@ -180,8 +180,6 @@ public class SpaceGym_Game {
             jsonPlayer.put("posY", player.getPosY());
             jsonPlayer.put("flipped", player.IsFlipped());
             jsonPlayer.put("onFloor", player.IsOnFloor());
-            jsonPlayer.put("canBasicAttack", player.getBasicWeapon().CanAttack());
-            jsonPlayer.put("canSpecialAttack", player.getSpecialWeapon().CanAttack());
 
             dummy.incVelocity(0, GRAVITY); // Gravedad
             dummy.calculateMovement();
