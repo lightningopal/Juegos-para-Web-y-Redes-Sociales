@@ -667,18 +667,38 @@ public class WebsocketHandler extends TextWebSocketHandler {
 									msg.put("event", "ACTION");
 									msg.put("type", "BASIC_ATTACK");
 									msg.put("player_name", user.getUser_name());
-									if (room == -1) {
-										synchronized (user.getSession()) {
-											user.getSession().sendMessage(new TextMessage(msg.toString()));
-										}
-									} else {
+									if (room != -1){
 										GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
 									}
+									// if (room == -1) {
+									// 	synchronized (user.getSession()) {
+									// 		user.getSession().sendMessage(new TextMessage(msg.toString()));
+									// 	}
+									// } else {
+									// 	GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
+									// }
+									
 								}
 							}
 							else
 							{
 								GamesManager.INSTANCE.tournamentGamesLock.unlock();
+								// Comprobamos el Space Gym
+								GamesManager.INSTANCE.spaceGymGamesLock.lock();
+								if (GamesManager.INSTANCE.spaceGym_games.containsKey(user.getPlayer_selected()))
+								{
+									if (user.getPlayer_selected().getBasicWeapon().attack()) { // Si se realiza el ataque
+										msg.put("event", "ACTION");
+										msg.put("type", "BASIC_ATTACK");
+										msg.put("player_name", user.getUser_name());
+										synchronized (user.getSession()) {
+											user.getSession().sendMessage(new TextMessage(msg.toString()));
+										}
+									} 
+									GamesManager.INSTANCE.spaceGymGamesLock.unlock();
+								}else{
+									GamesManager.INSTANCE.spaceGymGamesLock.unlock();
+								}
 							}
 							break;
 
