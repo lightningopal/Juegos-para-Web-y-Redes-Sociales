@@ -21,15 +21,12 @@ class Scene_Select_Map extends Phaser.Scene {
         this.mapButton1 = this.add.image(1415, 523, "map_button1");
         this.mapButton1.setFrame(0);
 
-        this.enterBtn = this.add.image(1810.0, 1000.0, "enter_button")
-            .setDepth(2);
         this.enterText;
 
         // Opciones de selección
         game.mPlayer.difficultySel = -1;
         this.return = false;
         this.optionSelected = 0; // 0 -> Mapa 0 / 1 -> Mapa 1
-        this.alreadySelected = false;
 
         this.changeOptionSound = this.sound.add("change_button");
         this.pressOptionSound = this.sound.add("press_button");
@@ -76,61 +73,61 @@ class Scene_Select_Map extends Phaser.Scene {
         });
         // Primer mapa
         this.mapButton0.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-            that.pressOptionSound.play({ volume: game.options.SFXVol });
-            that.mapButton0.setFrame(1);
-            that.mapButton1.setFrame(0);
-            that.optionSelected = 0;
-            game.mPlayer.difficultySel = 0;
-            that.alreadySelected = true;
+            if (that.waitingForQueue == false)
+            {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
+                that.mapButton0.setFrame(1);
+                that.mapButton1.setFrame(0);
+                that.optionSelected = 0;
+                game.mPlayer.difficultySel = 0;
+            }
             if (game.global.DEBUG_MODE) {
                 console.log("Mapa 1 pulsado");
             }
         });
         this.mapButton0.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-            // that.mapButton0.setFrame(0);
-            // that.scene.start("scene_searching");
+            if (that.waitingForQueue == false)
+            {
+                that.input.keyboard.removeAllKeys(true);
+                that.waitingForQueue = true;
+                that.scene.start("scene_searching");
+            }
             if (game.global.DEBUG_MODE) {
-                console.log("Mapa 1 soltado");
+                console.log("Mapa 1 elegido");
             }
         });
         // Segundo mapa
         this.mapButton1.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-            that.pressOptionSound.play({ volume: game.options.SFXVol });
-            that.mapButton0.setFrame(0);
-            that.mapButton1.setFrame(1);
-            that.alreadySelected = true;
-            that.optionSelected = 1;
-            game.mPlayer.difficultySel = 1;
+            if (that.waitingForQueue == false)
+            {
+                that.pressOptionSound.play({ volume: game.options.SFXVol });
+                that.mapButton0.setFrame(0);
+                that.mapButton1.setFrame(1);
+                that.optionSelected = 1;
+                game.mPlayer.difficultySel = 1;
+            }
+
             if (game.global.DEBUG_MODE) {
                 console.log("Mapa 2 pulsado");
             }
         });
         this.mapButton1.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-            // that.mapButton1.setFrame(0);
-            // that.scene.start("scene_searching");
+            if (that.waitingForQueue == false)
+            {
+                that.input.keyboard.removeAllKeys(true);
+                that.waitingForQueue = true;
+                that.scene.start("scene_searching");
+            }
             if (game.global.DEBUG_MODE) {
                 console.log("Mapa 2 soltado");
-            }
-        });
-        this.enterBtn.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-            if (game.mPlayer.difficultySel == 0 || game.mPlayer.difficultySel == 1){
-                if (that.waitingForQueue == false)
-                {
-                    that.input.keyboard.removeAllKeys(true);
-                    that.pressOptionSound.play({ volume: game.options.SFXVol });
-                    that.waitingForQueue = true;
-                    that.scene.start("scene_searching");
-                }
             }
         });
 
         // Mobile
         if (game.global.DEVICE === "mobile" || game.global.DEBUG_PHONE) {
-            this.enterText = this.add.image(1650.0, 910.0, "continue_text_mobile")
-                .setDepth(1);
             that.mapButton0.setFrame(0);
-
-            // Desktop
+            
+        // Desktop
         } else {
             this.add.image(62, 28.86, "escape_text")
                 .setDepth(5);
@@ -141,7 +138,7 @@ class Scene_Select_Map extends Phaser.Scene {
 
             // Opciones de selección
             this.input.keyboard.on('keydown-' + 'A', function (event) {
-                if (!that.return && !that.alreadySelected) {
+                if (!that.return) {
                     that.changeOptionSound.play({ volume: game.options.SFXVol });
                     that.optionSelected = (that.optionSelected + 1) % 2;
                     that.CheckOption();
@@ -151,7 +148,7 @@ class Scene_Select_Map extends Phaser.Scene {
                 }
             });
             this.input.keyboard.on('keydown-' + 'LEFT', function (event) {
-                if (!that.return && !that.alreadySelected) {
+                if (!that.return) {
                     that.changeOptionSound.play({ volume: game.options.SFXVol });
                     that.optionSelected = (that.optionSelected + 1) % 2;
                     that.CheckOption();
@@ -162,7 +159,7 @@ class Scene_Select_Map extends Phaser.Scene {
             });
 
             this.input.keyboard.on('keydown-' + 'D', function (event) {
-                if (!that.return && !that.alreadySelected) {
+                if (!that.return) {
                     that.changeOptionSound.play({ volume: game.options.SFXVol });
                     that.optionSelected = (that.optionSelected + 1) % 2;
                     that.CheckOption();
@@ -172,7 +169,7 @@ class Scene_Select_Map extends Phaser.Scene {
                 }
             });
             this.input.keyboard.on('keydown-' + 'RIGHT', function (event) {
-                if (!that.return && !that.alreadySelected) {
+                if (!that.return) {
                     that.changeOptionSound.play({ volume: game.options.SFXVol });
                     that.optionSelected = (that.optionSelected + 1) % 2;
                     that.CheckOption();
@@ -206,22 +203,13 @@ class Scene_Select_Map extends Phaser.Scene {
 
             this.input.keyboard.on('keydown-' + 'ESC', function (event) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
-                if (!that.alreadySelected){
                     that.input.keyboard.removeAllKeys(true);
                     that.scene.start("scene_select_character");
-                }else{
-                    that.alreadySelected = false;
-                }
-                
             });
 
             this.input.keyboard.on('keydown-' + 'ENTER', function (event) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 if (!that.return){
-                    if (!that.alreadySelected) {
-                        that.enterText.setVisible(true);
-                        that.alreadySelected = true;
-                    }else {
                         if (that.waitingForQueue == false)
                         {
                             that.input.keyboard.removeAllKeys(true);
@@ -229,38 +217,24 @@ class Scene_Select_Map extends Phaser.Scene {
                             game.mPlayer.difficultySel = that.optionSelected;
                             that.scene.start("scene_searching");
                         }
-                    }
                 }else{
-                    if (!that.alreadySelected){
-                        that.input.keyboard.removeAllKeys(true);
-                        that.scene.start("scene_select_character");
-                    }else{
-                        that.alreadySelected = false;
-                    }
+                    that.input.keyboard.removeAllKeys(true);
+                    that.scene.start("scene_select_character");
                 }
             });
             this.input.keyboard.on('keydown-' + 'O', function (event) {
                 that.pressOptionSound.play({ volume: game.options.SFXVol });
                 if (!that.return){
-                    if (!that.alreadySelected) {
-                        that.enterText.setVisible(true);
-                        that.alreadySelected = true;
-                    }else {
-                        if (that.waitingForQueue == false)
-                        {
-                            that.input.keyboard.removeAllKeys(true);
-                            that.waitingForQueue = true;
-                            game.mPlayer.difficultySel = that.optionSelected;
-                            that.scene.start("scene_searching");
-                        }
+                    if (that.waitingForQueue == false)
+                    {
+                        that.input.keyboard.removeAllKeys(true);
+                        that.waitingForQueue = true;
+                        game.mPlayer.difficultySel = that.optionSelected;
+                        that.scene.start("scene_searching");
                     }
                 }else{
-                    if (!that.alreadySelected){
-                        that.input.keyboard.removeAllKeys(true);
-                        that.scene.start("scene_select_character");
-                    }else{
-                        that.alreadySelected = false;
-                    }
+                    that.input.keyboard.removeAllKeys(true);
+                    that.scene.start("scene_select_character");
                 }
             });
         }

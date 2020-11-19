@@ -415,7 +415,6 @@ class Scene_Level1 extends Phaser.Scene {
                 // enable: true
             }).on('update', this.DumpJoyStickState, this);
 
-            this.text = this.add.text(0, 0);
             this.DumpJoyStickState();
 
             this.input.addPointer(2);
@@ -834,16 +833,6 @@ class Scene_Level1 extends Phaser.Scene {
     // Joystick movil
     DumpJoyStickState() {
         var cursorKeys = this.mobileKeys.joyStick.createCursorKeys();
-        var s = 'Key down: ';
-        for (var name in cursorKeys) {
-            if (cursorKeys[name].isDown) {
-                s += name + ' ';
-            }
-        }
-        s += '\n';
-        s += ('Force: ' + Math.floor(this.mobileKeys.joyStick.force * 100) / 100 + '\n');
-        s += ('Angle: ' + Math.floor(this.mobileKeys.joyStick.angle * 100) / 100 + '\n');
-        this.text.setText(s);
     }
 
     PreparedForPlay() {

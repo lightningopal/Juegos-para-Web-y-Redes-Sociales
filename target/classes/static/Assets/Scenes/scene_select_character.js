@@ -350,7 +350,7 @@ class Scene_Select_Character extends Phaser.Scene {
                     that.scene.start("scene_select_map");
                 } else {
                     // Selección de Skill -> SpaceGym
-                    that.input.keyboard.removeAllKeys(true);
+                    that.selectingCharacter = false;
                     game.global.socket.send(JSON.stringify({ event: "CREATE_SPACE_GYM", playerType: game.mPlayer.characterSel.type, skill: game.mPlayer.skillSel }));
                     // that.input.keyboard.removeAllKeys(true);
                     // that.scene.start("scene_space_gym");

@@ -124,9 +124,9 @@ window.onload = function () {
     }
 
     this.game.options = {
-        musicVol:       1.0,
+        musicVol:       0.6,
         currentSong:    undefined,
-        SFXVol:         1.0,
+        SFXVol:         0.6,
         fullScreen:     false
     }
 

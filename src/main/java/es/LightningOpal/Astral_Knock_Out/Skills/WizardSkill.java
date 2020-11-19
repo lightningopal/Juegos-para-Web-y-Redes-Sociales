@@ -2,9 +2,6 @@ package es.LightningOpal.Astral_Knock_Out.Skills;
 
 import es.LightningOpal.Astral_Knock_Out.*;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class WizardSkill extends Skill{
 
     private double damage;

@@ -101,8 +101,8 @@ class Scene_Boot extends Phaser.Scene {
 
                 // WEBSOCKETS
                 try {
-                    // game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
-                    game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
+                    game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
+                    // game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
                 }
                 catch (error) {
                     if (game.global.DEBUG_MODE) {
@@ -434,8 +434,8 @@ class Scene_Boot extends Phaser.Scene {
 
             // WEBSOCKETS
             try {
-                // game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
-                game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
+                game.global.socket = new WebSocket("ws://" + "localhost:8080" + "/ako");
+                // game.global.socket = new WebSocket("wss://" + "astral-knock-out.herokuapp.com" + "/ako");
             }
             catch (error) {
                 if (game.global.DEBUG_MODE) {
@@ -766,6 +766,7 @@ class Scene_Boot extends Phaser.Scene {
     UpdateSpaceGym(data) {
         // Player
         if (game.global.actualScene == "scene_space_gym") {
+            //console.log(data);
             game.mPlayer.image.x = data.player.posX;
             game.mPlayer.image.y = data.player.posY;
             game.mPlayer.image.flipX = data.player.flipped;

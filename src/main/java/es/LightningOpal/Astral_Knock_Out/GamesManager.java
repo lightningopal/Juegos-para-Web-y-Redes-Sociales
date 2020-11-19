@@ -40,7 +40,7 @@ public class GamesManager {
 
     //// Partidas "space gym"
     // Mapa que guarda las partidas "space gym" que se están ejecutando
-    public Map<Player, SpaceGym_Game> spaceGym_games = new ConcurrentHashMap<>();
+    public Map<String, SpaceGym_Game> spaceGym_games = new ConcurrentHashMap<>();
 
     // Cerrojo que impide tocar a la vez las partidas de "space gym"
     public Lock spaceGymGamesLock = new ReentrantLock();
@@ -83,20 +83,20 @@ public class GamesManager {
     /// Métodos
     // Método startSpaceGym, que inicia una partida de "space gym" para el jugador
     /// indicado
-    public void startSpaceGym(Player thisPlayer) {
+    public void startSpaceGym(User thisUser) {
         // Crea la partida para el jugador
-        SpaceGym_Game newGame = new SpaceGym_Game(thisPlayer);
+        SpaceGym_Game newGame = new SpaceGym_Game(thisUser);
         // Inicia el game loop de esa partida
         newGame.startGameLoop(scheduler_spaceGym);
         // Añade la partida al mapa de partidas
-        spaceGym_games.put(thisPlayer, newGame);
+        spaceGym_games.put(thisUser.getUser_name(), newGame);
 
         // Intenta escribir la información en el archivo de log
 		try {
 			AKO_Server.logLock.lock();
 			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
 			String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-			AKO_Server.logWriter.write(time + " - Create Space Gym: " + thisPlayer.getUserName() + ".\n");
+			AKO_Server.logWriter.write(time + " - Create Space Gym: " + thisUser.getUser_name() + ".\n");
 			AKO_Server.logWriter.close();
 			AKO_Server.logLock.unlock();
 		} catch (Exception e) {
@@ -106,16 +106,16 @@ public class GamesManager {
     }
 
     // Método stopSpaceGym, que para la partida de "space gym" del jugador indicado
-    public void stopSpaceGym(Player thisPlayer) {
+    public void stopSpaceGym(User thisUser) {
         spaceGymGamesLock.lock();
         // Obtiene la partida que hay que parar
-        SpaceGym_Game gameToStop = spaceGym_games.get(thisPlayer);
+        SpaceGym_Game gameToStop = spaceGym_games.get(thisUser.getUser_name());
         // Para el game loop de esa partida
         if (gameToStop != null){
             gameToStop.stopGameLoop();
         }
         // Elimina la partida del mapa de partidas
-        spaceGym_games.remove(thisPlayer);
+        spaceGym_games.remove(thisUser.getUser_name());
         spaceGymGamesLock.unlock();
 
         // Intenta escribir la información en el archivo de log
@@ -123,7 +123,7 @@ public class GamesManager {
 			AKO_Server.logLock.lock();
 			AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
 			String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-			AKO_Server.logWriter.write(time + " - Leave Space Gym: " + thisPlayer.getUserName() + ".\n");
+			AKO_Server.logWriter.write(time + " - Leave Space Gym: " + thisUser.getUser_name() + ".\n");
 			AKO_Server.logWriter.close();
 			AKO_Server.logLock.unlock();
 		} catch (Exception e) {
