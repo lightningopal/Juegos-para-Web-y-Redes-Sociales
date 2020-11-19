@@ -30,7 +30,7 @@ public class GamesManager {
     /// Variables
     // Número de partidas de cada uno
     public final int MAX_SPACEGYM_GAMES = 5;
-    public final int MAX_TOURNAMENT_GAMES = 10;
+    public final int MAX_TOURNAMENT_GAMES = 5;
     
     // Scheduler de las partidas "space gym"
     private ScheduledExecutorService scheduler_spaceGym = Executors.newScheduledThreadPool(MAX_SPACEGYM_GAMES);
@@ -48,6 +48,9 @@ public class GamesManager {
     //// Partidas "tournament"
     // Mapa que guarda las partidas "tournament" que se están ejecutando
     public Map<Integer, Tournament_Game> tournament_games = new ConcurrentHashMap<>();
+
+    // AtomicInteger que da numero de sala
+    public AtomicInteger nextRoom = new AtomicInteger(0);
 
     // Mapa que guarda enteros atómicos que ayudan a iniciar partidas a la vez
     public Map<Integer, AtomicInteger> startGame_counters = new ConcurrentHashMap<>();
@@ -131,7 +134,7 @@ public class GamesManager {
 
     public int createTournamentGame(Player playerA, Player playerB, int level) {
         // Asigna el numero de sala
-        int room = tournament_games.size();
+        int room = nextRoom.getAndIncrement();
         playerA.setRoom(room);
         playerB.setRoom(room);
 

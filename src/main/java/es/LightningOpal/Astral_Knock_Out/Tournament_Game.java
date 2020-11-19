@@ -188,8 +188,26 @@ public class Tournament_Game {
 
 	// Método startGameLoop, que inicia el game loop de la partida
     public void startGameLoop(ScheduledExecutorService scheduler_) {
-		// Inicia y guarda el hilo que ejecuta el método tick
-        future = scheduler_.scheduleAtFixedRate(() -> tick(), TICK_DELAY, TICK_DELAY, TimeUnit.MILLISECONDS);
+        // Inicia y guarda el hilo que ejecuta el método tick
+        try
+        {
+            future = scheduler_.scheduleAtFixedRate(() -> tick(), TICK_DELAY, TICK_DELAY, TimeUnit.MILLISECONDS);
+        }
+        catch(Exception e)
+        {
+            System.out.println("MEMORIA LLENA, IMPOSIBLE CREAR HILO");
+            GamesManager.INSTANCE.finishTournamentGame(room, playerB, playerA, false);
+            for (Player player : players.values()) {
+                try
+                {
+                    player.getSession().close();
+                }
+                catch (Exception ex)
+                {
+                    System.out.println("NO PUEDE CERRAR SESIÓN A JUGADOR: " + player.getUserName());
+                }
+            }
+        }
     }
 
     // Método stopGameLoop, que para el game loop de la partida

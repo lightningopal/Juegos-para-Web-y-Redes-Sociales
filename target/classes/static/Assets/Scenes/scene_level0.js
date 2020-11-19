@@ -964,17 +964,9 @@ class Scene_Level0 extends Phaser.Scene {
         });
 
         var tween = this.tweens.add({
-            targets: that.versus_right_circle,
-            x: 2220,
-            y: 1380,
-            duration: 300,
-            repeat: 0,
-        });
-
-        var tween = this.tweens.add({
             targets: [ that.versus_right_circle, that.versus_usernameB, that.versus_characterB, that.versus_pointsB ],
-            x: 2220,
-            y: 1380,
+            x: 2520,
+            y: 1680,
             duration: 300,
             repeat: 0,
         });
