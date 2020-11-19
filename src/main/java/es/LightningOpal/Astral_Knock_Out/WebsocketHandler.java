@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import javax.lang.model.element.Element;
+
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -442,7 +444,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 								if (GamesManager.INSTANCE.searching_players.get(level).size() > 0) {
 									// Obtenemos la información del rival
 									Player rival = GamesManager.INSTANCE.searching_players.get(level).remove();
-									System.out.println("Tamaño cola (after remove) nivel " + level + ": " + GamesManager.INSTANCE.searching_players.get(level).size());
+									System.out.println("Tamaño cola (after remove " + rival.getUserName() + ") nivel " + level + ": " + GamesManager.INSTANCE.searching_players.get(level).size());
 
 									// Se crea la partida
 									room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
@@ -512,7 +514,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 								else {
 									// Añade al jugador a la cola
 									GamesManager.INSTANCE.searching_players.get(level).add(thisPlayer);
-									System.out.println("Tamaño cola (after add) nivel " + level + ": " + GamesManager.INSTANCE.searching_players.get(level).size());
+									System.out.println("Tamaño cola (after add " + thisPlayer.getUserName() + ") nivel " + level + ": " + GamesManager.INSTANCE.searching_players.get(level).size());
 									GamesManager.INSTANCE.tournamentGamesLock.unlock();
 
 									// Asignar evento, sala y jugadores en el ObjectNode 'msg'
@@ -524,12 +526,20 @@ public class WebsocketHandler extends TextWebSocketHandler {
 										thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
 									}
 
-									if (DEBUG_MODE) {
+									/*if (DEBUG_MODE) {
 										name = user.getUser_name();
 										System.out.println("Buscando partida: " + name);
-									}
+									}*/
 								}
 							}
+							else
+							{
+								GamesManager.INSTANCE.tournamentGamesLock.unlock();
+							}
+						}
+						else
+						{
+							GamesManager.INSTANCE.tournamentGamesLock.unlock();
 						}
 					}
 					// Si no hay partidas disponibles
