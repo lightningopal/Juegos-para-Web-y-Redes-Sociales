@@ -75,7 +75,7 @@ public class Skill extends PhysicsObject{
 
     public void disable(){
         this.isActive = false;
-        this.setPosX(-500);
+        this.setPosX(-200);
         // Implementado el control en los hijos
     }
 

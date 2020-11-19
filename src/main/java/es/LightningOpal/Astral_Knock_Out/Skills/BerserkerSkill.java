@@ -56,6 +56,10 @@ public class BerserkerSkill extends Skill{
     @Override
     public void calculatePhysics(){
         double remainingTime = duration - (System.currentTimeMillis() - startTime);
+        if (remainingTime <= 0){
+            disable();
+            return;
+        }
         if (this.IsFlipped()){
             this.setVelX(-this.getMoveSpeed() * (remainingTime / duration) * (remainingTime / duration));
         }else{

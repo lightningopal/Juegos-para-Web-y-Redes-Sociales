@@ -1,2 +1,0 @@
-[Start: 2020-11-19_01-39-11 - End: 2020-11-19_01-39-38] - Winner: Thund3r[Id: 0, PlayerType: wizard, SecondarySkill: -1, Skin: 0, Points: 0] - Loser: ranking[Id: 3, PlayerType: rogue, SecondarySkill: -1, Skin: 0, Points: 0].
-[Start: 2020-11-19_01-40-31 - End: 2020-11-19_01-40-53] - Winner: Thund3r[Id: 0, PlayerType: wizard, SecondarySkill: -1, Skin: 0, Points: 70] - Loser: ranking[Id: 3, PlayerType: rogue, SecondarySkill: -1, Skin: 0, Points: 0].
