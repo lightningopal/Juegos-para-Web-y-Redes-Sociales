@@ -539,6 +539,24 @@ A continuación, enumeramos los distintos softwares que vamos a utilizar y si no
 
 #### **6.3.2. Financiación**
 
+Para financiar el proyecto inicialmente nos gustaría mostrar nuestro juego en páginas de *'Crowdfunding'* para obtener un beneficio inicial para el desarrollo. 
+
+En un principio nos decantamos por la plataforma *IndieGoGo* debido a que permite a los desarrolladores recibir el dinero de los mecenas a pesar de no llegar a la meta propuesta. Sin embargo, decidimos optar por cambiar a la página *KickStarter*, debido a la popularidad de dicha página y creemos que el contenido de nuestro juego es ideal para el sistema de recompensas que ofrece la página, ya que contamos con un contenido visual atractivo del que sacar provecho mediante dichas recompensas. A pesar de que es una opción arriesgada, consideramos que nos puede aportar un beneficio mucho mayor que *IndieGoGo*. A continuación, explicamos las características de nuestro programa de financiación:
+
+Precio base: 45.000€
+Tiempo para financiar: 30 días.
+
+Recompensas:
+
+*	5€ o más: nombre en los créditos y 10.000 Gemas.
+*	20€ o más: skin exclusiva (disponible únicamente en esta recompensa).
+*	50€ o más: una camiseta con el logo de AKO y los personajes del juego.
+*	100€ o más:  un póster de un personaje a elegir dibujado por los ilustradores del equipo.
+*	250€ o más: una sudadera de Lightning Opal con el nombre personalizado para la espalda.
+*	500€ o más: una figurita de cada personaje para jugar a rol de mesa y dados personalizados.
+*	1.000€ o más: una réplica del arma de Niuwak (Bárbaro).
+*	3.000€ o más: ayuda a los desarrolladores a diseñar el próximo personaje.
+
 #### **6.3.3. Fuerza de trabajo**
 
 **Equipo de desarrollo:** 5 personas. 
@@ -590,4 +608,8 @@ Aunque *Astral Knock Out* está más enfocado a un público competitivo, queremo
 
 * Plantilla para el GDD:  
 *https://eldocumentalistaudiovisual.files.wordpress.com/2015/02/gdd.pdf*
+
+- Enlace a nuestra página web:  
+*https://lightningopal.github.io/* 
+
 
