@@ -238,7 +238,7 @@ A continuación, mostramos las especificaciones sobre cómo se organizarán los 
 
 ![Captura14](https://user-images.githubusercontent.com/55460691/99713034-29401200-2aa4-11eb-80e3-f277ada040e9.PNG)
 
-![Captura15](https://user-images.githubusercontent.com/55460691/99713035-29401200-2aa4-11eb-9ac3-b07aa00ae3ba.PNG)
+![readme_controls](https://user-images.githubusercontent.com/36482605/99721186-1979fb00-2aaf-11eb-9145-f4a833f2416f.PNG)
 
 ### **3.7. Créditos**
 
