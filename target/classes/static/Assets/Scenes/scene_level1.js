@@ -251,8 +251,6 @@ class Scene_Level1 extends Phaser.Scene {
         this.myMovingRight = false;
         this.falling = false;
         this.myAttacking = false;
-        this.canBasicAttack = true;
-        this.canSpecialAttack = true;
         switch (game.mPlayer.characterSel.type) {
             case "berserker":
                 game.mPlayer.image = this.physics.add.sprite(250, 850, "berserker")

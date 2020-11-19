@@ -101,8 +101,6 @@ class Scene_Space_Gym extends Phaser.Scene {
         this.movingRight = false;
         this.falling = false;
         this.attacking = false;
-        this.canBasicAttack = true;
-        this.canSpecialAttack = true;
         switch (game.mPlayer.characterSel.type) {
             case "berserker":
                 game.mPlayer.image = this.physics.add.sprite(250, 850, "berserker")

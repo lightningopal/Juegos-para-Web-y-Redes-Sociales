@@ -793,8 +793,6 @@ class Scene_Boot extends Phaser.Scene {
             if (data.player.onFloor) {
                 this.scene.get('scene_space_gym').falling = false;
             }
-            this.scene.get('scene_space_gym').canBasicAttack = data.player.canBasicAttack;
-            this.scene.get('scene_space_gym').canSpecialAttack = data.player.canSpecialAttack;
 
             // Dummy
             this.scene.get('scene_space_gym').dummy.x = data.dummy.posX;
@@ -937,8 +935,6 @@ class Scene_Boot extends Phaser.Scene {
                 if (data.playerB.onFloor) {
                     level.falling = false;
                 }
-                level.canBasicAttack = data.playerB.canBasicAttack;
-                level.canSpecialAttack = data.playerB.canSpecialAttack;
 
                 // Proyectiles
                 for (var i = 0; i < data.projectilesB.length; i++) {
@@ -972,8 +968,6 @@ class Scene_Boot extends Phaser.Scene {
                 if (data.playerA.onFloor) {
                     level.falling = false;
                 }
-                level.canBasicAttack = data.playerA.canBasicAttack;
-                level.canSpecialAttack = data.playerA.canSpecialAttack;
 
                 // Proyectiles
                 for (var i = 0; i < data.projectilesA.length; i++) {
@@ -1016,8 +1010,6 @@ class Scene_Boot extends Phaser.Scene {
                 if (data.playerB.onFloor) {
                     level.falling = false;
                 }
-                level.canBasicAttack = data.playerB.canBasicAttack;
-                level.canSpecialAttack = data.playerB.canSpecialAttack;
 
                 // Proyectiles
                 for (var i = 0; i < data.projectilesB.length; i++) {
@@ -1051,8 +1043,6 @@ class Scene_Boot extends Phaser.Scene {
                 if (data.playerA.onFloor) {
                     level.falling = false;
                 }
-                level.canBasicAttack = data.playerA.canBasicAttack;
-                level.canSpecialAttack = data.playerA.canSpecialAttack;
 
                 // Proyectiles
                 for (var i = 0; i < data.projectilesA.length; i++) {
