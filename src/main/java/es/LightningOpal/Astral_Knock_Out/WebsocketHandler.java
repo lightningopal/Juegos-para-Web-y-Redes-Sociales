@@ -8,8 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import javax.lang.model.element.Element;
-
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -392,7 +390,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					break;
 				// Cuando un jugador busca partida
 				case "SEARCHING_GAME":
-					System.out.println("Busca partida: " + user.getUser_name());
+					System.out.println("Busca partida: " + user.getUser_name() + ", Player: " + user.getPlayer_selected().toString());
 					GamesManager.INSTANCE.tournamentGamesLock.lock();
 					// Si hay partidas disponibles
 					if (GamesManager.INSTANCE.tournament_games.size() < GamesManager.INSTANCE.MAX_TOURNAMENT_GAMES)
@@ -447,67 +445,77 @@ public class WebsocketHandler extends TextWebSocketHandler {
 									System.out.println("Tamaño cola (after remove " + rival.getUserName() + ") nivel " + level + ": " + GamesManager.INSTANCE.searching_players.get(level).size());
 
 									// Se crea la partida
-									room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
+									try
+									{
+										room = GamesManager.INSTANCE.createTournamentGame(thisPlayer, rival, level);
 
-									GamesManager.INSTANCE.tournamentGamesLock.unlock();
+										// Intenta escribir la información en el archivo de log
+										try {
+											AKO_Server.logLock.lock();
+											AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
+											String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+											AKO_Server.logWriter.write(time + " - Create Tournament Game: " + thisPlayer.getUserName() +
+											" - " + rival.getUserName() + " - Level: " + level + ", Room: " + room + ".\n");
+											AKO_Server.logWriter.close();
+											AKO_Server.logLock.unlock();
+										} catch (Exception e) {
+											// Si falla, se muestra el error
+											e.printStackTrace();
+										}
 
-									// Intenta escribir la información en el archivo de log
-									try {
-										AKO_Server.logLock.lock();
-										AKO_Server.logWriter = new BufferedWriter(new FileWriter(AKO_Server.logFile, true));
-										String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-										AKO_Server.logWriter.write(time + " - Create Tournament Game: " + thisPlayer.getUserName() +
-										" - " + rival.getUserName() + " - Level: " + level + ", Room: " + room + ".\n");
-										AKO_Server.logWriter.close();
-										AKO_Server.logLock.unlock();
-									} catch (Exception e) {
-										// Si falla, se muestra el error
+										// Creamos un ArrayNode 'players' para guardar la información de ambos jugadores
+										ArrayNode players = mapper.createArrayNode();
+
+										// Guardar la información del jugador A
+										ObjectNode playerA = mapper.createObjectNode();
+
+										playerA.put("playerId", thisPlayer.getPlayerId());
+										playerA.put("userName", thisPlayer.getUserName());
+										playerA.put("playerType", thisPlayer.getPlayerType());
+										playerA.put("skin", thisPlayer.getSkin());
+										playerA.put("skill", thisPlayer.getSkill());
+										playerA.put("points", thisPlayer.getPoints());
+
+										players.addPOJO(playerA);
+
+										// Guardar la información del jugador B
+										ObjectNode playerB = mapper.createObjectNode();
+
+										playerB.put("playerId", rival.getPlayerId());
+										playerB.put("userName", rival.getUserName());
+										playerB.put("playerType", rival.getPlayerType());
+										playerB.put("skin", rival.getSkin());
+										playerB.put("skill", rival.getSkill());
+										playerB.put("points", rival.getPoints());
+
+										players.addPOJO(playerB);
+
+										// Asignar evento, sala y jugadores en el ObjectNode 'msg'
+										msg.put("event", "GAME_FOUND");
+										msg.put("room", room);
+										msg.putPOJO("players", players);
+
+										// Enviar el mensaje a ambos usuarios
+										synchronized (thisPlayer.getSession()) {
+											thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
+										}
+										synchronized (rival.getSession()) {
+											rival.getSession().sendMessage(new TextMessage(msg.toString()));
+										}
+
+										if (DEBUG_MODE) {
+											System.out.println(
+													"Partida creada [" + room + "]: " + thisPlayer.getUserName() + " - " + rival.getUserName());
+										}
+									}
+									catch (Exception e)
+									{
 										e.printStackTrace();
+										System.out.println("NO SE HA PODIDO CREAR PARTIDA EN WSHandler");
 									}
-
-									// Creamos un ArrayNode 'players' para guardar la información de ambos jugadores
-									ArrayNode players = mapper.createArrayNode();
-
-									// Guardar la información del jugador A
-									ObjectNode playerA = mapper.createObjectNode();
-
-									playerA.put("playerId", thisPlayer.getPlayerId());
-									playerA.put("userName", thisPlayer.getUserName());
-									playerA.put("playerType", thisPlayer.getPlayerType());
-									playerA.put("skin", thisPlayer.getSkin());
-									playerA.put("skill", thisPlayer.getSkill());
-									playerA.put("points", thisPlayer.getPoints());
-
-									players.addPOJO(playerA);
-
-									// Guardar la información del jugador B
-									ObjectNode playerB = mapper.createObjectNode();
-
-									playerB.put("playerId", rival.getPlayerId());
-									playerB.put("userName", rival.getUserName());
-									playerB.put("playerType", rival.getPlayerType());
-									playerB.put("skin", rival.getSkin());
-									playerB.put("skill", rival.getSkill());
-									playerB.put("points", rival.getPoints());
-
-									players.addPOJO(playerB);
-
-									// Asignar evento, sala y jugadores en el ObjectNode 'msg'
-									msg.put("event", "GAME_FOUND");
-									msg.put("room", room);
-									msg.putPOJO("players", players);
-
-									// Enviar el mensaje a ambos usuarios
-									synchronized (thisPlayer.getSession()) {
-										thisPlayer.getSession().sendMessage(new TextMessage(msg.toString()));
-									}
-									synchronized (rival.getSession()) {
-										rival.getSession().sendMessage(new TextMessage(msg.toString()));
-									}
-
-									if (DEBUG_MODE) {
-										System.out.println(
-												"Partida creada [" + room + "]: " + thisPlayer.getUserName() + " - " + rival.getUserName());
+									finally
+									{
+										GamesManager.INSTANCE.tournamentGamesLock.unlock();
 									}
 								}
 								// Si no, añadimos al jugador a la cola
@@ -651,17 +659,26 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 						case "BASIC_ATTACK":
 							room = node.get("room").asInt();
-							if (user.getPlayer_selected().getBasicWeapon().attack()) { // Si se realiza el ataque
-								msg.put("event", "ACTION");
-								msg.put("type", "BASIC_ATTACK");
-								msg.put("player_name", user.getUser_name());
-								if (room == -1) {
-									synchronized (user.getSession()) {
-										user.getSession().sendMessage(new TextMessage(msg.toString()));
+							GamesManager.INSTANCE.tournamentGamesLock.lock();
+							if (GamesManager.INSTANCE.tournament_games.containsKey(room))
+							{
+								GamesManager.INSTANCE.tournamentGamesLock.unlock();
+								if (user.getPlayer_selected().getBasicWeapon().attack()) { // Si se realiza el ataque
+									msg.put("event", "ACTION");
+									msg.put("type", "BASIC_ATTACK");
+									msg.put("player_name", user.getUser_name());
+									if (room == -1) {
+										synchronized (user.getSession()) {
+											user.getSession().sendMessage(new TextMessage(msg.toString()));
+										}
+									} else {
+										GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
 									}
-								} else {
-									GamesManager.INSTANCE.tournament_games.get(room).broadcast(msg.toString());
 								}
+							}
+							else
+							{
+								GamesManager.INSTANCE.tournamentGamesLock.unlock();
 							}
 							break;
 

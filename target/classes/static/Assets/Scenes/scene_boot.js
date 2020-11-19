@@ -793,8 +793,6 @@ class Scene_Boot extends Phaser.Scene {
             if (data.player.onFloor) {
                 this.scene.get('scene_space_gym').falling = false;
             }
-            this.scene.get('scene_space_gym').canBasicAttack = data.player.canBasicAttack;
-            this.scene.get('scene_space_gym').canSpecialAttack = data.player.canSpecialAttack;
 
             // Dummy
             this.scene.get('scene_space_gym').dummy.x = data.dummy.posX;
