@@ -188,8 +188,26 @@ public class Tournament_Game {
 
 	// Método startGameLoop, que inicia el game loop de la partida
     public void startGameLoop(ScheduledExecutorService scheduler_) {
-		// Inicia y guarda el hilo que ejecuta el método tick
-        future = scheduler_.scheduleAtFixedRate(() -> tick(), TICK_DELAY, TICK_DELAY, TimeUnit.MILLISECONDS);
+        // Inicia y guarda el hilo que ejecuta el método tick
+        try
+        {
+            future = scheduler_.scheduleAtFixedRate(() -> tick(), TICK_DELAY, TICK_DELAY, TimeUnit.MILLISECONDS);
+        }
+        catch(Exception e)
+        {
+            System.out.println("MEMORIA LLENA, IMPOSIBLE CREAR HILO");
+            GamesManager.INSTANCE.finishTournamentGame(room, playerB, playerA, false);
+            for (Player player : players.values()) {
+                try
+                {
+                    player.getSession().close();
+                }
+                catch (Exception ex)
+                {
+                    System.out.println("NO PUEDE CERRAR SESIÓN A JUGADOR: " + player.getUserName());
+                }
+            }
+        }
     }
 
     // Método stopGameLoop, que para el game loop de la partida
@@ -269,7 +287,6 @@ public class Tournament_Game {
         ObjectNode jsonPlayerBHP = mapper.createObjectNode();
 
 		try {
-            // SI EL JUGADOR SE CAE PIERDE
             // Movemos las plataformas y el fondo en el level 1
             if (level == 1){
                 backgroundPos -= 1;
@@ -288,7 +305,11 @@ public class Tournament_Game {
                 }
             }
 			// Intenta calcular las físicas de los jugadores y enviarle los datos
-			// Player A
+            // Player A
+            if (level == 1){
+                // Compensamos el movimiento del escenario
+                playerA.setPosY(playerA.getPosY()+2);
+            }
 			playerA.incVelocity(0, GRAVITY); // Gravedad
             playerA.calculatePhysics();
             playerA.SetOnFloor(false);
@@ -317,7 +338,11 @@ public class Tournament_Game {
             jsonPlayerA.put("canBasicAttack", playerA.getBasicWeapon().CanAttack());
 			jsonPlayerA.put("canSpecialAttack", playerA.getSpecialWeapon().CanAttack());
 			
-			// Player B
+            // Player B
+            if (level == 1){
+                // Compensamos el movimiento del escenario
+                playerB.setPosY(playerB.getPosY()+2);
+            }
 			playerB.incVelocity(0, GRAVITY); // Gravedad
             playerB.calculatePhysics();
             playerB.SetOnFloor(false);

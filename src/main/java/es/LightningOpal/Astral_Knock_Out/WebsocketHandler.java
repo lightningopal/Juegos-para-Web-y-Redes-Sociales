@@ -390,6 +390,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 					break;
 				// Cuando un jugador busca partida
 				case "SEARCHING_GAME":
+					System.out.println("Busca partida: " + user.getUser_name());
 					GamesManager.INSTANCE.tournamentGamesLock.lock();
 					// Si hay partidas disponibles
 					if (GamesManager.INSTANCE.tournament_games.size() < GamesManager.INSTANCE.MAX_TOURNAMENT_GAMES)
@@ -504,7 +505,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
 									if (DEBUG_MODE) {
 										System.out.println(
-												"Partida creada: " + thisPlayer.getUserName() + " - " + rival.getUserName());
+												"Partida creada [" + room + "]: " + thisPlayer.getUserName() + " - " + rival.getUserName());
 									}
 								}
 								// Si no, añadimos al jugador a la cola
