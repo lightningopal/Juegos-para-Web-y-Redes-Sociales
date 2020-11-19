@@ -85,7 +85,7 @@ public class SpaceGym_Game {
                 break;
             case "rogue":
                 for (int i = 0; i < 9; i++) {
-                    projectiles.add(new RogueSkill(player, dummy, 550, true, 30, 120, i % 3)); // Target, duration, collidePlatforms, speed, damage, id
+                    projectiles.add(new RogueSkill(player, dummy, -1, true, 30, 120, i % 3)); // Caster, Target, duration, collidePlatforms, speed, damage, id
                 }
                 player.setBasicWeapon(new Weapon(projectiles, 3, 800, 25));
                 break;
@@ -155,7 +155,6 @@ public class SpaceGym_Game {
         ObjectNode jsonPlayer = mapper.createObjectNode();
         ObjectNode jsonDummy = mapper.createObjectNode();
         ObjectNode jsonProjectile = mapper.createObjectNode();
-        // ArrayNode arrayNodePlatforms = mapper.createArrayNode();
         ArrayNode arrayNodeProjectiles = mapper.createArrayNode();
 
         try {
@@ -180,8 +179,6 @@ public class SpaceGym_Game {
             jsonPlayer.put("posY", player.getPosY());
             jsonPlayer.put("flipped", player.IsFlipped());
             jsonPlayer.put("onFloor", player.IsOnFloor());
-            jsonPlayer.put("canBasicAttack", player.getBasicWeapon().CanAttack());
-            jsonPlayer.put("canSpecialAttack", player.getSpecialWeapon().CanAttack());
 
             dummy.incVelocity(0, GRAVITY); // Gravedad
             dummy.calculateMovement();
@@ -200,7 +197,6 @@ public class SpaceGym_Game {
                     // Calcular posición
                     skill.calculatePhysics();
                     if (skill.intersect(skill.getTarget())) {
-                        skill.setActive(false);
                         this.dummyHP = skill.impact(this.dummyHP);
                         if (this.dummyHP <= 0){
                             this.dummyHP = 1000;
