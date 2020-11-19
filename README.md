@@ -8,7 +8,7 @@
 | Enrique Sánchez de Francisco | e.sanchezd.2017@alumnos.urjc.es | enriuop|
 | Mireya Funke Prieto | m.funke.2017@alumnos.urjc.es | mfpheras|
 | Sergio Cruz Serrano | s.cruzs.2017@alumnos.urjc.es | Sergypulga|
-| Samuel Ríos Carlos | s.ríos.2017@alumnos.urjc.es | Thunder|
+| Samuel Ríos Carlos | s.rios.2017@alumnos.urjc.es | Thund3rDev|
 
 * * *
 
@@ -55,7 +55,7 @@ de derrotar a su oponente y convertirse en el mejor de todos los luchadores.
 En cuanto a lo que movimiento y mecánicas se refiere hemos tomado como referentes a juegos de combate 
 como *Super Smash Bros Ultimate, Brief Battles* y *Rivals of Aether.*
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+![Captura1](https://user-images.githubusercontent.com/55460691/99713116-365d0100-2aa4-11eb-8bff-cdb43d4c6336.PNG)
 
 Para la inspiración de los distintos personajes de nuestro juego y sus habilidades, nos hemos basado
 en las clases de los clásicos juegos de rol de mesa (bardo, mago, bárbaro y pícaro).
@@ -157,7 +157,7 @@ como desde un dispositivo móvil. Por esto hemos optado por reducir el manejo de
 * **Botón de salto.** 
 * **Botón de habilidad principal.** 
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+![Captura2](https://user-images.githubusercontent.com/55460691/99713118-365d0100-2aa4-11eb-8541-0d5a084cf72a.PNG)
 
 ### **2.3. Flujo de juego**
 
@@ -200,45 +200,115 @@ La partida se desarrollará en un enfrentamiento a muerte entre dos jugadores. A
 
 ## **3. Interfaz**
 
+A continuación, mostramos las especificaciones sobre cómo se organizarán los menús y la interfaz de las diferentes pantallas de juego que conforman *Astral Knock Out*.
+
 ### **3.1. Diagrama de flujo**
+
+![Captura3](https://user-images.githubusercontent.com/55460691/99713120-36f59780-2aa4-11eb-9e66-b714056d5eeb.PNG)
 
 ### **3.2. Introducción logo**
 
+![Captura4](https://user-images.githubusercontent.com/55460691/99713121-36f59780-2aa4-11eb-895a-e4a78d5ce1ab.PNG)
+
 ### **3.3. Inicio de sesión o creación de usuario**
+
+![Captura5](https://user-images.githubusercontent.com/55460691/99713122-36f59780-2aa4-11eb-940b-a9fce0243679.PNG)
+
+![Captura6](https://user-images.githubusercontent.com/55460691/99713123-378e2e00-2aa4-11eb-9994-a2a0fa412a67.PNG)
+
+![Captura7](https://user-images.githubusercontent.com/55460691/99713022-26ddb800-2aa4-11eb-8418-0ede62f52040.PNG)
+
+![Captura8](https://user-images.githubusercontent.com/55460691/99713024-27764e80-2aa4-11eb-96fc-3f661cc77edb.PNG)
 
 ### **3.4. Menú principal**
 
+![Captura9](https://user-images.githubusercontent.com/55460691/99713025-27764e80-2aa4-11eb-926d-cf784c8edf05.PNG)
+
+![Captura10](https://user-images.githubusercontent.com/55460691/99713027-27764e80-2aa4-11eb-8a79-6b743279ed43.PNG)
+
 ### **3.5. Ranking**
+
+![Captura11](https://user-images.githubusercontent.com/55460691/99713029-280ee500-2aa4-11eb-88d9-7a363403bb5b.PNG)
+
+![Captura12](https://user-images.githubusercontent.com/55460691/99713031-28a77b80-2aa4-11eb-9ffe-7f9b67474035.PNG)
 
 ### **3.6. Opciones**
 
+![Captura13](https://user-images.githubusercontent.com/55460691/99713033-28a77b80-2aa4-11eb-9257-b6514e2e9cf4.PNG)
+
+![Captura14](https://user-images.githubusercontent.com/55460691/99713034-29401200-2aa4-11eb-80e3-f277ada040e9.PNG)
+
+![Captura15](https://user-images.githubusercontent.com/55460691/99713035-29401200-2aa4-11eb-9ac3-b07aa00ae3ba.PNG)
+
 ### **3.7. Créditos**
+
+![Captura16](https://user-images.githubusercontent.com/55460691/99713037-29d8a880-2aa4-11eb-98b3-1efee2c4c536.PNG)
+
+![Captura17](https://user-images.githubusercontent.com/55460691/99713039-29d8a880-2aa4-11eb-9ad3-9ea1af3aa246.PNG)
 
 ### **3.8. Selección de personajes**
 
+![Captura18](https://user-images.githubusercontent.com/55460691/99713040-2a713f00-2aa4-11eb-8a3e-3cb735826bae.PNG)
+
+![Captura19](https://user-images.githubusercontent.com/55460691/99713041-2a713f00-2aa4-11eb-87a1-f65aa173034e.PNG)
+
 ### **3.9. Elección de mapa**
+
+![Captura20](https://user-images.githubusercontent.com/55460691/99713042-2b09d580-2aa4-11eb-9914-db2c1f643583.PNG)
+
+![Captura21](https://user-images.githubusercontent.com/55460691/99713043-2ba26c00-2aa4-11eb-9ffd-aa29e4d0b1fe.PNG)
+
+![Captura22](https://user-images.githubusercontent.com/55460691/99713044-2ba26c00-2aa4-11eb-8705-991e814af672.PNG)
 
 ### **3.10. Carga de conexión**
 
+![Captura23](https://user-images.githubusercontent.com/55460691/99713048-2c3b0280-2aa4-11eb-9074-a4d3cf526c28.PNG)
+
+![Captura24](https://user-images.githubusercontent.com/55460691/99713050-2c3b0280-2aa4-11eb-9f2b-ea5a3fd18f1d.PNG)
+
 ### **3.11. Partida cargada**
+
+![Captura25](https://user-images.githubusercontent.com/55460691/99713053-2c3b0280-2aa4-11eb-9fa1-30a2fa7c5a32.PNG)
+
+![Captura26](https://user-images.githubusercontent.com/55460691/99713054-2cd39900-2aa4-11eb-9e00-eebeaf7732e3.PNG)
 
 ### **3.12. Nivel 1**
 
+![Captura27](https://user-images.githubusercontent.com/55460691/99713057-2d6c2f80-2aa4-11eb-9d43-f019bbc4e256.PNG)
+
 ### **3.13. Nivel 2**
+
+![Captura28](https://user-images.githubusercontent.com/55460691/99713060-2d6c2f80-2aa4-11eb-842b-0674bcc04858.PNG)
 
 ### **3.14. Mensajes de comunicación sobre el servidor**
 
+![Captura29](https://user-images.githubusercontent.com/55460691/99713064-2e04c600-2aa4-11eb-9a6d-b47554dc7e3c.PNG)
+
 ### **3.15. Pantalla de final de partida**
+
+![Captura30](https://user-images.githubusercontent.com/55460691/99713065-2e04c600-2aa4-11eb-8079-65acfd41c655.PNG)
+
+![Captura31](https://user-images.githubusercontent.com/55460691/99713070-2e9d5c80-2aa4-11eb-8177-a1ac37686fe5.PNG)
 
 ### **3.16. Pausa**
 
+![Captura32](https://user-images.githubusercontent.com/55460691/99713072-2f35f300-2aa4-11eb-94b9-f82da36d878f.PNG)
+
+![Captura33](https://user-images.githubusercontent.com/55460691/99713073-2f35f300-2aa4-11eb-94ad-e107b6f9db69.PNG)
+
 ### **3.17. Modo entrenamiento**
 
+![Captura34](https://user-images.githubusercontent.com/55460691/99713075-2fce8980-2aa4-11eb-86c8-c2d811bebe1e.PNG)
+
 ### **3.18. Partida**
+
+![Captura35](https://user-images.githubusercontent.com/55460691/99713077-30672000-2aa4-11eb-8e0a-89b6a2d73826.PNG)
 
 ### **3.19. Contextualización**
 
 Pantalla con una corta contextualización de la temática del videojuego para que el jugador se ubique más fácilmente.
+
+![Captura36](https://user-images.githubusercontent.com/55460691/99713080-30ffb680-2aa4-11eb-9216-4a5f63010b68.PNG)
 
 ## **4. Arte**
 
@@ -250,7 +320,7 @@ Los personajes principales a parte de una clase característica, al pertenecer a
 
 Además, hemos decidido que las armas de los personajes, aunque sean diferentes en forma, compartan el mismo color y estilo. Nos hemos basado en las siguientes ilustraciones:
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+![Captura37](https://user-images.githubusercontent.com/55460691/99713083-31984d00-2aa4-11eb-8787-9dc6818b0c50.PNG)
 
 A continuación mostramos las ideas, referencias, conceptos y resultados finales de cada uno de los personajes:
 
@@ -260,17 +330,19 @@ A continuación mostramos las ideas, referencias, conceptos y resultados finales
 * Colores: arena, naranja, blanco, dorado y negro. 
 * Referencias de forma y color: 
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+![Captura38](https://user-images.githubusercontent.com/55460691/99713089-3230e380-2aa4-11eb-8e1d-670683bf0e8e.PNG)
 
 **NB:** Última imagen referencia a la vestimenta. 
 
 * Resultado final del personaje: 
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+![Captura39](https://user-images.githubusercontent.com/55460691/99713090-3230e380-2aa4-11eb-8a86-367a8d7808cc.PNG)
 
 * Descripción: 
 
 *Niuwak*: El más feroz de los guerreros del planeta Gowolik, conocido por su peligrosa climatología y sus despiadados habitantes. Es el orgulloso portador de Utikal, la espada sin alma, capaz de atravesar cualquier superficie, cortando hasta las más duras pieles.
+
+![Captura40](https://user-images.githubusercontent.com/55460691/99713092-33621080-2aa4-11eb-8e3b-465f2a707637.PNG)
 
 **Guerrero del planeta Polestia**
 
@@ -278,15 +350,17 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 * Colores: rojo, amarillo, gris y negro. 
 * Referencias de forma y color: 
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+![Captura41](https://user-images.githubusercontent.com/55460691/99713093-33621080-2aa4-11eb-88c2-1ceb354de0a3.PNG)
 
 * Resultado final del personaje: 
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+![Captura42](https://user-images.githubusercontent.com/55460691/99713096-33faa700-2aa4-11eb-8ef6-74cafd0f6ec3.PNG)
 
 * Descripción: 
 
 *Gretkaris*: Entrenada por Knipyad el pícaro, líder de la prestigiosa escuela de asesinos del planeta Polestia, Gretkaris la sigilosa es conocida por su impecable técnica de lanzar cuchillos. Ten cuidado, puede que te atraviese no una ni dos, sino tres veces con ellos. 
+
+![Captura43](https://user-images.githubusercontent.com/55460691/99713101-34933d80-2aa4-11eb-8607-42ab241413dd.PNG)
 
 **Guerrero del planeta Habog'ad**
 
@@ -294,15 +368,17 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 * Colores: verde cálido, naranja, cobre y azul turquesa. 
 * Referencias de forma y color: 
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+![Captura44](https://user-images.githubusercontent.com/55460691/99713104-34933d80-2aa4-11eb-8661-8fcf841ce7e2.PNG)
 
 * Resultado final del personaje: 
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+![Captura45](https://user-images.githubusercontent.com/55460691/99713106-352bd400-2aa4-11eb-8f58-7a498b0f5a63.PNG)
 
 * Descripción: 
 
 *Elago’ r*: Líder orgulloso de los Gart’ el, la tribu más longeva del planeta Habog’ ad. Domina todos los trucos mágicos que esconde el libro de Tsagad’ ar. Últimamente ha estado mejorando el hechizo arcaico de la triple hoja cortante. 
+
+![Captura46](https://user-images.githubusercontent.com/55460691/99713110-35c46a80-2aa4-11eb-8d12-54771b2a008d.PNG)
 
 **Guerrero del planeta Gnosenim**
 
@@ -310,21 +386,23 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 * Colores: morado, rosa, grises, azules. 
 * Referencias de forma y color: 
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+![Captura47](https://user-images.githubusercontent.com/55460691/99713112-35c46a80-2aa4-11eb-9bf2-f49434ff666a.PNG)
 
 **NB:** Última imagen referencia al color, no a la forma. 
 
 * Resultado final del personaje: 
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+![captura76](https://user-images.githubusercontent.com/62519332/99712836-e0885900-2aa3-11eb-9f6c-299f5c2d3911.jpg)
 
 * Descripción: 
 
 *Sitav II*: Es el heredero de la legendaria tuba mágica de Eobo el harmonioso, el primer rey de planeta Gnosenim. Adora trabajar como capataz en la mina junto a su amigo alado, Olokip. Se dice que sus melodías persiguen a sus enemigos, así que intenta mantener las distancias. 
 
+![captura77](https://user-images.githubusercontent.com/62519332/99712952-0e6d9d80-2aa4-11eb-9644-71355d3af5dd.jpg)
+
 **Ilustración final que recopila a los personajes**
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+![captura78](https://user-images.githubusercontent.com/62519332/99712975-17f70580-2aa4-11eb-8845-a328f4ae6114.jpg)
 
 ### **4.2. Escenarios**
 
@@ -333,19 +411,23 @@ Por otro lado, las plataformas se superpondrán al fondo y tendrán una estétic
 
 **Referencias**
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+![captura79](https://user-images.githubusercontent.com/62519332/99713095-33621080-2aa4-11eb-83ce-d7b717b27628.jpg)
 
 A continuación, mostramos las ilustraciones finales del juego:
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+![captura80](https://user-images.githubusercontent.com/62519332/99713099-33faa700-2aa4-11eb-80d4-f7d1ab44c3e7.jpg)
+
+![captura81](https://user-images.githubusercontent.com/62519332/99713103-34933d80-2aa4-11eb-95c2-588350c2d7b3.jpg)
 
 ### **4.3. Iconos**
+
+![captura82](https://user-images.githubusercontent.com/62519332/99713105-34933d80-2aa4-11eb-8670-b9531bdaf2b1.jpg)
 
 ### **4.4. Interfaz**
 
 Para llevar a cabo el diseño de la interfaz queremos usar tonos azules, rosas, morados y blancos para la tipografía. La idea es utilizar formas cuadradas y triangulares para que sea sencilla y fácil de entender. Por último, ya que los fondos tienen muchos detalles y animaciones hemos añadido transparencias a algunas zonas para que se pueda apreciar el fondo a través de la interfaz.
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+![captura83](https://user-images.githubusercontent.com/62519332/99713107-352bd400-2aa4-11eb-9f61-05e042d88ae7.jpg)
 
 **El resultado final de los elementos de la interfaz se encuentra recopilado en el apartado 3 de este documento.**
 
@@ -383,15 +465,19 @@ En cuanto a los efectos de sonido, hemos cogido sonidos de (*http://beta.blendwa
 
 ### **5.1. Modelos de negocio**
 
-**1. Cebo y anzuelo:** ofrecemos el juego gratis, confiando en que los usuarios comprarán skins o nuevos personajes y donarán a los desarrolladores. 
-**2. Fidelización:** captamos a los usuarios ofreciendo el juego gratis y ofrecemos actualizaciones y recompensas por jugar y avanzar en el ranking. 
-**3. Paga lo que puedas:** se puede comprar dinero del juego por un precio fijo, pero también se puede optar por donar un porcentaje extra (a elegir entre 10%, 20%, 30%, 40% o 50%) del precio que pagues por la moneda virtual para el desarrollo del juego.
+* **1. Cebo y anzuelo:** ofrecemos el juego gratis, confiando en que los usuarios comprarán skins o nuevos personajes y donarán a los desarrolladores. 
+* **2. Fidelización:** captamos a los usuarios ofreciendo el juego gratis y ofrecemos actualizaciones y recompensas por jugar y avanzar en el ranking. 
+* **3. Paga lo que puedas:** se puede comprar dinero del juego por un precio fijo, pero también se puede optar por donar un porcentaje extra (a elegir entre 10%, 20%, 30%, 40% o 50%) del precio que pagues por la moneda virtual para el desarrollo del juego.
 
 Nuestra idea es que el juego cuente con actualizaciones de contenido en un futuro. Estos contenidos son, por ejemplo, nuevos personajes, aspectos para estos y mapas diferentes. Para obtener estos contenidos el usuario contará con una moneda virtual que se obtiene jugando o si quiere, puede comprarlas con dinero real (a la hora de realizar esta transacción también podrá decidir si donar un porcentaje para el desarrollo del juego).
 
 Además, queremos incentivar la competitividad en el juego haciendo un sistema de temporadas. En el cual cada dos semanas se reiniciarán las puntuaciones y se ofrecerán monedas virtuales a los mejores jugadores y una *skin* especial para el mejor jugador. También habrá temporadas que cuenten con eventos especiales como por ejemplo *Halloween*, Navidad o el año nuevo chino que ofrecerán cosméticos característicos de dichos eventos.
 
 A continuación, adjuntamos unas imágenes que no se incluyen en esta versión del juego pero que ilustran cómo se vería la selección de personajes (pudiendo comprar y cambiar de aspectos), la pantalla de compra de monedas virtuales y tres aspectos diferentes que saldrán próximamente.
+
+![captura84](https://user-images.githubusercontent.com/62519332/99713108-352bd400-2aa4-11eb-8d63-82ecf6bb33c5.jpg)
+
+![captura85](https://user-images.githubusercontent.com/62519332/99713109-352bd400-2aa4-11eb-8251-a291a8215b19.jpg)
 
 ### **5.2. Tablas de productos y precios**
 
@@ -409,7 +495,7 @@ A continuación, adjuntamos unas imágenes que no se incluyen en esta versión d
 
 ### **5.3. Modelo de lienzo o canvas**
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+![captura86](https://user-images.githubusercontent.com/62519332/99713111-35c46a80-2aa4-11eb-9bd6-b602a61258d3.jpg)
 
 ## **6. Planificación y costes**
 
@@ -424,7 +510,7 @@ El equipo de desarrollo está formado por 5 personas:
 
 ### **6.2. Estimación temporal del desarollo**
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+![captura87](https://user-images.githubusercontent.com/62519332/99713113-35c46a80-2aa4-11eb-9a91-5fca60f6fd73.jpg)
 
 | | Porcentaje sobre el total de tiempo desarrollado |
 | :---------: | :---------: | 
@@ -453,8 +539,6 @@ A continuación, enumeramos los distintos softwares que vamos a utilizar y si no
 
 #### **6.3.2. Financiación**
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
 #### **6.3.3. Fuerza de trabajo**
 
 **Equipo de desarrollo:** 5 personas. 
@@ -476,13 +560,19 @@ Nos gustaría comentar ciertos aspectos del juego que no hemos podido añadir pa
 
 Aparte de la habilidad característica de cada personaje, también iba a haber cuatro posibles habilidades secundarias comunes a los cuatro personajes. Estas habilidades estan planteadas como efectos especiales o que aportan una mejora al personaje (escudo, curación más daño, teletransporte, invisibilidad…).
 
+![captura88](https://user-images.githubusercontent.com/62519332/99713115-365d0100-2aa4-11eb-86c0-f5f6250cba9c.jpg)
+
 **Animaciones de salto**
 
 Para esta versión hemos implementado animación de idle, correr y atacar para cada uno de los personajes, pero el resultado del movimiento mejoraría con la incorporación de una animación correspondiente al salto. Hemos podido desarrollar las siguientes pero no se han llegado a implementar:
 
+![captura89](https://user-images.githubusercontent.com/62519332/99713117-365d0100-2aa4-11eb-80b9-d7daff229cdd.jpg)
+
 **Efectos visuales**
 
 Queremos que los *VFX* de los ataques del juego no sean imágenes estáticas si no que se produzca una animación correspondiente con cada efecto. Además, nos gustaría añadir otro tipo de efectos como por ejemplo cuando saltas o corres aportando así más dinamismo y atractivo visual al juego.
+
+![captura90](https://user-images.githubusercontent.com/62519332/99713119-365d0100-2aa4-11eb-8d45-13ac3c4c4219.jpg)
 
 **Remapeado de controles**
 
@@ -499,5 +589,5 @@ Aunque *Astral Knock Out* está más enfocado a un público competitivo, queremo
 ## **8. Referencias**
 
 * Plantilla para el GDD:  
-*https://eldocumentalistaudiovisual.files.wordpress.com/2015/02/gdd.pdf *
+*https://eldocumentalistaudiovisual.files.wordpress.com/2015/02/gdd.pdf*
 
