@@ -84,7 +84,7 @@ public class RogueSkill extends Skill {
         }
         this.incVelocity(0, this.getAccelY());
         this.applyVelocity2Position();
-        if (this.getPosX() > 2020 || this.getPosX() < -100){
+        if (this.getPosX() > 2020 || this.getPosX() < -500){
             disable();
         }
     }

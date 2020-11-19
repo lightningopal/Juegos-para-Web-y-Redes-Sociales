@@ -94,6 +94,10 @@ public class WizardSkill extends Skill{
     @Override
     public void calculatePhysics(){
         double remainingTime = duration - (System.currentTimeMillis() - startTime);
+        if (remainingTime <= 0){
+            disable();
+            return;
+        }
         remainingTime = remainingTime / duration; // Va de 1 a 0
         if (this.id == 1){
             if (this.IsFlipped()){
